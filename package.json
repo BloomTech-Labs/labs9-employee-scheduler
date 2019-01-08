@@ -23,5 +23,8 @@
     "nodemon": "^1.18.9",
     "sqlite3": "^4.0.4",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0"
   }
 }
