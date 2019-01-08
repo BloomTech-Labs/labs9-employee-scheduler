@@ -39,6 +39,18 @@ class App extends Component {
           <NavLink to="/billing">Billing</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
+        <Switch>
+          <Route path="/calendar" render={props => <Calendar {...props} />} />
+          <Route path="/employees" render={props => <Employees {...props} />} />
+          <Route
+            path="/shift-calendar"
+            render={props => <CreateSchedule {...props} />}
+          />
+          <Route path="/billing" render={props => <Billing {...props} />} />
+          <Route path="/calendar" render={props => <Calendar {...props} />} />
+          <Route exact path="/" render={props => <Home {...props} />} />
+          <Route path="/dashboard" render={props => <Dashboard {...props} />} />
+        </Switch>
       </div>
     )
   }
