@@ -9,7 +9,7 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('users')
-    table.date('day').notNullable()
+    table.date('date').notNullable()
     table.time('start_time')
     table.time('end_time')
   })
