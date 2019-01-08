@@ -5,6 +5,7 @@
 - Carlos
 - Samuel
 - Adam
+- Kam
 
 to install, you will need two environment files:
 in the `./` you will need a `.env` file
