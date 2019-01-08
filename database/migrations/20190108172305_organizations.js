@@ -1,6 +1,9 @@
 exports.up = knex =>
   knex.schema.createTable('organizations', table => {
-    table.uuid('id').primary()
+    table
+      .uuid('id')
+      .primary()
+      .defaultTo(knex.raw('uuid_generate_v4()'))
     table
       .string('name', 128)
       .notNullable()
