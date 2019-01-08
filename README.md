@@ -5,3 +5,5 @@ in the `./` you will need a `.env` file
 in the `./client` you will a `.env.development` file
 
 for the contents of these files, reference the channel
+
+Adam is here
