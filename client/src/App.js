@@ -30,18 +30,17 @@ class App extends Component {
           `}
         />
         <h1>hello</h1>
-        //Should be moved to it's own component because this is what should be
-        in //it's own component because it should only be accessible on the
-        calender view
+        //This Switch should be moved to it's own component because it //should
+        only be accessible on the calender view
         <Switch>
-          //maybe this is supposed to be the employees
-          <NavLink to="/admin/shift-scheduler">Calendar</NavLink>
-          <NavLink to="/admin/employees">Employees</NavLink>
-          //not sure what is supposed go on this route, but it's in the wire
-          frame
-          <NavLink to="/">Create Schedule</NavLink>
-          <NavLink to="/admin/billing">Billing</NavLink>
+          <NavLink to="/calendar">Calendar</NavLink>
+          <NavLink to="/employees">Employees</NavLink>
+          <NavLink to="/shift-scheduler">Create Schedule</NavLink>
+          <NavLink to="/billing">Billing</NavLink>
           <NavLink to="/settings">Settings</NavLink>
+        </Switch>
+        <Switch>
+          <Route exact path="/" component={component} />
         </Switch>
       </div>
     )
