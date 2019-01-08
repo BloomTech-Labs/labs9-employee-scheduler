@@ -1,8 +1,11 @@
+exports.up = knex =>
+  knex.schema.createTable('organizations', table => {
+    table.uuid('id').primary()
+    table
+      .string('name', 128)
+      .notNullable()
+      .unique()
+    table.string('description', 1024)
+  })
 
-exports.up = function(knex, Promise) {
-  
-};
-
-exports.down = function(knex, Promise) {
-  
-};
+exports.down = knex => knex.schema.dropTableIfExists('organizations')
