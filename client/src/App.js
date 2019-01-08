@@ -32,13 +32,13 @@ class App extends Component {
         <h1>hello</h1>
         {/* This Switch should be moved to it's own component because it should
         only be accessible on the calender view */}
-        <div>
+        <nav>
           <NavLink to="/calendar">Calendar</NavLink>
           <NavLink to="/employees">Employees</NavLink>
           <NavLink to="/shift-scheduler">Create Schedule</NavLink>
           <NavLink to="/billing">Billing</NavLink>
           <NavLink to="/settings">Settings</NavLink>
-        </div>
+        </nav>
       </div>
     )
   }
