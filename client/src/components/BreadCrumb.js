@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 // this breadcrumb will be placed at the top should show the following links
 // Home component --> Sign Up || Sign In (if not logged in) --> Log Out (if logged)
