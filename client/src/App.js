@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Global, css } from '@emotion/core'
-import { NavLink, Route } from 'react-router-dom'
+import { NavLink, Route, Switch } from 'react-router-dom'
 
 import './reset.css'
 
@@ -30,18 +30,15 @@ class App extends Component {
           `}
         />
         <h1>hello</h1>
-        //This Switch should be moved to it's own component because it //should
-        only be accessible on the calender view
-        <Switch>
+        {/* This Switch should be moved to it's own component because it should
+        only be accessible on the calender view */}
+        <div>
           <NavLink to="/calendar">Calendar</NavLink>
           <NavLink to="/employees">Employees</NavLink>
           <NavLink to="/shift-scheduler">Create Schedule</NavLink>
           <NavLink to="/billing">Billing</NavLink>
           <NavLink to="/settings">Settings</NavLink>
-        </Switch>
-        <Switch>
-          <Route exact path="/" component={component} />
-        </Switch>
+        </div>
       </div>
     )
   }
