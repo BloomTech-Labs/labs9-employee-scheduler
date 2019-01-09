@@ -74,15 +74,15 @@
 
 `getUsers(orgId)` --> if no param all users
 
-`addUser(ordId)`
+`addUser(ordId, user object)`
 
 `updateUser(userId, changes object)`
 
-`deleteUser(userId)`
+`deleteUser(userId)` --> deletes everything dependent on the user
 
 <br>
 
-`getAvailabilities(userId)`
+`getAvailabilities(userId, constraint object)` --> default to showing next week
 
 `addAvailability(userId, day object)` --> adds new day
 
@@ -116,4 +116,4 @@
 
 <br>
 
-`getEventsByOrg(orgId)` --> returns list of all events for all users for an org
+`getEventsForOrg(orgId)` --> returns list of all events for all users for an org
