@@ -43,7 +43,6 @@ class App extends Component {
           <NavLink to="/calendar">Calendar</NavLink>
           <NavLink to="/employees">Employees</NavLink>
           <NavLink to="/shift-calendar">Create Schedule</NavLink>
-          <NavLink to="/billing">Billing</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
         <Switch>
