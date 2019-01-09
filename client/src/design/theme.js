@@ -8,11 +8,7 @@ const system = {
     captiontext: '#999999' // for small size copy, lower-emphasis copy
   },
 
-  fonts: {
-    system:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans"',
-    sans: '"Open Sans", sans-serif'
-  },
+  // moved font to global styles in app.js because we only have one font-family
 
   fontSizing: {
     s: '12px', // for captions, could go to 10px if legible

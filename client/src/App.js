@@ -28,6 +28,7 @@ class App extends Component {
           styles={css`
             html {
               font-size: 62.5%;
+              font-family: 'Open Sans', sans-serif;
             }
 
             * {
