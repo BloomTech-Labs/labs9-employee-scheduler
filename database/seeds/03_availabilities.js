@@ -30,7 +30,7 @@ const generateRandomBetween = (min, max) =>
 // generate sorted array of 5 numbers between 0 and 6 with no duplicates
 const generateWeekdays = () => {
   const days = []
-  while (days.lengh < 5) {
+  while (days.length < 5) {
     const day = generateRandomBetween(0, 6)
     if (!days.includes(day)) {
       days.push(day)
