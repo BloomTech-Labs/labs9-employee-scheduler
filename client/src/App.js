@@ -37,6 +37,7 @@ class App extends Component {
             }
           `}
         />
+        <Route exact path="/" render={props => <Home {...props} />} />
         <h1>hello</h1>
         {/* This Switch should be moved to it's own component because it should
         only be accessible on the calender view */}
@@ -54,7 +55,6 @@ class App extends Component {
           />
           <Route path="/billing" render={props => <Billing {...props} />} />
           <Route path="/calendar" render={props => <Calendar {...props} />} />
-          <Route exact path="/" render={props => <Home {...props} />} />
           <Route path="/dashboard" render={props => <Dashboard {...props} />} />
           <Route path="/settings" render={props => <Settings {...props} />} />
         </Switch>
