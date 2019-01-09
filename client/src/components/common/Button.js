@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 
 const Button = props => {
-  return <StyledButton type={props.type}>{props.text}</StyledButton>
+  return <StyledButton type={props.type}>{props.children}</StyledButton>
 }
 
 export default Button
