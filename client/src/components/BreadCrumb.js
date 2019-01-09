@@ -26,7 +26,7 @@ const BreadCrumb = props => {
 
         <Container className="breadcrumbs" extra>
           <LinkItem to="/signup">Sign Up</LinkItem>
-          <LinkItem to="/signup">Sign In</LinkItem>
+          <LinkItem to="/signin">Sign In</LinkItem>
         </Container>
       </Nav>
     )
@@ -48,16 +48,23 @@ const Container = styled('div')`
     font-size: ${props =>
       props.logo ? system.fontSizing.l : system.fontSizing.m};
     font-weight: ${props => (props.logo ? 'bold' : null)};
-    color: ${system.color.bodytext};
+    color: ${system.color.neutral};
     text-decoration: none;
     text-align: center;
   }
 `
 
 const Nav = styled.nav`
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  background: ${system.color.primary};
+  width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  margin: 20px 75px;
-  height: 40px;
+  padding: 2.5rem 10rem;
+  height: 7.5rem;
+  margin-bottom: 10rem;
 `

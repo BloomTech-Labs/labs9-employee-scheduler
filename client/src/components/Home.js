@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import bgImg from '../img/tempImg.png'
+import bgImg from '../img/fff.jpg'
 import Button from './common/Button'
 
 // this is the main landing page, it will house the payment options and main site branding styles. The nav here will display as Sign Up || Sign In.
@@ -20,20 +20,10 @@ class Home extends Component {
     return (
       <div>
         <BreadCrumb location={this.state.location} />
-        <Container>
-          <img
-            src={bgImg}
-            className="landing-image"
-            alt="temporary placeholder"
-          />
+        <Container src={bgImg}>
           <p>
-            Leverage agile frameworks to
-            <br /> provide a robust synopsis <br />
-            for high level overviews. <br />
-            Iterative approaches to corporate <br />
-            strategy foster collaborative
-            <br /> thinking to further the
-            <br />
+            Scheduling your employees is hard. Cadence is here to help. blah
+            blah blah blah blah blah blah blah blah blah blah
           </p>
           <Button type="text">Schedule Now</Button>
         </Container>
@@ -49,26 +39,21 @@ Home.propTypes = {
 }
 
 const Container = styled('div')`
-  position: relative;
-  margin: 0 75px;
-  width: 100%;
-  height: 500px;
-  .landing-image {
-    width: 100%;
-    max-width: 1350px;
-  }
+  margin: 7.5rem 7.5rem 0;
+  height: 50rem;
+  background-image: url(${props => props.src});
+  background-position: center center;
+  background-size: cover;
   p {
-    position: absolute;
-    top: 50px;
-    left: 90px;
+    padding: ${system.spacing.bigPadding};
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.l};
+    width: 55rem;
+    font-weight: bold;
   }
   button {
-    position: absolute;
-    top: 274px;
-    left: 133px;
-    font-size: ${system.fontSizing.l};
-    padding: ${system.spacing.bigPadding};
+    font-size: ${system.fontSizing.m};
+    padding: ${system.spacing.standardPadding};
+    margin-left: 2.5rem;
   }
 `
