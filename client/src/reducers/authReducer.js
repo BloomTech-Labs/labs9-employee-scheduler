@@ -1,12 +1,17 @@
-import something from '../actions'
+import { AUTH_SUCCESS, AUTH_FAIL } from '../actions'
 
 const initialState = {
-  userId: null,
-  token: ''
+  user: null,
+  token: '',
+  error: ''
 }
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_SUCCESS:
+      return { ...state, ...action.payload, error: '' }
+    case AUTH_FAIL:
+      return { ...state, error: 'authentication failed' }
     default:
       return state
   }

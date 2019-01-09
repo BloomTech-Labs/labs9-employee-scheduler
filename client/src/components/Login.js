@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
+import { authenticate } from '../actions'
+import { connect } from 'react-redux'
 
 const config = {
   // this is all public and was copied from the firebase console - Adam
@@ -34,19 +36,7 @@ const uiConfig = {
 class Login extends Component {
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      console.log(user)
-      firebase
-        .auth()
-        .currentUser.getIdToken(/* forceRefresh */ false)
-        .then(function(idToken) {
-          console.log('id token', idToken)
-        })
-        .catch(function(error) {
-          console.log(error)
-          // Handle error
-        })
-    })
+    this.unregisterAuthObserver = this.props.authenticate
   }
 
   // Make sure we un-register Firebase observers when the component unmounts.
@@ -67,4 +57,11 @@ class Login extends Component {
   }
 }
 
-export default Login
+const mapStateToProps = state => {
+  return {}
+}
+
+export default connect(
+  mapStateToProps,
+  { authenticate }
+)(Login)
