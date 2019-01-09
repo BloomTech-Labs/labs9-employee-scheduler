@@ -12,17 +12,23 @@ const BreadCrumb = props => {
   // ask the recieving component what location will be
   if (props.location !== 'Home') {
     breadContent = (
-      <Container>
-        <LinkItem to="/">Home</LinkItem>
+      <Container logo>
+        <LinkItem to="/">Cadence</LinkItem>
       </Container>
     )
   }
   if (props.location === 'Home') {
     breadContent = (
-      <Container className="breadcrumbs" right>
-        <LinkItem to="/signup">Sign Up</LinkItem>
-        <LinkItem to="/signup">Sign In</LinkItem>
-      </Container>
+      <Nav>
+        <Container logo>
+          <LinkItem to="/">Cadence</LinkItem>
+        </Container>
+
+        <Container className="breadcrumbs" extra>
+          <LinkItem to="/signup">Sign Up</LinkItem>
+          <LinkItem to="/signup">Sign In</LinkItem>
+        </Container>
+      </Nav>
     )
   }
 
@@ -32,17 +38,26 @@ const BreadCrumb = props => {
 export default BreadCrumb
 
 // basic styling to match design file
-const Container = styled('nav')`
-  background-color: ${system.color.neutral};
+const Container = styled('div')`
   display: flex;
   flex-direction: row;
-  justify-content: ${props => (props.right ? 'flex-end' : 'flex-start')};
-  padding: ${system.spacing.bigPadding};
-  width: 100%;
-  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  width: ${props => (props.extra ? '150px' : null)};
   a {
-    margin-right: 15px;
-    font-size: ${system.fontSizing.m};
+    font-size: ${props =>
+      props.logo ? system.fontSizing.l : system.fontSizing.m};
+    font-weight: ${props => (props.logo ? 'bold' : null)};
+    color: ${system.color.bodytext};
     text-decoration: none;
+    text-align: center;
   }
+`
+
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 75px;
+  height: 40px;
 `
