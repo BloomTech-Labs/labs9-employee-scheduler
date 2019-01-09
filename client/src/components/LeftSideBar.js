@@ -1,25 +1,28 @@
-import React, { Component } from 'react';
-import propTypes from 'prop-types';
+import React, { Component } from 'react'
+import propTypes from 'prop-types'
+import styled from '@emotion/styled'
+import system from '../design/theme'
+import StyledNavItem from './common/NavItem'
 
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
-class BreadCrumb extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
+class LeftSideBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
 
-	render() {
-		return (
-			<div>
-				<h1>BreadCrumb</h1>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <nav>
+        <StyledNavItem />
+      </nav>
+    )
+  }
 }
 
-export default BreadCrumb;
+export default LeftSideBar
 
-BreadCrumb.propTypes = {
-	// add propTypes here
-};
+LeftSideBar.propTypes = {
+  // add propTypes here
+}
