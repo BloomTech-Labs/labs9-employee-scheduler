@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { FirebaseReducer } from './FirebaseReducer'
+import { authReducer } from './authReducer'
 
 export default combineReducers({
-  FirebaseReducer
+  authReducer
 })
