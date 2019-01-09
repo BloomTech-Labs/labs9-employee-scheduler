@@ -9,7 +9,3 @@ class PrivateRoute extends Component {
 }
 
 export default PrivateRoute;
-
-PrivateRoute.propTypes = {
-	// add propTypes here
-};
