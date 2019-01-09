@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 
 // this component should render the billing page for the app and use Stripe.
 class Billing extends Component {
@@ -12,3 +13,7 @@ class Billing extends Component {
 }
 
 export default Billing;
+
+Billing.propTypes = {
+	// adding propTypes here
+};
