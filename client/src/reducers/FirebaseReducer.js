@@ -2,4 +2,4 @@ import something from '../actions'
 
 const initialState = []
 
-export const FirbaseReducer = (state = initialState, action) => {}
+export const FirebaseReducer = (state = initialState, action) => {}
