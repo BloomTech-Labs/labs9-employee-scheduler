@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Global, css } from '@emotion/core';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import Calendar from './components/Calendar';
-import Employees from './components/Employees';
-import CreateSchedule from './components/CreateSchedule';
-import Billing from './components/Billing';
-import Home from './components/Home';
-import Dashboard from './components/EmployeeDashboard';
-import Settings from './components/Settings';
-import Login from './components/Login';
+import React, { Component } from 'react'
+import axios from 'axios'
+import { Global, css } from '@emotion/core'
+import { NavLink, Route, Switch } from 'react-router-dom'
+import Calendar from './components/Calendar'
+import Employees from './components/Employees'
+import CreateSchedule from './components/CreateSchedule'
+import Billing from './components/Billing'
+import Home from './components/Home'
+import Dashboard from './components/EmployeeDashboard'
+import Settings from './components/Settings'
+import Login from './components/Login'
 
-import './reset.css';
+import './reset.css'
 
-const serverUrl = process.env.REACT_APP_SERVER_URL;
+const serverUrl = process.env.REACT_APP_SERVER_URL
 
 class App extends Component {
   componentDidMount() {
     axios
       .get(serverUrl)
       .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -63,8 +63,8 @@ class App extends Component {
           <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
