@@ -14,9 +14,12 @@ class LeftSideBar extends Component {
 
   render() {
     return (
-      <nav>
-        <StyledNavItem />
-      </nav>
+      <Nav>
+        <StyledNavItem to="/calendar">Calendar</StyledNavItem>
+        <StyledNavItem to="/employees">Employees</StyledNavItem>
+        <StyledNavItem to="/shift-calendar">Create Schedule</StyledNavItem>
+        <StyledNavItem to="/settings">Settings</StyledNavItem>
+      </Nav>
     )
   }
 }
@@ -26,3 +29,5 @@ export default LeftSideBar
 LeftSideBar.propTypes = {
   // add propTypes here
 }
+
+const Nav = styled.nav``
