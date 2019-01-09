@@ -3,10 +3,14 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import propTypes from 'prop-types'
 
+// takes in a component and it's props and wraps in App.js as
+// <PrivateRoute exact path="<routePath>" />
+
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
     render={props =>
+      // add private route prop conditions here
       auth.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
