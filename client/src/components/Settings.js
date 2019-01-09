@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 
 // This component will render out settings for the signed in user
 class Settings extends Component {
@@ -12,3 +13,7 @@ class Settings extends Component {
 }
 
 export default Settings;
+
+Settings.propTypes = {
+	// add propTypes here
+};
