@@ -46,7 +46,6 @@ class App extends Component {
           <NavLink to="/settings">Settings</NavLink>
         </nav>
         <Switch>
-          <Route path="/calendar" render={props => <Calendar {...props} />} />
           <Route path="/employees" render={props => <Employees {...props} />} />
           <Route
             path="/shift-calendar"
