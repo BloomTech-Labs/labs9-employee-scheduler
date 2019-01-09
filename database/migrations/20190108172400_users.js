@@ -4,8 +4,11 @@ exports.up = knex =>
       .uuid('id')
       .primary()
       .notNullable()
-    // create relationship between user and organization?
-    // people be in more than one organization? overoptimazation?
+    table // people be in more than one organization? overoptimazation?
+      .uuid('organization_id')
+      .notNullable()
+      .references('id')
+      .inTable('organizations')
     table.string('first_name', 128).notNullable()
     table.string('last_name', 128).notNullable()
     table.string('role', 128).notNullable() // enumerable datatype? foreigh key to table with all user roles?
