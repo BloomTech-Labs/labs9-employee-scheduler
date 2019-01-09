@@ -8,6 +8,7 @@ import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
 import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
+import Settings from './components/Settings'
 
 import './reset.css'
 
@@ -41,8 +42,7 @@ class App extends Component {
         <nav>
           <NavLink to="/calendar">Calendar</NavLink>
           <NavLink to="/employees">Employees</NavLink>
-          <NavLink to="/shift-scheduler">Create Schedule</NavLink>
-          <NavLink to="/billing">Billing</NavLink>
+          <NavLink to="/shift-calendar">Create Schedule</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
         <Switch>
@@ -56,6 +56,7 @@ class App extends Component {
           <Route path="/calendar" render={props => <Calendar {...props} />} />
           <Route exact path="/" render={props => <Home {...props} />} />
           <Route path="/dashboard" render={props => <Dashboard {...props} />} />
+          <Route path="/settings" render={props => <Settings {...props} />} />
         </Switch>
       </div>
     )
