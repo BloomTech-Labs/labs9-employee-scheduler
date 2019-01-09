@@ -7,7 +7,9 @@ import system from '../design/theme';
 // Home component --> Sign Up || Sign In (if not logged in) --> Log Out (if logged)
 
 const BreadCrumb = (props) => {
+	// initialize content for condition
 	let breadContent;
+	// ask the recieving component what location will be
 	if (props.location !== 'Home') {
 		breadContent = (
 			<Container>
@@ -29,6 +31,7 @@ const BreadCrumb = (props) => {
 
 export default BreadCrumb;
 
+// basic styling to match design file
 const Container = styled('nav')`
 background-color: ${system.color.neutral};
 display: flex;
