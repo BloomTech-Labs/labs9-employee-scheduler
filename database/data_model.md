@@ -1,6 +1,6 @@
 ## models
 
-ORGANIZATIONS
+#### ORGANIZATIONS
 ---
 ```
 {
@@ -10,7 +10,7 @@ ORGANIZATIONS
 }
 ```
 
-USERS
+#### USERS
 ---
 ```
 {
@@ -24,7 +24,7 @@ USERS
 }
 ```
 
-AVAILABILITIES
+#### AVAILABILITIES
 ---
 ```
 {
@@ -36,7 +36,7 @@ AVAILABILITIES
 }
 ```
 
-TIME_OFF_REQUESTS
+#### TIME_OFF_REQUESTS
 ---
 ```
 {
@@ -48,7 +48,7 @@ TIME_OFF_REQUESTS
 }
 ```
 
-EVENTS
+#### EVENTS
 ---
 ```
 {
@@ -71,6 +71,7 @@ updateOrg(ordId)
 deleteOrg(ordId)
 
 
+
 getUsers(orgId) --> if no param all users
 
 addUser(ordId) 
@@ -78,6 +79,7 @@ addUser(ordId)
 updateUser(userId, changes object)
 
 deleteUser(userId)
+
 
 
 getAvailabilities(userId)
@@ -89,6 +91,7 @@ updateAvailability(availabilityId, changes object) --> updates existing day
 deleteAvailability(availabilityId) --> deletes day
 
 
+
 getTimeOffRequests(userId)
 
 addTimeOffRequest(userId, request object)
@@ -96,6 +99,7 @@ addTimeOffRequest(userId, request object)
 updateTimeOffRequest(timeOffRequestId, changes object)
 
 deleteTimeOffRequest(timeOffRequestId)
+
 
 
 getTimeOffRequestsForOrg(orgId) --> returns a list of the above but for each employee
@@ -107,6 +111,7 @@ addEvent(userId, event object)
 updateEvent(eventId, changes object)
 
 deleteEvent(eventId)
+
 
 
 getEventsByOrg(orgId) --> returns list of all events for all users for an org
