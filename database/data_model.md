@@ -1,3 +1,50 @@
+## models
+
+--- ORGANIZATIONS ---
+{
+  id: UUID
+  name: STRING
+  description: STRING
+}
+
+--- USERS ---
+{
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  first_name: STRING
+  last_name: STRING
+  role: STRING [ 'owner', 'supervisor', 'employee' ]
+  email: STRING
+  phone: STRING
+}
+
+--- AVAILABILITIES ---
+{
+  id: uuid
+  user_id: UUID foreign key in USERS table
+  day: INTEGER [ 0- 6 ]
+  start_time: INTEGER [ 0 - 23]
+  end_time: INTEGER [ 0 - 23]
+}
+
+--- TIME_OFF_REQUESTS ---
+{
+  id: UUID
+  user_id: UUID foreign key in USERS table
+  date: DATE in YYYY-MM-DD format 
+  reason: STRING
+  status: STRING [ 'pending', 'confirmed', 'denied' ]
+}
+
+--- EVENTS ---
+{
+  id: uuid
+  user_id: UUID foreign key in USERS table
+  day: INTEGER [ 0- 6 ]
+  start_time: INTEGER [ 0 - 23]
+  end_time: INTEGER [ 0 - 23]
+}
+
 ## actions
 
 getOrgs()
