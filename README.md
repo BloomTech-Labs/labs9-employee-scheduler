@@ -13,7 +13,7 @@ Back-end Deployment: https://cadence-api.herokuapp.com/
 - [Features](#Features)
 - [Installation](#Installation)
 - [Testing](#Testing)
-- [API]
+- [API](#API)
 - [Contributing](#Contributing)
 
 ### Team (in alphabetical order)
