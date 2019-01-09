@@ -20,7 +20,7 @@ const BreadCrumb = props => {
   if (props.location === 'Home') {
     breadContent = (
       <Container className="breadcrumbs" right>
-        <LinkItem to="/signup">Sign Up</LinkItem>
+        <LinkItem to="/register">Sign Up</LinkItem>
         <LinkItem to="/signup">Sign In</LinkItem>
       </Container>
     )
