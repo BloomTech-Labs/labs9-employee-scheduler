@@ -62,56 +62,56 @@
 
 ## actions
 
-getOrgs()
+`getOrgs()`
 
-addOrg()
+`addOrg()`
 
-updateOrg(ordId)
+`updateOrg(ordId)`
 
-deleteOrg(ordId)
+`deleteOrg(ordId)`
 
+<br>
 
+`getUsers(orgId)` --> if no param all users
 
-getUsers(orgId) --> if no param all users
+`addUser(ordId)`
 
-addUser(ordId) 
+`updateUser(userId, changes object)`
 
-updateUser(userId, changes object)
+`deleteUser(userId)`
 
-deleteUser(userId)
+<br>
 
+`getAvailabilities(userId)`
 
+`addAvailability(userId, day object)` --> adds new day
 
-getAvailabilities(userId)
+`updateAvailability(availabilityId, changes object)` --> updates existing day
 
-addAvailability(userId, day object) --> adds new day
+`deleteAvailability(availabilityId)` --> deletes day
 
-updateAvailability(availabilityId, changes object) --> updates existing day
+<br>
 
-deleteAvailability(availabilityId) --> deletes day
+`getTimeOffRequests(userId)`
 
+`addTimeOffRequest(userId, request object)`
 
+`updateTimeOffRequest(timeOffRequestId, changes object)`
 
-getTimeOffRequests(userId)
+`deleteTimeOffRequest(timeOffRequestId)`
 
-addTimeOffRequest(userId, request object)
+<br>
 
-updateTimeOffRequest(timeOffRequestId, changes object)
+`getTimeOffRequestsForOrg(orgId)` --> returns a list of the above but for each employee
 
-deleteTimeOffRequest(timeOffRequestId)
+`getEvents(userId)`
 
+`addEvent(userId, event object)`
 
+`updateEvent(eventId, changes object)`
 
-getTimeOffRequestsForOrg(orgId) --> returns a list of the above but for each employee
+`deleteEvent(eventId)`
 
-getEvents(userId)
+<br>
 
-addEvent(userId, event object)
-
-updateEvent(eventId, changes object)
-
-deleteEvent(eventId)
-
-
-
-getEventsByOrg(orgId) --> returns list of all events for all users for an org
+`getEventsByOrg(orgId)` --> returns list of all events for all users for an org
