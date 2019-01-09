@@ -4,6 +4,8 @@ import firebase from 'firebase'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 
+console.log(authenticate)
+
 const config = {
   // this is all public and was copied from the firebase console - Adam
   // not included in .env because it's not sensitive
@@ -36,29 +38,28 @@ const uiConfig = {
 class Login extends Component {
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
-    this.unregisterAuthObserver = this.props.authenticate
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      return this.props.authenticate()
+    })
   }
-
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver()
   }
 
   render() {
-    return (
-      <div>
-        <p>Please sign-in:</p>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </div>
+    return this.props.user ? (
+      <h1>{this.props.user}</h1>
+    ) : (
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     )
   }
 }
 
 const mapStateToProps = state => {
-  return {}
+  return {
+    user: state.auth.user
+  }
 }
 
 export default connect(

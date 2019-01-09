@@ -7,20 +7,26 @@ export const AUTH_FAIL = 'AUTH_FAIL'
 const baseURL = process.env.REACT_APP_SERVER_URL
 
 export const authenticate = () => dispatch => {
-  try {
-    firebase.auth().onAuthStateChanged(async user => {
-      const idToken = await firebase
-        .auth()
-        .currentUser.getIdToken(/* forceRefresh */ false)
-      const res = await axios.post(`${baseURL}/users/current`, {
-        authorization: idToken
-      })
-      dispatch({
-        type: AUTH_SUCCESS,
-        payload: { user: res.data, token: idToken }
-      })
+  console.log('running')
+  return firebase
+    .auth()
+    .currentUser.getIdToken(/* forceRefresh */ false)
+    .then(idToken => {
+      console.log('token', idToken)
+      return axios
+        .post(`${baseURL}/users/current`, {
+          authorization: idToken
+        })
+        .then(res => {
+          console.log('res', res)
+          dispatch({
+            type: AUTH_SUCCESS,
+            payload: { user: res.data, token: idToken }
+          })
+        })
     })
-  } catch (err) {
-    dispatch({ type: AUTH_FAIL })
-  }
+    .catch(err => {
+      console.dir(err)
+      dispatch({ type: AUTH_FAIL })
+    })
 }
