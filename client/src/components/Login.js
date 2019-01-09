@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase';
+import React, { Component } from 'react'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import firebase from 'firebase'
 
 const config = {
   // this is all public and was copied from the firebase console - Adam
   // not included in .env because it's not sensitive
-  apiKey: 'AIzaSyA3bv7tMZL8pW0RjItXJaksvEghvAWTtMY',
-  authDomain: 'cadence-4f66e.firebaseapp.com',
-  databaseURL: 'https://cadence-4f66e.firebaseio.com',
-  projectId: 'cadence-4f66e',
-  storageBucket: 'cadence-4f66e.appspot.com',
-  messagingSenderId: '274823729425'
-};
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: 'cadence-20246.firebaseapp.com',
+  databaseURL: 'https://cadence-20246.firebaseio.com',
+  projectId: 'cadence-20246',
+  storageBucket: 'cadence-20246.appspot.com',
+  messagingSenderId: '143190395098'
+}
 
-firebase.initializeApp(config);
+firebase.initializeApp(config)
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -29,29 +29,29 @@ const uiConfig = {
     // Avoid redirects after sign-in.
     signInSuccessWithAuthResult: () => false
   }
-};
+}
 
 class Login extends Component {
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
+      console.log(user)
       firebase
         .auth()
         .currentUser.getIdToken(/* forceRefresh */ false)
         .then(function(idToken) {
-          console.log('id token', idToken);
+          console.log('id token', idToken)
         })
         .catch(function(error) {
-          console.log(error);
+          console.log(error)
           // Handle error
-        });
-    });
+        })
+    })
   }
 
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
-    this.unregisterAuthObserver();
+    this.unregisterAuthObserver()
   }
 
   render() {
@@ -63,8 +63,8 @@ class Login extends Component {
           firebaseAuth={firebase.auth()}
         />
       </div>
-    );
+    )
   }
 }
 
-export default Login;
+export default Login
