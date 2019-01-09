@@ -1,0 +1,93 @@
+/* FORM STYLES*/
+.form {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.form-title {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px 0;
+  text-align: center;
+}
+/* FORM GROUP STYLES*/
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.form-group:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* FORM LABEL STYLES*/
+.form-label {
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.inline {
+  width: fit-content;
+  margin-bottom: 0px;
+  margin-left: 5px;
+  align-self: center;
+}
+
+/* SELECT STYLES */
+.form-select {
+  width: 100%;
+  font-size: inherit;
+  border: 1px solid #ccc;
+  background: #fff;
+  height: 30px;
+}
+
+/* SUBMIT BUTTON STYLES */
+.form-submit-button {
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: Arial;
+  padding: 10px;
+  font-size: inherit;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* TEXT AREA STYLES */
+.form-textarea {
+  box-sizing: border-box;
+  min-width: 100%;
+  min-height: 80px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: inherit;
+}
+
+/* TEXT INPUT STYLES */
+.form-text-input,
+.form-email-input,
+.form-password-input {
+  box-sizing: border-box;
+  font-size: inherit;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 5px;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+/* FOCUS STYLES */
+.form-text-input:focus,
+.form-submit-button:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border: 1px solid #2979ff;
+}
