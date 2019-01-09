@@ -1,4 +1,4 @@
-const db = require('./dbConfig')
+const db = require('../dbConfig')
 
 async function getUsers() {
   return await db('users')
