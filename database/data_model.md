@@ -104,6 +104,8 @@
 
 `getTimeOffRequestsForOrg(orgId)` --> returns a list of the above but for each employee
 
+<br>
+
 `getEvents(userId)`
 
 `addEvent(userId, event object)`
