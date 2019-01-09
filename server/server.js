@@ -2,7 +2,7 @@ const express = require('express')
 const configureMiddleware = require('./config/middleware.js')
 
 const server = express()
-const router = require('./routers/router')
+const router = require('./routers/userRouter')
 
 configureMiddleware(server)
 
