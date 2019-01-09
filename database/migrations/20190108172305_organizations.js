@@ -1,4 +1,4 @@
-exports.up = async knex =>
+exports.up = knex =>
   knex.schema.createTable('organizations', table => {
     table
       .uuid('id')
