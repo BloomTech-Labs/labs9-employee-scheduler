@@ -16,8 +16,23 @@ const system = {
     l: '30px' // for headers
   },
 
+  borders: {
+    radius: '3px', // for border-radius
+    transparent: '1px solid transparent',
+    blue: '1px solid #159'
+  },
+
+  shadows: {
+    button: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+    buttonHover: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+    other: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+  },
+
+  transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
+
   spacing: {
-    radius: '3px' // for border-radius
+    standardPadding: '5px 10px',
+    bigPadding: '25px'
   }
 }
 
