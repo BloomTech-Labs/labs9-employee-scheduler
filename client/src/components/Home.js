@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import fire from '../config/fire';
 
 // this is the main landing page, it will house the payment options and main site branding styles. The nav here will display as Sign Up || Sign In.
 // if a user is logged in already, it will display the Schedule now button and the navbar will change to logout.

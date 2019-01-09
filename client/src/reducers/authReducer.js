@@ -1,13 +1,13 @@
-import something from '../actions'
+import something from '../actions';
 
 const initialState = {
-  user: null,
+  userId: null,
   token: ''
-}
+};
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     default:
-      return state
+      return state;
   }
-}
+};
