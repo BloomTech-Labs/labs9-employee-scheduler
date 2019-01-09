@@ -9,9 +9,11 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('users')
-    table.date('date').notNullable()
-    table.time('start_time')
-    table.time('end_time')
+    table.integer('day').notNullable() // 0-6 for Sunday-Saturday
+
+    // for both below value is '0-23'
+    table.integer('start_time')
+    table.integer('end_time')
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('availabilities')

@@ -10,8 +10,8 @@ exports.up = knex =>
       .references('id')
       .inTable('users')
     table.date('day').notNullable()
-    table.time('start_time')
-    table.time('end_time')
+    table.integer('start_time')
+    table.integer('end_time')
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('events')
