@@ -1,25 +1,47 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { Global, css } from '@emotion/core'
-import { NavLink, Route, Switch } from 'react-router-dom'
-import Calendar from './components/Calendar'
-import Employees from './components/Employees'
-import CreateSchedule from './components/CreateSchedule'
-import Billing from './components/Billing'
-import Home from './components/Home'
-import Dashboard from './components/EmployeeDashboard'
-import Settings from './components/Settings'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Global, css } from '@emotion/core';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import Calendar from './components/Calendar';
+import Employees from './components/Employees';
+import CreateSchedule from './components/CreateSchedule';
+import Billing from './components/Billing';
+import Home from './components/Home';
+import Dashboard from './components/EmployeeDashboard';
+import Settings from './components/Settings';
+import fire from './config/fire';
+import Login from './components/Login';
 
-import './reset.css'
+import './reset.css';
 
-const serverUrl = process.env.REACT_APP_SERVER_URL
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
+  // this will be refactored when we wire up redux, just in place
+  // right now to test firebase auth unless this is a use case for hooks
+  constructor() {
+    super();
+    this.state = {
+      user: {}
+    };
+  }
+
   componentDidMount() {
     axios
       .get(serverUrl)
       .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
+    this.authListener();
+  }
+  //for firebase auth using fire.js in the config folder
+  authListener() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
   }
 
   render() {
@@ -38,7 +60,9 @@ class App extends Component {
           `}
         />
         <h1>hello</h1>
-        {/* This Switch should be moved to it's own component because it should
+
+        {this.state.user ? <Home /> : <Login />}
+        {/* This nav should be moved to it's own component because it should
         only be accessible on the calender view */}
         <nav>
           <NavLink to="/calendar">Calendar</NavLink>
@@ -57,10 +81,11 @@ class App extends Component {
           <Route exact path="/" render={props => <Home {...props} />} />
           <Route path="/dashboard" render={props => <Dashboard {...props} />} />
           <Route path="/settings" render={props => <Settings {...props} />} />
+          <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
