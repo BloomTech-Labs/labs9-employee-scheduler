@@ -3,7 +3,7 @@ exports.up = knex =>
     table
       .uuid('id')
       .primary()
-      .defaultTo(knex.raw('uuid_generate_v4()'))
+      .notNullable()
     table
       .uuid('user_id')
       .notNullable()

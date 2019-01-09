@@ -3,7 +3,7 @@ exports.up = knex =>
     table
       .uuid('id')
       .primary()
-      .defaultTo(knex.raw('uuid_generate_v4()'))
+      .notNullable()
     table
       .uuid('user_id')
       .notNullable()
@@ -11,7 +11,7 @@ exports.up = knex =>
       .inTable('users')
     table.date('date').notNullable()
     table.string('reason', 1024)
-    table.string('status').defaultTo('pending')
+    table.string('status').defaultTo('pending') // change this to enumerable?
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('time_off_requests')
