@@ -1,5 +1,7 @@
 import axios from 'axios'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+// this import style is required for proper codesplitting of firebase
+import 'firebase/auth'
 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
