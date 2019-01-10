@@ -9,6 +9,7 @@ import Billing from './components/Billing'
 import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
+import Login from './components/Login'
 import Register from './components/Register'
 
 import './reset.css'
@@ -61,6 +62,7 @@ class App extends Component {
           <Route path="/calendar" component={Calendar} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/settings" component={Settings} />
+          <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
       </div>
     )
