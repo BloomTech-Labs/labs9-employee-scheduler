@@ -1,0 +1,30 @@
+import axios from 'axios'
+
+export const FETCH_EMPLOYEES_FROM_DB_SUCCESS = 'FETCH_EMPLOYEES_FROM_DB_SUCCESS'
+export const FETCH_EMPLOYEES_FROM_DB_FAIL = 'FETCH_EMPLOYEES_FROM_DB_FAIL'
+
+const baseURL = process.env.REACT_APP_SERVER_URL
+
+export const fetchEmployeesFromDB = orgId => dispatch => {
+  if (orgId) {
+    axios
+      .get(`${baseURL}/users/${orgId}`)
+      .then(res =>
+        dispatch({
+          type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
+          payload: res.data
+        })
+      )
+      .catch(error => console.log(error))
+  } else {
+    axios
+      .get(`${baseURL}/users/`)
+      .then(res =>
+        dispatch({
+          type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
+          payload: res.data
+        })
+      )
+      .catch(error => console.log(error))
+  }
+}
