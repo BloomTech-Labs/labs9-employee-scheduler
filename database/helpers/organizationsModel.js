@@ -1,4 +1,5 @@
 const db = require('../dbConfig')
+const uuid = require('uuid')
 
 // if no param all users
 const getOrgs = orgId => {
