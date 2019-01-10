@@ -2,18 +2,21 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 
 // this card component will contain the employee's info such as name, email, phone.
-class Billing extends Component {
+// these cards will live in both the calendar page (view only) and the employees directory (edit possible)
+class Card extends Component {
   render() {
     return (
       <div>
-        <h1>Billing</h1>
+        {/* Employee Name */}
+        {/* Employee Email */}
+        {/* Employee Phone */}
       </div>
     )
   }
 }
 
-export default Billing
+export default Card
 
-Billing.propTypes = {
+Card.propTypes = {
   // adding propTypes here
 }

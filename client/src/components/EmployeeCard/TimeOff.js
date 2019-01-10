@@ -6,7 +6,9 @@ class TimeOff extends Component {
   render() {
     return (
       <div>
-        <h1>TimeOff</h1>
+        {/* Employee's Time Off */}
+        {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
+        When it's on the employees directory page, it should show pending PTO */}
       </div>
     )
   }

@@ -6,7 +6,8 @@ class Availability extends Component {
   render() {
     return (
       <div>
-        <h1>Availability</h1>
+        {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
+         in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
       </div>
     )
   }
