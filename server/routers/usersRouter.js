@@ -14,6 +14,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
+  const { id } = req.params
+
   getUsers(id)
     .then(user => res.status(200).json(user))
     .catch(err => res.status(404).json(err))
@@ -22,7 +24,7 @@ router.get('/:id', (req, res) => {
 // this one depends on auth. We'll build it later
 router.get('/current', (req, res) => {}) // get info for current user
 
-router.post('/:id', async (req, res) => {
+router.post('/', async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
   const { id } = req.params
 
@@ -39,7 +41,7 @@ router.post('/:id', async (req, res) => {
   }
 })
 
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params
 
   if (!Object.keys(req.body)) {
@@ -55,7 +57,7 @@ router.put('/', async (req, res) => {
   }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params
 
   try {
