@@ -28,7 +28,12 @@ const deleteTimeOffRequest = timeOffRequestId => {
     .del()
 }
 
-const getTimeOffRequestsForOrg = async orgId => {} // returns a list of the above but for each employee
+// returns a list of the above but for each employee
+const getTimeOffRequestsForOrg = orgId => {
+  return db('time_off_requests as t')
+    .fullOuterJoin('users as u', 't.user_id', 'u.id')
+    .where({ 'u.organization_id': orgId })
+}
 
 module.exports = {
   getTimeOffRequests,

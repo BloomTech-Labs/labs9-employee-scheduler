@@ -9,12 +9,13 @@ const {
 } = require('../../database/helpers')
 
 router.get('/', (req, res) => {
-  getUsers()
+  getTimeOffRequests()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(404).json(err))
 })
 
 router.post('/', (req, res) => {})
+
 router.put('/', (req, res) => {})
 router.delete('/', (req, res) => {})
 
