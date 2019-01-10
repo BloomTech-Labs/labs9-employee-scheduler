@@ -9,6 +9,8 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     table.integer('day').notNullable() // 0-6 for Sunday-Saturday
 
     // for both below value is '0-23'
