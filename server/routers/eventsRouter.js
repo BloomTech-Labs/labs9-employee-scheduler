@@ -42,6 +42,13 @@ router.put('/:id', async (req, res) => {
 })
 router.delete('/:id', async (req, res) => {
   const { id } = req.params
+  try {
+    const success = await deleteEvent(id)
+    res.status(200).json(success)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Server error' })
+  }
 })
 
 module.exports = router
