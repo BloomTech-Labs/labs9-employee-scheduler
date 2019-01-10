@@ -9,6 +9,8 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('organizations')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     table.string('first_name', 128).notNullable()
     table.string('last_name', 128).notNullable()
     table.string('role', 128).notNullable() // enumerable datatype? foreigh key to table with all user roles?

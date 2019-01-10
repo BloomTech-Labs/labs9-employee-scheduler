@@ -9,6 +9,8 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     table.integer('day').notNullable()
     table.integer('start_time')
     table.integer('end_time')
