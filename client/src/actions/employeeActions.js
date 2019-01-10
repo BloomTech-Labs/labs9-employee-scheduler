@@ -15,7 +15,7 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
           payload: res.data
         })
       )
-      .catch(error => console.log(error))
+      .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL }))
   } else {
     axios
       .get(`${baseURL}/users/`)
@@ -25,6 +25,6 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
           payload: res.data
         })
       )
-      .catch(error => console.log(error))
+      .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL })
   }
 }
