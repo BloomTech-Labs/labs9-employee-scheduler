@@ -8,8 +8,8 @@
     "server": "nodemon",
     "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:latest && npx knex seed:run",
     "dev": "concurrently \"nodemon\" \"yarn --cwd ./client start\"",
-    "test": "jest --watch --verbose",
-    "test:once": "jest"
+    "test": "jest --watch --verbose --runInBand",
+    "test:once": "jest --runInBand"
   },
   "author": "",
   "license": "ISC",

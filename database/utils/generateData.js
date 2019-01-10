@@ -29,7 +29,7 @@ const generateUser = ({
 
 const generateUsersForOrg = ({
   org_id = uuid(),
-  quantity = generateRandomBetween(5, 50)
+  quantity = generateRandomBetween(5, 20)
 }) => {
   const users = []
   for (let i = 0; i < quantity; i++) {
@@ -213,16 +213,31 @@ const insertOrg = (
 ) => {
   return knex.transaction(async function(trx) {
     try {
-      await knex('organizations').insert(organization)
-      await knex('users').insert(users)
+      await knex('organizations')
+        .insert(organization)
+        .returning('id')
+        .transacting(trx)
+      await knex('users')
+        .insert(users)
+        .transacting(trx)
 
-      const availPromise = knex('availabilities').insert(availabilities)
-      const eventsPromise = knex('events').insert(events)
-      const timeOffPromise = knex('time_off_requests').insert(timeOffRequests)
+      const availPromise = knex('availabilities')
+        .insert(availabilities)
+        .transacting(trx)
+
+      const eventsPromise = knex('events')
+        .insert(events)
+        .transacting(trx)
+
+      const timeOffPromise = knex('time_off_requests')
+        .insert(timeOffRequests)
+        .transacting(trx)
+
       await Promise.all([availPromise, eventsPromise, timeOffPromise])
       return trx.commit()
     } catch (err) {
-      return trx.abort()
+      console.log(err.message)
+      return trx.rollback()
     }
   })
 }
