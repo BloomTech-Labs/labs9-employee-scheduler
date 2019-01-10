@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+// this import style is required for proper codesplitting of firebase
+import 'firebase/auth'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 

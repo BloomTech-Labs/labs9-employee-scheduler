@@ -1,9 +1,15 @@
 const admin = require('firebase-admin')
-const privateKey = process.env.FIREBASE_SECRET
-const serviceAccount = require('./firebaseConfig.json')
+
+// replace is needed because process.env escapes \n with \\n
+const privateKey = process.env.FIREBASE_SECRET.replace(/\\n/g, '\n')
+const clientEmail = process.env.FIREBASE_EMAIL
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    projectId: 'cadence-20246',
+    clientEmail,
+    privateKey
+  }),
   databaseURL: 'https://cadence-20246.firebaseio.com'
 })
 
