@@ -37,6 +37,8 @@ const Nav = styled.nav`
   border: ${system.borders.grey};
   border-radius: ${system.borders.radius};
   width: 200px;
+  position: absolute;
+  top: 0;
 
   a {
     text-decoration: none;
