@@ -53,6 +53,7 @@ const InnerContainer = styled('div')`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: ${system.spacing.standardPadding};
 
   h1 {
     padding: ${system.spacing.standardPadding};

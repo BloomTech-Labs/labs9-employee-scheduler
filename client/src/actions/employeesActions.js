@@ -20,7 +20,6 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
     axios
       .get(`${baseURL}/users/`)
       .then(res => {
-        console.log(res)
         dispatch({
           type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
           payload: res.data

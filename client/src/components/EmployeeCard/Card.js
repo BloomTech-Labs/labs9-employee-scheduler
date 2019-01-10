@@ -39,6 +39,8 @@ Card.propTypes = {
 const Container = styled('div')`
   border: 1px solid grey;
   padding: ${system.spacing.standardPadding};
+  margin: ${system.spacing.standardPadding};
+  width: 300px; // this is temp until we get a better system
 
   p {
     padding: ${system.spacing.standardPadding};
