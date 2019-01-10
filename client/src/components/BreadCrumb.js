@@ -24,10 +24,10 @@ const BreadCrumb = props => {
           <LinkItem to="/">Cadence</LinkItem>
         </Container>
 
-        <Container className="breadcrumbs" extra>
-          <LinkItem to="/signup">Sign Up</LinkItem>
-          <LinkItem to="/signup">Sign In</LinkItem>
-        </Container>
+        <Container className="breadcrumbs" right>
+        <LinkItem to="/register">Sign Up</LinkItem>
+        <LinkItem to="/signup">Sign In</LinkItem>
+      </Container>
       </Nav>
     )
   }
