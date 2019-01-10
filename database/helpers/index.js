@@ -1,52 +1,13 @@
-const {
-  getOrgs,
-  addOrg,
-  updateOrg,
-  deleteOrg
-} = require('./organizationsModel')
-const { getUsers, addUser, updateUser, deleteUser } = require('./usersModel')
-const {
-  getAvailabilities,
-  addAvailability,
-  updateAvailability,
-  deleteAvailability
-} = require('./availabilitiesModel')
-const {
-  getTimeOffRequests,
-  addTimeOffRequest,
-  updateTimeOffRequest,
-  deleteTimeOffRequest,
-  getTimeOffRequestsForOrg
-} = require('./timeOffRequestsModel')
-const {
-  getEvents,
-  addEvent,
-  updateEvent,
-  deleteEvent,
-  getEventsForOrg
-} = require('./eventsModel')
+const organizations = require('./organizationsModel')
+const users = require('./usersModel')
+const availabilities = require('./availabilitiesModel')
+const timeOffRequests = require('./timeOffRequestsModel')
+const events = require('./eventsModel')
 
 module.exports = {
-  getOrgs,
-  addOrg,
-  updateOrg,
-  deleteOrg,
-  getUsers,
-  addUser,
-  updateUser,
-  deleteUser,
-  getAvailabilities,
-  addAvailability,
-  updateAvailability,
-  deleteAvailability,
-  getTimeOffRequests,
-  addTimeOffRequest,
-  updateTimeOffRequest,
-  deleteTimeOffRequest,
-  getTimeOffRequestsForOrg,
-  getEvents,
-  addEvent,
-  updateEvent,
-  deleteEvent,
-  getEventsForOrg
+  ...organizations,
+  ...users,
+  ...availabilities,
+  ...timeOffRequests,
+  ...events
 }
