@@ -1,13 +1,29 @@
 const db = require('../dbConfig')
 
-const getOrgs = async () => {
-  const orgs = await db('organizations')
-  return orgs
+// if no param all users
+const getOrgs = orgId => {
+  if (orgId) {
+    return db('organizations as o').where({ 'o.id': orgId })
+  } else {
+    return db('organizations')
+  }
 }
-const addOrg = async org => {}
 
-const updateOrg = async orgId => {}
-const deleteOrg = async orgId => {}
+const addOrg = org => {
+  return db('organizations').insert({ id: uuid(), ...org })
+}
+
+const updateOrg = (orgId, updates) => {
+  return db('organizations as o')
+    .where({ 'o.id': orgId })
+    .update(updates)
+}
+
+const deleteOrg = orgId => {
+  return db('organizations as o')
+    .where({ 'o.id': orgId })
+    .del()
+}
 
 module.exports = {
   getOrgs,

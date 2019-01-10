@@ -1,10 +1,30 @@
 const db = require('../dbConfig')
+const uuid = require('uuid')
 
-// for users
-const getUsers = async orgId => {} // if no param all users
-const addUser = async (orgId, user) => {} // user is object
-const updateUser = async (userId, updates) => {} // updates is object
-const deleteUser = async userId => {} // deletes everything dependent on the user
+// if no param all users
+const getUsers = orgId => {
+  if (orgId) {
+    return db('users as u').where({ 'u.organization_id': orgId })
+  } else {
+    return db('users')
+  }
+}
+
+const addUser = user => {
+  return db('users').insert({ id: uuid(), ...user })
+}
+
+const updateUser = (userId, updates) => {
+  return db('users as u')
+    .where({ 'u.id': userId })
+    .update(updates)
+}
+
+const deleteUser = userId => {
+  return db('users as u')
+    .where({ 'u.id': userId })
+    .del()
+}
 
 module.exports = {
   getUsers,
