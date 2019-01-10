@@ -24,7 +24,11 @@ const deleteEvent = eventId => {
     .del()
 }
 
-const getEventsForOrg = orgId => {} // returns list of all events for all users for an org
+const getEventsForOrg = orgId => {
+  return db('events as e')
+    .fullOuterJoin('users as u', 'e.user_id', 'u.id')
+    .where({ 'u.organization_id': orgId })
+} // returns list of all events for all users for an org
 
 module.exports = {
   getEvents,
