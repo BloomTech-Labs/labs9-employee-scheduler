@@ -8,25 +8,30 @@ const {
   getTimeOffRequestsForOrg
 } = require('../../database/helpers')
 
-router.get('/', (req, res) => {
-  getTimeOffRequests()
+//get time off request
+router.get('/:id', (req, res) => {
+  const { id } = req.params
+  getTimeOffRequests(id)
     .then(request => res.status(200).json(request))
     .catch(err =>
-      res.status(404).json({ err: 'Error getting time off requests', err })
+      res.status(404).json({ message: 'Error getting time off requests', err })
     )
 })
 
-router.post('/', (req, res) => {
+//add time off request
+router.post('/:id', (req, res) => {
+  const { id } = req.params
   const { date, reason, status } = req.body
 
   if (!date || !reason || !status)
     res.status(400).json({ error: 'Missing required field(s)', err })
 
-  addTimeOffRequest()
+  addTimeOffRequest(id)
     .then(request => res.status(200).json(request))
     .catch(err => res.status(404).json({ err: 'Error with request', err }))
 })
 
+//update time off request
 router.put('/:id', (req, res) => {
   const { id } = req.params
 
@@ -40,6 +45,8 @@ router.put('/:id', (req, res) => {
       res.status(404).json({ err: 'Error getting time off requests', err })
     )
 })
+
+//delete time off request
 router.delete('/:id', (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
