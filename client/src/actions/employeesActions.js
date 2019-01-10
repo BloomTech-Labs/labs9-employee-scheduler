@@ -25,6 +25,6 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
           payload: res.data
         })
       )
-      .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL })
+      .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL }))
   }
 }
