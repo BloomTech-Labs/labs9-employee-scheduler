@@ -19,12 +19,16 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
   } else {
     axios
       .get(`${baseURL}/users/`)
-      .then(res =>
+      .then(res => {
+        console.log(res)
         dispatch({
           type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
           payload: res.data
         })
-      )
-      .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL }))
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL })
+      })
   }
 }
