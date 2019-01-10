@@ -8,25 +8,28 @@ const {
   getEventsForOrg
 } = require('../../database/helpers')
 
-router.get('/', (req, res) => {
-  getEvents()
+// this route needs a userID to give back the associated events
+router.get('/:id', (req, res) => {
+  getEvents(req.params.id)
     .then(events => res.status(200).json(events))
     .catch(err => res.status(404).json(err))
 })
 
-router.get('/all', (req, res) => {
-  getEventsForOrg()
+// this route needs an orgID to give back associated events
+router.get('/organization/:id', (req, res) => {
+  getEventsForOrg(req.params.id)
     .then(events => res.status(200).json(events))
     .catch(err => res.status(404).json(err))
 })
 
+// this route allows you to post a new event for an associated user
 router.post('/', async (req, res) => {
   const { user_id, day, start_time, end_time } = req.body
   if (!user_id || !day || !start_time || !end_time) {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
   try {
-    const success = await addEvent(req.body)
+    const success = await addEvent(user_id, req.body)
     res.status(201).json(success)
   } catch (error) {
     console.log(error)
@@ -34,6 +37,7 @@ router.post('/', async (req, res) => {
   }
 })
 
+// this route enables you to edit an event by its id
 router.put('/:id', async (req, res) => {
   const { id } = req.params
   if (!Object.keys(req.body)) {
@@ -47,6 +51,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
+// this route enables you to delete an event by its id
 router.delete('/:id', async (req, res) => {
   const { id } = req.params
   try {
