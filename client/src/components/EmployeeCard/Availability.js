@@ -10,7 +10,7 @@ class Availability extends Component {
       <Container>
         {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
          in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
-        <p>availability info here</p>
+        <h3>Availability</h3>
       </Container>
     )
   }

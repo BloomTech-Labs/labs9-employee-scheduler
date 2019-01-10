@@ -11,7 +11,7 @@ class TimeOff extends Component {
         {/* Employee's Time Off */}
         {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
         When it's on the employees directory page, it should show pending PTO */}
-        <p>time off info here</p>
+        <h3>Requested Time Off</h3>
       </Container>
     )
   }
