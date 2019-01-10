@@ -64,7 +64,7 @@
 
 `getOrgs()`
 
-`addOrg()`
+`addOrg(org)`
 
 `updateOrg(orgId)`
 
