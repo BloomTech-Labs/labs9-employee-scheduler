@@ -5,7 +5,7 @@ const initialState = {
   token: '',
   error: ''
 }
-
+//puts a user and token on state
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:

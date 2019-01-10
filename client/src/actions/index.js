@@ -6,6 +6,7 @@ export const AUTH_FAIL = 'AUTH_FAIL'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
+//puts token on headers for the backend
 export const authenticate = () => dispatch => {
   return firebase
     .auth()

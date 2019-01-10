@@ -5,8 +5,6 @@ import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 
 const config = {
-  // this is all public and was copied from the firebase console - Adam
-  // not included in .env because it's not sensitive
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: 'cadence-20246.firebaseapp.com',
   databaseURL: 'https://cadence-20246.firebaseio.com',
@@ -37,6 +35,7 @@ class Login extends Component {
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      //checks to see if there is a user logged in.
       return this.props.authenticate()
     })
   }

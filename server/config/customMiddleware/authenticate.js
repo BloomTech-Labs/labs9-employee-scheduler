@@ -7,6 +7,7 @@ admin.initializeApp({
   databaseURL: 'https://cadence-20246.firebaseio.com'
 })
 
+//checks to see if there is a token and verifies it
 const authenticate = (req, res, next) => {
   const idToken = req.headers.authorization
   if (idToken) {
