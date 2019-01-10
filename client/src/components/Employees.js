@@ -4,25 +4,34 @@ import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
+import { fetchEmployeesFromDB } from '../actions'
+import { connect } from 'react-redux'
+
 import Card from './EmployeeCard/Card'
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
+  componentDidMount() {
+    this.props.fetchEmployeesFromDB()
+  }
+
   render() {
+    const { employees } = this.props
+
     return (
       <OuterContainer>
         <BreadCrumb />
         <h1>Employees</h1>
         <InnerContainer>
-          {[...Array(5)].map(() => (
-            <Card />
-          ))}
+          {/* just grab the first 10 users for now because the db returns an array of 500*/}
+          {employees &&
+            employees
+              .slice(0, 10)
+              .map((employee, i) => <Card key={i} {...employee} />)}
         </InnerContainer>
       </OuterContainer>
     )
   }
 }
-
-export default Employees
 
 Employees.propTypes = {
   // add propTypes here
@@ -44,6 +53,7 @@ const InnerContainer = styled('div')`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: ${system.spacing.standardPadding};
 
   h1 {
     padding: ${system.spacing.standardPadding};
@@ -51,3 +61,14 @@ const InnerContainer = styled('div')`
     font-size: ${system.fontSizing.l};
   }
 `
+
+const mapStateToProps = state => {
+  return {
+    employees: state.employees.employees
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchEmployeesFromDB }
+)(Employees)
