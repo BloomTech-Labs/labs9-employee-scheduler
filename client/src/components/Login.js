@@ -4,8 +4,6 @@ import firebase from 'firebase'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 
-console.log(authenticate)
-
 const config = {
   // this is all public and was copied from the firebase console - Adam
   // not included in .env because it's not sensitive

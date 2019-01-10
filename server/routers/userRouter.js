@@ -21,4 +21,8 @@ router.post('/', (req, res) => {
   }
 })
 
+router.post('/current', (req, res) => {
+  return res.send(req.user.id)
+})
+
 module.exports = router
