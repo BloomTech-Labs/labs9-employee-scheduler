@@ -5,6 +5,8 @@ import { Router } from 'react-router-dom'
 
 function renderWithRouter(
   ui,
+  // this argument initializes the page at root, to ensure Router loads
+  // root routes properly
   {
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] })
