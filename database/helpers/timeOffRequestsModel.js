@@ -13,7 +13,7 @@ const getTimeOffRequests = userId => {
 const addTimeOffRequest = (userId, request) => {
   return db('time_off_requests as t')
     .where({ 't.id': userId })
-    .insert(...request)
+    .insert(request)
 }
 
 const updateTimeOffRequest = (timeOffRequestId, updates) => {
