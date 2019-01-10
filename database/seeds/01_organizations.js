@@ -1,11 +1,7 @@
-const faker = require('faker')
+const { generateOrgs } = require('../utils/generateData')
 const ids = require('../ids.json').org_ids
 
-const organizations = ids.map(id => ({
-  id,
-  name: faker.company.companyName(),
-  description: faker.lorem.sentence()
-}))
+const organizations = generateOrgs(ids)
 
 exports.seed = knex =>
   knex('organizations')
