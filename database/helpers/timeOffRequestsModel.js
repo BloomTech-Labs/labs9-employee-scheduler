@@ -8,9 +8,23 @@ const getTimeOffRequests = userId => {
     return db('time_off_requests')
   }
 }
-const addTimeOffRequest = (userId, request) => {} // request is object
-const updateTimeOffRequest = (timeOffRequestId, updates) => {}
-const deleteTimeOffRequest = timeOffRequestId => {}
+
+// request is object
+const addTimeOffRequest = (userId, request) => {
+  return
+}
+
+const updateTimeOffRequest = (timeOffRequestId, updates) => {
+  return db('time_off_requests as t')
+    .where({ 't.id': timeOffRequestId })
+    .update(updates)
+}
+
+const deleteTimeOffRequest = timeOffRequestId => {
+  return db('time_off_requests as t')
+    .where({ 't.id': timeOffRequestId })
+    .del()
+}
 
 const getTimeOffRequestsForOrg = async orgId => {} // returns a list of the above but for each employee
 
