@@ -3,7 +3,7 @@ const uuid = require('uuid')
 const moment = require('moment')
 
 // Generates a new org using an id
-const generateOrg = id => ({
+const generateOrg = (id = uuid()) => ({
   id,
   name: faker.company.companyName(),
   description: faker.lorem.sentence()
@@ -13,7 +13,11 @@ const generateOrg = id => ({
 const generateOrgs = ids => ids.map(generateOrg)
 
 // Generates a single user based on a userId, an orgId, and a userRole
-const generateUser = ({ user_id, org_id, user_role }) => ({
+const generateUser = ({
+  user_id = uuid(),
+  org_id = uuid(),
+  user_role = 'employee'
+}) => ({
   id: user_id,
   organization_id: org_id,
   first_name: faker.name.firstName(),
@@ -78,7 +82,7 @@ const generateAvailabilities = userId => {
   return availabilities
 }
 
-const generateEvents = userId => {
+const generateEvents = (userId = uuid()) => {
   // generate random numbers between two numbers
 
   // generate sorted array of 5 numbers between 0 and 6 with no duplicates
@@ -127,14 +131,14 @@ const generateEvents = userId => {
 }
 
 // expects a userId, and an array of existing requests. Returns a random day not in the existing list
-const generateDayOffRequest = ({ user_id, existing = [] }) => {
+const generateDayOffRequest = ({ user_id = uuid(), existing = [] }) => {
   let day
   const existingDates = existing.map(day => day.date)
-  const statusRand = generateRandomBetween(0, 2)
+  const statusRand = Math.random()
   const status =
     statusRand < 0.5 ? 'pending' : statusRand < 0.75 ? 'confirmed' : 'denied'
 
-  while (!day) {
+  while (day === undefined) {
     const candidate = generateRandomBetween(1, 14)
     if (!existingDates.includes(candidate)) {
       day = candidate
@@ -153,11 +157,11 @@ const generateDayOffRequest = ({ user_id, existing = [] }) => {
 
 // generate between 0 and 5 day off requests per user
 // for between 1 and 14 days in the future
-const generateDayOffRequests = userId => {
+const generateDayOffRequests = (userId = uuid()) => {
   const numberOff = generateRandomBetween(0, 5)
   const requests = []
   for (let i = 0; i < numberOff; i++) {
-    generateDayOffRequest({ userId, existing: requests })
+    requests.push(generateDayOffRequest({ userId, existing: requests }))
   }
   requests.sort()
   return requests
