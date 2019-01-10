@@ -31,7 +31,8 @@ Why does this product exist? How does a user access it?
 What's it do?
 
 ### Installation
-to install, you will need two environment files:
+To install the application in a local dev environment, you can run `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
+To install, you will need two environment files:
 in the `./` you will need a `.env` file
 in the `./client` you will a `.env.development` file
 

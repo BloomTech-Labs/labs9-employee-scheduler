@@ -1,4 +1,4 @@
-const faker = require('faker')
+const { generateUser } = require('../utils/generateData')
 const { org_ids, user_ids } = require('../ids.json')
 
 // generates a ratio so we can match an unequal number of orgs to users ie 500 / 25 = 20
@@ -13,15 +13,13 @@ org_ids.forEach((org_id, id_index) => {
     // set one owner, two supervisors, and the rest employees
     const userRole = i === 0 ? 'owner' : i < 3 ? 'supervisor' : 'employee'
 
-    users.push({
-      id: user_ids[i + ratio * id_index],
-      organization_id: org_id,
-      first_name: faker.name.firstName(),
-      last_name: faker.name.lastName(),
-      role: userRole,
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber()
-    })
+    users.push(
+      generateUser({
+        user_id: user_ids[i + ratio * id_index],
+        org_id: org_id,
+        user_role: userRole
+      })
+    )
   }
 })
 
