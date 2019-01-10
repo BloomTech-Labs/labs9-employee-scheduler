@@ -16,10 +16,17 @@ import './reset.css'
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      api: null
+    }
+  }
+
   componentDidMount() {
     axios
-      .get(serverUrl)
-      .then(res => console.log(res))
+      .get('https://cadence-api.herokuapp.com')
+      .then(res => this.setState({ api: res.data.message }))
       .catch(err => console.log(err))
   }
 
@@ -39,15 +46,13 @@ class App extends Component {
           `}
         />
         <Route exact path="/" render={props => <Home {...props} />} />
-        <h1>hello</h1>
+
+        <h1>
+          {this.state.api ? `This is from the API: ${this.state.api}` : null}
+        </h1>
+
         {/* This Switch should be moved to it's own component because it should
         only be accessible on the calender view */}
-        <nav>
-          <NavLink to="/calendar">Calendar</NavLink>
-          <NavLink to="/employees">Employees</NavLink>
-          <NavLink to="/shift-calendar">Create Schedule</NavLink>
-          <NavLink to="/settings">Settings</NavLink>
-        </nav>
         <Switch>
           <Route path="/employees" component={Employees} />
           <Route path="/shift-calendar" component={CreateSchedule} />
