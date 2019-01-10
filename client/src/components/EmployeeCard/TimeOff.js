@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-class Billing extends Component {
+class TimeOff extends Component {
   render() {
     return (
       <div>
-        <h1>Billing</h1>
+        <h1>TimeOff</h1>
       </div>
     )
   }
 }
 
-export default Billing
+export default TimeOff
 
-Billing.propTypes = {
+TimeOff.propTypes = {
   // adding propTypes here
 }
