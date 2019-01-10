@@ -13,8 +13,20 @@ const addAvailability = (userId, day) => {
     .where({ 'a.user_id': userId })
     .insert(day)
 } // adds new day, dayis object
-const updateAvailability = async (availabilityId, updates) => {} // updates existing day, updates is object
-const deleteAvailability = async availabilityId => {} // deletes day
+
+// updates existing day, updates is object
+const updateAvailability = (availabilityId, updates) => {
+  return db('availabilities as a')
+    .where({ 'a.id': availabilityId })
+    .update(updates)
+}
+
+// deletes day
+const deleteAvailability = availabilityId => {
+  return db('availabilities as a')
+    .where({ 'a.id': availabilityId })
+    .del()
+}
 
 module.exports = {
   getAvailabilities,
