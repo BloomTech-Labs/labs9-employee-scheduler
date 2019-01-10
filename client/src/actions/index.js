@@ -10,23 +10,26 @@ const baseURL = process.env.REACT_APP_SERVER_URL
 
 //puts token on headers for the backend
 export const authenticate = () => dispatch => {
-  return firebase
-    .auth()
-    .currentUser.getIdToken(/* forceRefresh */ false)
-    .then(idToken => {
-      return axios
-        .post(`${baseURL}/users/current`, null, {
-          headers: { authorization: idToken }
-        })
-        .then(res => {
-          dispatch({
-            type: AUTH_SUCCESS,
-            payload: { user: res.data, token: idToken }
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return currentUser
+      .getIdToken(/* forceRefresh */ false)
+      .then(idToken => {
+        return axios
+          .post(`${baseURL}/users/current`, null, {
+            headers: { authorization: idToken }
           })
-        })
-    })
-    .catch(err => {
-      console.dir(err)
-      dispatch({ type: AUTH_FAIL })
-    })
+          .then(res => {
+            dispatch({
+              type: AUTH_SUCCESS,
+              payload: { user: res.data, token: idToken }
+            })
+          })
+      })
+      .catch(err => {
+        console.dir(err)
+        dispatch({ type: AUTH_FAIL })
+      })
+  }
+  return dispatch({ type: AUTH_FAIL })
 }
