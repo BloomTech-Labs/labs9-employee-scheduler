@@ -11,10 +11,10 @@ const system = {
   // moved font to global styles in app.js because we only have one font-family
 
   fontSizing: {
-    s: '12px', // for captions, could go to 10px if legible
-    m: '16px', // base size for text
-    ml: '24px', // size for headers
-    l: '30px' // for big emphasis
+    s: '1.2rem', // for captions, could go to 10px if legible
+    m: '1.6rem', // base size for text
+    ml: '2.4rem', // size for headers
+    l: '3rem' // for big emphasis
   },
 
   borders: {
@@ -35,7 +35,9 @@ const system = {
   spacing: {
     standardPadding: '7.5px 15px',
     bigPadding: '25px',
-    container: '0 75px'
+    container: '0 75px',
+    mobile: '0 25px',
+    lineHeight: 1.25
   }
 }
 
