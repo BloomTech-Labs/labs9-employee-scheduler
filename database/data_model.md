@@ -64,17 +64,17 @@
 
 `getOrgs()`
 
-`addOrg()`
+`addOrg(org)`
 
-`updateOrg(ordId)`
+`updateOrg(orgId)`
 
-`deleteOrg(ordId)`
+`deleteOrg(orgId)`
 
 <br>
 
 `getUsers(orgId)` --> if no param all users
 
-`addUser(ordId, user object)`
+`addUser(orgId, user object)`
 
 `updateUser(userId, changes object)`
 
