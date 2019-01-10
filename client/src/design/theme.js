@@ -13,13 +13,15 @@ const system = {
   fontSizing: {
     s: '12px', // for captions, could go to 10px if legible
     m: '16px', // base size for text
-    l: '30px' // for headers
+    ml: '24px', // size for headers
+    l: '30px' // for big emphasis
   },
 
   borders: {
     radius: '3px', // for border-radius
     transparent: '1px solid transparent',
-    blue: '1px solid #159'
+    blue: '1px solid #159',
+    grey: '1px solid #999999'
   },
 
   shadows: {
@@ -31,8 +33,9 @@ const system = {
   transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
 
   spacing: {
-    standardPadding: '5px 10px',
-    bigPadding: '25px'
+    standardPadding: '7.5px 15px',
+    bigPadding: '25px',
+    container: '0 75px'
   }
 }
 
