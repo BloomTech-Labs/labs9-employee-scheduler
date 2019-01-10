@@ -20,7 +20,8 @@ const system = {
   borders: {
     radius: '3px', // for border-radius
     transparent: '1px solid transparent',
-    blue: '1px solid #159'
+    blue: '1px solid #159',
+    grey: '1px solid #999999'
   },
 
   shadows: {
