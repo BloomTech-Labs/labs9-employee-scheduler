@@ -10,7 +10,7 @@ const getUsers = orgId => {
   }
 }
 
-const addUser = (orgId, user) => {
+const addUser = user => {
   return db('users').insert({ id: uuid(), ...user })
 }
 

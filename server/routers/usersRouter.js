@@ -26,14 +26,13 @@ router.get('/current', (req, res) => {}) // get info for current user
 
 router.post('/', async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
-  const { id } = req.params
 
   if (!organization_id || !first_name || !last_name || !role) {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
 
   try {
-    const success = await addUser(id, req.body)
+    const success = await addUser(req.body)
     res.status(201).json(success)
   } catch (error) {
     console.log(error)
