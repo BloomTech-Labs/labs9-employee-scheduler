@@ -1,12 +1,6 @@
 import { combineReducers } from 'redux'
+import { authReducer } from './authReducer'
 
-const tempReducer = (state = [], action) => {
-  switch (action.type) {
-    case 'temp case':
-      return state
-    default:
-      return state
-  }
-}
-
-export default combineReducers({ tempReducer })
+export default combineReducers({
+  authReducer
+})

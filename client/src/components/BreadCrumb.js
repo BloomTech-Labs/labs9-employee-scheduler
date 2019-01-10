@@ -25,9 +25,9 @@ const BreadCrumb = props => {
         </Container>
 
         <Container className="breadcrumbs" extra>
-          <LinkItem to="/signup">Sign Up</LinkItem>
-          <LinkItem to="/signin">Sign In</LinkItem>
-        </Container>
+        <LinkItem to="/register">Sign Up</LinkItem>
+        <LinkItem to="/signin">Sign In</LinkItem>
+      </Container>
       </Nav>
     )
   }
