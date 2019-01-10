@@ -8,7 +8,7 @@ const {
 } = require('../../database/helpers')
 
 // getAvailability, takes in user id and constraints object (start, end itmes)
-router.get('/:user_id', (req, res) => {
+router.get('/:id', (req, res) => {
   const { id } = req.params
   const { constraints } = req.body
   getAvailabilities(id, constraints)
@@ -17,7 +17,7 @@ router.get('/:user_id', (req, res) => {
 })
 
 // addAvailability, takes in a user id and a day (week day)
-router.post('/:user_id', (req, res) => {
+router.post('/:id', (req, res) => {
   const { id } = req.params
   const { day } = req.body
   addAvailability(id, day)
@@ -25,8 +25,8 @@ router.post('/:user_id', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
-// updateAvailability, takes in availibilityId, and updates
-router.put('/:availability_id', (req, res) => {
+// updateAvailability, takes in availibility Id, and updates
+router.put('/:id', (req, res) => {
   const { id } = req.params
   const { updates } = req.body
   updateAvailability(id, updates)
@@ -35,7 +35,7 @@ router.put('/:availability_id', (req, res) => {
 })
 
 // deleteavailability takes in availability id and deletes
-router.delete('/:availability_id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params
   deleteAvailability(id)
     .then(count => res.status(200).json(count))
