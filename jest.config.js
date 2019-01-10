@@ -1,3 +1,4 @@
 module.exports = {
-  testPathIgnorePatterns: ['<rootDir>/client/']
+  testPathIgnorePatterns: ['<rootDir>/client/'],
+  setupFiles: ['dotenv/config']
 }
