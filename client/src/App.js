@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+import Register from './components/Register'
 
 import './reset.css'
 
@@ -54,15 +55,13 @@ class App extends Component {
         {/* This Switch should be moved to it's own component because it should
         only be accessible on the calender view */}
         <Switch>
-          <Route path="/employees" render={props => <Employees {...props} />} />
-          <Route
-            path="/shift-calendar"
-            render={props => <CreateSchedule {...props} />}
-          />
-          <Route path="/billing" render={props => <Billing {...props} />} />
-          <Route path="/calendar" render={props => <Calendar {...props} />} />
-          <Route path="/dashboard" render={props => <Dashboard {...props} />} />
-          <Route path="/settings" render={props => <Settings {...props} />} />
+          <Route path="/employees" component={Employees} />
+          <Route path="/shift-calendar" component={CreateSchedule} />
+          <Route path="/register" component={Register} />
+          <Route path="/billing" component={Billing} />
+          <Route path="/calendar" component={Calendar} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/settings" component={Settings} />
           <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
       </div>

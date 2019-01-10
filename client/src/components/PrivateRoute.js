@@ -1,11 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import propTypes from 'prop-types'
 
-// this will be used with react router to serve as private routes that only allow authenticated users
-class PrivateRoute extends Component {
-  render() {
-    return <div />
-  }
+// takes in a component and it's props and wraps in App.js as
+// <PrivateRoute exact path="<routePath>" />
+
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      // add private route prop conditions here
+      auth.isAuthenticated === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+)
+
+PrivateRoute.propTypes = {
+  // props types go here
 }
 
-export default PrivateRoute
+const mapStateToProps = state => ({
+  // redux props go here
+})
+
+export default connect(mapStateToProps)(PrivateRoute)
