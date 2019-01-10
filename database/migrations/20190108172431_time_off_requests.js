@@ -9,6 +9,8 @@ exports.up = knex =>
       .notNullable()
       .references('id')
       .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     table.date('date').notNullable()
     table.string('reason', 1024)
     table.string('status').defaultTo('pending') // change this to enumerable?
