@@ -7,12 +7,18 @@ const request = supertest(server)
 
 describe('test get user id route /:id', () => {
   it('should return 404 if no users found', async () => {
-    const response = await request.get('/availabilities/fakeId')
+    const response = await request
+      .get('/availabilities/fakeId')
+      .set('authorization', 'token')
+
     expect(response.status).toEqual(404)
   })
 
   it('should return a JSON response', async () => {
-    const response = await request.get('/availabilities/sdfasfas')
+    const response = await request
+      .get('/availabilities/sdfasfas')
+      .set('authorization', 'token')
+
     expect(response.type).toEqual('application/json')
   })
 
@@ -23,8 +29,10 @@ describe('test get user id route /:id', () => {
     const avails = team.availabilities.filter(
       item => item.user_id === target.id
     )
-    console.log(target)
-    const response = await request.get(`/availabilities/${target.id}`)
+    const response = await request
+      .get(`/availabilities/${target.id}`)
+      .set('authorization', 'token')
+
     expect(response.status).toBe(200)
     expect(response.body).toEqual(avails)
     // cleans up unneeded team data after tests

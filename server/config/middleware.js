@@ -9,5 +9,5 @@ module.exports = server => {
   server.use(helmet())
   server.use(morgan('dev'))
   server.use(cors())
-  // server.use(authenticate)
+  server.use(authenticate)
 }
