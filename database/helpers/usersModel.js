@@ -9,6 +9,12 @@ const getUsers = orgId => {
     return db('users')
   }
 }
+// get a single user
+const getUser = id => {
+  return db('users')
+    .where({ id })
+    .first()
+}
 
 const addUser = user => {
   return db('users').insert({ id: uuid(), ...user })
@@ -30,5 +36,6 @@ module.exports = {
   getUsers,
   addUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUser
 }
