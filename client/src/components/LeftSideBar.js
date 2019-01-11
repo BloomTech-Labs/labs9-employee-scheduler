@@ -42,7 +42,7 @@ LeftSideBar.propTypes = {
 
 const Hamburger = styled.div`
   font-size: ${system.fontSizing.ml};
-  color: ${system.color.captiontext};
+  color: ${system.color.neutral};
   cursor: pointer;
   margin: ${system.spacing.bigPadding};
 `
@@ -56,6 +56,8 @@ const Nav = styled.nav`
   flex-flow: column nowrap;
   justify-content: space-around;
   border: ${system.borders.grey};
+  border-top: none;
+  border-left: none;
   border-radius: ${system.borders.radius};
   width: 200px;
   position: absolute;

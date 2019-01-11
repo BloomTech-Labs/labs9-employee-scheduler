@@ -10,7 +10,6 @@ class Calendar extends Component {
     return (
       <div>
         <BreadCrumb location={this.state.location} />
-        <h1>Calendar</h1>
       </div>
     )
   }
