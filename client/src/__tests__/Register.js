@@ -28,7 +28,7 @@ describe('Register Component', () => {
   })
   it('should take a first name value on input', () => {
     const { firstName } = setup()
-    fireEvent.change(firstName, { target: { firstName: 'Carlos' } })
+    fireEvent.change(firstName, { target: { value: 'Carlos' } })
     expect(firstName.value).toBe('Carlos')
   })
 })
