@@ -9,9 +9,9 @@ class EmployeeDashboard extends Component {
       <div>
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
-        <AssignedShifts />
+        {/* <AssignedShifts />
         <TimeOffApproved />
-        <SubmitTimeOffRequest />
+        <SubmitTimeOffRequest /> */}
       </div>
     )
   }

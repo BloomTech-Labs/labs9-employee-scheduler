@@ -18,7 +18,3 @@ class Availability extends Component {
 }
 
 export default Availability
-
-Availability.propTypes = {
-  // adding propTypes here
-}
