@@ -43,7 +43,23 @@ for the contents of these files, reference the channel
 HIGH LEVEL INSTRUCTIONS HERE? MAY BE TEXT WE ALSO HAVE AVAILABLE ON SITE
 
 ### API
-DETAIL ENDPOINTS HERE
+API is protected by firebase authentication. A valid JWT must be included on a request header under the 'authorization' key in order for a request to be accepted.
+
+#### Users
+Uers are structured as follows:
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  first_name: STRING
+  last_name: STRING
+  role: STRING [ 'owner', 'supervisor', 'employee' ]
+  email: STRING
+  phone: STRING
+
+- GET /users: Returns all users
+- GET /users/:id: Returns all users for an organization 
+- GET /users/current: Returns user information for currently authorized user
+- POST /users: Creates a new user. Must have permission to create a user for the given organization. Returns the id of the new resource.
+- PUT /users/:id: Receives a changes object on the body of the request, and merges into the user if possible. Returns the updated resource.
 
 ### Testing
 This library uses Jest for testing. For the server side, we make use of Supertest, and for the client side, we make use of the React-Testing-Library.

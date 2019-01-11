@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   getUsers,
+  getUser,
   addUser,
   updateUser,
   deleteUser
@@ -13,16 +14,29 @@ router.get('/', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
+// this one depends on auth.
+router.get('/current', async (req, res) => {
+  const { id } = req.user
+  try {
+    const user = await getUser(id)
+
+    if (user) {
+      return res.status(200).json(user)
+    } else {
+      return res.status(404).send({ message: 'User not found.' })
+    }
+  } catch (err) {
+    return res.status(500).send()
+  }
+})
+
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  getUsers(id)
+  return getUsers(id)
     .then(user => res.status(200).json(user))
     .catch(err => res.status(404).json(err))
 })
-
-// this one depends on auth. We'll build it later
-router.get('/current', (req, res) => {}) // get info for current user
 
 router.post('/', async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
@@ -44,7 +58,12 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params
 
   if (!Object.keys(req.body)) {
-    res.status(400).json({ error: 'No fields provided to update' })
+    return res.status(400).json({ error: 'No fields provided to update' })
+  }
+
+  const user = await getUser(id)
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' })
   }
 
   try {

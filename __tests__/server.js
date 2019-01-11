@@ -5,7 +5,7 @@ const request = supertest(server)
 
 describe('server root', () => {
   it('responds to a get request', async () => {
-    const response = await request.get('/')
+    const response = await request.get('/').set('authorization', 'token')
     expect(response.status).toEqual(200)
     expect(response.body).toEqual({ message: 'hello!' })
   })
