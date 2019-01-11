@@ -17,7 +17,8 @@ const system = {
     s: '1.2rem', // for captions, could go to 10px if legible
     m: '1.6rem', // base size for text
     ml: '2.4rem', // size for headers
-    l: '3rem' // for big emphasis
+    l: '3rem', // for big emphasis
+    xl: '3.5rem' // ultra large
   },
 
   borders: {

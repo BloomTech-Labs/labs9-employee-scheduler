@@ -20,7 +20,9 @@ class LeftSideBar extends Component {
     const { toggleShow } = this
     return (
       <Container>
-        <Hamburger onClick={() => toggleShow()}>&#9776;</Hamburger>
+        <Hamburger classname="hamburger" onClick={() => toggleShow()}>
+          &#9776;
+        </Hamburger>
         <Fade left when={this.state.show}>
           <Nav>
             <NavItem to="/calendar">Calendar</NavItem>
@@ -40,15 +42,16 @@ LeftSideBar.propTypes = {
   // add propTypes here
 }
 
+const Container = styled.nav`
+  position: absolute;
+  top: 0;
+`
+
 const Hamburger = styled.div`
   font-size: ${system.fontSizing.ml};
   color: ${system.color.neutral};
   cursor: pointer;
   margin: ${system.spacing.bigPadding};
-`
-
-const Container = styled.nav`
-  position: absolute;
 `
 
 const Nav = styled.nav`
@@ -68,7 +71,6 @@ const Nav = styled.nav`
     border-bottom: ${system.borders.grey};
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.m};
-    background: ${system.color.neutral};
     transition: ${system.transition};
     :hover {
       color: ${system.color.neutral};
