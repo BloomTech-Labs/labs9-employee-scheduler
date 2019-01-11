@@ -15,7 +15,7 @@ const BreadCrumb = props => {
       <Nav fixed={false}>
         <Container logo>
           <LinkItem to="/">Cadence</LinkItem>
-          <p>>> {props.location}</p>
+          <p> {props.location}</p>
         </Container>
       </Nav>
     )
