@@ -56,7 +56,7 @@ class EmployeeDashboard extends Component {
         <BreadCrumb location={this.state.location} />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {this.state.user.firstname}</h1>
+            <h1>Welcome {this.state.user[0].firstname}</h1>
           </div>
           <AssignedShifts user={this.state.user} />
           <TimeOffApproved />

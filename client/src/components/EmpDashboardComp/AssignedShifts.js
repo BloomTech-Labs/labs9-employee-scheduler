@@ -53,6 +53,10 @@ const Container = styled('div')`
       flex-direction: row;
       width: 100%;
       justify-content: space-between;
+      margin: 10px auto;
+      p {
+        font-size: ${system.fontSizing.m};
+      }
     }
   }
 `
