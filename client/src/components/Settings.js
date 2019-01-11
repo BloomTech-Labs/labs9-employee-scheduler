@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
+import LeftSideBar from './LeftSideBar'
 
 // This component will render out settings for the signed in user
 class Settings extends Component {
@@ -10,6 +11,7 @@ class Settings extends Component {
   render() {
     return (
       <div>
+        <LeftSideBar />
         <BreadCrumb location={this.state.location} />
       </div>
     )

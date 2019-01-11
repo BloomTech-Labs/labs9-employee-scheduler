@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 
 import Card from './EmployeeCard/Card'
 import LeftSideBar from './LeftSideBar'
+import OuterContainer from './common/OuterContainer'
+
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
   state = {
@@ -22,10 +24,10 @@ class Employees extends Component {
     const { employees } = this.props
 
     return (
-      <div>
+      <OuterContainer>
         <BreadCrumb location={this.state.location} />
-        {/* <LeftSideBar />  this is way misaligned on this page...*/}
-        <OuterContainer>
+        <LeftSideBar />
+        <MidContainer>
           <h1>Employees</h1>
           <InnerContainer>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
@@ -34,8 +36,8 @@ class Employees extends Component {
                 .slice(0, 12)
                 .map((employee, i) => <Card key={i} {...employee} />)}
           </InnerContainer>
-        </OuterContainer>
-      </div>
+        </MidContainer>
+      </OuterContainer>
     )
   }
 }
@@ -44,7 +46,7 @@ Employees.propTypes = {
   // add propTypes here
 }
 
-const OuterContainer = styled('div')`
+const MidContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;

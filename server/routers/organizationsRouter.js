@@ -9,23 +9,28 @@ const {
 
 router.get('/', (req, res) => {
   getOrgs()
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(404).json(err))
+    .then(orgs => res.status(200).json(orgs))
+    .catch(err => res.status(500).json(err))
 })
 
 router.get('/:id', (req, res) => {
   const { id } = req.params
-
   getOrgs(id)
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(404).json(err))
+    .then(org => {
+      if (!org) {
+        return res.status(404).json({ message: 'Nonexistent organization' })
+      } else {
+        return res.status(200).json(org)
+      }
+    })
+    .catch(err => res.status(500).json(err))
 })
 
 router.post('/', async (req, res) => {
   const { name } = req.body
 
   if (!name) {
-    res.status(400).json({ error: 'Missing required field "name"' })
+    return res.status(400).json({ error: 'Missing required field "name"' })
   }
 
   try {

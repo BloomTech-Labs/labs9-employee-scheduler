@@ -4,7 +4,9 @@ const uuid = require('uuid')
 // if no param all users
 const getOrgs = orgId => {
   if (orgId) {
-    return db('organizations as o').where({ 'o.id': orgId })
+    return db('organizations as o')
+      .where({ 'o.id': orgId })
+      .first()
   } else {
     return db('organizations')
   }
