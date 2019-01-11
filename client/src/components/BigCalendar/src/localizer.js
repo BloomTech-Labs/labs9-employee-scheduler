@@ -1,38 +1,68 @@
-import PropTypes from 'prop-types'
-import invariant from 'invariant'
+var invariant = require('invariant')
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
 
-const localePropType = PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+var _extends2 = _interopRequireDefault(
+  require('@babel/runtime/helpers/extends')
+)
+
+var _propTypes = _interopRequireDefault(require('prop-types'))
+
+var _invariant = _interopRequireDefault(require('invariant'))
+
+var localePropType = _propTypes.default.oneOfType([
+  _propTypes.default.string,
+  _propTypes.default.func
+])
 
 function _format(localizer, formatter, value, format, culture) {
-  let result =
+  var result =
     typeof format === 'function'
       ? format(value, culture, localizer)
       : formatter.call(localizer, value, format, culture)
-
-  invariant(
-    result == null || typeof result === 'string',
-    '`localizer format(..)` must return a string, null, or undefined'
-  )
-
+  !(result == null || typeof result === 'string')
+    ? process.env.NODE_ENV !== 'production'
+      ? (0, _invariant.default)(
+          false,
+          '`localizer format(..)` must return a string, null, or undefined'
+        )
+      : invariant(false)
+    : void 0
   return result
 }
 
-export class DateLocalizer {
-  constructor(spec) {
-    invariant(
-      typeof spec.format === 'function',
-      'date localizer `format(..)` must be a function'
-    )
-    invariant(
-      typeof spec.firstOfWeek === 'function',
-      'date localizer `firstOfWeek(..)` must be a function'
-    )
+export var DateLocalizer = function DateLocalizer(spec) {
+  var _this = this
 
-    this.propType = spec.propType || localePropType
+  !(typeof spec.format === 'function')
+    ? process.env.NODE_ENV !== 'production'
+      ? (0, _invariant.default)(
+          false,
+          'date localizer `format(..)` must be a function'
+        )
+      : invariant(false)
+    : void 0
+  !(typeof spec.firstOfWeek === 'function')
+    ? process.env.NODE_ENV !== 'production'
+      ? (0, _invariant.default)(
+          false,
+          'date localizer `firstOfWeek(..)` must be a function'
+        )
+      : invariant(false)
+    : void 0
+  this.propType = spec.propType || localePropType
+  this.startOfWeek = spec.firstOfWeek
+  this.formats = spec.formats
 
-    this.startOfWeek = spec.firstOfWeek
-    this.formats = spec.formats
-    this.format = (...args) => _format(this, spec.format, ...args)
+  this.format = function() {
+    for (
+      var _len = arguments.length, args = new Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
+      args[_key] = arguments[_key]
+    }
+
+    return _format.apply(void 0, [_this, spec.format].concat(args))
   }
 }
 
@@ -42,16 +72,14 @@ export function mergeWithDefaults(
   formatOverrides,
   messages
 ) {
-  const formats = {
-    ...localizer.formats,
-    ...formatOverrides,
-  }
-
-  return {
-    ...localizer,
-    messages,
-    startOfWeek: () => localizer.startOfWeek(culture),
-    format: (value, format) =>
-      localizer.format(value, formats[format] || format, culture),
-  }
+  var formats = (0, _extends2.default)({}, localizer.formats, formatOverrides)
+  return (0, _extends2.default)({}, localizer, {
+    messages: messages,
+    startOfWeek: function startOfWeek() {
+      return localizer.startOfWeek(culture)
+    },
+    format: function format(value, _format2) {
+      return localizer.format(value, formats[_format2] || _format2, culture)
+    }
+  })
 }
