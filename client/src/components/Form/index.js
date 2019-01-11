@@ -1,22 +1,30 @@
 /* eslint-disable no-use-before-define */
-import React, { Component } from 'react';
-import './styles.css';
+import React, { Component } from 'react'
+import './styles.css'
 
 // Form Components
 function Group({
-  children, fileInput, handleChange, id, inline, property, type, value,
+  children,
+  fileInput,
+  handleChange,
+  id,
+  inline,
+  property,
+  type,
+  value,
+  ariaLabel
 }) {
-  const processChildren = (child) => {
+  const processChildren = child => {
     if (child.type === Form.File) {
-      return React.cloneElement(child, { fileInput, handleChange, property });
+      return React.cloneElement(child, { fileInput, handleChange, property })
     }
 
     if (child.type === Form.Checkbox) {
-      return React.cloneElement(child, { handleChange, property });
+      return React.cloneElement(child, { handleChange, property })
     }
 
     if (child.type === Form.Label) {
-      return React.cloneElement(child, { id, inline, property });
+      return React.cloneElement(child, { id, inline, property })
     }
 
     if (child.type === Form.TextInput) {
@@ -25,25 +33,42 @@ function Group({
         property,
         type,
         value,
-      });
+        ariaLabel
+      })
     }
 
     if (
-      child.type === Form.RadioButton
-      || child.type === Form.Select
-      || child.type === Form.TextArea
+      child.type === Form.RadioButton ||
+      child.type === Form.Select ||
+      child.type === Form.TextArea
     ) {
-      return React.cloneElement(child, { handleChange, property, value });
+      return React.cloneElement(child, {
+        handleChange,
+        property,
+        value,
+        ariaLabel
+      })
     }
 
-    return child;
-  };
+    return child
+  }
 
-  return <div className="form-group">{React.Children.map(children, processChildren)}</div>;
+  return (
+    <div className="form-group">
+      {React.Children.map(children, processChildren)}
+    </div>
+  )
 }
 
 function Checkbox({ property, handleChange }) {
-  return <input id={property} name={property} onChange={handleChange} type="checkbox" />;
+  return (
+    <input
+      id={property}
+      name={property}
+      onChange={handleChange}
+      type="checkbox"
+    />
+  )
 }
 
 function File({ property, fileInput, handleChange }) {
@@ -56,23 +81,22 @@ function File({ property, fileInput, handleChange }) {
       ref={fileInput}
       type="file"
     />
-  );
+  )
 }
 
-function Label({
-  property, children, inline, id,
-}) {
+function Label({ property, children, inline, id }) {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-for
-    <label className={inline ? 'form-label inline' : 'form-label'} htmlFor={id || property}>
+    <label
+      className={inline ? 'form-label inline' : 'form-label'}
+      htmlFor={id || property}
+    >
       {children}
     </label>
-  );
+  )
 }
 
-function RadioButton({
-  id, property, value, handleChange,
-}) {
+function RadioButton({ id, property, value, handleChange }) {
   return (
     <input
       checked={value === id}
@@ -83,12 +107,10 @@ function RadioButton({
       type="radio"
       value={id}
     />
-  );
+  )
 }
 
-function Select({
-  property, options, value, handleChange,
-}) {
+function Select({ property, options, value, handleChange, ariaLabel }) {
   return (
     <select
       className="form-select"
@@ -96,12 +118,13 @@ function Select({
       name={property}
       onChange={handleChange}
       value={value}
+      aria-label={ariaLabel}
     >
       {options.map(option => (
         <option key={option}>{option}</option>
       ))}
     </select>
-  );
+  )
 }
 
 function SubmitButton({ children }) {
@@ -109,10 +132,10 @@ function SubmitButton({ children }) {
     <button className="form-submit-button" type="submit">
       {children}
     </button>
-  );
+  )
 }
 
-function TextArea({ property, handleChange, value }) {
+function TextArea({ property, handleChange, value, ariaLabel }) {
   return (
     <textarea
       className="form-textarea"
@@ -120,12 +143,17 @@ function TextArea({ property, handleChange, value }) {
       name={property}
       onChange={handleChange}
       value={value}
+      aria-label={ariaLabel}
     />
-  );
+  )
 }
 
 function TextInput({
-  property, value, type = 'text', handleChange,
+  property,
+  value,
+  type = 'text',
+  handleChange,
+  ariaLabel
 }) {
   return (
     <input
@@ -135,97 +163,101 @@ function TextInput({
       onChange={handleChange}
       type={type}
       value={value}
+      aria-label={ariaLabel}
     />
-  );
+  )
 }
 
 class Form extends Component {
-  static Checkbox = Checkbox;
+  static Checkbox = Checkbox
 
-  static File = File;
+  static File = File
 
-  static Group = Group;
+  static Group = Group
 
-  static Label = Label;
+  static Label = Label
 
-  static RadioButton = RadioButton;
+  static RadioButton = RadioButton
 
-  static Select = Select;
+  static Select = Select
 
-  static SubmitButton = SubmitButton;
+  static SubmitButton = SubmitButton
 
-  static TextArea = TextArea;
+  static TextArea = TextArea
 
-  static TextInput = TextInput;
+  static TextInput = TextInput
 
   constructor(props) {
-    super(props);
-    const { initialValues } = this.props;
-    this.state = { values: initialValues };
-    this.fileInput = React.createRef();
+    super(props)
+    const { initialValues } = this.props
+    this.state = { values: initialValues }
+    this.fileInput = React.createRef()
   }
 
-  handleInputChange = (e) => {
-    const { values } = this.state;
-    const { type, value, name } = e.target;
+  handleInputChange = e => {
+    const { values } = this.state
+    const { type, value, name } = e.target
     if (type !== 'checkbox' && type !== 'radio') {
-      e.preventDefault();
+      e.preventDefault()
     }
     if (type === 'checkbox') {
       this.setState({
-        values: { ...values, [e.target.name]: e.target.checked },
-      });
+        values: { ...values, [e.target.name]: e.target.checked }
+      })
     } else if (e.target.type === 'file') {
       this.setState({
         values: {
           ...values,
-          [name]: this.fileInput.current.files[0].name,
-        },
-      });
+          [name]: this.fileInput.current.files[0].name
+        }
+      })
     } else {
       this.setState({
-        values: { ...values, [name]: value },
-      });
+        values: { ...values, [name]: value }
+      })
     }
-  };
+  }
 
-  handleFormSubmit = (e) => {
-    const { onSubmit } = this.props;
-    const { values } = this.state;
-    e.preventDefault();
-    onSubmit(values);
-  };
+  handleFormSubmit = e => {
+    const { onSubmit } = this.props
+    const { values } = this.state
+    e.preventDefault()
+    onSubmit(values)
+  }
 
-  handleGroups = (child) => {
-    const { values } = this.state;
+  handleGroups = child => {
+    const { values } = this.state
     // injects onChange handler into any Form.Group instance
     if (child.type === Form.Group) {
-      const value = values[child.props.property];
+      const value = values[child.props.property]
       return React.cloneElement(child, {
         fileInput: this.fileInput,
         handleChange: this.handleInputChange,
-        value,
-      });
+        value
+      })
     }
-    const children = child.props ? child.props.children : undefined;
+    const children = child.props ? child.props.children : undefined
     // returns child unchanged if it has no children
     if (!children || React.Children.count(children) === 0) {
-      return child;
+      return child
     }
     // otherwise recursively processes children for Groups
-    const processedChildren = React.Children.map(child.props.children, this.handleGroups);
-    return React.cloneElement(child, { children: processedChildren });
-  };
+    const processedChildren = React.Children.map(
+      child.props.children,
+      this.handleGroups
+    )
+    return React.cloneElement(child, { children: processedChildren })
+  }
 
   render() {
-    const { heading, children } = this.props;
+    const { heading, children } = this.props
     return (
       <form className="form" onSubmit={this.handleFormSubmit}>
         <heading.type className="form-title">{heading.title}</heading.type>
         {React.Children.map(children, this.handleGroups)}
       </form>
-    );
+    )
   }
 }
 
-export default Form;
+export default Form
