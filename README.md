@@ -5,7 +5,8 @@ BADGES
 Cadence is an employee shift scheduling SaaS for small-to-medium businesses. In this document, you will find everything you need to know about this open-source software project. <br><br>
 
 Front-end Deployment: https://cadence.netlify.com/ <br>
-Back-end Deployment: https://cadence-api.herokuapp.com/
+Back-end Deployment: https://cadence-api.herokuapp.com/<br>
+Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 
 ## Table of Contents
 - [Team](#team)
