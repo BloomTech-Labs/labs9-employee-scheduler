@@ -4,7 +4,8 @@ const {
   getAvailabilities,
   addAvailability,
   updateAvailability,
-  deleteAvailability
+  deleteAvailability,
+  getUser
 } = require('../../database/helpers')
 
 // getAvailability, takes in user id and constraints object (start, end itmes)
@@ -12,8 +13,20 @@ router.get('/:id', (req, res) => {
   const { id } = req.params
   const { constraints } = req.body
   getAvailabilities(id, constraints)
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(404).json(err))
+    .then(async users => {
+      if (users.length) {
+        return res.status(200).json(users)
+      }
+      const user = await getUser(id)
+      if (user) {
+        return res.status(200).json(users)
+      } else {
+        return res.status(404).json({ message: 'User does not exist' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 })
 
 // addAvailability, takes in a user id and a day (week day)
