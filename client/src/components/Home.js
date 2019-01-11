@@ -21,7 +21,6 @@ class Home extends Component {
     return (
       <OuterContainer>
         <BreadCrumb location={this.state.location} />
-        <LeftSideBar />
         <Container src={bgImg}>
           <p>
             Scheduling your employees is hard. Cadence is here to help. blah

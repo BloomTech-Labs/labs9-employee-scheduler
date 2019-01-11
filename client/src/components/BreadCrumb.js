@@ -15,6 +15,7 @@ const BreadCrumb = props => {
       <Nav fixed={false}>
         <Container logo>
           <LinkItem to="/">Cadence</LinkItem>
+          <p>>> {props.location}</p>
         </Container>
       </Nav>
     )
@@ -53,6 +54,12 @@ const Container = styled('div')`
     color: ${system.color.neutral};
     text-decoration: none;
     text-align: center;
+  }
+  p {
+    font-size: ${system.fontSizing.s};
+    color: ${system.color.neutral};
+    margin: 5px 15px 0;
+    word-spacing: 5px;
   }
 `
 
