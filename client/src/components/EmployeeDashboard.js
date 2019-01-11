@@ -44,14 +44,22 @@ class EmployeeDashboard extends Component {
               date: 'July 24th'
             },
             {
-              id: 1,
+              id: 2,
               date: 'July 27th'
             }
           ],
-          timeOffRequest: {
-            data: 'July 25th',
-            reason: 'Sick day'
-          }
+          timeOffRequest: [
+            {
+              id: 1,
+              data: 'July 25th',
+              reason: 'Sick day'
+            },
+            {
+              id: 2,
+              data: 'July 25th',
+              reason: 'Sick day'
+            }
+          ]
         }
       ]
     }
