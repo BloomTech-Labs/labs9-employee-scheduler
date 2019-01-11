@@ -6,7 +6,7 @@ import LeftSideBar from './LeftSideBar'
 // this component will house all of the main features for the create schedule page.
 class CreateSchedule extends Component {
   state = {
-    location: 'Create Schedule'
+    location: 'Schedule'
   }
   render() {
     return (
