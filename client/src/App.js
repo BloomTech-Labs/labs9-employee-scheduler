@@ -26,7 +26,9 @@ class App extends Component {
 
   componentDidMount() {
     axios
-      .get('https://cadence-api.herokuapp.com')
+      .get(serverUrl, {
+        headers: { authorization: 'testing' }
+      })
       .then(res => this.setState({ api: res.data.message }))
       .catch(err => console.log(err))
   }
