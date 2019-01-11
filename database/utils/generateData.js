@@ -242,6 +242,29 @@ const insertOrg = (
   })
 }
 
+// This is a test utility that populates a database with test data
+// for a single team, and returns the team as an object, along with a
+// cleanup function that can be called to cleanup the data aftewards.
+
+// It takes a knex instance, it then inserts a randomly generated
+// team into knex. It returns an object with two properties:
+
+// First: a team object with the following shape:
+// { organization, users, availabilities, events, timeOffRequests }
+
+// Second: a cleanup function, which is an async function that should be
+// called to clean up the database afterwards
+const generateTeamData = async knex => {
+  const team = populateOrg()
+  await insertOrg(team, knex)
+
+  const cleanup = async () => {
+    await knex('organizations').delete({ id: team.organization.id })
+  }
+
+  return { team, cleanup }
+}
+
 module.exports = {
   generateOrg,
   generateOrgs,
@@ -252,5 +275,5 @@ module.exports = {
   generateDayOffRequests,
   generateEvents,
   populateOrg,
-  insertOrg
+  generateTeamData
 }
