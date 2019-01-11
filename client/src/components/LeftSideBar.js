@@ -24,7 +24,7 @@ class LeftSideBar extends Component {
           &#9776;
         </Hamburger>
         <Fade left when={this.state.show}>
-          <Nav>
+          <Nav show={this.state.show}>
             <NavItem to="/calendar">Calendar</NavItem>
             <NavItem to="/employees">Employees</NavItem>
             <NavItem to="/shift-calendar">Create Schedule</NavItem>
@@ -64,6 +64,7 @@ const Nav = styled.nav`
   border-radius: ${system.borders.radius};
   width: 200px;
   position: absolute;
+  visibility: ${props => (props.show ? null : 'hidden')};
 
   a {
     text-decoration: none;
