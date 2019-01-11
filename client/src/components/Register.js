@@ -47,7 +47,9 @@ class Register extends Component {
       <Container>
         <BreadCrumb />
         <div className="wrapper">
-          <h1 className="headerText">Register</h1>
+          <h1 className="headerText" data-testid="register-form">
+            Register
+          </h1>
           <form type="submit" onClick={this.onSubmit}>
             <Form.Group
               property="firstName"
@@ -55,6 +57,7 @@ class Register extends Component {
               value={this.state.firstName}
               handleChange={this.changeHandler}
               placeholder="First Name..."
+              ariaLabel="first-name"
             >
               <Form.Label>First Name</Form.Label>
               <Form.TextInput />
@@ -64,6 +67,7 @@ class Register extends Component {
               type="text"
               value={this.state.lastName}
               handleChange={this.changeHandler}
+              ariaLabel="last-name"
             >
               <Form.Label>Last Name</Form.Label>
               <Form.TextInput />
@@ -73,6 +77,7 @@ class Register extends Component {
               type="text"
               value={this.state.email}
               handleChange={this.changeHandler}
+              ariaLabel="email"
             >
               <Form.Label>Email</Form.Label>
               <Form.TextInput />
@@ -82,6 +87,7 @@ class Register extends Component {
               type="number"
               value={this.state.phone}
               handleChange={this.changeHandler}
+              ariaLabel="phone"
             >
               <Form.Label>Phone Number</Form.Label>
               <Form.TextInput />
@@ -94,6 +100,7 @@ class Register extends Component {
               value={this.state.organization}
               changeHandler={this.changeHandler}
               options={options}
+              ariaLabel="organization"
             />
 
             <button className="register">Register</button>

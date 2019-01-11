@@ -1,6 +1,13 @@
 import React from 'react'
 
-const SelectList = ({ name, value, changeHandler, options, label }) => {
+const SelectList = ({
+  name,
+  value,
+  changeHandler,
+  options,
+  label,
+  ariaLabel
+}) => {
   const selectOptions = options.map(option => (
     <option key={option.label} value={option.value}>
       {option.label}
@@ -9,7 +16,12 @@ const SelectList = ({ name, value, changeHandler, options, label }) => {
   return (
     <div className="drop-down">
       <label htmlFor={label}>{label}</label>
-      <select name={name} value={value} onChange={changeHandler}>
+      <select
+        name={name}
+        value={value}
+        onChange={changeHandler}
+        aria-label={ariaLabel}
+      >
         {selectOptions}
       </select>
     </div>
