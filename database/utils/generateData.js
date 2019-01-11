@@ -151,7 +151,7 @@ const generateEvents = (userId = uuid()) => {
 }
 
 // expects a userId, and an array of existing requests. Returns a random day not in the existing list
-const generateDayOffRequest = ({ user_id = uuid(), existing = [] }) => {
+const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
   let day
   const existingDates = existing.map(day => day.date)
   const statusRand = Math.random()
@@ -166,7 +166,7 @@ const generateDayOffRequest = ({ user_id = uuid(), existing = [] }) => {
   }
   return {
     id: uuid(),
-    user_id,
+    user_id: userId,
     date: moment()
       .add(day, 'd')
       .format('YYYY-MM-DD'),

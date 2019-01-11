@@ -1,90 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const {
-  getEmployees,
-  getEmployee,
-  addEmployee,
-  updateEmployee,
-  deleteEmployee
-} = require('../../database/helpers')
+const { getEmployees } = require('../../database/helpers')
 
-router.get('/', (req, res) => {
-  getEmployee()
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(404).json(err))
-})
-
-// this one depends on auth.
-router.get('/current', async (req, res) => {
-  const { id } = req.user
-  try {
-    const user = await getEmployees(id)
-
-    if (user) {
-      return res.status(200).json(user)
-    } else {
-      return res.status(404).send({ message: 'User not found.' })
-    }
-  } catch (err) {
-    return res.status(500).send()
-  }
-})
+// what are the relevant routes here?
+// get all employees (includes time off info, etc)
 
 router.get('/:id', (req, res) => {
   const { id } = req.params
-
-  return getEmployee(id)
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(404).json(err))
-})
-
-router.post('/', async (req, res) => {
-  const { organization_id, first_name, last_name, role } = req.body
-
-  if (!organization_id || !first_name || !last_name || !role) {
-    res.status(400).json({ error: 'Missing required field(s)' })
-  }
-
-  try {
-    const success = await addEmployee(req.body)
-    res.status(201).json(success)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error' })
-  }
-})
-
-router.put('/:id', async (req, res) => {
-  const { id } = req.params
-
-  if (!Object.keys(req.body)) {
-    return res.status(400).json({ error: 'No fields provided to update' })
-  }
-
-  const user = await getEmployee(id)
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' })
-  }
-
-  try {
-    const success = await updateEmployee(id, req.body)
-    res.status(200).json(success)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error' })
-  }
-})
-
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params
-
-  try {
-    const success = await deleteEmployee(id)
-    res.status(200).json(success)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error' })
-  }
+  // id is org id
+  getEmployees(id)
+    .then(users => res.status(200).json(users))
+    .catch(err => {
+      console.log(err)
+      res.status(404).json(err)
+    })
 })
 
 module.exports = router
