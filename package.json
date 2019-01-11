@@ -10,7 +10,7 @@
     "start": "node server/index.js",
     "server": "nodemon",
     "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:latest && npx knex seed:run",
-    "dev": "concurrently \"nodemon\" \"yarn --cwd ./client start\"",
+    "dev": "concurrently \"nodemon server/index.js\" \"yarn --cwd ./client start\"",
     "test": "jest --watch --verbose --runInBand",
     "test:terse": "jest --watch --runInBand",
     "test:once": "jest --runInBand"
