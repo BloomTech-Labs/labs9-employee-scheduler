@@ -7,7 +7,7 @@ const SelectList = ({ name, value, changeHandler, options, label }) => {
     </option>
   ))
   return (
-    <div>
+    <div className="drop-down">
       <label htmlFor={label}>{label}</label>
       <select name={name} value={value} onChange={changeHandler}>
         {selectOptions}
