@@ -15,13 +15,22 @@ class Card extends Component {
     return (
       <Container>
         {/* Employee Name */}
-        <p>Name: {`${first_name} ${last_name}`}</p>
+        <p>
+          <B>Name:</B>
+          <br /> {`${first_name} ${last_name}`}
+        </p>
 
         {/* Employee Email */}
-        <p>Email: {email}</p>
+        <p>
+          <B>Email:</B>
+          <br /> {email}
+        </p>
 
         {/* Employee Phone */}
-        <p>Phone: {phone}</p>
+        <p>
+          <B>Phone:</B>
+          <br /> {phone}
+        </p>
 
         <Availability />
         <TimeOff />
@@ -37,14 +46,24 @@ Card.propTypes = {
 }
 
 const Container = styled('div')`
-  border: 1px solid grey;
+  background: ${system.color.neutral};
   padding: ${system.spacing.standardPadding};
-  margin: ${system.spacing.standardPadding};
-  width: 300px; // this is temp until we get a better system
+  margin: ${system.spacing.bigPadding};
+  border-radius: ${system.borders.radius};
+  box-shadow: ${system.shadows.other};
+  width: 300px;
+  /* // this width is temp until we get a better system */
 
   p {
     padding: ${system.spacing.standardPadding};
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.m};
+    line-height: ${system.spacing.lineHeight};
   }
+`
+
+const B = styled.span`
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: ${system.fontSizing.s};
 `
