@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
+import BigCalendar from './BigCalendar'
 
 // this component might feature a full monthly read only version of the calendar?
 class Calendar extends Component {
@@ -13,6 +14,7 @@ class Calendar extends Component {
       <div>
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
+        <BigCalendar />
       </div>
     )
   }
