@@ -6,13 +6,12 @@ const CardContainer = styled('div')`
   border: 1px inset ${system.color.captiontext};
   border-radius: ${system.borders.radius};
   padding: ${system.spacing.standardPadding};
-  margin-top: ${props => (props.avail ? system.spacing.bigPadding : null)};
-  margin-bottom: ${system.spacing.bigPadding};
+  margin: ${system.spacing.bigPadding} 7.5px;
 
   p {
     padding: 0.5rem;
     color: ${system.color.bodytext};
-    font-size: ${system.fontSizing.m};
+    font-size: ${system.fontSizing.sm};
   }
 `
 

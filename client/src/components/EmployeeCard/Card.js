@@ -15,22 +15,13 @@ class Card extends Component {
     return (
       <Container>
         {/* Employee Name */}
-        <p>
-          <B>Name:</B>
-          <br /> {`${first_name} ${last_name}`}
-        </p>
+        <P main>{`${first_name} ${last_name}`}</P>
 
         {/* Employee Email */}
-        <p>
-          <B>Email:</B>
-          <br /> {email}
-        </p>
+        <P>{email}</P>
 
         {/* Employee Phone */}
-        <p>
-          <B>Phone:</B>
-          <br /> {phone}
-        </p>
+        <P>{phone}</P>
 
         <Availability />
         <TimeOff />
@@ -53,17 +44,15 @@ const Container = styled('div')`
   width: 300px;
   box-shadow: ${system.shadows.otherLight};
   /* // this width is temp until we get a better system */
-
-  p {
-    padding: ${system.spacing.standardPadding};
-    color: ${system.color.bodytext};
-    font-size: ${system.fontSizing.m};
-    line-height: ${system.spacing.lineHeight};
-  }
 `
 
-const B = styled.span`
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: ${system.fontSizing.s};
+const P = styled.p`
+  padding: 2.5px 7.5px;
+  font-family: ${props => (props.main ? "'Lato', sans-serif" : 'inherit')};
+  font-weight: ${props => (props.main ? 'bold' : null)};
+  color: ${props =>
+    props.main ? system.color.primary : system.color.captiontext};
+  font-size: ${props =>
+    props.main ? system.fontSizing.m : system.fontSizing.sm};
+  line-height: ${system.spacing.lineHeight};
 `
