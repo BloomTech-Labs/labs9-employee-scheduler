@@ -45,4 +45,20 @@ describe('testing the organizations router', () => {
       expect(response.status).toEqual(404)
     })
   })
+
+  describe('POST', () => {
+    it('can create a new organization', async () => {
+      const org = { name: 'Test Organization' }
+      const response = await request.post('/organizations').send(org)
+      expect(response.body).toEqual([1])
+      expect(response.status).toBe(201)
+    })
+
+    it('can reject an empty organization', async () => {
+      const org = {}
+      const response = await request.post('/organizations').send(org)
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({ error: 'Missing required field "name"' })
+    })
+  })
 })

@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
   const { name } = req.body
 
   if (!name) {
-    res.status(400).json({ error: 'Missing required field "name"' })
+    return res.status(400).json({ error: 'Missing required field "name"' })
   }
 
   try {
