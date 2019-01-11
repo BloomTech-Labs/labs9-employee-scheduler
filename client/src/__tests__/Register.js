@@ -36,4 +36,19 @@ describe('Register Component', () => {
     fireEvent.change(lastName, { target: { value: 'Lantigua' } })
     expect(lastName.value).toBe('Lantigua')
   })
+  it('should take an email value on input to state', () => {
+    const { email } = setup()
+    fireEvent.change(email, { target: { value: 'email@email.com' } })
+    expect(email.value).toBe('email@email.com')
+  })
+  it('should take a phone number with number values to state', () => {
+    const { phoneNumber } = setup()
+    fireEvent.change(phoneNumber, { target: { value: '999999999' } })
+    expect(phoneNumber.value).toBe('999999999')
+  })
+  it('shoult take in an organization input to state', () => {
+    const { organization } = setup()
+    fireEvent.change(organization, { target: { value: 'McDonalds' } })
+    expect(organization.value).toBe('McDonalds')
+  })
 })
