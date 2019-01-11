@@ -27,6 +27,26 @@ const generateUser = ({
   phone: faker.phone.phoneNumber()
 })
 
+const generateUsersForOrg = ({
+  org_id = uuid(),
+  quantity = generateRandomBetween(5, 20)
+}) => {
+  const users = []
+  for (let i = 0; i < quantity; i++) {
+    // set one owner, two supervisors, and the rest employees
+    const userRole = i === 0 ? 'owner' : i < 3 ? 'supervisor' : 'employee'
+
+    users.push(
+      generateUser({
+        user_id: uuid(),
+        org_id: org_id,
+        user_role: userRole
+      })
+    )
+  }
+  return users
+}
+
 const generateRandomBetween = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
@@ -167,12 +187,93 @@ const generateDayOffRequests = (userId = uuid()) => {
   return requests
 }
 
+// Creates an object with values for all tables for one organization
+const populateOrg = (orgId = uuid()) => {
+  const organization = generateOrg(orgId)
+
+  const users = generateUsersForOrg({ org_id: organization.id })
+
+  let availabilities = []
+  let events = []
+  let timeOffRequests = []
+
+  users.forEach(user => {
+    availabilities = [...availabilities, ...generateAvailabilities(user.id)]
+    events = [...events, ...generateEvents(user.id)]
+    timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
+  })
+
+  return { organization, users, availabilities, events, timeOffRequests }
+}
+
+// Takes an object with properties for each table for a single organization and inserts into a database
+const insertOrg = (
+  { organization, users, availabilities, events, timeOffRequests },
+  knex
+) => {
+  return knex.transaction(async function(trx) {
+    try {
+      await knex('organizations')
+        .insert(organization)
+        .returning('id')
+        .transacting(trx)
+      await knex('users')
+        .insert(users)
+        .transacting(trx)
+
+      const availPromise = knex('availabilities')
+        .insert(availabilities)
+        .transacting(trx)
+
+      const eventsPromise = knex('events')
+        .insert(events)
+        .transacting(trx)
+
+      const timeOffPromise = knex('time_off_requests')
+        .insert(timeOffRequests)
+        .transacting(trx)
+
+      await Promise.all([availPromise, eventsPromise, timeOffPromise])
+      return trx.commit()
+    } catch (err) {
+      console.log(err.message)
+      return trx.rollback()
+    }
+  })
+}
+
+// This is a test utility that populates a database with test data
+// for a single team, and returns the team as an object, along with a
+// cleanup function that can be called to cleanup the data aftewards.
+
+// It takes a knex instance, it then inserts a randomly generated
+// team into knex. It returns an object with two properties:
+
+// First: a team object with the following shape:
+// { organization, users, availabilities, events, timeOffRequests }
+
+// Second: a cleanup function, which is an async function that should be
+// called to clean up the database afterwards
+const generateTeamData = async knex => {
+  const team = populateOrg()
+  await insertOrg(team, knex)
+
+  const cleanup = async () => {
+    await knex('organizations').delete({ id: team.organization.id })
+  }
+
+  return { team, cleanup }
+}
+
 module.exports = {
   generateOrg,
   generateOrgs,
   generateUser,
+  generateUsersForOrg,
   generateAvailabilities,
   generateDayOffRequest,
   generateDayOffRequests,
-  generateEvents
+  generateEvents,
+  populateOrg,
+  generateTeamData
 }
