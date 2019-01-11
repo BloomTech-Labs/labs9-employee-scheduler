@@ -8,7 +8,9 @@ const baseURL = process.env.REACT_APP_SERVER_URL
 export const fetchEmployeesFromDB = orgId => dispatch => {
   if (orgId) {
     axios
-      .get(`${baseURL}/users/${orgId}`)
+      .get(`${baseURL}/users/${orgId}`, {
+        headers: { authorization: 'testing' }
+      })
       .then(res =>
         dispatch({
           type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
@@ -18,7 +20,7 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
       .catch(error => dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL }))
   } else {
     axios
-      .get(`${baseURL}/users/`)
+      .get(`${baseURL}/users/`, { headers: { authorization: 'testing' } })
       .then(res => {
         dispatch({
           type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
