@@ -10,15 +10,20 @@ const {
 router.get('/', (req, res) => {
   getOrgs()
     .then(orgs => res.status(200).json(orgs))
-    .catch(err => res.status(404).json(err))
+    .catch(err => res.status(500).json(err))
 })
 
 router.get('/:id', (req, res) => {
   const { id } = req.params
-
   getOrgs(id)
-    .then(org => res.status(200).json(org))
-    .catch(err => res.status(404).json(err))
+    .then(org => {
+      if (!org) {
+        return res.status(404).json({ message: 'Nonexistent organization' })
+      } else {
+        return res.status(200).json(org)
+      }
+    })
+    .catch(err => res.status(500).json(err))
 })
 
 router.post('/', async (req, res) => {

@@ -33,17 +33,14 @@ describe('testing the organizations router', () => {
       const response = await request.get(`/organizations/${id}`)
 
       expect(response.status).toEqual(200)
-      expect(response.body.length).toEqual(expected.length)
+      expect([response.body]).toEqual(expected)
 
       await cleanup()
     })
 
-    // this test is not working and I can't fathom why.
     it('returns status code 404 for non-existent organization - GET/:id', async () => {
-      const id = 'fake'
-      const response = await request.get(`/organizations/${id}`)
-
-      console.log(response.data)
+      const fake_id = 1
+      const response = await request.get(`/organizations/${fake_id}`)
 
       expect(response.status).toEqual(404)
     })
