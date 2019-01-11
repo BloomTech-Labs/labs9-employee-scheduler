@@ -46,12 +46,12 @@ Card.propTypes = {
 }
 
 const Container = styled('div')`
-  background: ${system.color.neutral};
+  background: ${system.color.white};
   padding: ${system.spacing.standardPadding};
   margin: ${system.spacing.bigPadding};
-  border-radius: ${system.borders.radius};
-  box-shadow: ${system.shadows.other};
+  border-radius: ${system.borders.bigRadius};
   width: 300px;
+  box-shadow: ${system.shadows.otherLight};
   /* // this width is temp until we get a better system */
 
   p {

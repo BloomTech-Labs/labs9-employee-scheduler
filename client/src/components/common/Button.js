@@ -19,6 +19,7 @@ const StyledButton = styled('button')`
   font-size: ${system.fontSizing.m};
   padding: ${system.spacing.standardPadding};
   transition: ${system.transition};
+  outline: none;
   :hover {
     box-shadow: ${system.shadows.buttonHoverLight};
   }
