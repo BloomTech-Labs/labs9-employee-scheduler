@@ -48,9 +48,9 @@ class App extends Component {
         />
         <Route exact path="/" render={props => <Home {...props} />} />
 
-        <h1>
+        {/*<h1> get rid of this?
           {this.state.api ? `This is from the API: ${this.state.api}` : null}
-        </h1>
+        </h1>*/}
 
         {/* This Switch should be moved to it's own component because it should
         only be accessible on the calender view */}
