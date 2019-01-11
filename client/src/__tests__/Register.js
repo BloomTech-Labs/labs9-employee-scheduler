@@ -26,9 +26,14 @@ describe('Register Component', () => {
     const { getByTestId } = renderWithRouter(<Register />, { route })
     expect(getByTestId('register-form').textContent).toBe('Register')
   })
-  it('should take a first name value on input', () => {
+  it('should take a first name value on input to state', () => {
     const { firstName } = setup()
     fireEvent.change(firstName, { target: { value: 'Carlos' } })
     expect(firstName.value).toBe('Carlos')
+  })
+  it('should take a last name value on input to state', () => {
+    const { lastName } = setup()
+    fireEvent.change(lastName, { target: { value: 'Lantigua' } })
+    expect(lastName.value).toBe('Lantigua')
   })
 })
