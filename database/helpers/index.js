@@ -3,11 +3,13 @@ const users = require('./usersModel')
 const availabilities = require('./availabilitiesModel')
 const timeOffRequests = require('./timeOffRequestsModel')
 const events = require('./eventsModel')
+const employees = require('./employeesHelper')
 
 module.exports = {
   ...organizations,
   ...users,
   ...availabilities,
   ...timeOffRequests,
-  ...events
+  ...events,
+  ...employees
 }
