@@ -1,8 +1,11 @@
 const system = {
   color: {
-    danger: 'crimson', // red for alerts, warnings, reject actions, etc.
+    danger: '#990000', // red for alerts, warnings, reject actions, etc.
+    hoverDanger: '#b30000',
     success: '#2D936C', // green for approval, success, happy path actions, etc.
+    hoverSuccess: '#33a77a',
     primary: '#115599', // calm & deep blue for main color fields in app. Can be used for headers as well.
+    hoverPrimary: '#1462b0',
     neutral: '#fefdfa', // for backgrounds & expanses of white space
     bodytext: '#333333', // for large sections of copy
     captiontext: '#999999' // for small size copy, lower-emphasis copy
@@ -27,6 +30,7 @@ const system = {
   shadows: {
     button: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
     buttonHover: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+    buttonHoverLight: '2px 2px 19px -2px rgba(0,0,0,0.75)',
     other: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
   },
 
