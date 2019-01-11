@@ -8,7 +8,7 @@ const system = {
     hoverPrimary: '#1462b0',
     neutral: '#f4f4f4', // for backgrounds & expanses of white space
     bodytext: '#333333', // for large sections of copy
-    captiontext: '#999999', // for small size copy, lower-emphasis copy
+    captiontext: '#666', // for small size copy, lower-emphasis copy
     white: '#ffffff'
   },
 
@@ -16,7 +16,8 @@ const system = {
 
   fontSizing: {
     s: '1.2rem', // for captions, could go to 10px if legible
-    m: '1.6rem', // base size for text
+    sm: '1.4rem', // for large captions
+    m: '2rem', // base size for text
     ml: '2.4rem', // size for headers
     l: '3rem', // for big emphasis
     xl: '3.5rem' // ultra large
