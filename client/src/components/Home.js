@@ -19,8 +19,9 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <OuterContainer>
         <BreadCrumb location={this.state.location} />
+        <LeftSideBar />
         <Container src={bgImg}>
           <p>
             Scheduling your employees is hard. Cadence is here to help. blah
@@ -28,8 +29,7 @@ class Home extends Component {
           </p>
           <Button type="text">Schedule Now</Button>
         </Container>
-        <LeftSideBar />
-      </div>
+      </OuterContainer>
     )
   }
 }
@@ -39,6 +39,10 @@ export default Home
 Home.propTypes = {
   // add propTypes here
 }
+
+const OuterContainer = styled('div')`
+  position: relative;
+`
 
 const Container = styled('div')`
   margin: 7.5rem 7.5rem 0;

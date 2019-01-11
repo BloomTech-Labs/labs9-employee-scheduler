@@ -7,19 +7,30 @@ import NavItem from './common/NavItem'
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
 class LeftSideBar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
+  state = {
+    show: false
+  }
+
+  toggleShow = () => {
+    this.setState({ show: !this.state.show })
   }
 
   render() {
+    const { toggleShow } = this
+    const { show } = this.state
+
     return (
-      <Nav>
-        <NavItem to="/calendar">Calendar</NavItem>
-        <NavItem to="/employees">Employees</NavItem>
-        <NavItem to="/shift-calendar">Create Schedule</NavItem>
-        <NavItem to="/settings">Settings</NavItem>
-      </Nav>
+      <Container>
+        <Hamburger onClick={() => toggleShow()}>Menu</Hamburger>
+        {show && (
+          <Nav>
+            <NavItem to="/calendar">Calendar</NavItem>
+            <NavItem to="/employees">Employees</NavItem>
+            <NavItem to="/shift-calendar">Create Schedule</NavItem>
+            <NavItem to="/settings">Settings</NavItem>
+          </Nav>
+        )}
+      </Container>
     )
   }
 }
@@ -30,6 +41,15 @@ LeftSideBar.propTypes = {
   // add propTypes here
 }
 
+const Hamburger = styled.div`
+  font-size: 3rem;
+  cursor: pointer;
+`
+
+const Container = styled.nav`
+  position: absolute;
+`
+
 const Nav = styled.nav`
   display: flex;
   flex-flow: column nowrap;
@@ -37,6 +57,8 @@ const Nav = styled.nav`
   border: ${system.borders.grey};
   border-radius: ${system.borders.radius};
   width: 200px;
+  position: absolute;
+  top: 40px;
 
   a {
     text-decoration: none;
