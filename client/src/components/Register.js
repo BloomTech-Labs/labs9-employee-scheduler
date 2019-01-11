@@ -134,7 +134,6 @@ const Container = styled('div')`
       .drop-down {
         display: flex;
         flex-direction: column;
-        /* width: 100%; */
         height: 200px;
         label {
           text-transform: uppercase;
