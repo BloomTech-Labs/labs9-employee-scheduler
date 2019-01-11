@@ -40,11 +40,25 @@ class App extends Component {
           styles={css`
             html {
               font-size: 62.5%;
-              font-family: 'Open Sans', sans-serif;
+              font-family: 'Nunito', sans-serif;
             }
 
             * {
               box-sizing: border-box;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+              font-family: 'Lato', serif;
+            }
+
+            a {
+              text-decoration: none;
+              font-family: 'Nunito', sans-serif;
             }
           `}
         />
