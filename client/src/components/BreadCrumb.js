@@ -12,14 +12,17 @@ const BreadCrumb = props => {
   // ask the recieving component what location will be
   if (props.location !== 'Home') {
     breadContent = (
-      <Container logo>
-        <LinkItem to="/">Cadence</LinkItem>
-      </Container>
+      <Nav fixed={false}>
+        <Container logo>
+          <LinkItem to="/">Cadence</LinkItem>
+          <p>>> {props.location}</p>
+        </Container>
+      </Nav>
     )
   }
   if (props.location === 'Home') {
     breadContent = (
-      <Nav>
+      <Nav fixed={true}>
         <Container logo>
           <LinkItem to="/">Cadence</LinkItem>
         </Container>
@@ -52,10 +55,19 @@ const Container = styled('div')`
     text-decoration: none;
     text-align: center;
   }
+  p {
+    font-size: ${system.fontSizing.s};
+    color: ${system.color.neutral};
+    margin: 5px 15px 0;
+    word-spacing: 5px;
+  }
 `
 
+// for some pages (currently just home) nav is fixed
+// for others, it is static and does not scroll with the page
+
 const Nav = styled.nav`
-  position: fixed;
+  position: ${({ fixed }) => (fixed ? 'fixed' : 'static')};
   z-index: 100;
   top: 0;
   background: ${system.color.primary};
@@ -66,5 +78,5 @@ const Nav = styled.nav`
   justify-content: space-between;
   padding: 2.5rem 10rem;
   height: 7.5rem;
-  margin-bottom: 10rem;
+  margin-bottom: ${({ fixed }) => (fixed ? '10rem' : '1rem')};
 `

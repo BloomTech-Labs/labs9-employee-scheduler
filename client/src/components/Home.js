@@ -19,7 +19,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <OuterContainer>
         <BreadCrumb location={this.state.location} />
         <Container src={bgImg}>
           <p>
@@ -28,8 +28,7 @@ class Home extends Component {
           </p>
           <Button type="text">Schedule Now</Button>
         </Container>
-        <LeftSideBar />
-      </div>
+      </OuterContainer>
     )
   }
 }
@@ -39,6 +38,10 @@ export default Home
 Home.propTypes = {
   // add propTypes here
 }
+
+const OuterContainer = styled('div')`
+  position: relative;
+`
 
 const Container = styled('div')`
   margin: 7.5rem 7.5rem 0;

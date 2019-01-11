@@ -1,19 +1,9 @@
 const supertest = require('supertest')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
-const { populateOrg, insertOrg } = require('../database/utils/generateData')
+const { generateTeamData } = require('../database/utils/generateData')
 
 const request = supertest(server)
-
-const generateOrg = async () => {
-  const org = populateOrg()
-  await insertOrg(org, knex)
-  return org
-}
-
-const deleteOrg = async org => {
-  await knex('organizations').delete({ id: org.organization.id })
-}
 
 describe('user endpoint', () => {
   it('returns all users GET /', async () => {
@@ -29,8 +19,10 @@ describe('user endpoint', () => {
 
   it('returns all users for an org', async () => {
     console.log('running')
-    const org = await generateOrg()
-    const { id } = org.organization
+    // populates database with team data
+    const { team, cleanup } = await generateTeamData(knex)
+
+    const { id } = team.organization
     const expected = await knex('users').where({
       organization_id: id
     })
@@ -40,12 +32,15 @@ describe('user endpoint', () => {
     expect(response.status).toEqual(200)
     expect(response.body.length).toEqual(expected.length)
 
-    await deleteOrg(org)
+    // cleans up unneeded team data after tests
+    await cleanup()
   })
 
   it('edits a user\'s name', async () => {
-    const org = await generateOrg()
-    const { users } = org
+    // populates database with team data
+    const { team, cleanup } = await generateTeamData(knex)
+
+    const { users } = team
     const target = users[0]
     const changes = { first_name: 'Henry' }
     const response = await request.put(`/users/${target.id}`).send(changes)
@@ -55,6 +50,8 @@ describe('user endpoint', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual(1)
     expect(updatedUser).toEqual({ ...target, ...changes })
-    await deleteOrg(org)
+
+    // cleans up unneeded team data after tests
+    await cleanup()
   })
 })
