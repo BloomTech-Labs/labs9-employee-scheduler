@@ -38,10 +38,11 @@ AssignedSifts.propTypes = {
 
 const Container = styled('div')`
   padding: ${system.spacing.bigPadding};
-  border: 1px solid black;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 3px 0px;
   width: 100%;
   max-width: 216px;
   min-width: 200px;
+  border-radius: ${system.borders.radius};
   .title {
     width; 100%;
     max-width: 200px;
@@ -53,7 +54,7 @@ const Container = styled('div')`
       flex-direction: row;
       width: 100%;
       justify-content: space-between;
-      margin: 10px auto;
+      margin: 33px auto;
       p {
         font-size: ${system.fontSizing.m};
       }

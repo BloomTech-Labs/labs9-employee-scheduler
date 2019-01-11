@@ -38,10 +38,17 @@ class EmployeeDashboard extends Component {
               times: '10am-2pm'
             }
           ],
-          timeOfApproved: {
-            date: 'July 24th'
-          },
-          timeOfRequest: {
+          timeOffApproved: [
+            {
+              id: 1,
+              date: 'July 24th'
+            },
+            {
+              id: 1,
+              date: 'July 27th'
+            }
+          ],
+          timeOffRequest: {
             data: 'July 25th',
             reason: 'Sick day'
           }
@@ -81,5 +88,6 @@ const Container = styled('div')`
   flex-direction: column;
   .employee-welcome {
     font-size: ${system.fontSizing.l};
+    margin: 15px 0 15px 0;
   }
 `
