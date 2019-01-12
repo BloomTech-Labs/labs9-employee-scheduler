@@ -4,6 +4,7 @@ const availabilitiesRouter = require('./availabilitiesRouter')
 const timeOffRequestsRouter = require('./timeOffRequestsRouter')
 const eventsRouter = require('./eventsRouter')
 const employeesRouter = require('./employeesRouter')
+const dashboardRouter = require('./dashboardRouter')
 
 module.exports = {
   organizationsRouter,
@@ -11,5 +12,6 @@ module.exports = {
   availabilitiesRouter,
   timeOffRequestsRouter,
   eventsRouter,
-  employeesRouter
+  employeesRouter,
+  dashboardRouter
 }
