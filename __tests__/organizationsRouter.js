@@ -61,8 +61,15 @@ describe('testing the organizations router', () => {
         .post('/organizations')
         .send(org)
         .set('authorization', 'testing')
-      expect(response.body).toEqual([1])
+      expect(response.body.length).toEqual(1)
       expect(response.status).toBe(201)
+
+      const target = await knex('organizations').where(org)
+      expect(target.length).toEqual(1)
+
+      await knex('organizations')
+        .delete()
+        .where(org)
     })
 
     it('can reject an empty organization', async () => {
@@ -93,7 +100,13 @@ describe('testing the organizations router', () => {
       expect(edit.status).toBe(200)
       expect(response.body.name).toBe('Edited Org')
 
-      await cleanup
+      const target = await knex('organizations')
+        .where('id', id)
+        .select('name')
+        .first()
+      expect(target.name).toBe('Edited Org')
+
+      await cleanup()
     })
 
     it('can reject an empty organization', async () => {
