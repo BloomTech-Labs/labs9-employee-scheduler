@@ -12,16 +12,40 @@ describe('generateTeamData', () => {
     const { team, cleanup } = await generateTeamData(knex)
 
     const {
-      organizations,
+      organization,
       users,
       events,
       timeOffRequests,
       availabilities
     } = team
-    expect(organizations.length).toBeGreaterThan(originalOrg.length)
-    expect(users.length).toBeGreaterThan(originalUsers.length)
-    expect(events.length).toBeGreaterThan(originalEvents.length)
-    expect(timeOffRequests.length).toBeGreaterThan(originalTimeOff.length)
-    expect(availabilities.length).toBeGreaterThan(originalAvails.length)
+
+    let newOrg = await knex('organizations')
+    let newUsers = await knex('users')
+    let newEvents = await knex('events')
+    let newTimeOff = await knex('time_off_requests')
+    let newAvails = await knex('availabilities')
+
+    expect(newOrg.length).toEqual(originalOrg.length + 1)
+    expect(newUsers.length).toEqual(originalUsers.length + users.length)
+    expect(newEvents.length).toEqual(originalEvents.length + events.length)
+    expect(newTimeOff.length).toEqual(
+      originalTimeOff.length + timeOffRequests.length
+    )
+    expect(newAvails.length).toEqual(
+      originalAvails.length + availabilities.length
+    )
+    await cleanup()
+
+    newOrg = await knex('organizations')
+    newUsers = await knex('users')
+    newEvents = await knex('events')
+    newTimeOff = await knex('time_off_requests')
+    newAvails = await knex('availabilities')
+
+    expect(newOrg.length).toEqual(originalOrg.length)
+    expect(newUsers).toEqual(originalUsers)
+    expect(newEvents.length).toEqual(originalEvents.length)
+    expect(newTimeOff.length).toEqual(originalTimeOff.length)
+    expect(newAvails.length).toEqual(originalAvails.length)
   })
 })
