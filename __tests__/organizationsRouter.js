@@ -105,11 +105,7 @@ describe('testing the organizations router', () => {
         .send({})
         .set('authorization', 'testing')
 
-      console.log(
-        await request
-          .get(`/organizations/${id}`)
-          .set('authorization', 'testing')
-      )
+      await request.get(`/organizations/${id}`).set('authorization', 'testing')
 
       expect(response.status).toBe(400)
       expect(response.body).toEqual({ error: 'No fields provided to update' })
