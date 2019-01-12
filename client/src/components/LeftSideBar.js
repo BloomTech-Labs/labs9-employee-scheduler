@@ -51,34 +51,39 @@ const Hamburger = styled.div`
   font-size: ${system.fontSizing.ml};
   color: ${system.color.neutral};
   cursor: pointer;
-  margin: ${system.spacing.bigPadding};
+  margin: ${system.spacing.bigPadding} 25px 50px;
 `
 
 const Nav = styled.nav`
+  background: ${system.color.white};
+  box-shadow: ${system.shadows.otherLight};
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  border: ${system.borders.grey};
   border-top: none;
   border-left: none;
   border-radius: ${system.borders.radius};
-  width: 200px;
+  width: 150px;
   position: absolute;
   visibility: ${props => (props.show ? null : 'hidden')};
 
   a {
     text-decoration: none;
     padding: ${system.spacing.standardPadding};
-    border-bottom: ${system.borders.grey};
-    color: ${system.color.bodytext};
-    font-size: ${system.fontSizing.m};
+    border-bottom: 1px solid ${system.color.neutral};
+    color: ${system.color.captiontext};
+    font-size: ${system.fontSizing.sm};
     transition: ${system.transition};
     :hover {
       color: ${system.color.neutral};
       background: ${system.color.primary};
     }
+    :first-child {
+      border-radius: 0 ${system.borders.radius} 0 0;
+    }
     :last-child {
       border: ${system.borders.transparent};
+      border-radius: 0 0 ${system.borders.radius} 0;
     }
   }
 `
