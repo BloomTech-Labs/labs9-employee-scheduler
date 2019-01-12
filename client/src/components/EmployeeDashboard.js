@@ -24,7 +24,7 @@ class EmployeeDashboard extends Component {
     this.props.fetchSingleEmployeeFromDB(id)
   }
 
-  // for when we adding loading state
+  // for when we adding loading state to redux
   // componentDidUpdate(nextProps) {
   //   if (nextProps.employee.employee === null & this.props.employee.employee.loading) {
   //     this.props.history.push('/not-found')
@@ -34,6 +34,7 @@ class EmployeeDashboard extends Component {
   render() {
     const { employee } = this.props.employee
     let assignedShift
+    let approvedTimeOff
 
     if (employee.shifts) {
       assignedShift = (
@@ -41,7 +42,7 @@ class EmployeeDashboard extends Component {
           {employee.shifts.map(item => {
             return (
               <div className="details" key={item.id}>
-                <div>
+                <div className="date">
                   <p>{item.day}</p>
                 </div>
                 <div>
@@ -53,7 +54,28 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      assignedShift = 'loading'
+      assignedShift = <p>Loading</p>
+    }
+
+    if (employee.time_off) {
+      approvedTimeOff = (
+        <React.Fragment>
+          {employee.time_off.map(item => {
+            return (
+              <div className="details" key={item.id}>
+                <div className="date">
+                  <p>{item.date}</p>
+                </div>
+                <div className="reason">
+                  <p>{item.reason}</p>
+                </div>
+              </div>
+            )
+          })}
+        </React.Fragment>
+      )
+    } else {
+      approvedTimeOff = <p>No Time off Approved yet</p>
     }
 
     return (
@@ -72,7 +94,13 @@ class EmployeeDashboard extends Component {
                 {assignedShift}
               </div>
             </div>
-            {/* <TimeOffApproved user={employee} /> */}
+
+            <div className="assigned-wrapper">
+              <div className="title">
+                <h5>Approved Time Off</h5>
+                {approvedTimeOff}
+              </div>
+            </div>
             <TimeOffRequest />
           </div>
         </Container>
@@ -84,7 +112,6 @@ class EmployeeDashboard extends Component {
 const Container = styled('div')`
   width: 100%;
   padding: ${system.spacing.container};
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   .employee-welcome {
@@ -115,7 +142,14 @@ const Container = styled('div')`
           width: 100%;
           justify-content: space-between;
           margin: 33px auto;
+          .date {
+            min-width: 128px;
+          }
+          .reason {
+            width: 300px;
+          }
           p {
+            width: 100%;
             padding: 2.5px 7.5px;
             font-family: ${props =>
               props.main ? "'Lato', sans-serif" : 'inherit'};
