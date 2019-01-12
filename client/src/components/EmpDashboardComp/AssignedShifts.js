@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 
-const AssignedSifts = ({ user }) => {
+const AssignedSifts = props => {
   return (
     <Container>
-      {user.map(item => {
+      {props.employee.shifts.map(item => {
         return (
           <div className="title" key={item.id}>
             <h5>Assigned Shifts</h5>
-            {item.assignedShift.map(assigned => {
+            {item.shifts.map(assigned => {
               return (
                 <div className="details" key={assigned.id}>
                   <div>
@@ -35,28 +35,4 @@ AssignedSifts.propTypes = {
   // adding propTypes here
 }
 
-const Container = styled('div')`
-  padding: ${system.spacing.bigPadding};
-  box-shadow: ${system.shadows.otherLight};
-  width: 100%;
-  max-width: 216px;
-  min-width: 200px;
-  border-radius: ${system.borders.radius};
-  .title {
-    width: 100%;
-    max-width: 200px;
-    h5 {
-      font-size: ${system.fontSizing.ml};
-    }
-    .details {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: space-between;
-      margin: 33px auto;
-      p {
-        font-size: ${system.fontSizing.m};
-      }
-    }
-  }
-`
+const Container = styled('div')``
