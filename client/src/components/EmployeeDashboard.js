@@ -7,8 +7,8 @@ import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import { fetchSingleEmployeeFromDB } from '../actions'
 import { connect } from 'react-redux'
-import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -16,91 +16,70 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'Employee Dashboard',
-      user: [
-        // {
-        //   id: 1,
-        //   firstname: 'Ariel',
-        //   lastname: 'Smith',
-        //   assignedShift: [
-        //     {
-        //       id: 1,
-        //       date: 'July 18',
-        //       times: '10am-2pm'
-        //     },
-        //     {
-        //       id: 2,
-        //       date: 'July 20',
-        //       times: '10am-2pm'
-        //     },
-        //     {
-        //       id: 3,
-        //       date: 'July 21',
-        //       times: '10am-2pm'
-        //     }
-        //   ],
-        //   timeOffApproved: [
-        //     {
-        //       id: 1,
-        //       date: 'July 24th'
-        //     },
-        //     {
-        //       id: 2,
-        //       date: 'July 27th'
-        //     }
-        //   ],
-        //   timeOffRequest: [
-        //     {
-        //       id: 1,
-        //       data: 'July 25th',
-        //       reason: 'Sick day'
-        //     },
-        //     {
-        //       id: 2,
-        //       data: 'July 25th',
-        //       reason: 'Sick day'
-        //     }
-        //   ]
-        // }
-      ]
+      location: 'Employee Dashboard'
     }
   }
 
   componentDidMount() {
-    const id = '89ee112d-b517-4822-996d-392c079a86c5'
+    const { id } = this.props.match.params
     this.props.fetchSingleEmployeeFromDB(id)
   }
+
+  // for when we adding loading state
+  // componentDidUpdate(nextProps) {
+  //   if (nextProps.employee.employee === null & this.props.employee.employee.loading) {
+  //     this.props.history.push('/not-found')
+  //   }
+  // }
+
   render() {
+    const { employee } = this.props.employee
+    let assignedShift
+
+    if (employee.shifts) {
+      assignedShift = (
+        <React.Fragment>
+          {employee.shifts.map(item => {
+            return (
+              <div className="details" key={item.id}>
+                <div>
+                  <p>{item.day}</p>
+                </div>
+                <div>
+                  <p>{item.time}</p>
+                </div>
+              </div>
+            )
+          })}
+        </React.Fragment>
+      )
+    } else {
+      assignedShift = 'loading'
+    }
+
     return (
       <React.Fragment>
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {this.state.user.first_name}</h1>
+            <h1>Welcome {employee.first_name}</h1>
           </div>
           <div className="wrapper">
-            <AssignedShifts user={this.state.user} />
-            <TimeOffApproved user={this.state.user} />
+            <div className="assigned-wrapper">
+              <div className="title">
+                <h5>Assigned Shifts</h5>
+                {/* returns all assigned shift dates and times for the user */}
+                {assignedShift}
+              </div>
+            </div>
+            {/* <TimeOffApproved user={employee} /> */}
             <TimeOffRequest />
           </div>
         </Container>
       </React.Fragment>
     )
   }
-}
-
-const mapStateToProps = state => ({
-  employee: state.employee
-})
-
-export default connect(
-  mapStateToProps,
-  { fetchSingleEmployeeFromDB }
-)(EmployeeDashboard)
-
-EmployeeDashboard.propTypes = {
-  // add propTypes here
 }
 
 const Container = styled('div')`
@@ -118,5 +97,51 @@ const Container = styled('div')`
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
+    .assigned-wrapper {
+      background: ${system.color.white};
+      padding: ${system.spacing.standardPadding};
+      margin: ${system.spacing.bigPadding};
+      border-radius: ${system.borders.bigRadius};
+      width: 300px;
+      box-shadow: ${system.shadows.otherLight};
+      .title {
+        width: 100%;
+        max-width: 268px;
+        h5 {
+          font-size: ${system.fontSizing.ml};
+        }
+        .details {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          justify-content: space-between;
+          margin: 33px auto;
+          p {
+            padding: 2.5px 7.5px;
+            font-family: ${props =>
+              props.main ? "'Lato', sans-serif" : 'inherit'};
+            font-weight: ${props => (props.main ? 'bold' : null)};
+            color: ${props =>
+              props.main ? system.color.primary : system.color.captiontext};
+            font-size: ${system.fontSizing.m};
+            line-height: ${system.spacing.lineHeight};
+          }
+        }
+      }
+    }
   }
 `
+const mapStateToProps = state => {
+  return {
+    employee: state.employee
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchSingleEmployeeFromDB }
+)(EmployeeDashboard)
+
+EmployeeDashboard.propTypes = {
+  // add propTypes here
+}

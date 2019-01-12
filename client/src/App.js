@@ -76,7 +76,7 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route path="/billing" component={Billing} />
           <Route path="/calendar" component={Calendar} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard/:id" component={Dashboard} />
           <Route path="/settings" component={Settings} />
           <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
