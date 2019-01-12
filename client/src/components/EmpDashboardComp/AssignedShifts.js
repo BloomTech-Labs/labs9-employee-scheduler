@@ -43,7 +43,7 @@ const Container = styled('div')`
   min-width: 200px;
   border-radius: ${system.borders.radius};
   .title {
-    width; 100%;
+    width: 100%;
     max-width: 200px;
     h5 {
       font-size: ${system.fontSizing.ml};

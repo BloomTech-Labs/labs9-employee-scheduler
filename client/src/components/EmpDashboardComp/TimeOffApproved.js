@@ -36,12 +36,11 @@ const TimeOffContainer = styled('div')`
   padding: ${system.spacing.bigPadding};
   box-shadow: ${system.shadows.otherLight};
   width: 100%;
-  max-width: 216px;
+  max-width: 30 0px;
   min-width: 200px;
   border-radius: ${system.borders.radius};
   .title {
-    width; 100%;
-    max-width: 200px;
+    width: 100%;
     h5 {
       font-size: ${system.fontSizing.ml};
     }
