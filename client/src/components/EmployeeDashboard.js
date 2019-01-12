@@ -7,62 +7,68 @@ import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import { connect } from 'react-redux'
+import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
-//
 class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
       location: 'Employee Dashboard',
       user: [
-        {
-          id: 1,
-          firstname: 'Ariel',
-          lastname: 'Smith',
-          assignedShift: [
-            {
-              id: 1,
-              date: 'July 18',
-              times: '10am-2pm'
-            },
-            {
-              id: 2,
-              date: 'July 20',
-              times: '10am-2pm'
-            },
-            {
-              id: 3,
-              date: 'July 21',
-              times: '10am-2pm'
-            }
-          ],
-          timeOffApproved: [
-            {
-              id: 1,
-              date: 'July 24th'
-            },
-            {
-              id: 2,
-              date: 'July 27th'
-            }
-          ],
-          timeOffRequest: [
-            {
-              id: 1,
-              data: 'July 25th',
-              reason: 'Sick day'
-            },
-            {
-              id: 2,
-              data: 'July 25th',
-              reason: 'Sick day'
-            }
-          ]
-        }
+        // {
+        //   id: 1,
+        //   firstname: 'Ariel',
+        //   lastname: 'Smith',
+        //   assignedShift: [
+        //     {
+        //       id: 1,
+        //       date: 'July 18',
+        //       times: '10am-2pm'
+        //     },
+        //     {
+        //       id: 2,
+        //       date: 'July 20',
+        //       times: '10am-2pm'
+        //     },
+        //     {
+        //       id: 3,
+        //       date: 'July 21',
+        //       times: '10am-2pm'
+        //     }
+        //   ],
+        //   timeOffApproved: [
+        //     {
+        //       id: 1,
+        //       date: 'July 24th'
+        //     },
+        //     {
+        //       id: 2,
+        //       date: 'July 27th'
+        //     }
+        //   ],
+        //   timeOffRequest: [
+        //     {
+        //       id: 1,
+        //       data: 'July 25th',
+        //       reason: 'Sick day'
+        //     },
+        //     {
+        //       id: 2,
+        //       data: 'July 25th',
+        //       reason: 'Sick day'
+        //     }
+        //   ]
+        // }
       ]
     }
+  }
+
+  componentDidMount() {
+    const id = '89ee112d-b517-4822-996d-392c079a86c5'
+    this.props.fetchSingleEmployeeFromDB(id)
   }
   render() {
     return (
@@ -71,7 +77,7 @@ class EmployeeDashboard extends Component {
         <BreadCrumb location={this.state.location} />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {this.state.user[0].firstname}</h1>
+            <h1>Welcome {this.state.user.first_name}</h1>
           </div>
           <div className="wrapper">
             <AssignedShifts user={this.state.user} />
@@ -84,7 +90,14 @@ class EmployeeDashboard extends Component {
   }
 }
 
-export default EmployeeDashboard
+const mapStateToProps = state => ({
+  employee: state.employee
+})
+
+export default connect(
+  mapStateToProps,
+  { fetchSingleEmployeeFromDB }
+)(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
   // add propTypes here
