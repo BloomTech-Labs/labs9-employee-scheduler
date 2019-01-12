@@ -23,6 +23,9 @@ const updateOrg = (orgId, updates) => {
 }
 
 const deleteOrg = orgId => {
+  if (orgId === undefined) {
+    return Promise.reject('deleteOrg requires an argument')
+  }
   return db('organizations as o')
     .where({ 'o.id': orgId })
     .del()
