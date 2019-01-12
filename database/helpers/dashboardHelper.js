@@ -19,6 +19,8 @@ const getDashboard = async userId => {
         'Friday',
         'Saturday'
       ]
+      // do a little clever formatting with the date formatting
+      // depending on calendar api this might change later
       return [
         ...acc,
         { id, day: weekdays[day], time: `${start_time}am-${end_time - 12}pm` }
@@ -46,37 +48,3 @@ const getDashboard = async userId => {
 module.exports = {
   getDashboard
 }
-
-// return {
-//   user: [
-//     {
-//       id: 1,
-//       firstname: 'Ariel',
-//       lastname: 'Smith',
-//       assignedShift: [
-//         {
-//           id: 1,
-//           date: 'July 18',
-//           times: '10am-2pm'
-//         },
-//         {
-//           id: 2,
-//           date: 'July 20',
-//           times: '10am-2pm'
-//         },
-//         {
-//           id: 3,
-//           date: 'July 21',
-//           times: '10am-2pm'
-//         }
-//       ],
-//       timeOfApproved: {
-//         date: 'July 24th'
-//       },
-//       timeOfRequest: {
-//         data: 'July 25th',
-//         reason: 'Sick day'
-//       }
-//     }
-//   ]
-// }
