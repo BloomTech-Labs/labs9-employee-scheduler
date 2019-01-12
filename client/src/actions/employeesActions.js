@@ -39,7 +39,7 @@ export const fetchEmployeesFromDB = orgId => dispatch => {
 // fetches a single employee by user id
 export const fetchSingleEmployeeFromDB = userid => dispatch => {
   axios
-    .get(`${baseURL}/dashboard/:id`, {
+    .get(`${baseURL}/dashboard/${userid}`, {
       headers: { authorization: 'testing' }
     })
     .then(res =>
