@@ -78,7 +78,7 @@ const Nav = styled.nav`
       color: ${system.color.neutral};
       background: ${system.color.primary};
     }
-    :first-child {
+    :first-of-type {
       border-radius: 0 ${system.borders.radius} 0 0;
     }
     :last-child {
