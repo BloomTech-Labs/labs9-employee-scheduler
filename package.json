@@ -1,6 +1,6 @@
 {
   "name": "cadence",
-  "version": "1.0.0",
+  "version": "1.12.3",
   "engines": {
     "node": "10.x"
   },
@@ -22,6 +22,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "faker": "^4.1.0",
     "firebase-admin": "^6.5.0",
     "helmet": "^3.15.0",
     "knex": "^0.16.3",
@@ -29,8 +30,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
     "sqlite3": "^4.0.4",
-    "uuid": "^3.3.2",
-    "faker": "^4.1.0"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "5.6.0",
