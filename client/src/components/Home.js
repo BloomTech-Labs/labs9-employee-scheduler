@@ -52,11 +52,9 @@ const Container = styled('div')`
   background-size: cover;
 
   h1 {
-    padding: 75px ${system.spacing.bigPadding} 0;
-    color: ${system.color.bodytext};
+    padding: 75px 0 0;
     font-size: ${system.fontSizing.xl};
     width: 65rem;
-    font-weight: bold;
   }
   p {
     padding: ${system.spacing.bigPadding};
