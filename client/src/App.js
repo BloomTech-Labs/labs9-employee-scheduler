@@ -52,13 +52,17 @@ class App extends Component {
             h3,
             h4,
             h5,
-            h6 {
+            h6,
+            label {
               font-family: 'Lato', serif;
             }
 
-            a {
+            a,
+            input,
+            button {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
+              outline: none;
             }
           `}
         />
