@@ -73,9 +73,11 @@ class EmployeeDashboard extends Component {
           <div className="employee-welcome">
             <h1>Welcome {this.state.user[0].firstname}</h1>
           </div>
-          <AssignedShifts user={this.state.user} />
-          <TimeOffApproved />
-          <TimeOffRequest />
+          <div className="wrapper">
+            <AssignedShifts user={this.state.user} />
+            <TimeOffApproved user={this.state.user} />
+            <TimeOffRequest />
+          </div>
         </Container>
       </React.Fragment>
     )
@@ -96,6 +98,12 @@ const Container = styled('div')`
   flex-direction: column;
   .employee-welcome {
     font-size: ${system.fontSizing.l};
-    margin: 15px 0 15px 0;
+    margin: 15px 0 58px 0;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
   }
 `

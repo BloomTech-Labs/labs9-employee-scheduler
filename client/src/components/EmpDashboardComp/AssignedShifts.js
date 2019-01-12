@@ -10,7 +10,6 @@ const AssignedSifts = ({ user }) => {
         return (
           <div className="title" key={item.id}>
             <h5>Assigned Shifts</h5>
-            <div />
             {item.assignedShift.map(assigned => {
               return (
                 <div className="details" key={assigned.id}>
@@ -38,7 +37,7 @@ AssignedSifts.propTypes = {
 
 const Container = styled('div')`
   padding: ${system.spacing.bigPadding};
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 3px 0px;
+  box-shadow: ${system.shadows.otherLight};
   width: 100%;
   max-width: 216px;
   min-width: 200px;
