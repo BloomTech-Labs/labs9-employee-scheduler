@@ -12,7 +12,13 @@ class Settings extends Component {
   state = {
     location: 'Settings',
     disabled: true,
-    fakeUser: {}
+    fakeUser: {
+      email: 'example@example.com',
+      phone: '123-456-7890',
+      emailpref: true,
+      phonepref: false,
+      password: ''
+    }
   }
 
   clickHandler = () => {
@@ -21,10 +27,17 @@ class Settings extends Component {
     })
   }
 
-  inputHandler = event => {
+  changeHandler = event => {
+    event.preventDefault()
     this.setState({
-      [event.target.name]: event.target.value
+      fakeUser: {
+        [event.target.name]: event.target.value
+      }
     })
+  }
+
+  submitHandler = event => {
+    event.preventDefault()
   }
 
   render() {
@@ -44,7 +57,9 @@ class Settings extends Component {
                 type="email"
                 name="email"
                 placeholder="ex. bruce@waynecorp.com"
-                value="Hello World"
+                onChange={this.changeHandler}
+                defaultValue={this.state.fakeUser.email}
+                disabled={this.state.disabled}
               />
               <label htmlFor="tel">Phone</label>
               <input
@@ -52,17 +67,34 @@ class Settings extends Component {
                 name="tel"
                 placeholder="ex. 111-111-1111"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                onChange={this.changeHandler}
+                defaultValue={this.state.fakeUser.phone}
+                disabled={this.state.disabled}
               />
               <div>
                 <label>Preferred Contact Method</label>
                 <br />
-                <input type="checkbox" name="emailpref" value="email" />
+                <input
+                  type="checkbox"
+                  name="emailpref"
+                  onChange={this.changeHandler}
+                  defaultChecked={this.state.fakeUser.emailpref}
+                />
                 <label htmlFor="emailpref">Email?</label>
 
-                <input type="checkbox" name="phonepref" value="phone" />
+                <input
+                  type="checkbox"
+                  name="phonepref"
+                  onChange={this.changeHandler}
+                  defaultChecked={this.state.fakeUser.phonepref}
+                />
                 <label htmlFor="phonepref">Phone?</label>
               </div>
-              {this.state.disabled ? null : editOptions}
+              {this.state.disabled ? null : (
+                <EditOptions
+                  changeHandler={event => this.changeHandler(event)}
+                />
+              )}
             </form>
           </fieldset>
         </Container>
@@ -77,15 +109,24 @@ Settings.propTypes = {
   // add propTypes here
 }
 
-const editOptions = (
-  <>
-    <label htmlFor="password">Password</label>
-    <input name="password" type="password" placeholder="A strong password" />
-    <label htmlFor="confirm">Confirm Password</label>
-    <input name="confirm" type="password" placeholder="Confirm password" />
-    <Button type="submit">Submit Edits</Button>
-  </>
-)
+// These input fields will only appear if the user is editing the page.
+const EditOptions = props => {
+  return (
+    <>
+      <label htmlFor="password">Password</label>
+      <input
+        name="password"
+        type="password"
+        placeholder="A strong password"
+        onChange={props.changeHandler}
+        value={props.value}
+      />
+      <label htmlFor="confirm">Confirm Password</label>
+      <input name="confirm" type="password" placeholder="Confirm password" />
+      <Button type="submit">Submit Edits</Button>
+    </>
+  )
+}
 
 const Container = styled('div')`
   margin: 0 7.5rem;
@@ -112,7 +153,6 @@ const Container = styled('div')`
       top: 25px;
       right: 25px;
       cursor: pointer;
-
       :hover {
         color: ${system.color.primary};
       }
@@ -131,7 +171,8 @@ const Container = styled('div')`
       padding: 2.5px 5px;
       margin: 0.5rem 0 ${system.spacing.hugePadding};
       border: none;
-      border-bottom: 2px solid ${system.color.lightgrey};
+      border-bottom: 2px solid
+        ${props => (props.disabled ? 'transparent' : system.color.lightgrey)};
       transition: ${system.transition};
       :disabled {
         background: ${system.color.white};
