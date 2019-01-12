@@ -52,13 +52,17 @@ class App extends Component {
             h3,
             h4,
             h5,
-            h6 {
+            h6,
+            label {
               font-family: 'Lato', serif;
             }
 
-            a {
+            a,
+            input,
+            button {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
+              outline: none;
             }
           `}
         />
@@ -76,7 +80,7 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route path="/billing" component={Billing} />
           <Route path="/calendar" component={Calendar} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard/:id" component={Dashboard} />
           <Route path="/settings" component={Settings} />
           <Route path="/login" render={props => <Login {...props} />} />
         </Switch>
