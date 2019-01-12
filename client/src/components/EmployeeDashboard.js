@@ -98,15 +98,15 @@ const Container = styled('div')`
     justify-content: space-around;
     width: 100%;
     .assigned-wrapper {
-      padding: ${system.spacing.bigPadding};
+      background: ${system.color.white};
+      padding: ${system.spacing.standardPadding};
+      margin: ${system.spacing.bigPadding};
+      border-radius: ${system.borders.bigRadius};
+      width: 300px;
       box-shadow: ${system.shadows.otherLight};
-      width: 100%;
-      max-width: 253px;
-      min-width: 253px;
-      border-radius: ${system.borders.radius};
       .title {
         width: 100%;
-        max-width: 200px;
+        max-width: 268px;
         h5 {
           font-size: ${system.fontSizing.ml};
         }
@@ -117,7 +117,14 @@ const Container = styled('div')`
           justify-content: space-between;
           margin: 33px auto;
           p {
+            padding: 2.5px 7.5px;
+            font-family: ${props =>
+              props.main ? "'Lato', sans-serif" : 'inherit'};
+            font-weight: ${props => (props.main ? 'bold' : null)};
+            color: ${props =>
+              props.main ? system.color.primary : system.color.captiontext};
             font-size: ${system.fontSizing.m};
+            line-height: ${system.spacing.lineHeight};
           }
         }
       }
