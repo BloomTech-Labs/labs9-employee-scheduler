@@ -7,7 +7,7 @@ import './Calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-Calendar.momentLocalizer(moment)
+const localizer = Calendar.momentLocalizer(moment)
 
 const DnDCalendar = withDragAndDrop(Calendar)
 
@@ -44,6 +44,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <DnDCalendar
+          localizer={localizer}
           defaultDate={new Date()}
           defaultView="month"
           events={this.state.events}
