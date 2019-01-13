@@ -1,31 +1,65 @@
 import React from 'react'
-import { createStore } from 'redux'
-import { Provider, connect } from 'react-redux'
-import { render, fireEvent, cleanup } from 'react-testing-library'
-import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
-import { employeeReducer } from '../reducers/employeesReducer'
-import EmployeeDashboard from '../components/EmployeeDashboard'
+import { Provider } from 'react-redux'
+import { render } from 'react-testing-library'
+import { renderWithRedux } from './Redux'
 
-// this is a handy function that I normally make available for all my tests
-// that deal with connected components.
-// you can provide initialState or the entire store that the ui is rendered with
+const employee = {
+  id: '89ee112d-b517-4822-996d-392c079a86c5',
+  first_name: 'Loyce',
+  last_name: 'Koepp',
+  shifts: [
+    {
+      id: '67cb8ca8-8de1-420e-ba26-dc3ae1ebb84a',
+      day: 'Monday',
+      time: '0am-3pm'
+    }
+  ],
+  time_off: [
+    {
+      id: '1624a6a1-ab6a-4517-9fca-38b4ae36feb9',
+      date: '2019-01-20',
+      status: 'confirmed',
+      reason: 'Consectetur odio nisi.'
+    }
+  ]
+}
 
-function renderWithRedux(
-  ui,
-  { initialState, store = createStore(employeeReducer, initialState) } = {}
-) {
-  return {
-    ...render(<Provider store={store}>{ui}</Provider>),
-    // adding `store` to the returned utilities to allow us
-    // to reference it in our tests (just try to avoid using
-    // this to test implementation details).
-    store
+const fetchSingleEmployeeFromDB = userid => dispatch => {
+  dispatch({
+    type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
+    payload: employee
+  })
+}
+function employeeReducer(state = { employee: [] }, action) {
+  switch (action.type) {
+    case 'FETCH_EMPLOYEE_FROM_DB_SUCCESS':
+      return {
+        employee: employee
+      }
+    default:
+      return state
   }
 }
 
-describe('Employee Dashboard', () => {
-  it('calls fetchSingleEmployeeFromDB once', () => {
+class EmployeeDashboard extends React.Component {
+  componentDidMount() {
+    fetchSingleEmployeeFromDB()
+  }
+
+  render() {
+    return (
+      <div>
+        <p data-testid="day">{employee.shifts[0].day}</p>
+        <p data-testid="time">{employee.shifts[0].time}</p>
+      </div>
+    )
+  }
+}
+
+describe('employee dashboard with redux', () => {
+  it('can render with initial state', () => {
     const { getByTestId, getByText } = renderWithRedux(<EmployeeDashboard />)
-    expect(fetchSingleEmployeeFromDB).toHaveBeenCalled(1)
+    expect(getByTestId('day').textContent).toBe('Monday')
+    expect(getByTestId('time').textContent).toBe('0am-3pm')
   })
 })

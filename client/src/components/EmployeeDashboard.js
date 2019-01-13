@@ -14,13 +14,20 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'Employee Dashboard'
+      location: 'Employee Dashboard',
+      errors: ''
     }
   }
 
   componentDidMount() {
     const { id } = this.props.match.params
     this.props.fetchSingleEmployeeFromDB(id)
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    if (prevProps.error !== this.props.error) {
+      this.setState({ error: this.props.error })
+    }
   }
 
   // for when we adding loading state to redux
@@ -53,7 +60,12 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      assignedShift = <p>Loading</p>
+      assignedShift = <p>Loading...</p>
+    }
+
+    if (Object.keys(employee).length === 0) {
+      assignedShift = <p>{this.state.error}</p>
+      approvedTimeOff = <p>{this.state.error}</p>
     }
 
     if (employee.time_off) {
@@ -63,10 +75,10 @@ class EmployeeDashboard extends Component {
             return (
               <div className="details" key={item.id}>
                 <div className="date">
-                  <p>{item.date}</p>
+                  <p data-test-id="date">{item.date}</p>
                 </div>
                 <div className="reason">
-                  <p>{item.reason}</p>
+                  <p data-test-id="reason">{item.reason}</p>
                 </div>
               </div>
             )
@@ -165,7 +177,8 @@ const Container = styled('div')`
 `
 const mapStateToProps = state => {
   return {
-    employee: state.employee
+    employee: state.employee,
+    error: state.error
   }
 }
 

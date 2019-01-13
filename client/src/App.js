@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Global, css } from '@emotion/core'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Calendar from './components/Calendar'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
