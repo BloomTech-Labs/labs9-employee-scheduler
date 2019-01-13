@@ -10,7 +10,14 @@ import TimeOff from './TimeOff'
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
 class Card extends Component {
   render() {
-    const { first_name, last_name, email, phone } = this.props
+    const {
+      first_name,
+      last_name,
+      email,
+      phone,
+      availabilities,
+      time_off_requests
+    } = this.props
 
     return (
       <Container>
@@ -23,8 +30,8 @@ class Card extends Component {
         {/* Employee Phone */}
         <P>{phone}</P>
 
-        <Availability />
-        <TimeOff />
+        <Availability availabilities={availabilities} />
+        <TimeOff timeOffRequests={time_off_requests} />
       </Container>
     )
   }
