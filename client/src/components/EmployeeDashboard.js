@@ -6,7 +6,7 @@ import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import { fetchSingleEmployeeFromDB } from '../actions'
+import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
 import { connect } from 'react-redux'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site

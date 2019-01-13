@@ -3,7 +3,7 @@ import {
   FETCH_EMPLOYEES_FROM_DB_FAIL,
   FETCH_EMPLOYEE_FROM_DB_SUCCESS,
   FETCH_EMPLOYEE_FROM_DB_FAIL
-} from '../actions'
+} from '../actions/employeesActions'
 
 const initialState = {
   employees: [],
