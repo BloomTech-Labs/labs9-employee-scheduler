@@ -1,7 +1,13 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { render } from 'react-testing-library'
-import { renderWithRedux } from './Redux'
+import { render, waitForElement } from 'react-testing-library'
+import { renderWithReduxAndRouter } from '../../testing/utils'
+import EmployeeDashboard from '../components/EmployeeDashboard'
+import { fetchSingleEmployeefromDB } from '../actions'
+import * as axios from 'axios'
+
+jest.mock('axios')
 
 const employee = {
   id: '89ee112d-b517-4822-996d-392c079a86c5',
@@ -24,42 +30,18 @@ const employee = {
   ]
 }
 
-const fetchSingleEmployeeFromDB = userid => dispatch => {
-  dispatch({
-    type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
-    payload: employee
-  })
-}
-function employeeReducer(state = { employee: [] }, action) {
-  switch (action.type) {
-    case 'FETCH_EMPLOYEE_FROM_DB_SUCCESS':
-      return {
-        employee: employee
-      }
-    default:
-      return state
-  }
-}
-
-class EmployeeDashboard extends React.Component {
-  componentDidMount() {
-    fetchSingleEmployeeFromDB()
-  }
-
-  render() {
-    return (
-      <div>
-        <p data-testid="day">{employee.shifts[0].day}</p>
-        <p data-testid="time">{employee.shifts[0].time}</p>
-      </div>
-    )
-  }
-}
-
 describe('employee dashboard with redux', () => {
-  it('can render with initial state', () => {
-    const { getByTestId, getByText } = renderWithRedux(<EmployeeDashboard />)
-    expect(getByTestId('day').textContent).toBe('Monday')
-    expect(getByTestId('time').textContent).toBe('0am-3pm')
+  it('can render with initial state', async () => {
+    axios.get.mockImplementation(() => Promise.resolve({ data: employee }))
+
+    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
+      <Route path="/dashboard/:id" component={EmployeeDashboard} />,
+      {
+        route: `/dashboard/${employee.id}`
+      }
+    )
+    const testElement = await waitForElement(() => getByTestId('date'))
+    expect(getByTestId('date').textContent).toBe(employee.time_off[0].date)
+    expect(getByTestId('reason').textContent).toBe(employee.time_off[0].reason)
   })
 })
