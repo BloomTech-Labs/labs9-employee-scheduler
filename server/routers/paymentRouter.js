@@ -2,6 +2,7 @@ const express = require('express')
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 const router = express.Router()
 
+//  stripe one time payment recieve from from front end server
 router.post('/', (req, res, next) => {
   const stripeToken = req.body.stripeToken
 
@@ -14,6 +15,7 @@ router.post('/', (req, res, next) => {
     },
     (err, charge) => {
       // asynchronously called
+      console.log('charge: ' + charge) // gives id
       if (err) {
         res.send({
           success: false,
@@ -28,3 +30,5 @@ router.post('/', (req, res, next) => {
     }
   )
 })
+
+module.exports = router

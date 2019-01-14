@@ -24,6 +24,6 @@ server.use('/availabilities', availabilitiesRouter)
 server.use('/time-off-requests', timeOffRequestsRouter)
 server.use('/events', eventsRouter)
 server.use('/dashboard', dashboardRouter)
-server.use('/api/stripe', paymentRouter)
+server.use('/stripe', paymentRouter)
 
 module.exports = server
