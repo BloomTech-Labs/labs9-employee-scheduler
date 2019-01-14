@@ -9,6 +9,7 @@ const system = {
     neutral: '#f4f4f4', // for backgrounds & expanses of white space
     bodytext: '#333333', // for large sections of copy
     captiontext: '#666', // for small size copy, lower-emphasis copy
+    lightgrey: '#999',
     white: '#ffffff'
   },
 
@@ -16,7 +17,7 @@ const system = {
 
   fontSizing: {
     s: '1.2rem', // for captions, could go to 10px if legible
-    sm: '1.4rem', // for large captions
+    sm: '1.6rem', // for large captions
     m: '2rem', // base size for text
     ml: '2.4rem', // size for headers
     l: '3rem', // for big emphasis
@@ -28,7 +29,7 @@ const system = {
     bigRadius: '5px',
     transparent: '1px solid transparent',
     blue: '1px solid #159',
-    grey: '1px solid #999999'
+    grey: '1px solid #666'
   },
 
   shadows: {
@@ -44,6 +45,7 @@ const system = {
   spacing: {
     standardPadding: '7.5px 15px',
     bigPadding: '25px',
+    hugePadding: '40px',
     container: '0 75px',
     mobile: '0 25px',
     lineHeight: 1.25

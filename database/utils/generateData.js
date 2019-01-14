@@ -258,8 +258,10 @@ const generateTeamData = async knex => {
   const team = populateOrg()
   await insertOrg(team, knex)
 
-  const cleanup = async () => {
-    await knex('organizations').delete({ id: team.organization.id })
+  const cleanup = () => {
+    return knex('organizations')
+      .where('id', team.organization.id)
+      .del()
   }
 
   return { team, cleanup }
