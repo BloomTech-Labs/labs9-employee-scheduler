@@ -1,32 +1,30 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import DayPicker from 'react-day-picker/DayPickerInput'
-import 'react-day-picker/lib/style.css'
-import { formatDate, parseDate } from 'react-day-picker/moment'
+import DatePicker from 'react-datepicker'
+
+import 'react-datepicker/dist/react-datepicker.css'
 
 class TimeOffRequest extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedDay: undefined
+      startDate: new Date()
     }
   }
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    })
   }
 
   render() {
-    console.log(this.state.selectedDay)
+    console.log(this.state.startDate)
     return (
       <div>
-        <DayPicker
-          formatDate={formatDate}
-          parseDate={parseDate}
-          placeholder={`${formatDate(new Date())}`}
-          onClick={this.handleChange}
-          // name={}
-          // value{}
+        <DatePicker
+          selected={this.state.startDate}
+          onChange={this.handleChange}
         />
       </div>
     )
