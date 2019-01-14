@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
+
+import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import { fetchSingleEmployeeFromDB } from '../actions'
+import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
+
 import { connect } from 'react-redux'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
@@ -14,6 +17,7 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
+
       location: 'Employee Dashboard',
       errors: ''
     }
@@ -29,6 +33,7 @@ class EmployeeDashboard extends Component {
       this.setState({ error: this.props.error })
     }
   }
+
 
   // for when we adding loading state to redux
   // componentDidUpdate(nextProps) {
@@ -60,12 +65,14 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
+
       assignedShift = <p>Loading...</p>
     }
 
     if (Object.keys(employee).length === 0) {
       assignedShift = <p>{this.state.error}</p>
       approvedTimeOff = <p>{this.state.error}</p>
+
     }
 
     if (employee.time_off) {
@@ -75,10 +82,11 @@ class EmployeeDashboard extends Component {
             return (
               <div className="details" key={item.id}>
                 <div className="date">
-                  <p data-test-id="date">{item.date}</p>
+
+                  <p data-testid="date">{item.date}</p>
                 </div>
                 <div className="reason">
-                  <p data-test-id="reason">{item.reason}</p>
+                  <p data-testid="reason">{item.reason}</p>
                 </div>
               </div>
             )

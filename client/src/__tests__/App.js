@@ -2,9 +2,15 @@ import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
 import { renderWithRouter } from '../../testing/utils'
 import App from '../App'
+import axios from 'axios'
+
+jest.mock('axios')
 
 describe('App component', () => {
   it('renders hello', () => {
+    axios.get.mockImplementation(() =>
+      Promise.resolve({ data: { message: 'hello!' } })
+    )
     const { getByText } = renderWithRouter(<App />)
     expect(getByText('Cadence')).toBeInTheDocument()
   })

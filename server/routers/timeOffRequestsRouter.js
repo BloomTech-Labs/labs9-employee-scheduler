@@ -21,14 +21,17 @@ router.get('/:id', (req, res) => {
 //add time off request
 router.post('/:id', (req, res) => {
   const { id } = req.params
-  const { date, reason, status } = req.body
+  const { date, reason } = req.body
+  console.log(req.body)
+  if (!date || !reason)
+    return res.status(400).json({ error: 'Missing required field(s)' })
 
-  if (!date || !reason || !status)
-    res.status(400).json({ error: 'Missing required field(s)', err })
-
-  addTimeOffRequest(id)
+  addTimeOffRequest({ user_id: id, date, reason, status: 'pending' })
     .then(request => res.status(200).json(request))
-    .catch(err => res.status(404).json({ err: 'Error with request', err }))
+    .catch(err => {
+      console.log(err)
+      res.status(404).json({ err: 'Error with request', err })
+    })
 })
 
 //update time off request
