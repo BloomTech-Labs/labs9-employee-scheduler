@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Global, css } from '@emotion/core'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Calendar from './components/Calendar'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
@@ -52,13 +52,17 @@ class App extends Component {
             h3,
             h4,
             h5,
-            h6 {
+            h6,
+            label {
               font-family: 'Lato', serif;
             }
 
-            a {
+            a,
+            input,
+            button {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
+              outline: none;
             }
           `}
         />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { fireEvent } from 'react-testing-library'
 import { renderWithRouter } from '../../testing/utils'
 import Register from '../components/Register'
 
