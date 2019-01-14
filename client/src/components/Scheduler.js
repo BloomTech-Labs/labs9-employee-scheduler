@@ -79,4 +79,6 @@ class Scheduler extends React.Component {
     )
   }
 }
+
+console.log(HTML5Backend)
 export default DragDropContext(HTML5Backend)(Scheduler)
