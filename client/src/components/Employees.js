@@ -51,13 +51,6 @@ const MidContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   margin: ${system.spacing.container};
-
-  h1 {
-    padding: ${system.spacing.standardPadding};
-    color: ${system.color.bodytext};
-    font-size: ${system.fontSizing.l};
-    margin: ${system.spacing.bigPadding};
-  }
 `
 
 const InnerContainer = styled('div')`

@@ -5,6 +5,7 @@ import {
   FETCH_EMPLOYEE_FROM_DB_FAIL
 } from '../actions/employeesActions'
 
+
 const initialState = {
   employees: [],
   employee: [],
