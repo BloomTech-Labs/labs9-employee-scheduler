@@ -1,7 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { render } from 'react-testing-library'
-import { renderWithRedux } from './Redux'
+import { renderWithReduxAndRouter } from '../../testing/utils'
+import EmployeeDashboard from '../components/EmployeeDashboard'
+import { fetchSingleEmployeefromDB } from '../actions'
+import * as axios from 'axios'
+
+jest.mock('axios')
 
 const employee = {
   id: '89ee112d-b517-4822-996d-392c079a86c5',
@@ -24,41 +29,18 @@ const employee = {
   ]
 }
 
-const fetchSingleEmployeeFromDB = userid => dispatch => {
-  dispatch({
-    type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
-    payload: employee
-  })
-}
-function employeeReducer(state = { employee: [] }, action) {
-  switch (action.type) {
-    case 'FETCH_EMPLOYEE_FROM_DB_SUCCESS':
-      return {
-        employee: employee
-      }
-    default:
-      return state
-  }
-}
-
-class EmployeeDashboard extends React.Component {
-  componentDidMount() {
-    fetchSingleEmployeeFromDB()
-  }
-
-  render() {
-    return (
-      <div>
-        <p data-testid="day">{employee.shifts[0].day}</p>
-        <p data-testid="time">{employee.shifts[0].time}</p>
-      </div>
-    )
-  }
-}
-
 describe('employee dashboard with redux', () => {
   it('can render with initial state', () => {
-    const { getByTestId, getByText } = renderWithRedux(<EmployeeDashboard />)
+    axios.mockImplementation(() => Promise.resolve({ data: employee }))
+
+    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
+      <EmployeeDashboard />,
+      undefined,
+      {
+        route: `/dashboard/${employee.id}`
+      }
+    )
+
     expect(getByTestId('day').textContent).toBe('Monday')
     expect(getByTestId('time').textContent).toBe('0am-3pm')
   })
