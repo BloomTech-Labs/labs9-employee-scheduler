@@ -3,7 +3,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-// import { authenticate } from '../actions'
+
+import registerOwner from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 
 const config = {
@@ -34,19 +35,30 @@ const uiConfig = {
 }
 
 class RegisterOwner extends Component {
+  state = {}
+
+  // check that user is not already logged in?
+  // render form with info
+  // stage 1
+  // create account with oauth ...
+  // stage 2
+  // direct to page where user fills in the rest of the info
+
   componentDidMount() {
-    // check that user is not already logged in?
-    // render form with info
-    // stage 1
-    // create account with oauth ...
-    // stage 2
-    // direct to page where user fills in the rest of the info
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      //checks to see if there is a user logged in.
+      const { currentUser } = firebase.auth()
+      console.log('CURRENT USER')
+      console.log(currentUser)
+    })
+  }
+  // Make sure we un-register Firebase observers when the component unmounts.
+  componentWillUnmount() {
+    this.unregisterAuthObserver()
   }
 
   render() {
-    console.log(firebase.auth())
-
-    return true ? (
+    return false ? (
       <h1>display this by default</h1>
     ) : (
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
@@ -56,13 +68,11 @@ class RegisterOwner extends Component {
 
 // probably don't need this either
 const mapStateToProps = state => {
-  return {
-    user: state.auth.user
-  }
+  return {}
 }
 
 // do we need redux??
 export default connect(
   mapStateToProps,
-  { authenticate }
+  { registerOwner }
 )(RegisterOwner)
