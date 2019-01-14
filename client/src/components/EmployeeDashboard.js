@@ -196,5 +196,7 @@ export default connect(
 )(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
-  // add propTypes here
+  employee: propTypes.object,
+  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
+  error: propTypes.string
 }

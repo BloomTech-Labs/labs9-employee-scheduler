@@ -92,7 +92,7 @@ class Settings extends Component {
         <BreadCrumb location={this.state.location} />
 
         <Container>
-          <h1>Settings</h1>
+          <h1 data-testid="settings">Settings</h1>
 
           <fieldset disabled={this.state.disabled}>
             <form onSubmit={this.submitHandler}>
@@ -106,6 +106,7 @@ class Settings extends Component {
                 onChange={this.changeHandler}
                 defaultValue={this.state.user.email}
                 disabled={this.state.disabled}
+                aria-label="email"
               />
               <label htmlFor="phone">Phone</label>
               <Input
@@ -116,6 +117,7 @@ class Settings extends Component {
                 onChange={this.changeHandler}
                 defaultValue={this.state.user.phone}
                 disabled={this.state.disabled}
+                aria-label="tel"
               />
               <div>
                 <label>Preferred Contact Method</label>
@@ -124,6 +126,7 @@ class Settings extends Component {
                   type="checkbox"
                   name="emailpref"
                   onChange={this.checkHandler}
+                  aria-label="emailpref"
                   defaultChecked={this.state.user.emailpref}
                 />
                 <label htmlFor="emailpref">Email</label>
@@ -132,12 +135,15 @@ class Settings extends Component {
                   type="checkbox"
                   name="phonepref"
                   onChange={this.checkHandler}
+                  aria-label="phonepref"
                   defaultChecked={this.state.user.phonepref}
                 />
                 <label htmlFor="phonepref">Phone</label>
               </div>
               {this.state.disabled ? null : (
-                <Button type="submit">Submit Edits</Button>
+                <Button type="submit" data-test="submit">
+                  Submit Edits
+                </Button>
               )}
             </form>
           </fieldset>
