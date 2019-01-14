@@ -123,7 +123,7 @@ describe('testing the organizations router', () => {
       expect(response.status).toBe(400)
       expect(response.body).toEqual({ error: 'No fields provided to update' })
 
-      await cleanup
+      await cleanup()
     })
   })
 
@@ -138,7 +138,7 @@ describe('testing the organizations router', () => {
 
       expect(response.status).toBe(200)
 
-      await cleanup
+      await cleanup()
     })
   })
 })
