@@ -17,7 +17,8 @@ class Settings extends Component {
       phone: '123-456-7890',
       emailpref: true,
       phonepref: false,
-      password: ''
+      password: '',
+      confirm: ''
     }
   }
 
@@ -36,8 +37,21 @@ class Settings extends Component {
     })
   }
 
+  checkHandler = event => {
+    event.preventDefault()
+    this.setState({
+      fakeUser: {
+        [event.target.name]: event.target.checked
+      }
+    })
+  }
+
   submitHandler = event => {
     event.preventDefault()
+    const { password, confirm } = this.state.fakeUser
+    if (password && confirm !== password) {
+      alert('Your passwords do not match')
+    }
   }
 
   render() {
@@ -50,10 +64,10 @@ class Settings extends Component {
           <h1>Settings</h1>
 
           <fieldset disabled={this.state.disabled}>
-            <form>
+            <form onSubmit={this.submitHandler}>
               <p onClick={() => this.clickHandler()}>EDIT</p>
               <label htmlFor="email">Email</label>
-              <input
+              <Input
                 type="email"
                 name="email"
                 placeholder="ex. bruce@waynecorp.com"
@@ -62,7 +76,7 @@ class Settings extends Component {
                 disabled={this.state.disabled}
               />
               <label htmlFor="tel">Phone</label>
-              <input
+              <Input
                 type="tel"
                 name="tel"
                 placeholder="ex. 111-111-1111"
@@ -74,26 +88,31 @@ class Settings extends Component {
               <div>
                 <label>Preferred Contact Method</label>
                 <br />
-                <input
+                <Input
                   type="checkbox"
                   name="emailpref"
-                  onChange={this.changeHandler}
+                  onChange={this.checkHandler}
+                  checked={this.value}
                   defaultChecked={this.state.fakeUser.emailpref}
                 />
-                <label htmlFor="emailpref">Email?</label>
+                <label htmlFor="emailpref">Email</label>
 
-                <input
+                <Input
                   type="checkbox"
                   name="phonepref"
-                  onChange={this.changeHandler}
+                  onChange={this.checkHandler}
+                  checked={this.value}
                   defaultChecked={this.state.fakeUser.phonepref}
                 />
-                <label htmlFor="phonepref">Phone?</label>
+                <label htmlFor="phonepref">Phone</label>
               </div>
               {this.state.disabled ? null : (
                 <EditOptions
                   changeHandler={event => this.changeHandler(event)}
                 />
+              )}
+              {this.state.disabled ? null : (
+                <Button type="submit">Submit Edits</Button>
               )}
             </form>
           </fieldset>
@@ -114,7 +133,7 @@ const EditOptions = props => {
   return (
     <>
       <label htmlFor="password">Password</label>
-      <input
+      <Input
         name="password"
         type="password"
         placeholder="A strong password"
@@ -122,8 +141,13 @@ const EditOptions = props => {
         value={props.value}
       />
       <label htmlFor="confirm">Confirm Password</label>
-      <input name="confirm" type="password" placeholder="Confirm password" />
-      <Button type="submit">Submit Edits</Button>
+      <Input
+        name="confirm"
+        type="password"
+        placeholder="Confirm password"
+        onChange={props.changeHandler}
+        value={props.value}
+      />
     </>
   )
 }
@@ -166,22 +190,6 @@ const Container = styled('div')`
       color: ${system.color.captiontext};
     }
 
-    input {
-      font-size: ${system.fontSizing.m};
-      padding: 2.5px 5px;
-      margin: 0.5rem 0 ${system.spacing.hugePadding};
-      border: none;
-      border-bottom: 2px solid
-        ${props => (props.disabled ? 'transparent' : system.color.lightgrey)};
-      transition: ${system.transition};
-      :disabled {
-        background: ${system.color.white};
-      }
-      :focus {
-        border-bottom: 2px solid ${system.color.primary};
-      }
-    }
-
     input[type='checkbox'] {
       margin-top: 10px;
       :first-of-type {
@@ -195,5 +203,20 @@ const Container = styled('div')`
     button {
       width: 150px;
     }
+  }
+`
+const Input = styled.input`
+  font-size: ${system.fontSizing.m};
+  padding: 2.5px 5px;
+  margin: 0.5rem 0 ${system.spacing.hugePadding};
+  border: none;
+  border-bottom: 2px solid
+    ${props => (props.disabled ? 'transparent' : '#d2d2d2')};
+  transition: ${system.transition};
+  :disabled {
+    background: ${system.color.white};
+  }
+  :focus {
+    border-bottom: 2px solid ${system.color.primary};
   }
 `
