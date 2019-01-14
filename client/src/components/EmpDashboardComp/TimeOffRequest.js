@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import Form from '../Form/index'
 import axios from 'axios'
+import styled from '@emotion/styled'
+import system from '../../design/theme'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -51,25 +53,27 @@ class TimeOffRequest extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
+        <h5>Request time off</h5>
         <Form
           initialValues={{
             reason: ''
           }}
           onSubmit={this.submitTimeOffRequest}
         >
+          <Form.Label>Date</Form.Label>
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
           />
           <Form.Group property="reason" type="text">
             <Form.Label>Reason</Form.Label>
-            <Form.TextInput />
+            <Form.TextInput className="reason" />
             <Form.SubmitButton type="submit">Submit</Form.SubmitButton>
           </Form.Group>
         </Form>
         <p>{this.state.message}</p>
-      </div>
+      </Container>
     )
   }
 }
@@ -79,3 +83,20 @@ export default TimeOffRequest
 TimeOffRequest.propTypes = {
   // adding propTypes here
 }
+
+const Container = styled('div')`
+  padding: ${system.spacing.bigPadding};
+  box-shadow: ${system.shadows.otherLight};
+  width: 100%;
+  max-width: 30 0px;
+  min-width: 200px;
+  border-radius: ${system.borders.radius};
+
+  width: 100%;
+  h5 {
+    font-size: ${system.fontSizing.ml};
+  }
+  p {
+    font-size: ${system.fontSizing.m};
+  }
+`
