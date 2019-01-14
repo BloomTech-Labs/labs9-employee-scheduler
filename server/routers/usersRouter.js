@@ -38,6 +38,11 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
+// we need two separate post routes here:
+// one for employees (incl supervisors) and one for owners
+// i'll leave the generic post here for now
+
+// generic post leaving for now
 router.post('/', async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
 
@@ -48,6 +53,49 @@ router.post('/', async (req, res) => {
   try {
     const success = await addUser(req.body)
     res.status(201).json(success)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
+// post owner and org
+router.post('/register/owner', async (req, res) => {
+  // grab user id from client which is from firebase auth
+  const { id } = req.user
+
+  // grab necessary fields from body
+  // this includes:
+  // org name
+  // org description
+  // first and last name
+  // email
+
+  // check possible error states
+  // First, some necessary field is missing
+  if (true /* db user already exists*/) {
+    res.status(400).json({ error: 'User already exists' })
+  }
+  // Second, user id already exists in db
+  if (!fields) {
+    // modify accordingly
+    res.status(400).json({ error: 'Missing required field(s)' })
+  }
+
+  // Add rows to db
+  try {
+    // First, add new org (because user will need to reference org)
+    const orgSuccces = await addOrg({
+      /* specific items */
+    })
+    // have to check if knex returning wants otherwise the next step is a db call to get new id
+    const userSuccess = await addUser({
+      /* specific items incl. org id */
+    })
+
+    res.status(201).json({
+      /* some custom success message */
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
