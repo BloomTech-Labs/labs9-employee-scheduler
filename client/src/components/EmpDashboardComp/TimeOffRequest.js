@@ -6,7 +6,7 @@ import Form from '../Form/index'
 import axios from 'axios'
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { fromParams } from 'google-gax/build/src/routing_header'
+
 const api = process.env.REACT_APP_SERVER_URL
 
 const user = '77b6afd5-38cb-4304-9c0f-bb55ac496342'
@@ -27,6 +27,7 @@ class TimeOffRequest extends Component {
     })
   }
 
+  //converts date to 'YYYY-MM-DD' format
   convertDateToMoment = e => {
     let dateString = this.state.startDate
     let dateObj = new Date(dateString)
@@ -35,6 +36,7 @@ class TimeOffRequest extends Component {
     return momentString
   }
 
+  //sends the date and time off request to the server
   submitTimeOffRequest = ({ reason }) => {
     const date = this.convertDateToMoment()
     const requestObj = { date, reason }
@@ -48,9 +50,6 @@ class TimeOffRequest extends Component {
   }
 
   render() {
-    console.log('start date', this.state.startDate)
-    console.log('converted', this.convertDateToMoment)
-    console.log('after submit', this.state.requestDate)
     return (
       <div>
         <Form
