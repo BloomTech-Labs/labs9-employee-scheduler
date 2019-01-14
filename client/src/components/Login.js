@@ -47,8 +47,10 @@ class Login extends Component {
   }
 
   render() {
+    console.log(firebase.auth())
+
     return this.props.user ? (
-      <h1>{this.props.user}</h1>
+      <h1>Success</h1>
     ) : (
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     )

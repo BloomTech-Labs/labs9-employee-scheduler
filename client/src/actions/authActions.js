@@ -20,6 +20,7 @@ export const authenticate = () => dispatch => {
             headers: { authorization: idToken }
           })
           .then(res => {
+            console.log(res.data)
             dispatch({
               type: AUTH_SUCCESS,
               payload: { user: res.data, token: idToken }
@@ -27,7 +28,6 @@ export const authenticate = () => dispatch => {
           })
       })
       .catch(err => {
-        console.dir(err)
         dispatch({ type: AUTH_FAIL })
       })
   }
