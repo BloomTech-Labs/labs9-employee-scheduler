@@ -56,3 +56,4 @@ describe('employee dashboard with redux', () => {
     expect(getByTestId('reason').textContent).toBe(employee.time_off[0].reason)
   })
 })
+
