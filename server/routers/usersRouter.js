@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
 
 // this one depends on auth.
 router.post('/current', async (req, res) => {
-  console.log('in users route')
   const { id } = req.user
   try {
     const user = await getUser(id)
@@ -24,7 +23,6 @@ router.post('/current', async (req, res) => {
     if (user) {
       return res.status(200).json(user)
     } else {
-      console.log(`#${id} not found`)
       return res.status(404).send({ message: 'User not found.' })
     }
   } catch (err) {
