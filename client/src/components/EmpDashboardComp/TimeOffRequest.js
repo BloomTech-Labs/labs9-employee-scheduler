@@ -7,55 +7,70 @@ import axios from 'axios'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { fromParams } from 'google-gax/build/src/routing_header'
+const api = process.env.REACT_APP_SERVER_URL
 
+const user = '77b6afd5-38cb-4304-9c0f-bb55ac496342'
 class TimeOffRequest extends Component {
   constructor(props) {
     super(props)
     this.state = {
       startDate: new Date(),
       requestDate: '',
-      reason: ''
+      reason: '',
+      message: ''
     }
   }
-
+  //this comes directly from the datePicker docs, I think 'date' is happening under the hood.
   handleChange = date => {
     this.setState({
       startDate: date
     })
   }
 
-  convertDate = () => {
+  convertDateToMoment = e => {
     let dateString = this.state.startDate
     let dateObj = new Date(dateString)
     let momentObj = moment(dateObj)
     let momentString = momentObj.format('YYYY-MM-DD')
-    this.setState({ requestDate: momentString })
+    return momentString
   }
 
-  submitTimeOffRequest = e => {
-    e.preventDefault()
-    const { requestDate, reason } = this.state
+  submitTimeOffRequest = ({ reason }) => {
+    const date = this.convertDateToMoment()
+    const requestObj = { date, reason }
+    console.log(requestObj)
     axios
-      .post('https://cadence-api.herokuapp.com/time-off-requests', {
-        requestDate,
-        reason
+      .post(`${api}/time-off-requests/${user}`, requestObj, {
+        headers: { authorization: 'testing' }
       })
-      .then()
+      .then(() => this.setState({ message: 'request received' }))
       .catch(err => console.log(err))
   }
 
   render() {
-    console.log(this.state.request)
+    console.log('start date', this.state.startDate)
+    console.log('converted', this.convertDateToMoment)
+    console.log('after submit', this.state.requestDate)
     return (
-      <form>
-        <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-        />
-        <Form.Label>Reason</Form.Label>
-        <Form.TextInput />
-        <button type="submit">Submit</button>
-      </form>
+      <div>
+        <Form
+          initialValues={{
+            reason: ''
+          }}
+          onSubmit={this.submitTimeOffRequest}
+        >
+          <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+          />
+          <Form.Group property="reason" type="text">
+            <Form.Label>Reason</Form.Label>
+            <Form.TextInput />
+            <Form.SubmitButton type="submit">Submit</Form.SubmitButton>
+          </Form.Group>
+        </Form>
+        <p>{this.state.message}</p>
+      </div>
     )
   }
 }

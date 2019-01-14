@@ -1,4 +1,5 @@
 const db = require('../dbConfig')
+const uuid = require('uuid/v4')
 
 // for time_off_requests
 const getTimeOffRequests = userId => {
@@ -10,10 +11,8 @@ const getTimeOffRequests = userId => {
 }
 
 // request is object
-const addTimeOffRequest = (userId, request) => {
-  return db('time_off_requests as t')
-    .where({ 't.id': userId })
-    .insert(request)
+const addTimeOffRequest = request => {
+  return db('time_off_requests as t').insert({ ...request, id: uuid() })
 }
 
 const updateTimeOffRequest = (timeOffRequestId, updates) => {
