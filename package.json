@@ -30,6 +30,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
     "sqlite3": "^4.0.4",
+    "stripe": "^6.20.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
