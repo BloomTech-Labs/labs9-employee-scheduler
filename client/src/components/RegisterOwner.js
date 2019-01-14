@@ -4,7 +4,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import registerOwner from '../actions' // for calling once all data is in
+import { registerOwner } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 
 const config = {
@@ -16,7 +16,10 @@ const config = {
   messagingSenderId: '143190395098'
 }
 
-firebase.initializeApp(config)
+// in case firebase was already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(config)
+}
 
 // Configure FirebaseUI.
 const uiConfig = {

@@ -15,7 +15,10 @@ const config = {
   messagingSenderId: '143190395098'
 }
 
-firebase.initializeApp(config)
+// in case firebase was already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(config)
+}
 
 // Configure FirebaseUI.
 const uiConfig = {
