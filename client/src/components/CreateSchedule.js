@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
+import Scheduler from './Scheduler'
 
 // this component will house all of the main features for the create schedule page.
 class CreateSchedule extends Component {
@@ -13,6 +14,7 @@ class CreateSchedule extends Component {
       <div>
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
+        <Scheduler />
       </div>
     )
   }
