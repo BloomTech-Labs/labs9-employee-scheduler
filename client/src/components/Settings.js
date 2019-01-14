@@ -16,9 +16,7 @@ class Settings extends Component {
       email: 'example@example.com',
       phone: '123-456-7890',
       emailpref: true,
-      phonepref: false,
-      password: '',
-      confirm: ''
+      phonepref: false
     }
   }
 
@@ -48,10 +46,9 @@ class Settings extends Component {
 
   submitHandler = event => {
     event.preventDefault()
-    const { password, confirm } = this.state.fakeUser
-    if (password && confirm !== password) {
-      alert('Your passwords do not match')
-    }
+    this.setState({
+      disabled: true
+    })
   }
 
   render() {
@@ -107,11 +104,6 @@ class Settings extends Component {
                 <label htmlFor="phonepref">Phone</label>
               </div>
               {this.state.disabled ? null : (
-                <EditOptions
-                  changeHandler={event => this.changeHandler(event)}
-                />
-              )}
-              {this.state.disabled ? null : (
                 <Button type="submit">Submit Edits</Button>
               )}
             </form>
@@ -126,30 +118,6 @@ export default Settings
 
 Settings.propTypes = {
   // add propTypes here
-}
-
-// These input fields will only appear if the user is editing the page.
-const EditOptions = props => {
-  return (
-    <>
-      <label htmlFor="password">Password</label>
-      <Input
-        name="password"
-        type="password"
-        placeholder="A strong password"
-        onChange={props.changeHandler}
-        value={props.value}
-      />
-      <label htmlFor="confirm">Confirm Password</label>
-      <Input
-        name="confirm"
-        type="password"
-        placeholder="Confirm password"
-        onChange={props.changeHandler}
-        value={props.value}
-      />
-    </>
-  )
 }
 
 const Container = styled('div')`
