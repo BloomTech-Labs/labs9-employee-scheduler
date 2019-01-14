@@ -6,7 +6,6 @@ exports.up = knex =>
       .notNullable()
     table // people be in more than one organization? overoptimazation?
       .uuid('organization_id')
-      .notNullable()
       .references('id')
       .inTable('organizations')
       .onDelete('CASCADE')
