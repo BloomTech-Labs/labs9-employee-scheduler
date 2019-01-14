@@ -75,10 +75,10 @@ class EmployeeDashboard extends Component {
             return (
               <div className="details" key={item.id}>
                 <div className="date">
-                  <p data-test-id="date">{item.date}</p>
+                  <p data-testid="date">{item.date}</p>
                 </div>
                 <div className="reason">
-                  <p data-test-id="reason">{item.reason}</p>
+                  <p data-testid="reason">{item.reason}</p>
                 </div>
               </div>
             )

@@ -2,7 +2,8 @@ import React from 'react'
 import { render } from 'react-testing-library'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import reducer from '../src/reducers'
 import { Provider } from 'react-redux'
 
@@ -26,7 +27,10 @@ function renderWithRouter(
 
 function renderWithRedux(
   ui,
-  { initialState, store = createStore(reducer, initialState) } = {}
+  {
+    initialState,
+    store = createStore(reducer, initialState, applyMiddleware(thunk))
+  } = {}
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
@@ -39,10 +43,11 @@ function renderWithRedux(
 
 function renderWithReduxAndRouter(
   ui,
-  { initialState, store = createStore(reducer, initialState) } = {},
   {
     route = '/',
-    history = createMemoryHistory({ initialEntries: [route] })
+    history = createMemoryHistory({ initialEntries: [route] }),
+    initialState,
+    store = createStore(reducer, initialState, applyMiddleware(thunk))
   } = {}
 ) {
   return {

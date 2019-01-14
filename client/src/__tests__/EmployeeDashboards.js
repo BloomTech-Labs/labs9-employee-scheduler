@@ -1,6 +1,7 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { render } from 'react-testing-library'
+import { render, waitForElement } from 'react-testing-library'
 import { renderWithReduxAndRouter } from '../../testing/utils'
 import EmployeeDashboard from '../components/EmployeeDashboard'
 import { fetchSingleEmployeefromDB } from '../actions'
@@ -30,18 +31,17 @@ const employee = {
 }
 
 describe('employee dashboard with redux', () => {
-  it('can render with initial state', () => {
-    axios.mockImplementation(() => Promise.resolve({ data: employee }))
+  it('can render with initial state', async () => {
+    axios.get.mockImplementation(() => Promise.resolve({ data: employee }))
 
     const { getByTestId, getByText, history } = renderWithReduxAndRouter(
-      <EmployeeDashboard />,
-      undefined,
+      <Route path="/dashboard/:id" component={EmployeeDashboard} />,
       {
         route: `/dashboard/${employee.id}`
       }
     )
-
-    expect(getByTestId('day').textContent).toBe('Monday')
-    expect(getByTestId('time').textContent).toBe('0am-3pm')
+    const testElement = await waitForElement(() => getByTestId('date'))
+    expect(getByTestId('date').textContent).toBe(employee.time_off[0].date)
+    expect(getByTestId('reason').textContent).toBe(employee.time_off[0].reason)
   })
 })
