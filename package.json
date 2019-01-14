@@ -29,6 +29,7 @@
     "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
+    "react-dnd-html5-backend": "^7.0.2",
     "sqlite3": "^4.0.4",
     "uuid": "^3.3.2"
   },
