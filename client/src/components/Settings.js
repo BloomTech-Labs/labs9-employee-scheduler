@@ -74,7 +74,7 @@ class Settings extends Component {
                 onChange={this.changeHandler}
                 defaultValue={this.state.fakeUser.email}
                 disabled={this.state.disabled}
-                ariaLabel="email"
+                aria-label="email"
               />
               <label htmlFor="tel">Phone</label>
               <Input
@@ -85,7 +85,7 @@ class Settings extends Component {
                 onChange={this.changeHandler}
                 defaultValue={this.state.fakeUser.phone}
                 disabled={this.state.disabled}
-                ariaLabel="tel"
+                aria-label="tel"
               />
               <div>
                 <label>Preferred Contact Method</label>
@@ -96,7 +96,7 @@ class Settings extends Component {
                   onChange={this.checkHandler}
                   checked={this.value}
                   defaultChecked={this.state.fakeUser.emailpref}
-                  ariaLabel="emailpref"
+                  aria-label="emailpref"
                 />
                 <label htmlFor="emailpref">Email</label>
 
@@ -106,7 +106,7 @@ class Settings extends Component {
                   onChange={this.checkHandler}
                   checked={this.value}
                   defaultChecked={this.state.fakeUser.phonepref}
-                  ariaLabel="phonepref"
+                  aria-label="phonepref"
                 />
                 <label htmlFor="phonepref">Phone</label>
               </div>
