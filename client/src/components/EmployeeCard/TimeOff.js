@@ -19,7 +19,13 @@ class TimeOff extends Component {
       response = 'approved'
     }
 
-    Axios.put(`${baseURL}/time-off-requests${id}`, { status: response })
+    Axios.put(
+      `${baseURL}/time-off-requests/${id}`,
+      { status: response },
+      {
+        headers: { authorization: 'testing' }
+      }
+    )
       .then(res => {
         console.log(res.data)
       })
