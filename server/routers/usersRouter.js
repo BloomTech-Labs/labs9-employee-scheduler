@@ -5,7 +5,8 @@ const {
   getUser,
   addUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  addOrg
 } = require('../../database/helpers')
 const uuid = require('uuid') // need here for optimizing creation of org with owner
 
@@ -81,7 +82,7 @@ router.post('/register/owner', async (req, res) => {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
   // Second, user id already exists in db
-  if (getUser(id)) {
+  if (await getUser(id)) {
     // modify accordingly
     res.status(400).json({ error: 'User already exists' })
   }
@@ -99,7 +100,6 @@ router.post('/register/owner', async (req, res) => {
     })
     // Third, add new user as owner
     const userSuccess = await addUser({
-      id: user_id,
       organization_id: newId,
       first_name: firstName,
       last_name: lastName,

@@ -65,7 +65,7 @@ class RegisterOwner extends Component {
         const { email, displayName } = firebase.auth().currentUser
         // In case user enters more than two names
         const firstName = displayName.split(' ')[0]
-        const lastName = displayName.split(' ').slice(1)
+        const lastName = displayName.split(' ').slice(1)[0]
 
         this.setState({ email, firstName, lastName, oauthSuccess: true })
       }
