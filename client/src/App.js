@@ -13,6 +13,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
+import { authenticate } from './actions' // for initial call
+import { connect } from 'react-redux'
 
 import './reset.css'
 import { registerOwner } from './actions/registerActions'
@@ -28,12 +30,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get(serverUrl, {
-        headers: { authorization: 'testing' }
-      })
-      .then(res => this.setState({ api: res.data.message }))
-      .catch(err => console.log(err))
+    this.props.authenticate()
+    // axios
+    //   .get(serverUrl, {
+    //     headers: { authorization: 'testing' }
+    //   })
+    //   .then(res => this.setState({ api: res.data.message }))
+    //   .catch(err => console.log(err))
   }
 
   render() {
@@ -107,4 +110,9 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = ({}) => ({})
+
+export default connect(
+  mapStateToProps,
+  { authenticate }
+)(App)
