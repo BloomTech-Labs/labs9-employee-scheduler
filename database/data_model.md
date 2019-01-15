@@ -54,9 +54,8 @@
 {
   id: uuid
   user_id: UUID foreign key in USERS table
-  day: INTEGER [ 0- 6 ]
-  start_time: INTEGER [ 0 - 23]
-  end_time: INTEGER [ 0 - 23]
+  start: DATETIME
+  end: DATETIME 
 }
 ```
 

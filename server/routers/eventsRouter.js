@@ -24,12 +24,12 @@ router.get('/organization/:id', (req, res) => {
 
 // this route allows you to post a new event for an associated user
 router.post('/', async (req, res) => {
-  const { user_id, day, start_time, end_time } = req.body
-  if (!user_id || !day || !start_time || !end_time) {
+  const { user_id, start, end } = req.body
+  if (!user_id || !start || !end) {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
   try {
-    const success = await addEvent(user_id, req.body)
+    const success = await addEvent(req.body)
     res.status(201).json(success)
   } catch (error) {
     console.log(error)

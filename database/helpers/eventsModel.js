@@ -6,10 +6,9 @@ const getEvents = userId => {
   return db('events as e').where({ 'e.user_id': userId })
 }
 
-const addEvent = (userId, event) => {
-  return db('events as e').insert({
-    'e.id': uuid(),
-    'e.user_id': userId,
+const addEvent = event => {
+  return db('events').insert({
+    id: uuid(),
     ...event
   })
 }
