@@ -1,1 +1,736 @@
-{"organization":{"id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","name":"Crona - Haley","description":"Iure beatae nisi necessitatibus."},"users":[{"id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Hallie","last_name":"Kassulke","role":"owner","email":"Aniya.Gerlach49@yahoo.com","phone":"257.751.8873","emailpref":false,"phonepref":false},{"id":"af32e28c-d640-4443-b18a-df50a557cd9d","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Blaise","last_name":"McGlynn","role":"supervisor","email":"Afton34@yahoo.com","phone":"1-606-973-7031 x9932","emailpref":false,"phonepref":false},{"id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Eleanora","last_name":"Mraz","role":"supervisor","email":"Deondre.Medhurst@gmail.com","phone":"(112) 305-5081 x1838","emailpref":false,"phonepref":true},{"id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Tracey","last_name":"Runolfsson","role":"employee","email":"Abner63@gmail.com","phone":"089-555-2300 x8455","emailpref":true,"phonepref":true},{"id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Hortense","last_name":"Kunze","role":"employee","email":"Gladys.Koelpin96@hotmail.com","phone":"(162) 377-0031","emailpref":true,"phonepref":true},{"id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Lila","last_name":"Gutmann","role":"employee","email":"Ernest_Welch98@gmail.com","phone":"(899) 326-9460","emailpref":true,"phonepref":false},{"id":"3c9097a1-222a-4da0-aa75-cde14d81067b","organization_id":"88ff93cb-13c6-4ec3-a4d5-c237e94bacc4","first_name":"Vesta","last_name":"Schroeder","role":"employee","email":"Jarred0@gmail.com","phone":"(064) 894-8687","emailpref":false,"phonepref":true}],"availabilities":[{"id":"80a2b81e-2258-49ff-95e1-54b6ec347e46","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":0,"start_time":6,"end_time":13},{"id":"dade8d9f-bc84-4f9c-baa6-81d38e2c8c47","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":1,"start_time":0,"end_time":23},{"id":"3f9433b1-151c-4267-a9ec-5e8c5ec7e53e","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":2,"start_time":8,"end_time":13},{"id":"5d8d462a-642b-4117-8cce-1ac4887a7316","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":3,"start_time":12,"end_time":14},{"id":"6d19add0-1433-4f35-b97f-aac6fb14561a","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":4,"start_time":10,"end_time":19},{"id":"165433c7-d021-4e91-84ac-5abc704ace11","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":0,"start_time":8,"end_time":22},{"id":"92385c23-988e-40a3-8466-2f363d9d7584","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":1,"start_time":0,"end_time":23},{"id":"704e4e36-2000-4512-b6d7-210bdc294bab","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":2,"start_time":6,"end_time":19},{"id":"c4f88772-7669-455e-a6b8-77937820643c","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":4,"start_time":5,"end_time":16},{"id":"2a5c365d-75fd-4b89-a0ae-7e013b26fcc5","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":5,"start_time":0,"end_time":23},{"id":"065d1b63-4add-464c-8b22-55bae8a9484a","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":1,"start_time":8,"end_time":20},{"id":"b5975fed-84eb-4559-b9e1-09967e23ef14","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":2,"start_time":3,"end_time":19},{"id":"3f4d60f4-8acb-47be-ab6e-519bb6794488","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":4,"start_time":5,"end_time":15},{"id":"639c82c6-b2c0-42a0-af17-0d27f9936926","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":5,"start_time":0,"end_time":23},{"id":"2b3a21e3-ee4a-461f-b13f-d71307d4c772","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":6,"start_time":0,"end_time":23},{"id":"e428b368-91e6-4d5e-ba6d-a0573781ec7a","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":2,"start_time":8,"end_time":22},{"id":"81d3b5c9-acac-4ed0-8668-ab6db042909c","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":3,"start_time":12,"end_time":15},{"id":"6cef6285-266d-4e5c-af7d-8961e1d6f0dd","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":4,"start_time":0,"end_time":23},{"id":"5f90f728-2533-4a15-9835-2c7376adcec5","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":5,"start_time":11,"end_time":23},{"id":"9f356fe5-bdf6-41ab-8869-c33f0db938ff","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":6,"start_time":0,"end_time":23},{"id":"c654fed9-9101-42e2-9088-08d9734420af","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":0,"start_time":3,"end_time":20},{"id":"b8cba6c0-71be-4cb3-8d9e-dede47124fcb","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":1,"start_time":0,"end_time":23},{"id":"f7a53cd9-9fbb-45b8-a43e-fac09d0579c9","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":3,"start_time":7,"end_time":22},{"id":"5a785130-bc5e-43a7-9da0-023ce962d601","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":4,"start_time":0,"end_time":23},{"id":"62be0782-14c8-4663-99d4-0820bdbd37ce","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":5,"start_time":0,"end_time":23},{"id":"03c9007a-2d36-4fa9-bc2f-39c00ca40259","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":0,"start_time":0,"end_time":23},{"id":"d25f0645-3ab2-43ab-b2f2-83a274e7c6f4","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":1,"start_time":0,"end_time":23},{"id":"e2272380-063d-43e9-a3cf-8c763d22f72e","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":2,"start_time":0,"end_time":23},{"id":"6a6daee4-d14d-4b45-b6ea-05f8c600165d","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":3,"start_time":6,"end_time":15},{"id":"febf47c6-5532-4a0c-af3f-747e21e39fe9","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":5,"start_time":1,"end_time":22},{"id":"6eefdc93-d2e7-4c2a-a98a-7f5461c578d2","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":2,"start_time":1,"end_time":15},{"id":"64c58ef4-d468-4498-ab3b-bbce5b418120","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":3,"start_time":1,"end_time":12},{"id":"991ee476-9492-45c7-9bf3-f726a5b43379","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":4,"start_time":5,"end_time":17},{"id":"09af612a-9a37-46ba-b00c-0fcfbf886e86","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":5,"start_time":11,"end_time":14},{"id":"9cd3887d-b711-4bf2-8310-a900d2b71ba2","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":6,"start_time":0,"end_time":23}],"events":[{"id":"424ea4bd-baa6-484c-a0b3-1c99e97950ba","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":0,"start_time":1,"end_time":14},{"id":"14125e40-d1ff-4351-96ce-28d7d4a13593","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":2,"start_time":3,"end_time":22},{"id":"3bd75d96-9970-41f3-8b45-84fbad3c87bb","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":3,"start_time":3,"end_time":20},{"id":"6b736e43-878a-4135-b1cd-6fa212296dc6","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":5,"start_time":8,"end_time":15},{"id":"ba5bed53-88e2-40af-9bbb-fc4432ba422a","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","day":6,"start_time":12,"end_time":12},{"id":"e377cd2c-66de-4d3e-9ac1-c0663f5d9899","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":0,"start_time":10,"end_time":23},{"id":"c782d99a-5f2a-4a1e-be5e-14e60f17572f","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":2,"start_time":0,"end_time":23},{"id":"11eb616c-67e1-4200-875b-c7503b49734a","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":3,"start_time":0,"end_time":23},{"id":"ddd4fd30-0d71-442f-8029-67651b7fdc91","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":4,"start_time":9,"end_time":21},{"id":"1f199128-0a71-4017-91b8-30bc058b7165","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","day":5,"start_time":0,"end_time":23},{"id":"62e54c5c-ecd6-4586-86d4-0dc268ff6edf","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":0,"start_time":7,"end_time":12},{"id":"fe452190-38a2-4dc6-9624-b4d23ced2589","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":1,"start_time":10,"end_time":16},{"id":"829d3de8-31dc-4297-b240-202170ec72f9","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":3,"start_time":0,"end_time":23},{"id":"bc752f65-1a6f-45a3-9350-5085b58eeaee","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":4,"start_time":10,"end_time":18},{"id":"fc936cc8-8f25-4247-8953-20542e9ab108","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","day":5,"start_time":8,"end_time":18},{"id":"1eada1ad-d7da-40ff-b96c-43a9ffa8c8fe","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":1,"start_time":0,"end_time":23},{"id":"b38a143f-dbac-45e7-99b4-cff8158ac819","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":2,"start_time":5,"end_time":15},{"id":"aee80bbb-1ade-49dc-8b9c-618bdc335a75","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":3,"start_time":10,"end_time":19},{"id":"40fe9fa7-549f-42f9-b3a6-a8c336430c17","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":4,"start_time":0,"end_time":23},{"id":"7b96d669-8cda-468d-b16d-3e9d008dbb05","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","day":5,"start_time":7,"end_time":22},{"id":"15754b0e-ed33-445b-9401-ff8d8534f556","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":0,"start_time":11,"end_time":15},{"id":"4ce95d7e-6e49-4c1a-8cce-9bba7b264228","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":2,"start_time":0,"end_time":23},{"id":"3ac8a13b-bda2-4c92-86c6-d11ef80b0943","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":4,"start_time":12,"end_time":19},{"id":"6a68b373-7af8-4fa4-8515-180221c542c8","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":5,"start_time":1,"end_time":16},{"id":"31f49519-7613-43ba-813e-3fda3a4ba98c","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","day":6,"start_time":7,"end_time":22},{"id":"f7083268-53f4-4cf8-bf6c-42062ed8c3d8","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":0,"start_time":9,"end_time":21},{"id":"58bda5e9-cdd2-45fd-96a8-300858d820a0","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":1,"start_time":5,"end_time":22},{"id":"9c7738eb-ae12-43f5-aa10-9192a27052bb","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":2,"start_time":12,"end_time":17},{"id":"eabae30c-1096-4766-9a02-1a5a125422f8","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":4,"start_time":0,"end_time":23},{"id":"f7107388-12dc-432f-baee-a1b2f5182020","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","day":6,"start_time":0,"end_time":23},{"id":"c74a903b-f137-491c-8102-7a321c42a6dd","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":0,"start_time":0,"end_time":23},{"id":"a0d5171f-510e-4221-a583-c7c06822e13b","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":1,"start_time":9,"end_time":12},{"id":"5e8a255b-ddf5-4901-8bf2-2836f67658dd","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":3,"start_time":0,"end_time":23},{"id":"347d730c-13d3-4e75-9bc5-86526cfebd18","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":5,"start_time":0,"end_time":23},{"id":"dfd929e9-a91f-4edc-8114-01e143ee4129","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","day":6,"start_time":0,"end_time":23}],"timeOffRequests":[{"id":"32afc0c6-6aee-41c2-a055-30bca29862a1","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","date":"2019-01-21","reason":"Laudantium dolorum aperiam odit.","status":"denied"},{"id":"7a12f708-8423-4c98-b2af-8dbd47216f94","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","date":"2019-01-23","reason":"Est occaecati unde asperiores facere ut.","status":"pending"},{"id":"c90c314d-5d7d-4cb4-ad9d-7b5f7ede0be6","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","date":"2019-01-25","reason":"At debitis molestias quia id vel harum deleniti.","status":"confirmed"},{"id":"921cb67b-23b9-4e02-8041-005c4993fca9","user_id":"6819b7ba-b4f1-43cf-9637-f049e423c39f","date":"2019-01-22","reason":"Quasi est deleniti nobis rerum.","status":"pending"},{"id":"3b10e463-b519-4dbe-a882-80b383cf0a43","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","date":"2019-01-21","reason":"Nisi corrupti fugit.","status":"confirmed"},{"id":"efaaa71e-97ac-431f-b8d9-6de829b4dc87","user_id":"af32e28c-d640-4443-b18a-df50a557cd9d","date":"2019-01-24","reason":"Velit adipisci porro in sed.","status":"pending"},{"id":"a8b57839-68c3-4027-838c-224ba5abc608","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","date":"2019-01-17","reason":"Necessitatibus aliquam et quia facere autem voluptatibus praesentium error perferendis.","status":"denied"},{"id":"7a0db40c-bd3c-43a8-ada1-73014c564caa","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","date":"2019-01-24","reason":"Accusamus ad ad explicabo magnam nulla quia fugit eum.","status":"confirmed"},{"id":"21c3dad9-dc7a-455a-ab29-0bc286bb7df3","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","date":"2019-01-21","reason":"Libero ratione velit sint nihil.","status":"confirmed"},{"id":"f4ebe420-08bc-4731-8eb9-131c1c0ce4e3","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","date":"2019-01-25","reason":"Et saepe corrupti quidem labore non explicabo fugiat.","status":"pending"},{"id":"bcce56e2-a64d-4b31-b2d3-c45800ec0bca","user_id":"f41a50ec-2acd-47f3-bb30-b6bcdf76b900","date":"2019-01-25","reason":"Nulla voluptatem est qui sunt error quos tempore delectus.","status":"confirmed"},{"id":"223d73d1-1eff-4912-a711-47810059236e","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","date":"2019-01-26","reason":"Libero voluptates voluptates tempore excepturi.","status":"pending"},{"id":"113ab749-b408-457c-a00d-3906649566f7","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","date":"2019-01-24","reason":"Perspiciatis aut beatae quaerat neque dignissimos eum ut molestiae.","status":"denied"},{"id":"b7ac8183-c1d8-4fde-9fa9-0f36722438ce","user_id":"80fec025-3bcf-46cb-91a2-7241417e1fa3","date":"2019-01-18","reason":"Quia in dicta nesciunt expedita.","status":"confirmed"},{"id":"90209864-6f6f-4c8c-bb13-2870a2fc5b1a","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","date":"2019-01-28","reason":"Accusantium voluptatum quia asperiores officia.","status":"denied"},{"id":"31f4a3e3-172e-4d9e-9ec3-8dc9a9d5ef9e","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","date":"2019-01-16","reason":"Quos doloribus sapiente pariatur laboriosam.","status":"confirmed"},{"id":"a6ccffa2-aae6-435b-9211-2cedf363b05e","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","date":"2019-01-27","reason":"Aliquid sint animi ut placeat quo qui error distinctio sapiente.","status":"confirmed"},{"id":"9c6e0884-4dd9-42c5-ad40-a176f638b5f4","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","date":"2019-01-23","reason":"Vero ex fugit sunt corporis voluptates velit.","status":"denied"},{"id":"c1b67b24-913d-4b25-be06-7dc80a71b8a0","user_id":"ee9c8f7a-5917-4491-b125-ab0fa73bec1d","date":"2019-01-18","reason":"Eos eum illum atque fugit.","status":"pending"},{"id":"b5debdbf-77ad-4585-8e47-dbbeb91bc494","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","date":"2019-01-26","reason":"Id consequatur sunt.","status":"denied"},{"id":"eab4c425-35c2-4a7f-b346-e4a3213caf93","user_id":"d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a","date":"2019-01-17","reason":"Voluptas ut corporis iure quia sint sit qui earum ut.","status":"denied"},{"id":"370a6862-2834-4237-8792-138e6ee4c663","user_id":"3c9097a1-222a-4da0-aa75-cde14d81067b","date":"2019-01-24","reason":"Sint temporibus tempore sed consequatur sint sed et veniam.","status":"denied"}]}
+{
+    "organization": {
+        "id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+        "name": "Crona - Haley",
+        "description": "Iure beatae nisi necessitatibus."
+    },
+    "users": [
+        {
+            "id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Hallie",
+            "last_name": "Kassulke",
+            "role": "owner",
+            "email": "Aniya.Gerlach49@yahoo.com",
+            "phone": "257.751.8873",
+            "emailpref": false,
+            "phonepref": false
+        },
+        {
+            "id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Blaise",
+            "last_name": "McGlynn",
+            "role": "supervisor",
+            "email": "Afton34@yahoo.com",
+            "phone": "1-606-973-7031 x9932",
+            "emailpref": false,
+            "phonepref": false
+        },
+        {
+            "id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Eleanora",
+            "last_name": "Mraz",
+            "role": "supervisor",
+            "email": "Deondre.Medhurst@gmail.com",
+            "phone": "(112) 305-5081 x1838",
+            "emailpref": false,
+            "phonepref": true
+        },
+        {
+            "id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Tracey",
+            "last_name": "Runolfsson",
+            "role": "employee",
+            "email": "Abner63@gmail.com",
+            "phone": "089-555-2300 x8455",
+            "emailpref": true,
+            "phonepref": true
+        },
+        {
+            "id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Hortense",
+            "last_name": "Kunze",
+            "role": "employee",
+            "email": "Gladys.Koelpin96@hotmail.com",
+            "phone": "(162) 377-0031",
+            "emailpref": true,
+            "phonepref": true
+        },
+        {
+            "id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Lila",
+            "last_name": "Gutmann",
+            "role": "employee",
+            "email": "Ernest_Welch98@gmail.com",
+            "phone": "(899) 326-9460",
+            "emailpref": true,
+            "phonepref": false
+        },
+        {
+            "id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "organization_id": "88ff93cb-13c6-4ec3-a4d5-c237e94bacc4",
+            "first_name": "Vesta",
+            "last_name": "Schroeder",
+            "role": "employee",
+            "email": "Jarred0@gmail.com",
+            "phone": "(064) 894-8687",
+            "emailpref": false,
+            "phonepref": true
+        }
+    ],
+    "availabilities": [
+        {
+            "id": "80a2b81e-2258-49ff-95e1-54b6ec347e46",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 0,
+            "start_time": 6,
+            "end_time": 13
+        },
+        {
+            "id": "dade8d9f-bc84-4f9c-baa6-81d38e2c8c47",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 1,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "3f9433b1-151c-4267-a9ec-5e8c5ec7e53e",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 2,
+            "start_time": 8,
+            "end_time": 13
+        },
+        {
+            "id": "5d8d462a-642b-4117-8cce-1ac4887a7316",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 3,
+            "start_time": 12,
+            "end_time": 14
+        },
+        {
+            "id": "6d19add0-1433-4f35-b97f-aac6fb14561a",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 4,
+            "start_time": 10,
+            "end_time": 19
+        },
+        {
+            "id": "165433c7-d021-4e91-84ac-5abc704ace11",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 0,
+            "start_time": 8,
+            "end_time": 22
+        },
+        {
+            "id": "92385c23-988e-40a3-8466-2f363d9d7584",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 1,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "704e4e36-2000-4512-b6d7-210bdc294bab",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 2,
+            "start_time": 6,
+            "end_time": 19
+        },
+        {
+            "id": "c4f88772-7669-455e-a6b8-77937820643c",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 4,
+            "start_time": 5,
+            "end_time": 16
+        },
+        {
+            "id": "2a5c365d-75fd-4b89-a0ae-7e013b26fcc5",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 5,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "065d1b63-4add-464c-8b22-55bae8a9484a",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 1,
+            "start_time": 8,
+            "end_time": 20
+        },
+        {
+            "id": "b5975fed-84eb-4559-b9e1-09967e23ef14",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 2,
+            "start_time": 3,
+            "end_time": 19
+        },
+        {
+            "id": "3f4d60f4-8acb-47be-ab6e-519bb6794488",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 4,
+            "start_time": 5,
+            "end_time": 15
+        },
+        {
+            "id": "639c82c6-b2c0-42a0-af17-0d27f9936926",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 5,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "2b3a21e3-ee4a-461f-b13f-d71307d4c772",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 6,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "e428b368-91e6-4d5e-ba6d-a0573781ec7a",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 2,
+            "start_time": 8,
+            "end_time": 22
+        },
+        {
+            "id": "81d3b5c9-acac-4ed0-8668-ab6db042909c",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 3,
+            "start_time": 12,
+            "end_time": 15
+        },
+        {
+            "id": "6cef6285-266d-4e5c-af7d-8961e1d6f0dd",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 4,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "5f90f728-2533-4a15-9835-2c7376adcec5",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 5,
+            "start_time": 11,
+            "end_time": 23
+        },
+        {
+            "id": "9f356fe5-bdf6-41ab-8869-c33f0db938ff",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 6,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "c654fed9-9101-42e2-9088-08d9734420af",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 0,
+            "start_time": 3,
+            "end_time": 20
+        },
+        {
+            "id": "b8cba6c0-71be-4cb3-8d9e-dede47124fcb",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 1,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "f7a53cd9-9fbb-45b8-a43e-fac09d0579c9",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 3,
+            "start_time": 7,
+            "end_time": 22
+        },
+        {
+            "id": "5a785130-bc5e-43a7-9da0-023ce962d601",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 4,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "62be0782-14c8-4663-99d4-0820bdbd37ce",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 5,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "03c9007a-2d36-4fa9-bc2f-39c00ca40259",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 0,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "d25f0645-3ab2-43ab-b2f2-83a274e7c6f4",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 1,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "e2272380-063d-43e9-a3cf-8c763d22f72e",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 2,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "6a6daee4-d14d-4b45-b6ea-05f8c600165d",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 3,
+            "start_time": 6,
+            "end_time": 15
+        },
+        {
+            "id": "febf47c6-5532-4a0c-af3f-747e21e39fe9",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 5,
+            "start_time": 1,
+            "end_time": 22
+        },
+        {
+            "id": "6eefdc93-d2e7-4c2a-a98a-7f5461c578d2",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 2,
+            "start_time": 1,
+            "end_time": 15
+        },
+        {
+            "id": "64c58ef4-d468-4498-ab3b-bbce5b418120",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 3,
+            "start_time": 1,
+            "end_time": 12
+        },
+        {
+            "id": "991ee476-9492-45c7-9bf3-f726a5b43379",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 4,
+            "start_time": 5,
+            "end_time": 17
+        },
+        {
+            "id": "09af612a-9a37-46ba-b00c-0fcfbf886e86",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 5,
+            "start_time": 11,
+            "end_time": 14
+        },
+        {
+            "id": "9cd3887d-b711-4bf2-8310-a900d2b71ba2",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 6,
+            "start_time": 0,
+            "end_time": 23
+        }
+    ],
+    "events": [
+        {
+            "id": "424ea4bd-baa6-484c-a0b3-1c99e97950ba",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 0,
+            "start_time": 1,
+            "end_time": 14
+        },
+        {
+            "id": "14125e40-d1ff-4351-96ce-28d7d4a13593",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 2,
+            "start_time": 3,
+            "end_time": 22
+        },
+        {
+            "id": "3bd75d96-9970-41f3-8b45-84fbad3c87bb",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 3,
+            "start_time": 3,
+            "end_time": 20
+        },
+        {
+            "id": "6b736e43-878a-4135-b1cd-6fa212296dc6",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 5,
+            "start_time": 8,
+            "end_time": 15
+        },
+        {
+            "id": "ba5bed53-88e2-40af-9bbb-fc4432ba422a",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "day": 6,
+            "start_time": 12,
+            "end_time": 12
+        },
+        {
+            "id": "e377cd2c-66de-4d3e-9ac1-c0663f5d9899",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 0,
+            "start_time": 10,
+            "end_time": 23
+        },
+        {
+            "id": "c782d99a-5f2a-4a1e-be5e-14e60f17572f",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 2,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "11eb616c-67e1-4200-875b-c7503b49734a",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 3,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "ddd4fd30-0d71-442f-8029-67651b7fdc91",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 4,
+            "start_time": 9,
+            "end_time": 21
+        },
+        {
+            "id": "1f199128-0a71-4017-91b8-30bc058b7165",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "day": 5,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "62e54c5c-ecd6-4586-86d4-0dc268ff6edf",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 0,
+            "start_time": 7,
+            "end_time": 12
+        },
+        {
+            "id": "fe452190-38a2-4dc6-9624-b4d23ced2589",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 1,
+            "start_time": 10,
+            "end_time": 16
+        },
+        {
+            "id": "829d3de8-31dc-4297-b240-202170ec72f9",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 3,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "bc752f65-1a6f-45a3-9350-5085b58eeaee",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 4,
+            "start_time": 10,
+            "end_time": 18
+        },
+        {
+            "id": "fc936cc8-8f25-4247-8953-20542e9ab108",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "day": 5,
+            "start_time": 8,
+            "end_time": 18
+        },
+        {
+            "id": "1eada1ad-d7da-40ff-b96c-43a9ffa8c8fe",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 1,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "b38a143f-dbac-45e7-99b4-cff8158ac819",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 2,
+            "start_time": 5,
+            "end_time": 15
+        },
+        {
+            "id": "aee80bbb-1ade-49dc-8b9c-618bdc335a75",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 3,
+            "start_time": 10,
+            "end_time": 19
+        },
+        {
+            "id": "40fe9fa7-549f-42f9-b3a6-a8c336430c17",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 4,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "7b96d669-8cda-468d-b16d-3e9d008dbb05",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "day": 5,
+            "start_time": 7,
+            "end_time": 22
+        },
+        {
+            "id": "15754b0e-ed33-445b-9401-ff8d8534f556",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 0,
+            "start_time": 11,
+            "end_time": 15
+        },
+        {
+            "id": "4ce95d7e-6e49-4c1a-8cce-9bba7b264228",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 2,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "3ac8a13b-bda2-4c92-86c6-d11ef80b0943",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 4,
+            "start_time": 12,
+            "end_time": 19
+        },
+        {
+            "id": "6a68b373-7af8-4fa4-8515-180221c542c8",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 5,
+            "start_time": 1,
+            "end_time": 16
+        },
+        {
+            "id": "31f49519-7613-43ba-813e-3fda3a4ba98c",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "day": 6,
+            "start_time": 7,
+            "end_time": 22
+        },
+        {
+            "id": "f7083268-53f4-4cf8-bf6c-42062ed8c3d8",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 0,
+            "start_time": 9,
+            "end_time": 21
+        },
+        {
+            "id": "58bda5e9-cdd2-45fd-96a8-300858d820a0",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 1,
+            "start_time": 5,
+            "end_time": 22
+        },
+        {
+            "id": "9c7738eb-ae12-43f5-aa10-9192a27052bb",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 2,
+            "start_time": 12,
+            "end_time": 17
+        },
+        {
+            "id": "eabae30c-1096-4766-9a02-1a5a125422f8",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 4,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "f7107388-12dc-432f-baee-a1b2f5182020",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "day": 6,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "c74a903b-f137-491c-8102-7a321c42a6dd",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 0,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "a0d5171f-510e-4221-a583-c7c06822e13b",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 1,
+            "start_time": 9,
+            "end_time": 12
+        },
+        {
+            "id": "5e8a255b-ddf5-4901-8bf2-2836f67658dd",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 3,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "347d730c-13d3-4e75-9bc5-86526cfebd18",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 5,
+            "start_time": 0,
+            "end_time": 23
+        },
+        {
+            "id": "dfd929e9-a91f-4edc-8114-01e143ee4129",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "day": 6,
+            "start_time": 0,
+            "end_time": 23
+        }
+    ],
+    "timeOffRequests": [
+        {
+            "id": "32afc0c6-6aee-41c2-a055-30bca29862a1",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "date": "2019-01-21",
+            "reason": "Laudantium dolorum aperiam odit.",
+            "status": "denied"
+        },
+        {
+            "id": "7a12f708-8423-4c98-b2af-8dbd47216f94",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "date": "2019-01-23",
+            "reason": "Est occaecati unde asperiores facere ut.",
+            "status": "pending"
+        },
+        {
+            "id": "c90c314d-5d7d-4cb4-ad9d-7b5f7ede0be6",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "date": "2019-01-25",
+            "reason": "At debitis molestias quia id vel harum deleniti.",
+            "status": "confirmed"
+        },
+        {
+            "id": "921cb67b-23b9-4e02-8041-005c4993fca9",
+            "user_id": "6819b7ba-b4f1-43cf-9637-f049e423c39f",
+            "date": "2019-01-22",
+            "reason": "Quasi est deleniti nobis rerum.",
+            "status": "pending"
+        },
+        {
+            "id": "3b10e463-b519-4dbe-a882-80b383cf0a43",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "date": "2019-01-21",
+            "reason": "Nisi corrupti fugit.",
+            "status": "confirmed"
+        },
+        {
+            "id": "efaaa71e-97ac-431f-b8d9-6de829b4dc87",
+            "user_id": "af32e28c-d640-4443-b18a-df50a557cd9d",
+            "date": "2019-01-24",
+            "reason": "Velit adipisci porro in sed.",
+            "status": "pending"
+        },
+        {
+            "id": "a8b57839-68c3-4027-838c-224ba5abc608",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "date": "2019-01-17",
+            "reason": "Necessitatibus aliquam et quia facere autem voluptatibus praesentium error perferendis.",
+            "status": "denied"
+        },
+        {
+            "id": "7a0db40c-bd3c-43a8-ada1-73014c564caa",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "date": "2019-01-24",
+            "reason": "Accusamus ad ad explicabo magnam nulla quia fugit eum.",
+            "status": "confirmed"
+        },
+        {
+            "id": "21c3dad9-dc7a-455a-ab29-0bc286bb7df3",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "date": "2019-01-21",
+            "reason": "Libero ratione velit sint nihil.",
+            "status": "confirmed"
+        },
+        {
+            "id": "f4ebe420-08bc-4731-8eb9-131c1c0ce4e3",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "date": "2019-01-25",
+            "reason": "Et saepe corrupti quidem labore non explicabo fugiat.",
+            "status": "pending"
+        },
+        {
+            "id": "bcce56e2-a64d-4b31-b2d3-c45800ec0bca",
+            "user_id": "f41a50ec-2acd-47f3-bb30-b6bcdf76b900",
+            "date": "2019-01-25",
+            "reason": "Nulla voluptatem est qui sunt error quos tempore delectus.",
+            "status": "confirmed"
+        },
+        {
+            "id": "223d73d1-1eff-4912-a711-47810059236e",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "date": "2019-01-26",
+            "reason": "Libero voluptates voluptates tempore excepturi.",
+            "status": "pending"
+        },
+        {
+            "id": "113ab749-b408-457c-a00d-3906649566f7",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "date": "2019-01-24",
+            "reason": "Perspiciatis aut beatae quaerat neque dignissimos eum ut molestiae.",
+            "status": "denied"
+        },
+        {
+            "id": "b7ac8183-c1d8-4fde-9fa9-0f36722438ce",
+            "user_id": "80fec025-3bcf-46cb-91a2-7241417e1fa3",
+            "date": "2019-01-18",
+            "reason": "Quia in dicta nesciunt expedita.",
+            "status": "confirmed"
+        },
+        {
+            "id": "90209864-6f6f-4c8c-bb13-2870a2fc5b1a",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "date": "2019-01-28",
+            "reason": "Accusantium voluptatum quia asperiores officia.",
+            "status": "denied"
+        },
+        {
+            "id": "31f4a3e3-172e-4d9e-9ec3-8dc9a9d5ef9e",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "date": "2019-01-16",
+            "reason": "Quos doloribus sapiente pariatur laboriosam.",
+            "status": "confirmed"
+        },
+        {
+            "id": "a6ccffa2-aae6-435b-9211-2cedf363b05e",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "date": "2019-01-27",
+            "reason": "Aliquid sint animi ut placeat quo qui error distinctio sapiente.",
+            "status": "confirmed"
+        },
+        {
+            "id": "9c6e0884-4dd9-42c5-ad40-a176f638b5f4",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "date": "2019-01-23",
+            "reason": "Vero ex fugit sunt corporis voluptates velit.",
+            "status": "denied"
+        },
+        {
+            "id": "c1b67b24-913d-4b25-be06-7dc80a71b8a0",
+            "user_id": "ee9c8f7a-5917-4491-b125-ab0fa73bec1d",
+            "date": "2019-01-18",
+            "reason": "Eos eum illum atque fugit.",
+            "status": "pending"
+        },
+        {
+            "id": "b5debdbf-77ad-4585-8e47-dbbeb91bc494",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "date": "2019-01-26",
+            "reason": "Id consequatur sunt.",
+            "status": "denied"
+        },
+        {
+            "id": "eab4c425-35c2-4a7f-b346-e4a3213caf93",
+            "user_id": "d38d9b0f-cd44-4c7f-879c-1f7ec9c6127a",
+            "date": "2019-01-17",
+            "reason": "Voluptas ut corporis iure quia sint sit qui earum ut.",
+            "status": "denied"
+        },
+        {
+            "id": "370a6862-2834-4237-8792-138e6ee4c663",
+            "user_id": "3c9097a1-222a-4da0-aa75-cde14d81067b",
+            "date": "2019-01-24",
+            "reason": "Sint temporibus tempore sed consequatur sint sed et veniam.",
+            "status": "denied"
+        }
+    ]
+}
