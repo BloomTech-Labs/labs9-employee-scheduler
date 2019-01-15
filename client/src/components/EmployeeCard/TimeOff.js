@@ -3,7 +3,6 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
-import connect 
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 class TimeOff extends Component {
@@ -18,11 +17,11 @@ class TimeOff extends Component {
         <p>Requested Time Off</p>
         {timeOffRequests &&
           timeOffRequests.map(({ id, date, status }) => (
-            <>
-              <p key={id}>{`${date} ${status}`}</p>
+            <React.Fragment key={id}>
+              <p>{`${date} ${status}`}</p>
               <button>approve</button>
               <button>deny</button>
-            </>
+            </React.Fragment>
           ))}
       </CardContainer>
     )
