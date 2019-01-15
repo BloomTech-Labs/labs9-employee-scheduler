@@ -15,11 +15,28 @@ import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
 import { authenticate } from './actions' // for initial call
 import { connect } from 'react-redux'
+import firebase from 'firebase/app'
+// this import style is required for proper codesplitting of firebase
+import 'firebase/auth'
 
 import './reset.css'
 import { registerOwner } from './actions/registerActions'
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: 'cadence-20246.firebaseapp.com',
+  databaseURL: 'https://cadence-20246.firebaseio.com',
+  projectId: 'cadence-20246',
+  storageBucket: 'cadence-20246.appspot.com',
+  messagingSenderId: '143190395098'
+}
+
+// in case firebase was already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 class App extends Component {
   constructor() {

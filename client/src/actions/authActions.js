@@ -12,12 +12,12 @@ const baseURL = process.env.REACT_APP_SERVER_URL
 export const authenticate = () => async dispatch => {
   // wrap in try/catch to catch firebase errors
   try {
-    // try to get token from firebase
-    const idToken = await firebase
-      .auth()
-      .currentUser.getIdToken(/* forceRefresh */ false)
+    // try to get current user from firebase
+    const { currentUser } = firebase.auth()
 
-    if (idToken) {
+    if (currentUser) {
+      const idToken = currentUser.getIdToken(/* forceRefresh */ false)
+
       axios
         .post(`${baseURL}/users/current`, null, {
           headers: { authorization: idToken }
@@ -30,12 +30,12 @@ export const authenticate = () => async dispatch => {
           })
         })
         .catch(err => {
-          dispatch({ type: AUTH_FAIL }) // server error
+          dispatch({ type: AUTH_FAIL, payload: { error: 'server error' } })
         })
     } else {
-      dispatch({ type: AUTH_FAIL }) // no token
+      dispatch({ type: AUTH_FAIL, payload: { error: 'no user info' } })
     }
   } catch (error) {
-    dispatch({ type: AUTH_FAIL }) // firebase error
+    dispatch({ type: AUTH_FAIL, payload: { error: 'firebase error' } })
   }
 }
