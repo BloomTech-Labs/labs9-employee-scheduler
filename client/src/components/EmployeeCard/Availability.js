@@ -15,7 +15,9 @@ class Availability extends Component {
          in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
         <p>Availability</p>
         {availabilities &&
-          availabilities.map(({ id, day, time }) => <p>{`${day} ${time}`}</p>)}
+          availabilities.map(({ id, day, time }) => (
+            <p key={id}>{`${day} ${time}`}</p>
+          ))}
       </CardContainer>
     )
   }

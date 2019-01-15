@@ -15,6 +15,10 @@ const TimeOffApproved = ({ user }) => {
                 <div className="details" key={tOA.id}>
                   <div>
                     <p>{tOA.date}</p>
+                    //button will be for employees to remove a time off request.
+                    This will //be easier to work with when we have an id for an
+                    employee showing on //the employee page.
+                    <button>remove request</button>
                   </div>
                 </div>
               )
