@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
+import connect 
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 class TimeOff extends Component {
