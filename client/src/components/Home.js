@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 // import bgImg from '../img/fff.jpg'
 import bg from '../img/bg.jpg' // https://unsplash.com/photos/PypjzKTUqLo img by Roman Bozhko
+import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP8G8 img by STIL
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
@@ -23,7 +24,7 @@ class Home extends Component {
     return (
       <OuterContainer>
         <BreadCrumb location={this.state.location} />
-        <Container src={bg}>
+        <Container>
           <h1>Scheduling your employees is hard.</h1>
           <p>
             Cadence is an easy-to-use shift scheduling tool. You'll never have
@@ -45,10 +46,10 @@ Home.propTypes = {
 }
 
 const Container = styled('div')`
-  margin: 7.5rem 7.5rem 0;
-  height: 68rem;
-  background-image: url(${props => props.src});
-  background-position: top;
+  margin: 7.5rem 0 0;
+  height: 118rem;
+  background-image: url(${bg});
+  background-position: center;
   background-size: cover;
 
   h1 {
@@ -67,6 +68,19 @@ const Container = styled('div')`
     margin-left: 2.5rem;
     a {
       color: ${system.color.neutral};
+    }
+  }
+
+  @media (max-width: 500px) {
+    background-image: url(${bgSmall});
+    width: 675px;
+    height: 50rem;
+    h1 {
+      margin: 50px auto 50px auto;
+      height: 30px;
+      padding: 42px;
+      font-size: ${system.fontSizing.xl};
+      color: ${system.color.bodytext};
     }
   }
 `
