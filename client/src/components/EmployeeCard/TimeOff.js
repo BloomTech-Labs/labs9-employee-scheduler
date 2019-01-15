@@ -4,11 +4,13 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
 import Axios from 'axios'
+import { dispoTimeOffRequests } from '../../actions'
+import { connect } from 'react-redux'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 const baseURL = process.env.REACT_APP_SERVER_URL
 class TimeOff extends Component {
-  dispoTimeOffRequests = e => {
+  handleTimeOff = e => {
     e.preventDefault()
     const id = e.target.id
     let response = ''
@@ -18,18 +20,7 @@ class TimeOff extends Component {
     } else {
       response = 'approved'
     }
-
-    Axios.put(
-      `${baseURL}/time-off-requests/${id}`,
-      { status: response },
-      {
-        headers: { authorization: 'testing' }
-      }
-    )
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(error => console.log(error))
+    this.props.dispoTimeOffRequests(id, response)
   }
 
   render() {
@@ -46,23 +37,15 @@ class TimeOff extends Component {
             <React.Fragment key={id}>
               <p>{`${date} ${status}`}</p>
               {status === 'confirmed' ? (
-                <button id={id} name="deny" onClick={this.dispoTimeOffRequests}>
+                <button id={id} name="deny" onClick={this.handleTimeOff}>
                   deny
                 </button>
               ) : (
                 <>
-                  <button
-                    id={id}
-                    name="deny"
-                    onClick={() => this.dispoTimeOffRequests}
-                  >
+                  <button id={id} name="deny" onClick={this.handleTimeOff}>
                     deny
                   </button>
-                  <button
-                    id={id}
-                    name="approve"
-                    onClick={() => this.dispoTimeOffRequests}
-                  >
+                  <button id={id} name="approve" onClick={this.handleTimeOff}>
                     approve
                   </button>
                 </>
@@ -74,7 +57,10 @@ class TimeOff extends Component {
   }
 }
 
-export default TimeOff
+export default connect(
+  null,
+  { dispoTimeOffRequests }
+)(TimeOff)
 
 TimeOff.propTypes = {
   // adding propTypes here

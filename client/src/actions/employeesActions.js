@@ -63,9 +63,15 @@ export const fetchSingleEmployeeFromDB = userid => dispatch => {
 }
 
 //dispositions employee time off requests
-export const dispoTimeOffRequests = (timeOffRequestId, updates) => dispatch => {
+export const dispoTimeOffRequests = (timeOffId, status) => dispatch => {
   axios
-    .put(`${baseURL}/time-off-requests/${timeOffRequestId}`, updates)
+    .put(
+      `${baseURL}/time-off-requests/${timeOffId}`,
+      { status },
+      {
+        headers: { authorization: 'testing' }
+      }
+    )
     .then(res =>
       dispatch({
         type: UPDATE_TIME_OFF_REQUEST_SUCCESS,
