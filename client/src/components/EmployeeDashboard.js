@@ -56,6 +56,7 @@ class EmployeeDashboard extends Component {
                 </div>
                 <div>
                   <p>{item.time}</p>
+                  <p>hello</p>
                 </div>
               </div>
             )
