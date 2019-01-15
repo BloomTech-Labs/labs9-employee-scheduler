@@ -26,7 +26,7 @@ const generateUser = ({
   email: faker.internet.email(),
   phone: faker.phone.phoneNumber(),
   emailpref: faker.random.boolean(),
-  phonepref: faker.random.boolean(),
+  phonepref: faker.random.boolean()
 })
 
 const generateUsersForOrg = ({
