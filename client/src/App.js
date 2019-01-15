@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Global, css } from '@emotion/core'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import Calendar from './components/Calendar'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
@@ -13,27 +13,34 @@ import Login from './components/Login'
 import Register from './components/Register'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
+import { authenticate } from './actions' // for initial call
+import { connect } from 'react-redux'
+import firebase from 'firebase/app'
+// this import style is required for proper codesplitting of firebase
+import 'firebase/auth'
 
 import './reset.css'
 import { registerOwner } from './actions/registerActions'
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      api: null
-    }
-  }
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: 'cadence-20246.firebaseapp.com',
+  databaseURL: 'https://cadence-20246.firebaseio.com',
+  projectId: 'cadence-20246',
+  storageBucket: 'cadence-20246.appspot.com',
+  messagingSenderId: '143190395098'
+}
 
+// in case firebase was already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
+
+class App extends Component {
   componentDidMount() {
-    axios
-      .get(serverUrl, {
-        headers: { authorization: 'testing' }
-      })
-      .then(res => this.setState({ api: res.data.message }))
-      .catch(err => console.log(err))
+    this.props.authenticate()
   }
 
   render() {
@@ -76,7 +83,7 @@ class App extends Component {
             <Switch>
               <Route path="/employees" component={Employees} />
               <Route path="/shift-calendar" component={CreateSchedule} />
-              <Route path="/register" component={Register} />
+              <Route path="/register" component={RegisterOwner} />
               <Route path="/billing" component={Billing} />
               <Route path="/calendar" component={Calendar} />
               <Route path="/dashboard/:id" component={Dashboard} />
@@ -85,26 +92,16 @@ class App extends Component {
             </Switch>
           </Elements>
         </StripeProvider>
-
-        {/*<h1> get rid of this?
-          {this.state.api ? `This is from the API: ${this.state.api}` : null}
-        </h1>*/}
-
-        {/* This Switch should be moved to it's own component because it should
-        only be accessible on the calender view */}
-        <Switch>
-          <Route path="/employees" component={Employees} />
-          <Route path="/shift-calendar" component={CreateSchedule} />
-          <Route path="/register" component={RegisterOwner} />
-          <Route path="/billing" component={Billing} />
-          <Route path="/calendar" component={Calendar} />
-          <Route path="/dashboard/:id" component={Dashboard} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/login" render={props => <Login {...props} />} />
-        </Switch>
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = ({}) => ({})
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { authenticate }
+  )(App)
+)

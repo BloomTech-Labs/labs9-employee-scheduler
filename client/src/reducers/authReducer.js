@@ -11,7 +11,7 @@ export const authReducer = (state = initialState, action) => {
     case AUTH_SUCCESS:
       return { ...state, ...action.payload, error: '' }
     case AUTH_FAIL:
-      return { ...state, error: 'authentication failed' }
+      return { ...state, error: action.payload.error }
     default:
       return state
   }
