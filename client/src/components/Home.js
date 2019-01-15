@@ -9,6 +9,7 @@ import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
+import stripe from '../img/stripe.png'
 
 // this is the main landing page, it will house the payment options and main site branding styles. The nav here will display as Sign Up || Sign In.
 // if a user is logged in already, it will display the Schedule now button and the navbar will change to logout.
@@ -38,9 +39,9 @@ class Home extends Component {
           <div className="card-container">
             <h1>Features</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-              ratione doloribus assumenda saepe eaque ut! Aspernatur excepturi
-              in suscipit rem.
+              Cadence has the features that your business needs to keep
+              organized. We are interactive and easy to use. Join today to get
+              your business started on these amazing features.
             </p>
             <ul>
               <li>
@@ -55,26 +56,44 @@ class Home extends Component {
                 Requests
               </li>
               <li>
-                <i className="fas fa-check" /> Added Security of Firebase oAuth
-                and Stripe
-              </li>
-              <li>
-                {' '}
-                <i className="fas fa-check" />
-                Recurring Events Are Made Easy With Cadence
-              </li>
-              <li>
-                {' '}
-                <i className="fas fa-check" />
-                Never Double Book And Employee Again
+                <i className="fas fa-check" /> Added Security of oAuth and
+                Stripe
               </li>
             </ul>
           </div>
           <div className="card-container">
             <h1>Easy to get started</h1>
+            <p>
+              Scheduling can be hard. Let Cadence do the work for you and help
+              you keep track so that you can focus on your business.
+            </p>
+            <ul>
+              <li>
+                <i className="far fa-thumbs-up" />
+                Sign in through oAuth
+              </li>
+              <li>
+                <i className="far fa-thumbs-up" />
+                Create your Cadence Account
+              </li>
+              <li>
+                <i className="far fa-thumbs-up" />
+                Create your organization
+              </li>
+              <li>
+                <i className="far fa-thumbs-up" />
+                Add your employees to it
+              </li>
+              <li>
+                <i className="far fa-thumbs-up" />
+                Begin filling the spaces
+              </li>
+            </ul>
           </div>
           <div className="card-container">
             <h1>Secure Payment</h1>
+
+            <img src={stripe} alt="stripe logo" />
           </div>
         </Features>
       </OuterContainer>
@@ -133,23 +152,48 @@ const Features = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  background-color: ${system.color.neutral};
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 670px;
+    padding: ${system.spacing.hugePadding};
+  }
   .card-container {
     display: flex;
     width: 500px;
-    height: 559px;
+    height: 537px;
     position: relative;
     flex-flow: column nowrap;
     background: ${system.color.white};
     padding: ${system.spacing.bigPadding};
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
+    @media (max-width: 500px) {
+      margin: 30px auto;
+      justify-content: space-around;
+      width: 100%;
+    }
     p {
       margin-bottom: 38px;
       font-size: ${system.fontSizing.m};
     }
-    li {
-      margin-bottom: 38px;
-      font-size: ${system.fontSizing.m};
+    ul {
+      i.fa-check {
+        margin-right: 10px;
+        font-size: ${system.fontSizing.l};
+        color: ${system.color.success};
+      }
+      i.fa-thumbs-up {
+        margin-right: 20px;
+        font-size: ${system.fontSizing.l};
+        color: ${system.color.primary};
+      }
+      li {
+        margin-bottom: 38px;
+        font-size: ${system.fontSizing.m};
+      }
     }
   }
 `
