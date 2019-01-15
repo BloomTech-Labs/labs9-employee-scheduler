@@ -11,6 +11,7 @@ import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
 import Register from './components/Register'
+import { Elements, StripeProvider } from 'react-stripe-elements'
 
 import './reset.css'
 
@@ -68,22 +69,20 @@ class App extends Component {
         />
         <Route exact path="/" render={props => <Home {...props} />} />
 
-        {/*<h1> get rid of this?
-          {this.state.api ? `This is from the API: ${this.state.api}` : null}
-        </h1>*/}
-
-        {/* This Switch should be moved to it's own component because it should
-        only be accessible on the calender view */}
-        <Switch>
-          <Route path="/employees" component={Employees} />
-          <Route path="/shift-calendar" component={CreateSchedule} />
-          <Route path="/register" component={Register} />
-          <Route path="/billing" component={Billing} />
-          <Route path="/calendar" component={Calendar} />
-          <Route path="/dashboard/:id" component={Dashboard} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/login" render={props => <Login {...props} />} />
-        </Switch>
+        <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
+          <Elements>
+            <Switch>
+              <Route path="/employees" component={Employees} />
+              <Route path="/shift-calendar" component={CreateSchedule} />
+              <Route path="/register" component={Register} />
+              <Route path="/billing" component={Billing} />
+              <Route path="/calendar" component={Calendar} />
+              <Route path="/dashboard/:id" component={Dashboard} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/login" render={props => <Login {...props} />} />
+            </Switch>
+          </Elements>
+        </StripeProvider>
       </div>
     )
   }

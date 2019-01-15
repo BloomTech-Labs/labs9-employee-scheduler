@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CardElement, injectStripe } from 'react-stripe-elements'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
@@ -7,32 +8,66 @@ import Button from './common/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
-// this component should render the billing page for the app and use Stripe.
 class Billing extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'Billing',
-      card: {
-        cardnumber: null,
-        expiry: 'null',
-        cvv: 'null'
-      }
+      location: 'Billing'
     }
+    this.submit = this.submit.bind(this)
   }
 
-  changeHandler = event => {
-    event.preventDefault()
-    this.setState({
-      card: {
-        ...this.state.card,
-        [event.target.name]: event.target.value
-      }
-    })
+  async submit(ev) {
+    // User clicked submit
   }
+
   render() {
     return (
       <OuterContainer height="true">
+        <LeftSideBar />
+        <BreadCrumb location={this.state.location} />
+
+        <Container>
+          <h1>Billing</h1>
+          <form>
+            <CardElement />
+            <Button onClick={this.submit}>Pay</Button>
+          </form>
+        </Container>
+      </OuterContainer>
+    )
+  }
+}
+
+export default injectStripe(Billing)
+
+// // this component should render the billing page for the app and use Stripe.
+// class Billing extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       location: 'Billing',
+//       card: {
+//         cardnumber: null,
+//         expiry: 'null',
+//         cvv: 'null'
+//       }
+//     }
+//   }
+
+//   changeHandler = event => {
+//     event.preventDefault()
+//     this.setState({
+//       card: {
+//         ...this.state.card,
+//         [event.target.name]: event.target.value
+//       }
+//     })
+//   }
+//   render() {
+//     return (
+{
+  /* <OuterContainer height="true">
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
 
@@ -55,32 +90,33 @@ class Billing extends Component {
             <Button type="submit">Pay Now</Button>
           </form>
         </Container>
-      </OuterContainer>
-    )
-  }
+      </OuterContainer> */
 }
+//     )
+//   }
+// }
 
-export default Billing
+// export default Billing
 
-Billing.propTypes = {
-  // adding propTypes here
-}
+// Billing.propTypes = {
+//   // adding propTypes here
+// }
 
-const Input = styled.input`
-  font-size: ${system.fontSizing.m};
-  padding: 2.5px 5px;
-  margin: 0.5rem 0 ${system.spacing.hugePadding};
-  border: none;
-  border-bottom: 2px solid
-    ${props => (props.disabled ? 'transparent' : '#d2d2d2')};
-  transition: ${system.transition};
-  :disabled {
-    background: ${system.color.white};
-  }
-  :focus {
-    border-bottom: 2px solid ${system.color.primary};
-  }
-`
+// const Input = styled.input`
+//   font-size: ${system.fontSizing.m};
+//   padding: 2.5px 5px;
+//   margin: 0.5rem 0 ${system.spacing.hugePadding};
+//   border: none;
+//   border-bottom: 2px solid
+//     ${props => (props.disabled ? 'transparent' : '#d2d2d2')};
+//   transition: ${system.transition};
+//   :disabled {
+//     background: ${system.color.white};
+//   }
+//   :focus {
+//     border-bottom: 2px solid ${system.color.primary};
+//   }
+// `
 const Container = styled('div')`
   margin: 0 7.5rem;
   display: flex;
@@ -97,6 +133,7 @@ const Container = styled('div')`
     padding: ${system.spacing.bigPadding};
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
+    margin-bottom: 20px;
 
     p {
       position: absolute;
@@ -114,16 +151,6 @@ const Container = styled('div')`
       text-transform: uppercase;
       margin-bottom: 0.5rem;
       color: ${system.color.captiontext};
-    }
-
-    input[type='checkbox'] {
-      margin-top: 10px;
-      :first-of-type {
-        margin-left: 5px;
-      }
-      :nth-of-type(2) {
-        margin-left: 40px;
-      }
     }
 
     button {
