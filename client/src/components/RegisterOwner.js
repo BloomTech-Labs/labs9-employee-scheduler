@@ -77,6 +77,7 @@ class RegisterOwner extends Component {
   }
 
   handleChange = e => {
+    e.preventDefault()
     this.setState({ [e.target.name]: e.target.value })
   }
 
@@ -121,6 +122,17 @@ class RegisterOwner extends Component {
           firebaseAuth={firebase.auth()}
         />
       )
+    } else if (outcome) {
+      return (
+        <Container>
+          <BreadCrumb />
+          <div className="wrapper">
+            <h1 className="headerText" data-testid="register-form">
+              {`Registration ${outcome}`}
+            </h1>
+          </div>
+        </Container>
+      )
     } else {
       return (
         <Container>
@@ -129,7 +141,7 @@ class RegisterOwner extends Component {
             <h1 className="headerText" data-testid="register-form">
               Complete Registration
             </h1>
-            <form type="submit" onClick={handleSubmit}>
+            <form type="submit" onSubmit={handleSubmit}>
               <Form.Group
                 property="firstName"
                 type="text"
