@@ -98,9 +98,9 @@ export default injectStripe(Billing)
 
 // export default Billing
 
-// Billing.propTypes = {
-//   // adding propTypes here
-// }
+Billing.propTypes = {
+  // adding propTypes here
+}
 
 // const Input = styled.input`
 //   font-size: ${system.fontSizing.m};
