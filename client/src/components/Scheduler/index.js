@@ -16,6 +16,11 @@ class Scheduler extends React.Component {
     this.props.fetchEmployeesFromDB()
   }
 
+  createEvent(event) {
+    console.log(event)
+    console.log(typeof event.start)
+  }
+
   render() {
     const { employees } = this.props
     return (
@@ -27,7 +32,7 @@ class Scheduler extends React.Component {
           defaultDate={new Date()}
           defaultView="week"
           events={this.state.events}
-          onEventDrop={event => console.log(event)}
+          onEventDrop={this.createEvent}
           onEventResize={event => console.log(event)}
           onSelectEvent={event => console.log(event)}
           startAccessor="start"
