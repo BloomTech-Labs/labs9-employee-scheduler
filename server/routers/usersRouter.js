@@ -32,12 +32,28 @@ router.post('/current', async (req, res) => {
   }
 })
 
-router.get('/:id', (req, res) => {
+// get all users for org by org id
+router.get('/org/:id', async (req, res) => {
   const { id } = req.params
-
-  return getUsers(id)
+  getUsers(id)
     .then(user => res.status(200).json(user))
     .catch(err => res.status(404).json(err))
+})
+
+// get single user by user id
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await getUser(id)
+
+    if (user) {
+      return res.status(200).json(user)
+    } else {
+      return res.status(404).send({ message: 'User not found.' })
+    }
+  } catch (err) {
+    return res.status(500).send()
+  }
 })
 
 // we need two separate post routes here:
