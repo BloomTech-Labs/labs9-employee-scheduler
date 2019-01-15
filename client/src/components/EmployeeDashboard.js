@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
+
+import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import { fetchSingleEmployeeFromDB } from '../actions'
+import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
+
 import { connect } from 'react-redux'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
@@ -79,6 +82,8 @@ class EmployeeDashboard extends Component {
                 </div>
                 <div className="reason">
                   <p data-testid="reason">{item.reason}</p>
+                  {/* needs logic added to the button to remove the request */}
+                  <button>Remove</button>
                 </div>
               </div>
             )
@@ -112,7 +117,9 @@ class EmployeeDashboard extends Component {
                 {approvedTimeOff}
               </div>
             </div>
-            <TimeOffRequest />
+            <div className="title">
+              <TimeOffRequest />
+            </div>
           </div>
         </Container>
       </React.Fragment>
@@ -188,5 +195,7 @@ export default connect(
 )(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
-  // add propTypes here
+  employee: propTypes.object,
+  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
+  error: propTypes.string
 }

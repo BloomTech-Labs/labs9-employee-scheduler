@@ -33,6 +33,9 @@ describe('testing the employees router', () => {
         .set('authorization', 'testing')
 
       expect(Array.isArray(response.body)).toBe(true)
+
+      await cleanup()
+
     })
   })
 })

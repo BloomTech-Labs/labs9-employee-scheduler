@@ -6,23 +6,44 @@ import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Button from './common/Button'
+import axios from 'axios'
 
 // This component will render out settings for the signed in user
 class Settings extends Component {
-  state = {
-    location: 'Settings',
-    disabled: true,
-    fakeUser: {
-      email: 'example@example.com',
-      phone: '123-456-7890',
-      emailpref: true,
-      phonepref: false,
-      password: '',
-      confirm: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+      location: 'Settings',
+      disabled: true,
+      user: {
+        email: '',
+        phone: '',
+        emailpref: true,
+        phonepref: false
+      }
     }
   }
 
-  clickHandler = () => {
+  // this CDM get url needs to be updated when the users/current route is built to get by current id
+  componentDidMount() {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/users`, {
+        headers: { authorization: 'testing' }
+      })
+      .then(res => {
+        const { phone, email } = res.data[0]
+        console.log(res.data[0])
+        this.setState({
+          user: {
+            phone: phone,
+            email: email
+          }
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  editHandler = () => {
     this.setState({
       disabled: false
     })
@@ -31,7 +52,8 @@ class Settings extends Component {
   changeHandler = event => {
     event.preventDefault()
     this.setState({
-      fakeUser: {
+      user: {
+        ...this.state.user,
         [event.target.name]: event.target.value
       }
     })
@@ -40,7 +62,7 @@ class Settings extends Component {
   checkHandler = event => {
     event.preventDefault()
     this.setState({
-      fakeUser: {
+      user: {
         [event.target.name]: event.target.checked
       }
     })
@@ -48,10 +70,19 @@ class Settings extends Component {
 
   submitHandler = event => {
     event.preventDefault()
-    const { password, confirm } = this.state.fakeUser
-    if (password && confirm !== password) {
-      alert('Your passwords do not match')
-    }
+    this.setState({
+      disabled: true
+    })
+
+    // need to get id off of redux state
+    // ${id} needs to go in url
+    const { user } = this.setState
+    axios
+      .put(`${process.env.REACT_APP_SERVER_URL}/users/`, user, {
+        headers: { authorization: 'testing' }
+      })
+      .then(res => alert('Your account has been edited successfully.'))
+      .catch(err => alert('Something went wrong. Try again please.'))
   }
 
   render() {
@@ -61,29 +92,32 @@ class Settings extends Component {
         <BreadCrumb location={this.state.location} />
 
         <Container>
-          <h1>Settings</h1>
+          <h1 data-testid="settings">Settings</h1>
 
           <fieldset disabled={this.state.disabled}>
             <form onSubmit={this.submitHandler}>
-              <p onClick={() => this.clickHandler()}>EDIT</p>
+              {/* Replace this EDIT with a pencil icon later */}
+              <p onClick={() => this.editHandler()}>EDIT</p>
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
                 name="email"
                 placeholder="ex. bruce@waynecorp.com"
                 onChange={this.changeHandler}
-                defaultValue={this.state.fakeUser.email}
+                defaultValue={this.state.user.email}
                 disabled={this.state.disabled}
+                aria-label="email"
               />
-              <label htmlFor="tel">Phone</label>
+              <label htmlFor="phone">Phone</label>
               <Input
                 type="tel"
-                name="tel"
+                name="phone"
                 placeholder="ex. 111-111-1111"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 onChange={this.changeHandler}
-                defaultValue={this.state.fakeUser.phone}
+                defaultValue={this.state.user.phone}
                 disabled={this.state.disabled}
+                aria-label="tel"
               />
               <div>
                 <label>Preferred Contact Method</label>
@@ -92,8 +126,8 @@ class Settings extends Component {
                   type="checkbox"
                   name="emailpref"
                   onChange={this.checkHandler}
-                  checked={this.value}
-                  defaultChecked={this.state.fakeUser.emailpref}
+                  aria-label="emailpref"
+                  defaultChecked={this.state.user.emailpref}
                 />
                 <label htmlFor="emailpref">Email</label>
 
@@ -101,18 +135,15 @@ class Settings extends Component {
                   type="checkbox"
                   name="phonepref"
                   onChange={this.checkHandler}
-                  checked={this.value}
-                  defaultChecked={this.state.fakeUser.phonepref}
+                  aria-label="phonepref"
+                  defaultChecked={this.state.user.phonepref}
                 />
                 <label htmlFor="phonepref">Phone</label>
               </div>
               {this.state.disabled ? null : (
-                <EditOptions
-                  changeHandler={event => this.changeHandler(event)}
-                />
-              )}
-              {this.state.disabled ? null : (
-                <Button type="submit">Submit Edits</Button>
+                <Button type="submit" data-test="submit">
+                  Submit Edits
+                </Button>
               )}
             </form>
           </fieldset>
@@ -126,30 +157,6 @@ export default Settings
 
 Settings.propTypes = {
   // add propTypes here
-}
-
-// These input fields will only appear if the user is editing the page.
-const EditOptions = props => {
-  return (
-    <>
-      <label htmlFor="password">Password</label>
-      <Input
-        name="password"
-        type="password"
-        placeholder="A strong password"
-        onChange={props.changeHandler}
-        value={props.value}
-      />
-      <label htmlFor="confirm">Confirm Password</label>
-      <Input
-        name="confirm"
-        type="password"
-        placeholder="Confirm password"
-        onChange={props.changeHandler}
-        value={props.value}
-      />
-    </>
-  )
 }
 
 const Container = styled('div')`
@@ -207,6 +214,7 @@ const Container = styled('div')`
 `
 const Input = styled.input`
   font-size: ${system.fontSizing.m};
+  color: ${system.color.bodytext};
   padding: 2.5px 5px;
   margin: 0.5rem 0 ${system.spacing.hugePadding};
   border: none;
@@ -215,6 +223,7 @@ const Input = styled.input`
   transition: ${system.transition};
   :disabled {
     background: ${system.color.white};
+    color: ${system.color.bodytext};
   }
   :focus {
     border-bottom: 2px solid ${system.color.primary};

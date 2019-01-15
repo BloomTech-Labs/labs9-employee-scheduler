@@ -13,6 +13,7 @@
     "react-big-calendar": "^0.19.0",
     "react-dnd": "2.6.0",
     "react-dnd-html5-backend": "2.6.0",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",
     "react-firebaseui": "^3.1.2",
     "react-redux": "^6.0.0",

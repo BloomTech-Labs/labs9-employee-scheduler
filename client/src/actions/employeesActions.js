@@ -48,6 +48,7 @@ export const fetchSingleEmployeeFromDB = userid => dispatch => {
       headers: { authorization: 'testing' }
     })
     .then(res =>
+
       dispatch({
         type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
         payload: res.data
