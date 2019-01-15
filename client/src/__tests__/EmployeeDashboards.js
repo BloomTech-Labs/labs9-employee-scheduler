@@ -1,8 +1,15 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { render } from 'react-testing-library'
-import { renderWithRedux } from './Redux'
+import { render, waitForElement } from 'react-testing-library'
+import { renderWithReduxAndRouter } from '../../testing/utils'
+import EmployeeDashboard from '../components/EmployeeDashboard'
+import { fetchSingleEmployeefromDB } from '../actions'
+import * as axios from 'axios'
 
+jest.mock('axios')
+
+// this is the mocked data to be returned
 const employee = {
   id: '89ee112d-b517-4822-996d-392c079a86c5',
   first_name: 'Loyce',
@@ -24,42 +31,29 @@ const employee = {
   ]
 }
 
-const fetchSingleEmployeeFromDB = userid => dispatch => {
-  dispatch({
-    type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
-    payload: employee
-  })
-}
-function employeeReducer(state = { employee: [] }, action) {
-  switch (action.type) {
-    case 'FETCH_EMPLOYEE_FROM_DB_SUCCESS':
-      return {
-        employee: employee
-      }
-    default:
-      return state
-  }
-}
-
-class EmployeeDashboard extends React.Component {
-  componentDidMount() {
-    fetchSingleEmployeeFromDB()
-  }
-
-  render() {
-    return (
-      <div>
-        <p data-testid="day">{employee.shifts[0].day}</p>
-        <p data-testid="time">{employee.shifts[0].time}</p>
-      </div>
-    )
-  }
-}
-
 describe('employee dashboard with redux', () => {
-  it('can render with initial state', () => {
-    const { getByTestId, getByText } = renderWithRedux(<EmployeeDashboard />)
-    expect(getByTestId('day').textContent).toBe('Monday')
-    expect(getByTestId('time').textContent).toBe('0am-3pm')
+  it('can render with initial state', async () => {
+    // mocks axios call so that we can control what data gets returned.
+    // this is setting up the mock, so that when axios actually gets called
+    // by the component, the test works appropriately.
+    axios.get.mockImplementation(() => Promise.resolve({ data: employee }))
+
+    // renders the component with both Redux and Router, with the route set
+    // to the matching route for this component in App
+    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
+      <Route path="/dashboard/:id" component={EmployeeDashboard} />,
+      {
+        route: `/dashboard/${employee.id}`
+      }
+    )
+
+    // since axios and redux thunk are asyncronous, this waits for the page to
+    // register changes from ComponentDidMount before proceeding with tests
+    const testElement = await waitForElement(() => getByTestId('date'))
+
+    // uses test ids to assert expectations
+    expect(getByTestId('date').textContent).toBe(employee.time_off[0].date)
+    expect(getByTestId('reason').textContent).toBe(employee.time_off[0].reason)
   })
 })
+

@@ -253,7 +253,9 @@ class Form extends Component {
     const { heading, children } = this.props
     return (
       <form className="form" onSubmit={this.handleFormSubmit}>
-        <heading.type className="form-title">{heading.title}</heading.type>
+        {heading && (
+          <heading.type className="form-title">{heading.title}</heading.type>
+        )}
         {React.Children.map(children, this.handleGroups)}
       </form>
     )
