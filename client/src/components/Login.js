@@ -15,7 +15,10 @@ const config = {
   messagingSenderId: '143190395098'
 }
 
-firebase.initializeApp(config)
+// in case firebase was already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(config)
+}
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -48,7 +51,7 @@ class Login extends Component {
 
   render() {
     return this.props.user ? (
-      <h1>{this.props.user}</h1>
+      <h1>Success</h1>
     ) : (
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     )

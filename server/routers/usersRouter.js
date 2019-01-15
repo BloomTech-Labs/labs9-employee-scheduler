@@ -5,8 +5,10 @@ const {
   getUser,
   addUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  addOrg
 } = require('../../database/helpers')
+const uuid = require('uuid') // need here for optimizing creation of org with owner
 
 router.get('/', (req, res) => {
   getUsers()
@@ -15,7 +17,7 @@ router.get('/', (req, res) => {
 })
 
 // this one depends on auth.
-router.get('/current', async (req, res) => {
+router.post('/current', async (req, res) => {
   const { id } = req.user
   try {
     const user = await getUser(id)
@@ -38,6 +40,11 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
+// we need two separate post routes here:
+// one for employees (incl supervisors) and one for owners
+// i'll leave the generic post here for now
+
+// generic post leaving for now
 router.post('/', async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
 
@@ -48,6 +55,67 @@ router.post('/', async (req, res) => {
   try {
     const success = await addUser(req.body)
     res.status(201).json(success)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
+// post owner and org
+router.post('/register/owner', async (req, res) => {
+  // grab user id from client which is from firebase auth
+  const { id } = req.user
+
+  // grab all req'd info from body obj
+  const {
+    email,
+    phone,
+    firstName,
+    lastName,
+    orgName,
+    orgDescription
+  } = req.body
+
+  // check possible error states
+  // First, some necessary field is missing
+  if (!id || !firstName || !lastName || !orgName) {
+    res.status(400).json({ error: 'Missing required field(s)' })
+  }
+  // Second, user id already exists in db
+  if (await getUser(id)) {
+    // modify accordingly
+    res.status(400).json({ error: 'User already exists' })
+  }
+
+  // Add rows to db
+  try {
+    // First, generate id for new org
+    const newId = uuid()
+
+    // Second, add new org
+    const orgSuccces = await addOrg({
+      id: newId,
+      name: orgName,
+      description: orgDescription
+    })
+    // Third, add new user as owner
+    const userSuccess = await addUser({
+      organization_id: newId,
+      first_name: firstName,
+      last_name: lastName,
+      role: 'owner',
+      email,
+      phone
+    })
+
+    if (orgSuccces && userSuccess) {
+      res.status(201).json({
+        message: 'Success creating new owner and organization'
+      })
+    } else {
+      // else abort the try block by throwing an error
+      throw new Error('error')
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
