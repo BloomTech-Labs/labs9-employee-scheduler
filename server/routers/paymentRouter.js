@@ -1,31 +1,38 @@
 const express = require('express')
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 const router = express.Router()
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
-//  stripe one time payment recieve from from front end server
 router.post('/', (req, res, next) => {
-  const stripeToken = req.body.stripeToken
-
-  stripe.charges.create(
+  const { stripeToken, email } = req.body
+  stripe.customers.create(
     {
-      amount: 2200,
-      currency: 'usd',
-      description: 'Example charge',
+      email: email,
       source: stripeToken
     },
-    (err, charge) => {
-      // asynchronously called
-      console.log('charge: ' + charge) // gives id
+    (err, customer) => {
       if (err) {
-        res.send({
-          success: false,
-          message: 'error'
-        })
+        res.status(500).json({ message: 'Failed to create customer', err })
       } else {
-        res.send({
-          success: true,
-          message: 'Success'
-        })
+        const { id } = customer // this id should be coupled to the organization
+        stripe.subscriptions.create(
+          {
+            customer: id,
+            items: [
+              {
+                plan: 'plan_ELLat7E29umz5Y'
+              }
+            ]
+          },
+          (err, subscription) => {
+            if (err) {
+              res.status(500).json({ message: 'Failed to subscribe', err })
+            } else {
+              // this is where we add a "paid" bool to the organization
+              console.log(`Success: ${subscription}`)
+              res.send({ Success: subscription })
+            }
+          }
+        )
       }
     }
   )
