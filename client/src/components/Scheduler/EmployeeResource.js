@@ -3,11 +3,11 @@ import { DragSource } from 'react-dnd'
 import EmployeeCard from '../EmployeeCard/Card'
 
 const EmployeeEvent = props => {
-  const { connectDragSource, event } = props
+  const { connectDragSource, event, employee } = props
   console.log(props)
   return connectDragSource(
     <div style={{ opacity: props.isDragging ? '.7' : undefined }}>
-      <EmployeeCard />
+      <EmployeeCard {...employee} />
     </div>
   )
 }

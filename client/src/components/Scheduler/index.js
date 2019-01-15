@@ -1,20 +1,26 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Calendar from '../Calendar'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import EmployeePool from './EmployeePool'
+import { fetchEmployeesFromDB } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
 class Scheduler extends React.Component {
   state = { events: [] }
-  ComponentDidMount() {}
+
+  componentDidMount() {
+    this.props.fetchEmployeesFromDB()
+  }
 
   render() {
+    const { employees } = this.props
     return (
       <div style={{ display: 'flex' }}>
-        <EmployeePool />
+        <EmployeePool employees={employees} />
         <DnDCal
           selectable
           resizable
@@ -33,5 +39,10 @@ class Scheduler extends React.Component {
   }
 }
 
-console.log(HTML5Backend)
-export default DragDropContext(HTML5Backend)(Scheduler)
+const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
+
+const DragSched = DragDropContext(HTML5Backend)(Scheduler)
+export default connect(
+  mapStateToProps,
+  { fetchEmployeesFromDB }
+)(DragSched)
