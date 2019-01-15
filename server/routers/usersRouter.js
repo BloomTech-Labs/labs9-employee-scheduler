@@ -7,6 +7,7 @@ const {
   updateUser,
   deleteUser
 } = require('../../database/helpers')
+const uuid = require('uuid') // need here for optimizing creation of org with owner
 
 router.get('/', (req, res) => {
   getUsers()
@@ -64,38 +65,57 @@ router.post('/register/owner', async (req, res) => {
   // grab user id from client which is from firebase auth
   const { id } = req.user
 
-  // grab necessary fields from body
-  // this includes:
-  // org name
-  // org description
-  // first and last name
-  // email
+  // grab all req'd info from body obj
+  const {
+    email,
+    phone,
+    firstName,
+    lastName,
+    orgName,
+    orgDescription
+  } = req.body
 
   // check possible error states
   // First, some necessary field is missing
-  if (true /* db user already exists*/) {
-    res.status(400).json({ error: 'User already exists' })
+  if (!id || !firstName || !lastName || !orgName) {
+    res.status(400).json({ error: 'Missing required field(s)' })
   }
   // Second, user id already exists in db
-  if (!fields) {
+  if (getUser(id)) {
     // modify accordingly
-    res.status(400).json({ error: 'Missing required field(s)' })
+    res.status(400).json({ error: 'User already exists' })
   }
 
   // Add rows to db
   try {
-    // First, add new org (because user will need to reference org)
+    // First, generate id for new org
+    const newId = uuid()
+
+    // Second, add new org
     const orgSuccces = await addOrg({
-      /* specific items */
+      id: newId,
+      name: orgName,
+      description: orgDescription
     })
-    // have to check if knex returning wants otherwise the next step is a db call to get new id
+    // Third, add new user as owner
     const userSuccess = await addUser({
-      /* specific items incl. org id */
+      id: user_id,
+      organization_id: newId,
+      first_name: firstName,
+      last_name: lastName,
+      role: 'owner',
+      email,
+      phone
     })
 
-    res.status(201).json({
-      /* some custom success message */
-    })
+    if (orgSuccces && userSuccess) {
+      res.status(201).json({
+        message: 'Success creating new owner and organization'
+      })
+    } else {
+      // else abort the try block by throwing an error
+      throw new Error('error')
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
