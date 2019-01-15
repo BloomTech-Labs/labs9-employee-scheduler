@@ -5,7 +5,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import { registerOwner } from '../actions' // for calling once all data is in
+import { registerAsOwner } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Form from './Form/index'
 import BreadCrumb from './BreadCrumb'
@@ -82,7 +82,23 @@ class RegisterOwner extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log('clicked')
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      orgDescription
+    } = this.state
+
+    this.props.registerAsOwner({
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      orgDescription
+    })
   }
 
   render() {
@@ -96,8 +112,6 @@ class RegisterOwner extends Component {
       orgDescription
     } = this.state
     const { handleChange, handleSubmit } = this
-
-    console.log(this.state)
 
     if (!oauthSuccess) {
       return (
@@ -199,5 +213,5 @@ const mapStateToProps = state => {
 // do we need redux??
 export default connect(
   mapStateToProps,
-  { registerOwner }
+  { registerAsOwner }
 )(RegisterOwner)
