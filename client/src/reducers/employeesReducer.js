@@ -41,10 +41,11 @@ export const employeeReducer = (state = initialState, action) => {
 }
 
 //dispositions employee time off requests
-export const dispoTimeOffRequestsReducer = ((state = initialState),
-action => {
-  switch (action.type) {
-    case UPDATE_TIME_OFF_REQUEST_SUCCESS:
-      return {}
-  }
-})
+// export const dispoTimeOffRequestsReducer = (state = initialState, action => {
+//   switch(action.type) {
+//     case UPDATE_TIME_OFF_REQUEST_SUCCESS:
+//     return {
+//       if(action.payload === denied {})
+//     }
+//   }
+// })
