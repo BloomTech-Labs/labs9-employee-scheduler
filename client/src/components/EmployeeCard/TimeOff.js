@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 const baseURL = process.env.REACT_APP_SERVER_URL
 class TimeOff extends Component {
+  //sets the correct button on the DOM depending on the status of the request
   handleTimeOff = e => {
     e.preventDefault()
     const id = e.target.id
@@ -20,6 +21,7 @@ class TimeOff extends Component {
     } else {
       response = 'approved'
     }
+    //calls function from redux actions
     this.props.dispoTimeOffRequests(id, response)
   }
 

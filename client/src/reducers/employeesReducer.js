@@ -19,6 +19,9 @@ export const employeesReducer = (state = initialState, action) => {
       return { employees: [...action.payload], error: '' }
     case FETCH_EMPLOYEES_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching failed' }
+
+    //verifies that the id of the time off request matches the time off id
+    // and if it does it changes the status of the request on the DOM.
     case UPDATE_TIME_OFF_REQUEST_SUCCESS:
       const { payload: timeOff } = action
       console.log(action, state.employees)
