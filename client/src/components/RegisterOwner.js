@@ -51,12 +51,15 @@ class RegisterOwner extends Component {
     orgName: '',
     orgDescription: ''
   }
-  // check that user is not already logged in?
-  // render form with info
+  // ideall we'd start by checking that the user is not already logged in
+  // we're not doing that now
+  // what we're doing is this
   // stage 1
   // create account with oauth ...
   // stage 2
   // direct to page where user fills in the rest of the info
+  // stage 3
+  // submit request to server, update state to reflect response
 
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
