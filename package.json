@@ -1,9 +1,6 @@
 {
   "name": "cadence",
   "version": "1.12.3",
-  "engines": {
-    "node": "10.x"
-  },
   "description": "",
   "main": "server/index.js",
   "scripts": {

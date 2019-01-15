@@ -10,9 +10,11 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import Register from './components/Register'
+// import Register from './components/Register' taking out of commision for now
+import RegisterOwner from './components/RegisterOwner'
 
 import './reset.css'
+import { registerOwner } from './actions/registerActions'
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
@@ -77,7 +79,7 @@ class App extends Component {
         <Switch>
           <Route path="/employees" component={Employees} />
           <Route path="/shift-calendar" component={CreateSchedule} />
-          <Route path="/register" component={Register} />
+          <Route path="/register" component={RegisterOwner} />
           <Route path="/billing" component={Billing} />
           <Route path="/calendar" component={Calendar} />
           <Route path="/dashboard/:id" component={Dashboard} />
