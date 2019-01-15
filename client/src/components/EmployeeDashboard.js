@@ -82,6 +82,8 @@ class EmployeeDashboard extends Component {
                 </div>
                 <div className="reason">
                   <p data-testid="reason">{item.reason}</p>
+                  {/* needs logic added to the button to remove the request */}
+                  <button>Remove</button>
                 </div>
               </div>
             )
