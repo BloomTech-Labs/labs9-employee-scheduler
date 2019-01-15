@@ -19,7 +19,7 @@ class TimeOff extends Component {
     if (name === 'deny') {
       response = 'denied'
     } else {
-      response = 'approved'
+      response = 'confirmed'
     }
     //calls function from redux actions
     this.props.dispoTimeOffRequests(id, response)
