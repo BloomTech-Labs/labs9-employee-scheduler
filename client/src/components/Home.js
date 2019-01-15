@@ -92,7 +92,12 @@ class Home extends Component {
           </div>
           <div className="card-container">
             <h1>Secure Payment</h1>
-
+            <p>
+              Cadence offers it's users some of the best security features. We
+              want your information to remain your information. Stripe helps us
+              accomplish this by manageming billing details so you never have to
+              worry about anything happening to financial data.
+            </p>
             <img src={stripe} alt="stripe logo" />
           </div>
         </Features>
@@ -153,6 +158,7 @@ const Features = styled('div')`
   flex-direction: row;
   justify-content: space-around;
   background-color: ${system.color.neutral};
+  max-width: 1614px;
   @media (max-width: 500px) {
     display: flex;
     flex-direction: column;
