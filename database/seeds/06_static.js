@@ -27,5 +27,10 @@ exports.seed = function(knex, Promise) {
         .then(() => {
           return knex('events').insert(events)
         })
+      // .catch(err => {
+      //   for (i in err) {
+      //     console.log(err[i])
+      //   }
+      // })
     })
 }
