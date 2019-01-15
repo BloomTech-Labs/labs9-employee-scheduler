@@ -17,7 +17,7 @@ class TimeOff extends Component {
         <p>Requested Time Off</p>
         {timeOffRequests &&
           timeOffRequests.map(({ id, date, status }) => (
-            <p>{`${date} ${status}`}</p>
+            <p key={id}>{`${date} ${status}`}</p>
           ))}
       </CardContainer>
     )
