@@ -34,6 +34,49 @@ class Home extends Component {
             <LinkItem to="/employees">Schedule Now</LinkItem>
           </Button>
         </Container>
+        <Features>
+          <div className="card-container">
+            <h1>Features</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              ratione doloribus assumenda saepe eaque ut! Aspernatur excepturi
+              in suscipit rem.
+            </p>
+            <ul>
+              <li>
+                <i className="fas fa-check" /> Interactive Drag and Drop
+                Calander
+              </li>
+              <li>
+                <i className="fas fa-check" /> Schedule Employee Shifts Weekly
+              </li>
+              <li>
+                <i className="fas fa-check" /> Approve and Deny Time off
+                Requests
+              </li>
+              <li>
+                <i className="fas fa-check" /> Added Security of Firebase oAuth
+                and Stripe
+              </li>
+              <li>
+                {' '}
+                <i className="fas fa-check" />
+                Recurring Events Are Made Easy With Cadence
+              </li>
+              <li>
+                {' '}
+                <i className="fas fa-check" />
+                Never Double Book And Employee Again
+              </li>
+            </ul>
+          </div>
+          <div className="card-container">
+            <h1>Easy to get started</h1>
+          </div>
+          <div className="card-container">
+            <h1>Secure Payment</h1>
+          </div>
+        </Features>
       </OuterContainer>
     )
   }
@@ -81,6 +124,32 @@ const Container = styled('div')`
       padding: 42px;
       font-size: ${system.fontSizing.xl};
       color: ${system.color.bodytext};
+    }
+  }
+`
+const Features = styled('div')`
+  margin: 0 auto;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .card-container {
+    display: flex;
+    width: 500px;
+    height: 559px;
+    position: relative;
+    flex-flow: column nowrap;
+    background: ${system.color.white};
+    padding: ${system.spacing.bigPadding};
+    border-radius: ${system.borders.bigRadius};
+    box-shadow: ${system.shadows.otherLight};
+    p {
+      margin-bottom: 38px;
+      font-size: ${system.fontSizing.m};
+    }
+    li {
+      margin-bottom: 38px;
+      font-size: ${system.fontSizing.m};
     }
   }
 `
