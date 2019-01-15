@@ -9,10 +9,13 @@ exports.up = knex => {
 }
 
 exports.down = knex => {
-  return knex.schema.alterTable('users', table => {
-    table.dropColumn('end_time')
-    table.dropColumn('start_time')
-    table.integer('day').notNullable()
+  return knex.schema.alterTable('events', table => {
+    table.dropColumn('start')
+    table.dropColumn('end')
+    table
+      .integer('day')
+      .notNullable()
+      .defaultTo(1)
     table.integer('start_time')
     table.integer('end_time')
   })

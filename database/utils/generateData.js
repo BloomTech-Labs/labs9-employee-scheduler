@@ -139,14 +139,27 @@ const generateEvents = (userId = uuid()) => {
   const times = generateTimes()
   const events = []
 
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth()
+  const date = today.getDate()
+  const dayOfWeek = today.getDay()
+
+  const weekStart = date - dayOfWeek
+
   // generates availabilities for 5 days
   for (let i = 0; i < 5; i++) {
+    const day = weekStart + days[i]
+    const start = times[i][0]
+    const end = times[i][1]
+    const startDate = new Date(year, month, day, start)
+    const endDate = new Date(year, month, day, end)
+
     events.push({
       id: uuid(),
       user_id: userId,
-      day: days[i],
-      start_time: times[i][0],
-      end_time: times[i][1]
+      start: startDate,
+      end: endDate
     })
   }
   return events
