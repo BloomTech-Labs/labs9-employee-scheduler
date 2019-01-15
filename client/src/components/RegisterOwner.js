@@ -112,6 +112,7 @@ class RegisterOwner extends Component {
       orgDescription
     } = this.state
     const { handleChange, handleSubmit } = this
+    const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (!oauthSuccess) {
       return (
@@ -205,12 +206,8 @@ class RegisterOwner extends Component {
   }
 }
 
-// probably don't need this either
-const mapStateToProps = state => {
-  return {}
-}
+const mapStateToProps = ({ registration }) => ({ registration })
 
-// do we need redux??
 export default connect(
   mapStateToProps,
   { registerAsOwner }
