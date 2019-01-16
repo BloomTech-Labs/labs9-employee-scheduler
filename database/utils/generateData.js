@@ -302,9 +302,9 @@ const structureEmployees = org => {
       'Friday',
       'Saturday'
     ]
-    const { user_id, availability_id, day, start_time, end_time } = current
+    const { user_id, id, day, start_time, end_time } = current
     const newItem = {
-      id: availability_id,
+      id,
       day: weekdays[day],
       time: `${start_time}am-${end_time - 12}pm`
     }
@@ -322,13 +322,12 @@ const structureEmployees = org => {
   // the same way: key value pairs where each key is a user id and the value
   // is an array of the time off requests for that user
   timeOffRequests = timeOffRequests.reduce((acc, current) => {
-    const { user_id, time_off_request_id, date, reason, status } = current
-    const newItem = { id: time_off_request_id, date, reason, status }
+    const { user_id } = current
 
     if (acc[user_id]) {
-      acc[user_id].push(newItem)
+      acc[user_id].push(current)
     } else {
-      acc[user_id] = [newItem]
+      acc[user_id] = [current]
     }
 
     return acc
