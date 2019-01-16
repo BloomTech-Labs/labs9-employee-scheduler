@@ -106,6 +106,7 @@ class App extends Component {
               <Route path="/dashboard/:id" component={Dashboard} />
               <Route path="/settings" component={Settings} />
               <Route path="/login" render={props => <Login {...props} />} />
+              <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
         </StripeProvider>
