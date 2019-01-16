@@ -5,6 +5,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -23,24 +24,10 @@ const uiConfig = {
 }
 
 class Login extends Component {
-  // check for user in both component did mount (if logged in user navigates here)
-  // and component did update (if the login flow succeeds)
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.history.push('/')
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.user) {
-      this.props.history.push('/')
-    }
-  }
-
   render() {
     if (this.props.user) {
-      // render an empty div so that react doesn't yell at us for not having a return in render()
-      return <div />
+      // redirect to home once/if user is in the store
+      return <Redirect to="/" />
     } else {
       return (
         <StyledFirebaseAuth
