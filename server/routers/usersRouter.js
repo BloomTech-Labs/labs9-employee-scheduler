@@ -126,9 +126,6 @@ router.post('/register/owner', async (req, res) => {
       phone
     })
 
-    console.log('org success' + orgSuccess)
-    console.log('user success' + userSuccess)
-
     if (orgSuccess && userSuccess) {
       res.status(201).json({
         message: 'Success creating new owner and organization'
