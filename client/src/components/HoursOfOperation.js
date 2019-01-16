@@ -3,6 +3,7 @@ import Timekeeper from './TimeKeeper'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
+//creates a dynamic button generator
 export const Button = ({ handleHours, id }) => {
   return (
     <div>
@@ -20,18 +21,12 @@ class HoursOfOperation extends Component {
   constructor() {
     super()
     this.state = {
-      time: '12:00 pm',
       isOpen: false,
       isClose: false
     }
   }
 
-  handleTimeChange = newTime => {
-    this.setState({ time: newTime.formatted })
-  }
-
   handleHours = e => {
-    console.log(e.target.name)
     if (e.target.name === 'open') {
       this.setState({ isOpen: true, isClose: false })
     } else {
@@ -39,9 +34,9 @@ class HoursOfOperation extends Component {
     }
   }
 
-  saveAndClose = () => {
+  saveAndClose = time => {
     //TODO: will need to send the changed time to the DB here
-    this.setState({ isOpen: false, isClose: false })
+    this.setState({ isOpen: false, isClose: false, time: time })
   }
 
   render() {
@@ -56,6 +51,7 @@ class HoursOfOperation extends Component {
     ]
     return (
       <Container>
+        <h1>Hours of Operation</h1>
         <HoursContainer>
           {days.map((button, i) => {
             return (
@@ -89,10 +85,13 @@ const P = styled.p`
   line-height: ${system.spacing.lineHeight};
 `
 
-const HoursContainer = styled.div``
-
-const Container = styled.div`
+const HoursContainer = styled.div`
   display: flex;
   flex-direction: row;
   max-width: 500px;
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `
