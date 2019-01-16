@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Timekeeper from 'react-timekeeper'
 import axios from 'axios'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -77,6 +78,11 @@ class App extends Component {
           `}
         />
         <Route exact path="/" render={props => <Home {...props} />} />
+
+        <Timekeeper
+          time="4:55 PM"
+          // ...
+        />
 
         <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
           <Elements>
