@@ -5,6 +5,7 @@ import 'firebase/auth'
 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
+export const LOGOUT = 'LOGOUT'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -37,5 +38,14 @@ export const authenticate = () => async dispatch => {
     }
   } catch (error) {
     dispatch({ type: AUTH_FAIL, payload: { error: 'firebase error' } })
+  }
+}
+
+export const logout = () => async dispatch => {
+  try {
+    await firebase.auth().signOut()
+    dispatch({ type: LOGOUT })
+  } catch (error) {
+    console.log('error logging out')
   }
 }

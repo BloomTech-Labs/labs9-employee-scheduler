@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_FAIL } from '../actions'
+import { AUTH_SUCCESS, AUTH_FAIL, LOGOUT } from '../actions'
 
 const initialState = {
   user: null,
@@ -12,6 +12,8 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, ...action.payload, error: '' }
     case AUTH_FAIL:
       return { ...state, error: action.payload.error }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }
