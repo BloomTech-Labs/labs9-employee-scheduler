@@ -3,6 +3,7 @@ const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { getEmployees } = require('../database/helpers/employeesHelper')
 const { generateTeamData } = require('../database/utils/generateData')
+const { processDateTime, processDate } = require('../database/utils/dbUtils')
 
 const request = supertest(server)
 
@@ -13,24 +14,6 @@ describe('testing the employees router', () => {
       const { id } = team.organization
 
       let expected = await getEmployees(id)
-
-      const processDateTime = date => {
-        const { DB_ENV } = process.env
-        if (DB_ENV === 'sqlite3') {
-          return new Date(date).getTime()
-        } else {
-          return new Date(date).toJSON()
-        }
-      }
-
-      const processDate = date => {
-        const { DB_ENV } = process.env
-        if (DB_ENV === 'sqlite3') {
-          return new Date(date).toJSON().split('T')[0]
-        } else {
-          return new Date(date).toJSON()
-        }
-      }
 
       expected = expected.map(employee => ({
         ...employee,

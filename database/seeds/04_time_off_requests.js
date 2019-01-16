@@ -9,7 +9,7 @@ user_ids.forEach(id => {
 
 // insert records in batches of 100 otherwise sqlite will complain about too many variables
 exports.seed = async knex => {
-  await knex('time_off_requests').truncate()
+  await knex('time_off_requests').delete()
   for (let i = 0; i < time_off_requests.length / 100; i++) {
     await knex('time_off_requests').insert(
       time_off_requests.slice(i * 100, (i + 1) * 100)
