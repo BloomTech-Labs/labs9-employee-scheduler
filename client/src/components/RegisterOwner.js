@@ -5,7 +5,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import { registerAsOwner } from '../actions' // for calling once all data is in
+import { registerAsOwner, authenticate } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Form from './Form/index'
 import BreadCrumb from './BreadCrumb'
@@ -71,6 +71,7 @@ class RegisterOwner extends Component {
         const lastName = displayName.split(' ').slice(1)[0]
 
         this.setState({ email, firstName, lastName, oauthSuccess: true })
+        this.props.authenticate()
       }
     })
   }
@@ -225,5 +226,5 @@ const mapStateToProps = ({ registration }) => ({ registration })
 
 export default connect(
   mapStateToProps,
-  { registerAsOwner }
+  { registerAsOwner, authenticate }
 )(RegisterOwner)
