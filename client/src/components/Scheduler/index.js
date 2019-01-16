@@ -5,7 +5,6 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import EmployeePool from './EmployeePool'
-import TimeKeeper from '../TimeKeeper'
 import { fetchEmployeesFromDB } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
@@ -61,7 +60,6 @@ class Scheduler extends React.Component {
           endAccessor="end"
           draggableAccessor={event => true}
         />
-        <TimeKeeper />
       </div>
     )
   }
