@@ -6,7 +6,7 @@ import {
   UPDATE_TIME_OFF_REQUEST_SUCCESS,
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT
-} from '../actions/employeesActions'
+} from '../actions'
 
 const initialState = {
   employees: [],

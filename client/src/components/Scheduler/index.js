@@ -16,12 +16,12 @@ class Scheduler extends React.Component {
     this.props.fetchEmployeesFromDB()
   }
 
-  handleDrop(drop) {
-    console.log('drop', event)
+  handleDrop = drop => {
+    console.log('drop', drop)
     const { event, start } = drop
     const { type, ...employee } = event
     if (event.type === 'new_shift') {
-      this.props.createEvent(employee)
+      this.props.createEvent({ employee, start })
     }
   }
 
