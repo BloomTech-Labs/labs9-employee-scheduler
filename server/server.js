@@ -15,7 +15,9 @@ const {
 
 configureMiddleware(server)
 
-server.get('/', (req, res) => res.status(200).json({ message: 'hello!' }))
+server.get('/', (req, res) => {
+  return res.status(200).json({ message: 'hello!' })
+})
 
 server.use('/organizations', organizationsRouter)
 server.use('/users', usersRouter)

@@ -13,16 +13,35 @@ describe('testing the employees router', () => {
       const { id } = team.organization
 
       let expected = await getEmployees(id)
+
+      const processDateTime = date => {
+        const { DB } = process.env
+        if (DB === 'sqlite3') {
+          return new Date(date).getTime()
+        } else {
+          return new Date(date).toJSON()
+        }
+      }
+
+      const processDate = date => {
+        const { DB } = process.env
+        if (DB === 'sqlite3') {
+          return new Date(date).toJSON().split('T')[0]
+        } else {
+          return new Date(date).toJSON()
+        }
+      }
+
       expected = expected.map(employee => ({
         ...employee,
         events: employee.events.map(event => ({
           ...event,
-          start: new Date(event.start).toJSON(),
-          end: new Date(event.end).toJSON()
+          start: processDateTime(event.start),
+          end: processDateTime(event.end)
         })),
         time_off_requests: employee.time_off_requests.map(req => ({
           ...req,
-          date: new Date(req.date).toJSON()
+          date: processDate(req.date)
         }))
       }))
 
