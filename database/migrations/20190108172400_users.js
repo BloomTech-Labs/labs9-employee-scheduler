@@ -1,7 +1,7 @@
 exports.up = knex =>
   knex.schema.createTable('users', table => {
     table
-      .uuid('id')
+      .string('id', 50)
       .primary()
       .notNullable()
     table // people be in more than one organization? overoptimazation?

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon",
-    "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:latest && npx knex seed:run",
+    "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run",
     "dev": "concurrently \"nodemon server/index.js\" \"yarn --cwd ./client start\"",
     "test": "jest --watch --verbose --runInBand",
     "test:terse": "jest --watch --runInBand",
