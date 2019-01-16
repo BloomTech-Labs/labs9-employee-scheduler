@@ -42,7 +42,7 @@ class TimeOff extends Component {
                 <button id={id} name="deny" onClick={this.handleTimeOff}>
                   deny
                 </button>
-              ) : (
+              ) : 'pending' ? (
                 <>
                   <button id={id} name="deny" onClick={this.handleTimeOff}>
                     deny
@@ -51,7 +51,11 @@ class TimeOff extends Component {
                     approve
                   </button>
                 </>
-              )}
+              )}{ status === 'denied' ? (
+                <button id={id} name="approve" onClick={this.handleTimeOff}>
+                  approve
+                </button>
+              ) : null}
             </React.Fragment>
           ))}
       </CardContainer>

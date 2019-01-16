@@ -40,10 +40,13 @@ class TimeOffRequest extends Component {
 
   //sends the date and time off request to the server
   submitTimeOffRequest = ({ reason }) => {
-    const date = this.convertDateToMoment()
+    // const date = this.convertDateToMoment()
+    const date = this.state.startDate
     const requestObj = { date, reason }
     console.log(requestObj)
     axios
+      //TODO: user is in a variable at the top of this file
+      //will need to be refactored to be dynamic
       .post(`${api}/time-off-requests/${user}`, requestObj, {
         headers: { authorization: 'testing' }
       })
