@@ -2,6 +2,7 @@ const supertest = require('supertest')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { generateTeamData } = require('../database/utils/generateData')
+const { processDateTime } = require('../database/utils/dbUtils')
 
 const request = supertest(server)
 
@@ -15,8 +16,8 @@ describe('eventsRouter', () => {
       .filter(event => event.user_id === targetUser.id)
       .map(event => ({
         ...event,
-        start: event.start.toJSON(),
-        end: event.end.toJSON()
+        start: processDateTime(event.start),
+        end: processDateTime(event.end)
       }))
 
     const response = await request
@@ -35,8 +36,8 @@ describe('eventsRouter', () => {
 
     const now = Date.now()
     const newEvent = {
-      end: new Date(Date.now() + 3 * 60 * 60 * 1000).toJSON(),
-      start: new Date(now).toJSON(),
+      end: processDateTime(now + 3 * 60 * 60 * 1000),
+      start: processDateTime(now),
       user_id: targetUser.id
     }
 
@@ -51,8 +52,8 @@ describe('eventsRouter', () => {
 
     createdEvent = {
       ...createdEvent,
-      start: createdEvent.start.toJSON(),
-      end: createdEvent.end.toJSON()
+      start: processDateTime(createdEvent.start),
+      end: processDateTime(createdEvent.end)
     }
 
     expect(response.status).toEqual(201)

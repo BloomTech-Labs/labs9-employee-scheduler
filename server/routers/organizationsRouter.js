@@ -39,9 +39,7 @@ router.post('/', async (req, res) => {
 
   try {
     const id = await addOrg(req.body)
-    console.log(id)
     const newOrg = await getOrg(id)
-    console.log(newOrg)
     res.status(201).json(newOrg)
   } catch (error) {
     console.log(error)
