@@ -158,10 +158,8 @@ class App extends Component {
                 path="/settings"
                 component={Settings}
               />
-              <Route path="/register" component={RegisterOwner} /> // if logged
-              in redirect to home
-              <Route path="/login" render={props => <Login {...props} />} /> //
-              redirect is logged in
+              <Route path="/register" component={RegisterOwner} />
+              <Route path="/login" render={props => <Login {...props} />} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
