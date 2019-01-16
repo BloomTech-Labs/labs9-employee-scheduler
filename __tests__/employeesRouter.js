@@ -15,8 +15,8 @@ describe('testing the employees router', () => {
       let expected = await getEmployees(id)
 
       const processDateTime = date => {
-        const { DB } = process.env
-        if (DB === 'sqlite3') {
+        const { DB_ENV } = process.env
+        if (DB_ENV === 'sqlite3') {
           return new Date(date).getTime()
         } else {
           return new Date(date).toJSON()
@@ -24,8 +24,8 @@ describe('testing the employees router', () => {
       }
 
       const processDate = date => {
-        const { DB } = process.env
-        if (DB === 'sqlite3') {
+        const { DB_ENV } = process.env
+        if (DB_ENV === 'sqlite3') {
           return new Date(date).toJSON().split('T')[0]
         } else {
           return new Date(date).toJSON()
