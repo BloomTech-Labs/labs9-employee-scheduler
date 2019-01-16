@@ -38,16 +38,16 @@ const uiConfig = {
 
 class Login extends Component {
   // Listen to the Firebase Auth state and set the local state.
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      //checks to see if there is a user logged in.
-      return this.props.authenticate()
-    })
-  }
-  // Make sure we un-register Firebase observers when the component unmounts.
-  componentWillUnmount() {
-    this.unregisterAuthObserver()
-  }
+  // componentDidMount() {
+  //   this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+  //     //checks to see if there is a user logged in.
+  //     return this.props.authenticate()
+  //   })
+  // }
+  // // Make sure we un-register Firebase observers when the component unmounts.
+  // componentWillUnmount() {
+  //   this.unregisterAuthObserver()
+  // }
 
   render() {
     return this.props.user ? (

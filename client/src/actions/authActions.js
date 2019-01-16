@@ -16,7 +16,7 @@ export const authenticate = () => async dispatch => {
     const { currentUser } = firebase.auth()
 
     if (currentUser) {
-      const idToken = currentUser.getIdToken(/* forceRefresh */ false)
+      const idToken = await currentUser.getIdToken(/* forceRefresh */ false)
 
       axios
         .post(`${baseURL}/users/current`, null, {

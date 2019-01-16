@@ -38,9 +38,18 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
 class App extends Component {
   componentDidMount() {
-    this.props.authenticate()
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      //checks to see if there is a user logged in.
+      this.props.authenticate()
+    })
+  }
+  // Make sure we un-register Firebase observers when the component unmounts.
+  componentWillUnmount() {
+    this.unregisterAuthObserver()
   }
 
   render() {
