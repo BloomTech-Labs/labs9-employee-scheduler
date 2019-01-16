@@ -4,6 +4,8 @@ export const FETCH_EMPLOYEES_FROM_DB_SUCCESS = 'FETCH_EMPLOYEES_FROM_DB_SUCCESS'
 export const FETCH_EMPLOYEES_FROM_DB_FAIL = 'FETCH_EMPLOYEES_FROM_DB_FAIL'
 export const FETCH_EMPLOYEE_FROM_DB_SUCCESS = 'FETCH_EMPLOYEE_FROM_DB_SUCCESS'
 export const FETCH_EMPLOYEE_FROM_DB_FAIL = 'FETCH_EMPLOYEE_FROM_DB_FAIL'
+export const UPDATE_TIME_OFF_REQUEST_SUCCESS = 'UPDATE_TIME_OFF_REQUEST_SUCCESS'
+export const UPDATE_TIME_OFF_REQUEST_FAIL = 'UPDATE_TIME_OFF_REQUEST_FAIL'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -48,7 +50,6 @@ export const fetchSingleEmployeeFromDB = userid => dispatch => {
       headers: { authorization: 'testing' }
     })
     .then(res =>
-
       dispatch({
         type: FETCH_EMPLOYEE_FROM_DB_SUCCESS,
         payload: res.data
@@ -57,6 +58,29 @@ export const fetchSingleEmployeeFromDB = userid => dispatch => {
     .catch(error =>
       dispatch({
         type: FETCH_EMPLOYEE_FROM_DB_FAIL
+      })
+    )
+}
+
+//dispositions employee time off requests
+export const dispoTimeOffRequests = (timeOffId, status) => dispatch => {
+  axios
+    .put(
+      `${baseURL}/time-off-requests/${timeOffId}`,
+      { status },
+      {
+        headers: { authorization: 'testing' }
+      }
+    )
+    .then(res =>
+      dispatch({
+        type: UPDATE_TIME_OFF_REQUEST_SUCCESS,
+        payload: res.data
+      })
+    )
+    .catch(error =>
+      dispatch({
+        type: UPDATE_TIME_OFF_REQUEST_FAIL
       })
     )
 }
