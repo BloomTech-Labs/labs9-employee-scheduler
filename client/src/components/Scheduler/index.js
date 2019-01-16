@@ -23,6 +23,9 @@ class Scheduler extends React.Component {
 
   render() {
     const { employees } = this.props
+    const events = employees.reduce((acc, employee) => {
+      return [...acc, ...employee.events]
+    }, [])
     return (
       <div style={{ display: 'flex' }}>
         <EmployeePool employees={employees} />

@@ -78,6 +78,24 @@ const getEmployees = async orgId => {
       return acc
     }, {})
 
+  // do the same as above with events
+  const events = await db('users as u')
+    .where({ 'u.organization_id': orgId })
+    .join('events as e', { 'u.id': 'e.user_id' })
+    .select('u.id as user_id', 'start', 'end', 'e.id')
+    .reduce((acc, current) => {
+      const { user_id } = current
+      // const newItem = { id: time_off_request_id, date, reason, status }
+
+      if (acc[user_id]) {
+        acc[user_id].push(current)
+      } else {
+        acc[user_id] = [current]
+      }
+
+      return acc
+    }, {})
+
   // Fourth, map over the employees and add the availabilies and time off requests
   const combined = employees.map(employee => {
     const { id } = employee
@@ -85,7 +103,8 @@ const getEmployees = async orgId => {
     return {
       ...employee,
       availabilities: availabilities[id] ? [...availabilities[id]] : [],
-      time_off_requests: timeOffRequests[id] ? [...timeOffRequests[id]] : []
+      time_off_requests: timeOffRequests[id] ? [...timeOffRequests[id]] : [],
+      events: events[id] ? [...events[id]] : []
     }
   })
 
