@@ -14,17 +14,17 @@ import * as axios from 'axios'
 
 jest.mock('axios')
 
+// generate org with table structure
 const org = populateOrg({ size: 4 })
+
+// convert into nested employee data structure
 const employees = structureEmployees(org)
 const { users, events } = org
 
-console.log(events[0])
-console.log(employees[0])
-
+// find an employee who is scheduled
 const scheduledEmployee = employees.find(
   employee => employee.id === events[0].user_id
 )
-
 const scheduledName = `${scheduledEmployee.first_name} ${
   scheduledEmployee.last_name
 }`
@@ -34,11 +34,13 @@ describe('Scheduler', () => {
     // mocks axios call so that we can control what data gets returned.
     // this is setting up the mock, so that when axios actually gets called
     // by the component, the test works appropriately.
-    axios.get.mockImplementation(() => Promise.resolve({ data: employees }))
+    axios.get.mockImplementationOnce(() => Promise.resolve({ data: employees }))
 
     // renders the component with both Redux and Router, with the route set
     // to the matching route for this component in App
-    const { getByTestId, getByText, history } = renderWithRedux(<Scheduler />)
+    const { getByTestId, getByText, history, container } = renderWithRedux(
+      <Scheduler />
+    )
 
     // since axios and redux thunk are asyncronous, this waits for the page to
     // register changes from ComponentDidMount before proceeding with tests
@@ -46,5 +48,11 @@ describe('Scheduler', () => {
 
     // uses test ids to assert expectations
     expect(testElement.textContent).toBeDefined()
+
+    const cal = await waitForElement(() =>
+      container.querySelector('.rbc-calendar')
+    )
+
+    expect(cal.textContent).toMatch(scheduledName)
   })
 })
