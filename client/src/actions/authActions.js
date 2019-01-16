@@ -5,6 +5,8 @@ import 'firebase/auth'
 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
+export const LOGOUT = 'LOGOUT'
+export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -16,7 +18,7 @@ export const authenticate = () => async dispatch => {
     const { currentUser } = firebase.auth()
 
     if (currentUser) {
-      const idToken = currentUser.getIdToken(/* forceRefresh */ false)
+      const idToken = await currentUser.getIdToken(/* forceRefresh */ false)
 
       axios
         .post(`${baseURL}/users/current`, null, {
@@ -39,3 +41,16 @@ export const authenticate = () => async dispatch => {
     dispatch({ type: AUTH_FAIL, payload: { error: 'firebase error' } })
   }
 }
+
+export const logout = () => async dispatch => {
+  try {
+    await firebase.auth().signOut()
+    dispatch({ type: LOGOUT })
+  } catch (error) {
+    console.log('error logging out')
+  }
+}
+
+export const resetAuthState = () => ({
+  type: RESET_AUTH_STATE
+})

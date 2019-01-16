@@ -5,20 +5,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
-
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_KEY,
-  authDomain: 'cadence-20246.firebaseapp.com',
-  databaseURL: 'https://cadence-20246.firebaseio.com',
-  projectId: 'cadence-20246',
-  storageBucket: 'cadence-20246.appspot.com',
-  messagingSenderId: '143190395098'
-}
-
-// in case firebase was already initialized
-if (!firebase.apps.length) {
-  firebase.initializeApp(config)
-}
+import { Redirect } from 'react-router-dom'
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -37,24 +24,18 @@ const uiConfig = {
 }
 
 class Login extends Component {
-  // Listen to the Firebase Auth state and set the local state.
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      //checks to see if there is a user logged in.
-      return this.props.authenticate()
-    })
-  }
-  // Make sure we un-register Firebase observers when the component unmounts.
-  componentWillUnmount() {
-    this.unregisterAuthObserver()
-  }
-
   render() {
-    return this.props.user ? (
-      <h1>Success</h1>
-    ) : (
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-    )
+    if (this.props.user) {
+      // redirect to home once/if user is in the store
+      return <Redirect to="/" />
+    } else {
+      return (
+        <StyledFirebaseAuth
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
+      )
+    }
   }
 }
 

@@ -24,6 +24,10 @@ class Scheduler extends React.Component {
 
   render() {
     const { employees } = this.props
+
+    const names = []
+    employees.map(employee => names.push(`${employee.first_name}`))
+
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
@@ -51,6 +55,8 @@ class Scheduler extends React.Component {
           onEventDrop={this.createEvent}
           onEventResize={event => console.log(event)}
           onSelectEvent={event => console.log(event)}
+          eventPropGetter={event => ({ className: event.title.split(' ')[0] })}
+          names={names}
           startAccessor="start"
           endAccessor="end"
           draggableAccessor={event => true}

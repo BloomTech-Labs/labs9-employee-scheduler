@@ -12,9 +12,6 @@ import axios from 'axios'
 class Billing extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      location: 'Billing'
-    }
     this.submit = this.submit.bind(this)
   }
 
@@ -38,7 +35,7 @@ class Billing extends Component {
     return (
       <OuterContainer height="true">
         <LeftSideBar />
-        <BreadCrumb location={this.state.location} />
+        <BreadCrumb location="Billing" />
 
         <Container>
           <h1>Billing</h1>

@@ -3,6 +3,11 @@ import LinkItem from './common/LinkItem'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
+// this will benefit from being refactored once Breadcrumb is getting loaded by App.js
+// once that happens we'll simply be able to this method down as props
+import { logout } from '../actions' // for initial call
+import { connect } from 'react-redux'
+
 // this breadcrumb will be placed at the top should show the following links
 // Home component --> Sign Up || Sign In (if not logged in) --> Log Out (if logged)
 
@@ -16,6 +21,10 @@ const BreadCrumb = props => {
         <Container logo>
           <LinkItem to="/">Cadence</LinkItem>
           <p> {props.location}</p>
+        </Container>
+
+        <Container className="breadcrumbs" extra>
+          <button onClick={props.logout}>Log out</button>
         </Container>
       </Nav>
     )
@@ -38,7 +47,10 @@ const BreadCrumb = props => {
   return breadContent
 }
 
-export default BreadCrumb
+export default connect(
+  null,
+  { logout }
+)(BreadCrumb)
 
 // basic styling to match design file
 const Container = styled('div')`
