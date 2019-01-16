@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Calendar from './components/Calendar'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
@@ -76,7 +76,7 @@ class App extends Component {
   }
 
   render() {
-    const role = (this.props.user && this.props.user.role) || null
+    const { user } = this.props
 
     return (
       <div>
@@ -110,7 +110,20 @@ class App extends Component {
             }
           `}
         />
-        <Route exact path="/" render={props => <Home {...props} />} />
+
+        <Route
+          exact
+          path="/"
+          render={props => {
+            if (user && (user.role === 'owner' || user.role === 'supervisor')) {
+              return <Redirect to="/shift-calendar" />
+            } else if (user && user.role === 'employee') {
+              return <Redirect to="/dashboard" />
+            } else {
+              return <Home {...props} />
+            }
+          }}
+        />
 
         <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
           <Elements>
