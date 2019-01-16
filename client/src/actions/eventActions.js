@@ -10,6 +10,7 @@ export const createEvent = event => async dispatch => {
     const req = await axios.post(`${baseUrl}/events`, event, {
       headers: { authorization: 'testing ' }
     })
+    dispatch({ type: CREATE_EVENT, payload: req.body })
   } catch (err) {
     dispatch({ type: EVENT_ERROR })
   }

@@ -4,7 +4,8 @@ import {
   FETCH_EMPLOYEE_FROM_DB_SUCCESS,
   FETCH_EMPLOYEE_FROM_DB_FAIL,
   UPDATE_TIME_OFF_REQUEST_SUCCESS,
-  UPDATE_TIME_OFF_REQUEST_FAILL
+  UPDATE_TIME_OFF_REQUEST_FAIL,
+  CREATE_EVENT
 } from '../actions/employeesActions'
 
 const initialState = {
@@ -37,6 +38,21 @@ export const employeesReducer = (state = initialState, action) => {
                   return request
                 }
               })
+            }
+          } else {
+            return employee
+          }
+        })
+      }
+    case CREATE_EVENT:
+      const { payload: event } = action
+      return {
+        ...state,
+        employees: state.employees.map(employee => {
+          if (employee.id === event.user_id) {
+            return {
+              ...employee,
+              events: [...employee.events, event]
             }
           } else {
             return employee
