@@ -8,15 +8,15 @@ const baseUrl = process.env.REACT_APP_SERVER_URL
 export const createEvent = ({ employee, start }) => async dispatch => {
   try {
     const processed = {
-      user_id: employee.user_id,
+      user_id: employee.id,
       start,
       end: new Date(start.getTime() + 1000 * 60 * 60)
     }
-    console.log(processed)
-    // const req = await axios.post(`${baseUrl}/events`, event, {
-    //   headers: { authorization: 'testing ' }
-    // })
-    // dispatch({ type: CREATE_EVENT, payload: req.body })
+    const req = await axios.post(`${baseUrl}/events`, processed, {
+      headers: { authorization: 'testing ' }
+    })
+    console.log(req.data)
+    dispatch({ type: CREATE_EVENT, payload: req.data })
   } catch (err) {
     dispatch({ type: EVENT_ERROR })
   }
