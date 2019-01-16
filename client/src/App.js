@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Calendar from './components/Calendar'
@@ -10,7 +9,6 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import Register from './components/Register'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
 import { authenticate, resetAuthState } from './actions' // for initial call
@@ -20,8 +18,6 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import './reset.css'
-
-const serverUrl = process.env.REACT_APP_SERVER_URL
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
