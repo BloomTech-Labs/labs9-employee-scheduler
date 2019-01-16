@@ -10,6 +10,7 @@ import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
 import Register from './components/Register'
+import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
@@ -75,6 +76,8 @@ class App extends Component {
   }
 
   render() {
+    const role = (this.props.user && this.props.user.role) || null
+
     return (
       <div>
         <Global
@@ -112,14 +115,40 @@ class App extends Component {
         <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
           <Elements>
             <Switch>
-              <Route path="/employees" component={Employees} />
-              <Route path="/shift-calendar" component={CreateSchedule} />
-              <Route path="/register" component={RegisterOwner} />
-              <Route path="/billing" component={Billing} />
-              <Route path="/calendar" component={Calendar} />
-              <Route path="/dashboard/:id" component={Dashboard} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/login" render={props => <Login {...props} />} />
+              <PrivateRoute
+                access="admin"
+                path="/employees"
+                component={Employees}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/shift-calendar"
+                component={CreateSchedule}
+              />
+              <PrivateRoute
+                access="owner"
+                path="/billing"
+                component={Billing}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/calendar"
+                component={Calendar}
+              />
+              <PrivateRoute
+                access="all"
+                path="/dashboard/:id"
+                component={Dashboard}
+              />
+              <PrivateRoute
+                access="all"
+                path="/settings"
+                component={Settings}
+              />
+              <Route path="/register" component={RegisterOwner} /> // if logged
+              in redirect to home
+              <Route path="/login" render={props => <Login {...props} />} /> //
+              redirect is logged in
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
