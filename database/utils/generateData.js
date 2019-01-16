@@ -75,7 +75,7 @@ const generateAvailabilities = userId => {
   const generateTimes = () => {
     const times = []
     for (let i = 0; i < 5; i++) {
-      if (Math.random() > 0.4) {
+      if (Math.random() > 0.2) {
         times.push([
           generateRandomBetween(0, 12),
           generateRandomBetween(12, 23)
@@ -205,10 +205,11 @@ const generateDayOffRequests = (userId = uuid()) => {
 }
 
 // Creates an object with values for all tables for one organization
-const populateOrg = (orgId = uuid()) => {
+const populateOrg = ({ orgId = uuid(), size }) => {
+  console.log(size)
   const organization = generateOrg(orgId)
 
-  const users = generateUsersForOrg({ org_id: organization.id })
+  const users = generateUsersForOrg({ org_id: organization.id, quantity: size })
 
   let availabilities = []
   let events = []
@@ -271,8 +272,9 @@ const insertOrg = (
 
 // Second: a cleanup function, which is an async function that should be
 // called to clean up the database afterwards
-const generateTeamData = async knex => {
-  const team = populateOrg()
+const generateTeamData = async (knex, size) => {
+  console.log(size)
+  const team = populateOrg({ size })
   await insertOrg(team, knex)
 
   const cleanup = () => {
@@ -282,6 +284,82 @@ const generateTeamData = async knex => {
   }
 
   return { team, cleanup }
+}
+
+const structureEmployees = org => {
+  let { users: employees, timeOffRequests, availabilities, events } = org
+  // Grab the availabilities for each employee and crunch the data together
+  // into an object of key value pairs where each key is a user id and the value
+  // is an array of the availabilities for that user
+  availabilities = availabilities.reduce((acc, current) => {
+    // to display the date nicely for the front end to consume
+    const weekdays = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ]
+    const { user_id, availability_id, day, start_time, end_time } = current
+    const newItem = {
+      id: availability_id,
+      day: weekdays[day],
+      time: `${start_time}am-${end_time - 12}pm`
+    }
+
+    if (acc[user_id]) {
+      acc[user_id].push(newItem)
+    } else {
+      acc[user_id] = [newItem]
+    }
+
+    return acc
+  }, {})
+
+  // Grab the time off requests for each employee. The data is crunched in
+  // the same way: key value pairs where each key is a user id and the value
+  // is an array of the time off requests for that user
+  timeOffRequests = timeOffRequests.reduce((acc, current) => {
+    const { user_id, time_off_request_id, date, reason, status } = current
+    const newItem = { id: time_off_request_id, date, reason, status }
+
+    if (acc[user_id]) {
+      acc[user_id].push(newItem)
+    } else {
+      acc[user_id] = [newItem]
+    }
+
+    return acc
+  }, {})
+
+  // do the same as above with events
+  events = events.reduce((acc, current) => {
+    const { user_id } = current
+
+    if (acc[user_id]) {
+      acc[user_id].push(current)
+    } else {
+      acc[user_id] = [current]
+    }
+
+    return acc
+  }, {})
+
+  // Fourth, map over the employees and add the availabilies and time off requests
+  const combined = employees.map(employee => {
+    const { id } = employee
+
+    return {
+      ...employee,
+      availabilities: availabilities[id] ? [...availabilities[id]] : [],
+      time_off_requests: timeOffRequests[id] ? [...timeOffRequests[id]] : [],
+      events: events[id] ? [...events[id]] : []
+    }
+  })
+
+  return combined
 }
 
 module.exports = {
@@ -294,5 +372,6 @@ module.exports = {
   generateDayOffRequests,
   generateEvents,
   populateOrg,
-  generateTeamData
+  generateTeamData,
+  structureEmployees
 }
