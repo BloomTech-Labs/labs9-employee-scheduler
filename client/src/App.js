@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Calendar from './components/Calendar'
@@ -14,16 +13,13 @@ import Register from './components/Register'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
-import { authenticate } from './actions' // for initial call
+import { authenticate, resetAuthState } from './actions' // for initial call
 import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
 import './reset.css'
-import { registerOwner } from './actions/registerActions'
-
-const serverUrl = process.env.REACT_APP_SERVER_URL
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -41,7 +37,27 @@ if (!firebase.apps.length) {
 
 class App extends Component {
   componentDidMount() {
-    this.props.authenticate()
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      //checks to see if there is a user logged in.
+      this.props.authenticate()
+    })
+  }
+
+  componentDidUpdate() {
+    // when user logs out, it will set `userDidLogout` to true
+    // this needs to trigger a redirect to `/` using history.push()
+    // but first we need to reset auth state so that this method
+    // doesn't keep running, pushing `/` to history on each update
+    const { userDidLogout, resetAuthState, history } = this.props
+    if (userDidLogout) {
+      resetAuthState()
+      history.push('/')
+    }
+  }
+
+  // Make sure we un-register Firebase observers when the component unmounts.
+  componentWillUnmount() {
+    this.unregisterAuthObserver()
   }
 
   render() {
@@ -99,11 +115,14 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({}) => ({})
+const mapStateToProps = ({ auth: { user, userDidLogout } }) => ({
+  user,
+  userDidLogout
+})
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { authenticate }
+    { authenticate, resetAuthState }
   )(App)
 )
