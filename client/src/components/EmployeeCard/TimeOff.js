@@ -9,6 +9,36 @@ import { connect } from 'react-redux'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 const baseURL = process.env.REACT_APP_SERVER_URL
+
+export const StatusContent = ({ id, status, handleTimeOff }) => {
+  if (status === 'confirmed') {
+    return (
+      <button id={id} name="deny" onClick={handleTimeOff}>
+        deny
+      </button>
+    )
+  }
+  if (status === 'pending') {
+    return (
+      <>
+        <button id={id} name="deny" onClick={handleTimeOff}>
+          deny
+        </button>
+        <button id={id} name="approve" onClick={handleTimeOff}>
+          approve
+        </button>
+      </>
+    )
+  }
+  if (status === 'denied') {
+    return (
+      <button id={id} name="approve" onClick={handleTimeOff}>
+        approve
+      </button>
+    )
+  }
+}
+
 class TimeOff extends Component {
   //sets the correct button on the DOM depending on the status of the request
   handleTimeOff = e => {
@@ -38,24 +68,11 @@ class TimeOff extends Component {
           timeOffRequests.map(({ id, date, status }) => (
             <React.Fragment key={id}>
               <p>{`${date} ${status}`}</p>
-              {status === 'confirmed' ? (
-                <button id={id} name="deny" onClick={this.handleTimeOff}>
-                  deny
-                </button>
-              ) : 'pending' ? (
-                <>
-                  <button id={id} name="deny" onClick={this.handleTimeOff}>
-                    deny
-                  </button>
-                  <button id={id} name="approve" onClick={this.handleTimeOff}>
-                    approve
-                  </button>
-                </>
-              )}{ status === 'denied' ? (
-                <button id={id} name="approve" onClick={this.handleTimeOff}>
-                  approve
-                </button>
-              ) : null}
+              <StatusContent
+                id={id}
+                status={status}
+                handleTimeOff={this.handleTimeOff}
+              />
             </React.Fragment>
           ))}
       </CardContainer>
