@@ -24,8 +24,20 @@ class Scheduler extends React.Component {
   render() {
     const { employees } = this.props
     const events = employees.reduce((acc, employee) => {
-      return [...acc, ...employee.events]
+      return [
+        ...acc,
+        ...employee.events.map(event => {
+          // console.log(typeof event.start)
+          return {
+            ...event,
+            start: new Date(event.start),
+            end: new Date(event.end),
+            title: `${employee.first_name} ${employee.last_name}`
+          }
+        })
+      ]
     }, [])
+
     return (
       <div style={{ display: 'flex' }}>
         <EmployeePool employees={employees} />
@@ -34,7 +46,7 @@ class Scheduler extends React.Component {
           resizable
           defaultDate={new Date()}
           defaultView="week"
-          events={this.state.events}
+          events={events}
           onEventDrop={this.createEvent}
           onEventResize={event => console.log(event)}
           onSelectEvent={event => console.log(event)}
