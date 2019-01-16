@@ -13,7 +13,7 @@ import Register from './components/Register'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
-import { authenticate, resetAuthState } from './actions' // for initial call
+import { authenticate, resetAuthState, setRedirectFlagToFalse } from './actions' // for initial call
 import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
@@ -48,9 +48,23 @@ class App extends Component {
     // this needs to trigger a redirect to `/` using history.push()
     // but first we need to reset auth state so that this method
     // doesn't keep running, pushing `/` to history on each update
-    const { userDidLogout, resetAuthState, history } = this.props
+    const {
+      userDidLogout,
+      resetAuthState,
+      history,
+      redirect,
+      setRedirectFlagToFalse
+    } = this.props
+
     if (userDidLogout) {
       resetAuthState()
+      history.push('/')
+    }
+
+    // we also need a general case of redirect where the auth state is not touched
+    // this is used by the register component
+    if (redirect) {
+      setRedirectFlagToFalse()
       history.push('/')
     }
   }
@@ -115,14 +129,18 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ auth: { user, userDidLogout } }) => ({
+const mapStateToProps = ({
+  auth: { user, userDidLogout },
+  registration: { redirect }
+}) => ({
   user,
-  userDidLogout
+  userDidLogout,
+  redirect
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { authenticate, resetAuthState }
+    { authenticate, resetAuthState, setRedirectFlagToFalse }
   )(App)
 )

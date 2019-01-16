@@ -71,7 +71,6 @@ class RegisterOwner extends Component {
         const lastName = displayName.split(' ').slice(1)[0]
 
         this.setState({ email, firstName, lastName, oauthSuccess: true })
-        this.props.authenticate()
       }
     })
   }
