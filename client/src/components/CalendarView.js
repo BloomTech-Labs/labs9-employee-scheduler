@@ -2,26 +2,24 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-import Scheduler from './Scheduler'
 
-// this component will house all of the main features for the create schedule page.
-class CreateSchedule extends Component {
+// this component might feature a full monthly read only version of the calendar?
+class Calendar extends Component {
   state = {
-    location: 'Schedule'
+    location: 'Calendar'
   }
   render() {
     return (
       <div>
         <LeftSideBar />
         <BreadCrumb location={this.state.location} />
-        <Scheduler />
       </div>
     )
   }
 }
 
-export default CreateSchedule
+export default Calendar
 
-CreateSchedule.propTypes = {
-  // add propTypes here
+Calendar.propTypes = {
+  // add propstypes here
 }
