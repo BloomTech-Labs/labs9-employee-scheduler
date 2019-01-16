@@ -24,7 +24,6 @@ export const employeesReducer = (state = initialState, action) => {
     // and if it does it changes the status of the request on the DOM.
     case UPDATE_TIME_OFF_REQUEST_SUCCESS:
       const { payload: timeOff } = action
-      console.log(action, state.employees)
       return {
         ...state,
         employees: state.employees.map(employee => {
