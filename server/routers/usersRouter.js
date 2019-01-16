@@ -110,13 +110,14 @@ router.post('/register/owner', async (req, res) => {
     const newId = uuid()
 
     // Second, add new org
-    const orgSuccces = await addOrg({
+    const orgSuccess = await addOrg({
       id: newId,
       name: orgName,
       description: orgDescription
     })
     // Third, add new user as owner
     const userSuccess = await addUser({
+      id,
       organization_id: newId,
       first_name: firstName,
       last_name: lastName,
@@ -125,7 +126,7 @@ router.post('/register/owner', async (req, res) => {
       phone
     })
 
-    if (orgSuccces && userSuccess) {
+    if (orgSuccess && userSuccess) {
       res.status(201).json({
         message: 'Success creating new owner and organization'
       })

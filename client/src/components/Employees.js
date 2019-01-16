@@ -13,9 +13,6 @@ import OuterContainer from './common/OuterContainer'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
-  state = {
-    location: 'Employees'
-  }
   componentDidMount() {
     this.props.fetchEmployeesFromDB()
   }
@@ -25,7 +22,7 @@ class Employees extends Component {
 
     return (
       <OuterContainer>
-        <BreadCrumb location={this.state.location} />
+        <BreadCrumb location="Employees" />
         <LeftSideBar />
         <MidContainer>
           <h1>Employees</h1>

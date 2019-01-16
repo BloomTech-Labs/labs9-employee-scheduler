@@ -13,7 +13,6 @@ class Settings extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'Settings',
       disabled: true,
       user: {
         email: '',
@@ -89,7 +88,7 @@ class Settings extends Component {
     return (
       <OuterContainer height="true">
         <LeftSideBar />
-        <BreadCrumb location={this.state.location} />
+        <BreadCrumb location="Settings" />
 
         <Container>
           <h1 data-testid="settings">Settings</h1>

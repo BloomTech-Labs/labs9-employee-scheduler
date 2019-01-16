@@ -1,6 +1,7 @@
 import React from 'react'
 import { DragSource } from 'react-dnd'
 import EmployeeCard from '../EmployeeCard/Card'
+import styled from '@emotion/styled'
 
 const EmployeeEvent = props => {
   const { connectDragSource, event, employee } = props
