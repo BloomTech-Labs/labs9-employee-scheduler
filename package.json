@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon",
-    "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:latest && npx knex seed:run",
+    "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run",
     "dev": "concurrently \"nodemon server/index.js\" \"yarn --cwd ./client start\"",
     "test": "jest --watch --verbose --runInBand",
     "test:terse": "jest --watch --runInBand",
@@ -26,7 +26,6 @@
     "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
-
     "sqlite3": "^4.0.6",
     "stripe": "^6.20.0",
     "uuid": "^3.3.2"
@@ -36,6 +35,7 @@
     "eslint-plugin-jest": "^22.1.2",
     "eslint-plugin-react": "^7.12.3",
     "jest": "^23.6.0",
+    "pg": "^7.8.0",
     "supertest": "^3.3.0"
   }
 }

@@ -1,16 +1,22 @@
 const db = require('../dbConfig')
-const uuid = require('uuid')
+const uuid = require('uuid/v4')
 
-// for events
+// for events by userId
 const getEvents = userId => {
   return db('events as e').where({ 'e.user_id': userId })
 }
 
+// gets an event by its id
+const getEvent = id => db('events').where('id', id)
+
 const addEvent = event => {
-  return db('events').insert({
-    id: uuid(),
-    ...event
-  })
+  const id = uuid()
+  return db('events')
+    .insert({
+      id,
+      ...event
+    })
+    .then(() => id)
 }
 const updateEvent = (eventId, updates) => {
   return db('events as e')
@@ -31,6 +37,7 @@ const getEventsForOrg = orgId => {
 
 module.exports = {
   getEvents,
+  getEvent,
   addEvent,
   updateEvent,
   deleteEvent,

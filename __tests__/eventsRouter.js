@@ -2,6 +2,7 @@ const supertest = require('supertest')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { generateTeamData } = require('../database/utils/generateData')
+const { processDateTime } = require('../database/utils/dbUtils')
 
 const request = supertest(server)
 
@@ -10,13 +11,13 @@ describe('eventsRouter', () => {
     const { team, cleanup } = await generateTeamData(knex)
 
     const targetUser = team.users[0]
-    console.log(targetUser)
+
     const targetEvents = team.events
       .filter(event => event.user_id === targetUser.id)
       .map(event => ({
         ...event,
-        start: event.start.getTime(),
-        end: event.end.getTime()
+        start: processDateTime(event.start),
+        end: processDateTime(event.end)
       }))
 
     const response = await request
@@ -35,8 +36,8 @@ describe('eventsRouter', () => {
 
     const now = Date.now()
     const newEvent = {
-      end: new Date(Date.now() + 60 * 60 * 60 * 1000).getTime(),
-      start: new Date(now).getTime(),
+      end: processDateTime(now + 3 * 60 * 60 * 1000),
+      start: processDateTime(now),
       user_id: targetUser.id
     }
 
@@ -45,14 +46,20 @@ describe('eventsRouter', () => {
       .send(newEvent)
       .set('authorization', 'testing')
 
-    const createdEvent = await knex('events')
+    let createdEvent = await knex('events')
       .where(newEvent)
       .first()
 
-    expect(response.status).toEqual(201)
-    expect(typeof response.body[0]).toBe('number')
+    createdEvent = {
+      ...createdEvent,
+      start: processDateTime(createdEvent.start),
+      end: processDateTime(createdEvent.end)
+    }
 
+    expect(response.status).toEqual(201)
+    expect(response.body[0]).toMatchObject(createdEvent)
     expect(createdEvent).toMatchObject(newEvent)
+
     await cleanup()
   })
 })

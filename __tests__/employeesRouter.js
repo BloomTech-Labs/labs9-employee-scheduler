@@ -3,6 +3,7 @@ const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { getEmployees } = require('../database/helpers/employeesHelper')
 const { generateTeamData } = require('../database/utils/generateData')
+const { processDateTime, processDate } = require('../database/utils/dbUtils')
 
 const request = supertest(server)
 
@@ -12,7 +13,20 @@ describe('testing the employees router', () => {
       const { team, cleanup } = await generateTeamData(knex)
       const { id } = team.organization
 
-      const expected = await getEmployees(id)
+      let expected = await getEmployees(id)
+
+      expected = expected.map(employee => ({
+        ...employee,
+        events: employee.events.map(event => ({
+          ...event,
+          start: processDateTime(event.start),
+          end: processDateTime(event.end)
+        })),
+        time_off_requests: employee.time_off_requests.map(req => ({
+          ...req,
+          date: processDate(req.date)
+        }))
+      }))
 
       const response = await request
         .get(`/employees/${id}`)
@@ -35,7 +49,6 @@ describe('testing the employees router', () => {
       expect(Array.isArray(response.body)).toBe(true)
 
       await cleanup()
-
     })
   })
 })

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   getEvents,
+  getEvent,
   addEvent,
   updateEvent,
   deleteEvent,
@@ -29,8 +30,9 @@ router.post('/', async (req, res) => {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
   try {
-    const success = await addEvent(req.body)
-    res.status(201).json(success)
+    const id = await addEvent(req.body)
+    const event = await getEvent(id)
+    res.status(201).json(event)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
