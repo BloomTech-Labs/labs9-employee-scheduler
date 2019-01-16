@@ -10,13 +10,13 @@ describe('eventsRouter', () => {
     const { team, cleanup } = await generateTeamData(knex)
 
     const targetUser = team.users[0]
-    console.log(targetUser)
+
     const targetEvents = team.events
       .filter(event => event.user_id === targetUser.id)
       .map(event => ({
         ...event,
-        start: event.start.getTime(),
-        end: event.end.getTime()
+        start: event.start.toJSON(),
+        end: event.end.toJSON()
       }))
 
     const response = await request
@@ -35,8 +35,8 @@ describe('eventsRouter', () => {
 
     const now = Date.now()
     const newEvent = {
-      end: new Date(Date.now() + 60 * 60 * 60 * 1000).getTime(),
-      start: new Date(now).getTime(),
+      end: new Date(Date.now() + 3 * 60 * 60 * 1000).toJSON(),
+      start: new Date(now).toJSON(),
       user_id: targetUser.id
     }
 
@@ -45,14 +45,20 @@ describe('eventsRouter', () => {
       .send(newEvent)
       .set('authorization', 'testing')
 
-    const createdEvent = await knex('events')
+    let createdEvent = await knex('events')
       .where(newEvent)
       .first()
 
-    expect(response.status).toEqual(201)
-    expect(typeof response.body[0]).toBe('number')
+    createdEvent = {
+      ...createdEvent,
+      start: createdEvent.start.toJSON(),
+      end: createdEvent.end.toJSON()
+    }
 
+    expect(response.status).toEqual(201)
+    expect(response.body[0]).toMatchObject(createdEvent)
     expect(createdEvent).toMatchObject(newEvent)
+
     await cleanup()
   })
 })

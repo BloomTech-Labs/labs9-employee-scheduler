@@ -8,7 +8,7 @@ const {
   deleteUser,
   addOrg
 } = require('../../database/helpers')
-const uuid = require('uuid') // need here for optimizing creation of org with owner
+const uuid = require('uuid/v4') // need here for optimizing creation of org with owner
 
 router.get('/', (req, res) => {
   getUsers()
@@ -52,6 +52,7 @@ router.get('/:id', async (req, res) => {
       return res.status(404).send({ message: 'User not found.' })
     }
   } catch (err) {
+    console.log(err)
     return res.status(500).send()
   }
 })

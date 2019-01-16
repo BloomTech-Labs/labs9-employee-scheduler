@@ -12,7 +12,19 @@ describe('testing the employees router', () => {
       const { team, cleanup } = await generateTeamData(knex)
       const { id } = team.organization
 
-      const expected = await getEmployees(id)
+      let expected = await getEmployees(id)
+      expected = expected.map(employee => ({
+        ...employee,
+        events: employee.events.map(event => ({
+          ...event,
+          start: new Date(event.start).toJSON(),
+          end: new Date(event.end).toJSON()
+        })),
+        time_off_requests: employee.time_off_requests.map(req => ({
+          ...req,
+          date: new Date(req.date).toJSON()
+        }))
+      }))
 
       const response = await request
         .get(`/employees/${id}`)
@@ -35,7 +47,6 @@ describe('testing the employees router', () => {
       expect(Array.isArray(response.body)).toBe(true)
 
       await cleanup()
-
     })
   })
 })

@@ -1,5 +1,5 @@
 const db = require('../dbConfig')
-const uuid = require('uuid')
+const uuid = require('uuid/v4')
 
 // if no param all users
 const getOrgs = orgId => {
@@ -12,8 +12,14 @@ const getOrgs = orgId => {
   }
 }
 
+// gets org by id
+const getOrg = id => db('organizations').where('id', id)
+
 const addOrg = org => {
-  return db('organizations').insert({ id: uuid(), ...org })
+  const id = uuid()
+  return db('organizations')
+    .insert({ id, ...org })
+    .then(() => id)
 }
 
 const updateOrg = (orgId, updates) => {
@@ -33,6 +39,7 @@ const deleteOrg = orgId => {
 
 module.exports = {
   getOrgs,
+  getOrg,
   addOrg,
   updateOrg,
   deleteOrg

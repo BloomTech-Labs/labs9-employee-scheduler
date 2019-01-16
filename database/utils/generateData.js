@@ -1,5 +1,5 @@
 const faker = require('faker')
-const uuid = require('uuid')
+const uuid = require('uuid/v4')
 const moment = require('moment')
 
 // Generates a new org using an id
