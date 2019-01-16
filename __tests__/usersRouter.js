@@ -70,12 +70,13 @@ describe('/users route', () => {
       const { team, cleanup } = await generateTeamData(knex)
 
       const user = team.users[0]
-      console.log(user)
 
-      await knex('users').delete(user.id)
+      await knex('users')
+        .delete()
+        .where('id', user.id)
 
       const response = await request
-        .get('/users/1')
+        .get(`/users/${user.id}`)
         .set('authorization', 'token')
 
       expect(response.status).toEqual(404)
@@ -121,10 +122,12 @@ describe('/users route', () => {
 
       const user = team.users[0]
 
-      await knex('users').delete(user.id)
+      await knex('users')
+        .delete()
+        .where('id', user.id)
 
       const response = await request
-        .put('/users/current')
+        .put(`/users/${user.id}`)
         .set('authorization', user.id)
 
       expect(response.status).toEqual(404)

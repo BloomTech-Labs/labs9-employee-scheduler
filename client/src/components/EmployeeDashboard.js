@@ -17,7 +17,6 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'Employee Dashboard',
       errors: ''
     }
   }
@@ -56,6 +55,7 @@ class EmployeeDashboard extends Component {
                 </div>
                 <div>
                   <p>{item.time}</p>
+                  <p>hello</p>
                 </div>
               </div>
             )
@@ -97,7 +97,7 @@ class EmployeeDashboard extends Component {
     return (
       <React.Fragment>
         <LeftSideBar />
-        <BreadCrumb location={this.state.location} />
+        <BreadCrumb location="Employee Dashboard" />
         <Container>
           <div className="employee-welcome">
             <h1>Welcome {employee.first_name}</h1>

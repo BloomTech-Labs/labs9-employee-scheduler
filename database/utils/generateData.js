@@ -1,5 +1,5 @@
 const faker = require('faker')
-const uuid = require('uuid')
+const uuid = require('uuid/v4')
 const moment = require('moment')
 
 // Generates a new org using an id
@@ -31,7 +31,7 @@ const generateUser = ({
 
 const generateUsersForOrg = ({
   org_id = uuid(),
-  quantity = generateRandomBetween(5, 20)
+  quantity = 6 // generateRandomBetween(5, 20) // commented this to constrain the number of employees per org
 }) => {
   const users = []
   for (let i = 0; i < quantity; i++) {
@@ -123,13 +123,19 @@ const generateEvents = (userId = uuid()) => {
   const generateTimes = () => {
     const times = []
     for (let i = 0; i < 5; i++) {
-      if (Math.random() > 0.4) {
+      if (Math.random() < 0.4) {
         times.push([
-          generateRandomBetween(0, 12),
-          generateRandomBetween(12, 23)
+          // 9 to 5 shift
+          9,
+          17
+          //generateRandomBetween(0, 12),
+          //generateRandomBetween(12, 23)
         ])
+      } else if (Math.random() > 0.8) {
+        // created a morning shift
+        times.push([0, 9])
       } else {
-        times.push([0, 23])
+        times.push([17, 23]) // night shift
       }
     }
     return times

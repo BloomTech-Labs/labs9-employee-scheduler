@@ -63,7 +63,7 @@
 
 `getOrgs()`
 
-`addOrg(org)`
+`addOrg(org)` -> Returns the created org
 
 `updateOrg(orgId)`
 
@@ -107,7 +107,7 @@
 
 `getEvents(userId)`
 
-`addEvent(userId, event object)`
+`addEvent(userId, event object)` --> returns created event object
 
 `updateEvent(eventId, changes object)`
 

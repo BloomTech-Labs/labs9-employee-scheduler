@@ -13,6 +13,20 @@ module.exports = {
     }
     // debug: true
   },
+  dev_psql: {
+    client: 'postgresql',
+    connection: {
+      database: 'cadence',
+      user: 'kamdu',
+      password: '3649631'
+    },
+    migrations: {
+      directory: './database/migrations',
+      tableName: 'dbmigrations'
+    },
+    seeds: { directory: './database/seeds' }
+    // debug: true
+  },
   production: {
     client: 'sqlite3',
     connection: { filename: './database/db.sqlite3' },

@@ -1,25 +1,28 @@
 const supertest = require('supertest')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
+const uuid = require('uuid/v4')
 const { generateTeamData } = require('../database/utils/generateData')
 
 const request = supertest(server)
 
 describe('test get user id route /:id', () => {
   it('should return 404 if no users found', async () => {
-    const response = await request
-      .get('/availabilities/fakeId')
-      .set('authorization', 'token')
+    const badId = uuid()
 
-    expect(response.status).toEqual(404)
-  })
+    // verify id is not in database
+    const verifyBadID = await knex('availabilities')
+      .where('id', badId)
+      .first()
 
-  it('should return a JSON response', async () => {
+    expect(verifyBadID).toBeUndefined()
+
     const response = await request
-      .get('/availabilities/sdfasfas')
+      .get(`/availabilities/${badId}`)
       .set('authorization', 'token')
 
     expect(response.type).toEqual('application/json')
+    expect(response.status).toEqual(404)
   })
 
   it('gets availability based on id', async () => {

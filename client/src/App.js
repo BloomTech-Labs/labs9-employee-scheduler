@@ -9,6 +9,11 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+<<<<<<< HEAD
+=======
+import Register from './components/Register'
+import FourOhFour from './components/common/FourOhFour'
+>>>>>>> master
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
 import { authenticate, resetAuthState } from './actions' // for initial call
@@ -104,6 +109,7 @@ class App extends Component {
               <Route path="/dashboard/:id" component={Dashboard} />
               <Route path="/settings" component={Settings} />
               <Route path="/login" render={props => <Login {...props} />} />
+              <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
         </StripeProvider>

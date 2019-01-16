@@ -1,25 +1,19 @@
-import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
+import React from 'react'
+import BigCalendar from 'react-big-calendar'
+import moment from 'moment'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
-// this component might feature a full monthly read only version of the calendar?
-class Calendar extends Component {
-  state = {
-    location: 'Calendar'
-  }
-  render() {
-    return (
-      <div>
-        <LeftSideBar />
-        <BreadCrumb location={this.state.location} />
-      </div>
-    )
-  }
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
+
+const localizer = BigCalendar.momentLocalizer(moment)
+
+export default function Calendar(props) {
+  return <StyledCalendar {...props} localizer />
 }
 
-export default Calendar
-
-Calendar.propTypes = {
-  // add propstypes here
-}
+const StyledCalendar = styled(BigCalendar)`
+  width: 100%;
+  padding: ${system.spacing.hugePadding};
+`

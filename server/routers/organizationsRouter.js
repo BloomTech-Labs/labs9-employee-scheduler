@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   getOrgs,
+  getOrg,
   addOrg,
   updateOrg,
   deleteOrg
@@ -23,7 +24,10 @@ router.get('/:id', (req, res) => {
         return res.status(200).json(org)
       }
     })
-    .catch(err => res.status(500).json(err))
+    .catch(err => {
+      console.log(err)
+      res.status(500).json(err)
+    })
 })
 
 router.post('/', async (req, res) => {
@@ -34,8 +38,9 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const success = await addOrg(req.body)
-    res.status(201).json(success)
+    const id = await addOrg(req.body)
+    const newOrg = await getOrg(id)
+    res.status(201).json(newOrg)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })

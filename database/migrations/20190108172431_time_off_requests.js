@@ -5,7 +5,7 @@ exports.up = knex =>
       .primary()
       .notNullable()
     table
-      .uuid('user_id')
+      .string('user_id', 50)
       .notNullable()
       .references('id')
       .inTable('users')

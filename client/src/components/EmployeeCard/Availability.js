@@ -17,7 +17,7 @@ class Availability extends Component {
         {availabilities &&
           availabilities.map(({ id, day, time }) => (
             //temporarily adds ids tp the DOM for easy access for testing
-            <p key={id}>{`${day} ${time} ${id}`}</p>
+            <p key={id}>{`${day} ${time}`}</p>
           ))}
       </CardContainer>
     )

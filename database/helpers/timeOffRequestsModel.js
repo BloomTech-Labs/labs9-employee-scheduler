@@ -1,7 +1,7 @@
 const db = require('../dbConfig')
 const uuid = require('uuid/v4')
 
-// for time_off_requests
+// for time_off_requests by user
 const getTimeOffRequests = userId => {
   if (userId) {
     return db('time_off_requests as t').where({ 't.user_id': userId })
@@ -10,15 +10,22 @@ const getTimeOffRequests = userId => {
   }
 }
 
+//gets time off request by id
+const getTimeOffRequest = id => {
+  return db('time_off_requests as t')
+    .where({ 't.id': id })
+    .first()
+}
+
 // request is object
 const addTimeOffRequest = request => {
   return db('time_off_requests as t').insert({ ...request, id: uuid() })
 }
 
-const updateTimeOffRequest = (timeOffRequestId, updates) => {
+const updateTimeOffRequest = (timeOffRequestId, status) => {
   return db('time_off_requests as t')
     .where({ 't.id': timeOffRequestId })
-    .update(updates)
+    .update(status)
 }
 
 const deleteTimeOffRequest = timeOffRequestId => {
@@ -39,5 +46,6 @@ module.exports = {
   addTimeOffRequest,
   updateTimeOffRequest,
   deleteTimeOffRequest,
-  getTimeOffRequestsForOrg
+  getTimeOffRequestsForOrg,
+  getTimeOffRequest
 }

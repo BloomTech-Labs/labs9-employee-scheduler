@@ -13,97 +13,85 @@ import stripe from '../img/stripe.png'
 
 // this is the main landing page, it will house the payment options and main site branding styles. The nav here will display as Sign Up || Sign In.
 // if a user is logged in already, it will display the Schedule now button and the navbar will change to logout.
-class Home extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      location: 'Home'
-    }
-  }
-
-  render() {
-    return (
-      <OuterContainer>
-        <BreadCrumb location={this.state.location} />
-        <Container>
-          <h1>Scheduling your employees is hard.</h1>
+const Home = () => {
+  return (
+    <OuterContainer>
+      <BreadCrumb location="Home" />
+      <Container>
+        <h1>Scheduling your employees is hard.</h1>
+        <p>
+          Cadence is an easy-to-use shift scheduling tool. You'll never have to
+          waste time worrying about wasting time ever again.
+        </p>
+        <Button type="text">
+          <LinkItem to="/employees">Schedule Now</LinkItem>
+        </Button>
+      </Container>
+      <Features>
+        <div className="card-container">
+          <h1>Features</h1>
           <p>
-            Cadence is an easy-to-use shift scheduling tool. You'll never have
-            to waste time worrying about wasting time ever again.
+            Cadence has the features that your business needs to keep organized.
+            We are interactive and easy to use. Join today to get your business
+            started on these amazing features.
           </p>
-          <Button type="text">
-            <LinkItem to="/employees">Schedule Now</LinkItem>
-          </Button>
-        </Container>
-        <Features>
-          <div className="card-container">
-            <h1>Features</h1>
-            <p>
-              Cadence has the features that your business needs to keep
-              organized. We are interactive and easy to use. Join today to get
-              your business started on these amazing features.
-            </p>
-            <ul>
-              <li>
-                <i className="fas fa-check" /> Interactive Drag and Drop
-                Calander
-              </li>
-              <li>
-                <i className="fas fa-check" /> Schedule Employee Shifts Weekly
-              </li>
-              <li>
-                <i className="fas fa-check" /> Approve and Deny Time off
-                Requests
-              </li>
-              <li>
-                <i className="fas fa-check" /> Added Security of oAuth and
-                Stripe
-              </li>
-            </ul>
-          </div>
-          <div className="card-container">
-            <h1>Easy to get started</h1>
-            <p>
-              Scheduling can be hard. Let Cadence do the work for you and help
-              you keep track so that you can focus on your business.
-            </p>
-            <ul>
-              <li>
-                <i className="far fa-thumbs-up" />
-                Sign in through oAuth
-              </li>
-              <li>
-                <i className="far fa-thumbs-up" />
-                Create your Cadence Account
-              </li>
-              <li>
-                <i className="far fa-thumbs-up" />
-                Create your organization
-              </li>
-              <li>
-                <i className="far fa-thumbs-up" />
-                Add your employees to it
-              </li>
-              <li>
-                <i className="far fa-thumbs-up" />
-                Begin filling the spaces
-              </li>
-            </ul>
-          </div>
-          <div className="card-container">
-            <h1>Secure Payment</h1>
-            <p>
-              Cadence offers it's users some of the best security features. We
-              want your information to remain your information. Stripe helps us
-              accomplish this by manageming billing details so you never have to
-              worry about anything happening to financial data.
-            </p>
-            <img src={stripe} alt="stripe logo" />
-          </div>
-        </Features>
-      </OuterContainer>
-    )
-  }
+          <ul>
+            <li>
+              <i className="fas fa-check" /> Interactive Drag and Drop Calander
+            </li>
+            <li>
+              <i className="fas fa-check" /> Schedule Employee Shifts Weekly
+            </li>
+            <li>
+              <i className="fas fa-check" /> Approve and Deny Time off Requests
+            </li>
+            <li>
+              <i className="fas fa-check" /> Added Security of oAuth and Stripe
+            </li>
+          </ul>
+        </div>
+        <div className="card-container">
+          <h1>Easy to get started</h1>
+          <p>
+            Scheduling can be hard. Let Cadence do the work for you and help you
+            keep track so that you can focus on your business.
+          </p>
+          <ul>
+            <li>
+              <i className="far fa-thumbs-up" />
+              Sign in through oAuth
+            </li>
+            <li>
+              <i className="far fa-thumbs-up" />
+              Create your Cadence Account
+            </li>
+            <li>
+              <i className="far fa-thumbs-up" />
+              Create your organization
+            </li>
+            <li>
+              <i className="far fa-thumbs-up" />
+              Add your employees to it
+            </li>
+            <li>
+              <i className="far fa-thumbs-up" />
+              Begin filling the spaces
+            </li>
+          </ul>
+        </div>
+        <div className="card-container">
+          <h1>Secure Payment</h1>
+          <p>
+            Cadence offers it's users some of the best security features. We
+            want your information to remain your information. Stripe helps us
+            accomplish this by manageming billing details so you never have to
+            worry about anything happening to financial data.
+          </p>
+          <img src={stripe} alt="stripe logo" />
+        </div>
+      </Features>
+    </OuterContainer>
+  )
 }
 
 export default Home

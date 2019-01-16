@@ -5,5 +5,5 @@ const organizations = generateOrgs(ids)
 
 exports.seed = knex =>
   knex('organizations')
-    .truncate()
+    .delete()
     .then(() => knex('organizations').insert(organizations))

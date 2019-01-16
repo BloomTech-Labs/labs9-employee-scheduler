@@ -1,6 +1,7 @@
 const supertest = require('supertest')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
+const uuid = require('uuid/v4')
 const { generateTeamData } = require('../database/utils/generateData')
 
 const request = supertest(server)
@@ -45,7 +46,12 @@ describe('testing the organizations router', () => {
     })
 
     it('returns status code 404 for non-existent organization - GET/:id', async () => {
-      const fake_id = 1
+      const fake_id = uuid()
+      const verifyAbsence = await knex('organizations')
+        .where('id', fake_id)
+        .first()
+      expect(verifyAbsence).toBeFalsy()
+
       const response = await request
         .get(`/organizations/${fake_id}`)
         .set('authorization', 'testing')
@@ -61,15 +67,17 @@ describe('testing the organizations router', () => {
         .post('/organizations')
         .send(org)
         .set('authorization', 'testing')
-      expect(response.body.length).toEqual(1)
-      expect(response.status).toBe(201)
 
+      // check to see if target is in database
       const target = await knex('organizations').where(org)
-      expect(target.length).toEqual(1)
 
+      // clean target out of database if created
       await knex('organizations')
         .delete()
         .where(org)
+      expect(response.body.length).toEqual(1)
+      expect(response.status).toBe(201)
+      expect(target.length).toEqual(1)
     })
 
     it('can reject an empty organization', async () => {
@@ -123,9 +131,7 @@ describe('testing the organizations router', () => {
       expect(response.status).toBe(400)
       expect(response.body).toEqual({ error: 'No fields provided to update' })
 
-
       await cleanup()
-
     })
   })
 
