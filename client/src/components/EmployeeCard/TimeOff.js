@@ -36,6 +36,8 @@ export const StatusContent = ({ id, status, handleTimeOff }) => {
       </button>
     )
   }
+
+  return null
 }
 
 class TimeOff extends Component {
@@ -48,7 +50,7 @@ class TimeOff extends Component {
     if (name === 'deny') {
       response = 'denied'
     } else {
-      response = 'confirmed'
+      response = 'approved'
     }
     //calls function from redux actions
     this.props.dispoTimeOffRequests(id, response)

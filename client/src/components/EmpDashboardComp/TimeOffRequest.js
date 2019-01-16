@@ -40,8 +40,8 @@ class TimeOffRequest extends Component {
 
   //sends the date and time off request to the server
   submitTimeOffRequest = ({ reason }) => {
-    // const date = this.convertDateToMoment()
-    const date = this.state.startDate
+    const date = this.convertDateToMoment()
+    // const date = this.state.startDate
     const requestObj = { date, reason }
     console.log(requestObj)
     axios
