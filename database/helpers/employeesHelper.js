@@ -10,12 +10,12 @@ const getEmployees = async orgId => {
   // I divided the query up into three, that then get compiled together.
 
   // First, grab all the employees for a given org
-  const employees = await db('users as u').where({ 'u.organization_id': orgId })
+  const employeesP = db('users as u').where({ 'u.organization_id': orgId })
 
   // Second, grab the availabilities for each employee and crunch the data together
   // into an object of key value pairs where each key is a user id and the value
   // is an array of the availabilities for that user
-  const availabilities = await db('users as u')
+  const availabilitiesP = db('users as u')
     .where({ 'u.organization_id': orgId })
     .join('availabilities as a', { 'u.id': 'a.user_id' })
     .select(
@@ -55,7 +55,7 @@ const getEmployees = async orgId => {
   // Third, grab the time off requests for each employee. The data is crunched in
   // the same way: key value pairs where each key is a user id and the value
   // is an array of the time off requests for that user
-  const timeOffRequests = await db('users as u')
+  const timeOffRequestsP = db('users as u')
     .where({ 'u.organization_id': orgId })
     .join('time_off_requests as tor', { 'u.id': 'tor.user_id' })
     .select(
@@ -79,7 +79,7 @@ const getEmployees = async orgId => {
     }, {})
 
   // do the same as above with events
-  const events = await db('users as u')
+  const eventsP = db('users as u')
     .where({ 'u.organization_id': orgId })
     .join('events as e', { 'u.id': 'e.user_id' })
     .select('u.id as user_id', 'start', 'end', 'e.id')
@@ -95,6 +95,19 @@ const getEmployees = async orgId => {
 
       return acc
     }, {})
+
+  // await for all async actions to finish
+  const [
+    events,
+    employees,
+    availabilities,
+    timeOffRequests
+  ] = await Promise.all([
+    eventsP,
+    employeesP,
+    availabilitiesP,
+    timeOffRequestsP
+  ])
 
   // Fourth, map over the employees and add the availabilies and time off requests
   const combined = employees.map(employee => {
