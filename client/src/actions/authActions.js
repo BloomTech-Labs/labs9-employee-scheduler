@@ -6,6 +6,7 @@ import 'firebase/auth'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
+export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -49,3 +50,7 @@ export const logout = () => async dispatch => {
     console.log('error logging out')
   }
 }
+
+export const resetAuthState = () => ({
+  type: RESET_AUTH_STATE
+})
