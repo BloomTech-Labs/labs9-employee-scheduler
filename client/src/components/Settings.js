@@ -29,7 +29,6 @@ class Settings extends Component {
 
   componentDidMount() {
     const { phone, email, emailpref, phonepref } = this.props.user
-    console.log(this.props.user)
     this.setState({
       user: {
         phone: phone,
@@ -71,8 +70,6 @@ class Settings extends Component {
   }
 
   checkHandler = event => {
-    console.log(event.target)
-    // event.preventDefault()
     this.setState({
       user: {
         ...this.state.user,
@@ -88,7 +85,6 @@ class Settings extends Component {
     })
 
     const { user } = this.state
-    console.log(user)
     axios
       .put(
         `${process.env.REACT_APP_SERVER_URL}/users/${this.props.user.id}`,
