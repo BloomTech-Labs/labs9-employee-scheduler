@@ -138,11 +138,13 @@ class App extends Component {
                 path="/shift-calendar"
                 component={CreateSchedule}
               />
-              <PrivateRoute
-                access="owner"
-                path="/billing"
-                component={Billing}
-              />
+              <Elements>
+                <PrivateRoute
+                  access="owner"
+                  path="/billing"
+                  component={Billing}
+                />
+              </Elements>
               <PrivateRoute
                 access="admin"
                 path="/calendar"
