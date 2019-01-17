@@ -16,8 +16,10 @@ class TimeKeeper extends Component {
     this.setState({ time: newTime.formatted })
     if (this.props.name === 'close') {
       this.setState({ closeTime: this.state.time })
+      console.log(`close time is ${this.state.closeTime}`)
     } else {
       this.setState({ openTime: this.state.time })
+      console.log(`open time is ${this.state.openTime}`)
     }
   }
 

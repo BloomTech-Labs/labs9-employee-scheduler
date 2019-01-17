@@ -1,14 +1,21 @@
 import React from 'react'
 
-const Button = ({ handleHours, id }) => {
+const Button = ({ handleHours, showHandleHours, id, day, name }) => {
   return (
     <div>
-      <button id={id} onClick={handleHours} name="open">
-        open
+      <button name={name} onClick={showHandleHours}>
+        {name}
       </button>
-      <button id={id} onClick={handleHours} name="close">
-        close
-      </button>
+      {day === true ? (
+        <>
+          <button id={id} onClick={handleHours} name="open">
+            open
+          </button>
+          <button id={id} onClick={handleHours} name="close">
+            close
+          </button>
+        </>
+      ) : null}
     </div>
   )
 }

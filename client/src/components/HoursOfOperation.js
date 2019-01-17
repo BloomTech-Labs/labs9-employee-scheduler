@@ -11,7 +11,17 @@ class HoursOfOperation extends Component {
     this.state = {
       isOpen: false,
       isClose: false,
-      time: ''
+      time: '',
+      show: false,
+      days: {
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false
+      }
     }
   }
   //opens the correct version of the timekeeper so it sends back
@@ -24,6 +34,18 @@ class HoursOfOperation extends Component {
     }
   }
 
+  showHandleHours = e => {
+    e.preventDefault()
+    console.log(e.target.name)
+    const { days } = this.state
+    this.setState({
+      days: {
+        ...days,
+        [e.target.name]: !days[e.target.name]
+      }
+    })
+  }
+
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveAndClose = (e, time) => {
     //TODO: will need to send the changed time to the DB here
@@ -32,26 +54,22 @@ class HoursOfOperation extends Component {
   }
 
   render() {
-    const days = [
-      'sunday',
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday'
-    ]
     return (
       <Container>
         <h1>Hours of Operation</h1>
         <HoursContainer>
           {/* maps over the days and places a pair of edit buttons for each one */}
-          {days.map((button, i) => {
+          {Object.keys(this.state.days).map((day, i) => {
             return (
-              <div key={i}>
-                <p>{days[i]}</p>
-                <Button handleHours={this.handleHours}>{button}</Button>
-              </div>
+              <Button
+                key={i}
+                handleHours={this.handleHours}
+                day={this.state.days[day]}
+                name={day}
+                showHandleHours={this.showHandleHours}
+              >
+                {this.props.children}
+              </Button>
             )
           })}
         </HoursContainer>
