@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ErrorMessage from './ErrorMessage'
-import { authenticate } from '../actions'
 import propTypes from 'prop-types'
 
 // takes in a component and it's props and wraps in App.js as
