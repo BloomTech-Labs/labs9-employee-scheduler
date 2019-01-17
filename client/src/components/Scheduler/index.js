@@ -20,6 +20,9 @@ class Scheduler extends React.Component {
     console.log('drop', drop)
     const { event, start } = drop
     const { type, ...employee } = event
+
+    // checks to see if this is the creation of a new_shift via an employee card
+    // being dragged, rather than an existing event being dragged
     if (event.type === 'new_shift') {
       this.props.createEvent({ employee, start })
     }
