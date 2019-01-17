@@ -14,6 +14,7 @@ class LeftSideBar extends Component {
   }
 
   toggleShow = () => {
+    console.log('clicked')
     this.setState({ show: !this.state.show })
   }
 

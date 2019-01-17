@@ -239,7 +239,6 @@ const generateDayOffRequests = (userId = uuid()) => {
 
 // Creates an object with values for all tables for one organization
 const populateOrg = ({ orgId = uuid(), size }) => {
-  console.log(size)
   const organization = generateOrg(orgId)
 
   const users = generateUsersForOrg({ org_id: organization.id, quantity: size })
