@@ -1,11 +1,6 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { render, waitForElement } from 'react-testing-library'
 import { renderWithRedux } from '../../testing/utils'
 import Scheduler from '../components/Scheduler'
-import { fetchSingleEmployeefromDB } from '../actions'
-// import employees from './employees.json'
 import {
   populateOrg,
   structureEmployees
