@@ -23,7 +23,6 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
   const { id } = req.params
   const { date, reason } = req.body
-  console.log(req.body)
   if (!date || !reason)
     return res.status(400).json({ error: 'Missing required field(s)' })
 
@@ -39,7 +38,6 @@ router.post('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params
   // const { status } = req.body
-  console.log(req.body)
 
   updateTimeOffRequest(id, req.body)
     .then(result => {
