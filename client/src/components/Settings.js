@@ -9,6 +9,9 @@ import Button from './common/Button'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
+const phonePattern =
+  '^(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$'
+
 // This component will render out settings for the signed in user
 class Settings extends Component {
   constructor(props) {
@@ -68,11 +71,12 @@ class Settings extends Component {
   }
 
   checkHandler = event => {
-    event.preventDefault()
+    console.log(event.target)
+    // event.preventDefault()
     this.setState({
       user: {
         ...this.state.user,
-        [event.target.name]: event.target.checked
+        [event.target.name]: Boolean(event.target.checked)
       }
     })
   }
@@ -127,7 +131,7 @@ class Settings extends Component {
                 type="tel"
                 name="phone"
                 placeholder="ex. 111-111-1111"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                pattern={phonePattern}
                 onChange={this.changeHandler}
                 defaultValue={this.state.user.phone}
                 disabled={this.state.disabled}
@@ -141,7 +145,7 @@ class Settings extends Component {
                   name="emailpref"
                   onChange={this.checkHandler}
                   aria-label="emailpref"
-                  defaultChecked={this.state.user.emailpref}
+                  checked={this.state.user.emailpref}
                 />
                 <label htmlFor="emailpref">Email</label>
 
@@ -150,7 +154,7 @@ class Settings extends Component {
                   name="phonepref"
                   onChange={this.checkHandler}
                   aria-label="phonepref"
-                  defaultChecked={this.state.user.phonepref}
+                  checked={this.state.user.phonepref}
                 />
                 <label htmlFor="phonepref">Phone</label>
               </div>
