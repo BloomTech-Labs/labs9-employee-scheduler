@@ -9,10 +9,11 @@ import propTypes from 'prop-types'
 // <PrivateRoute exact path="<routePath>" />
 
 // time to display error message
-const interval = 3000
+const errorInterval = 3000
+const loadingInterval = 8000
 
 class PrivateRoute extends React.Component {
-  state = { timeout: false }
+  state = { errorTimeout: false, loadingTimeout: false }
 
   render() {
     const { user, error, component: Component, access, ...rest } = this.props
@@ -23,14 +24,16 @@ class PrivateRoute extends React.Component {
         render={ownProps => {
           // initialize authentication process if no user on redux state
           if (!user) {
-            console.log('user false')
             // checks to see if auth was already unsuccessfully tried
             if (error) {
               console.log(error)
               // checks to see if an message has already been displayed
-              if (this.state.timeout) {
+              if (!this.state.errorTimeout) {
                 // if so, displays error message and starts timeout
-                setTimeout(() => this.setState({ timeout: true }), interval)
+                setTimeout(
+                  () => this.setState({ errorTimeout: true }),
+                  errorInterval
+                )
                 return <ErrorMessage error={error} />
               }
               // else, redirects to root
@@ -39,7 +42,16 @@ class PrivateRoute extends React.Component {
 
             // otherwise App is still going through auth process, but has not errored,
             // so show loading screen.
-            return <p>Loading...</p>
+            if (!this.state.loadingTimeout) {
+              setTimeout(
+                () => this.setState({ loadingTimeout: true }),
+                loadingInterval
+              )
+              return <p>Loading...</p>
+            } else {
+              // else, redirects to root
+              return <Redirect to="/" />
+            }
           }
 
           // if user exists on state, then verify user authorization
