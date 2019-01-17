@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ErrorMessage from './ErrorMessage'
+import EmptyScreen from './EmptyScreen'
 import propTypes from 'prop-types'
 
 // takes in a component and it's props and wraps in App.js as
@@ -33,7 +34,11 @@ class PrivateRoute extends React.Component {
                   () => this.setState({ errorTimeout: true }),
                   errorInterval
                 )
-                return <ErrorMessage error={error} />
+                return (
+                  <EmptyScreen>
+                    <ErrorMessage error={error} />
+                  </EmptyScreen>
+                )
               }
               // else, redirects to root
               return <Redirect to="/" />
@@ -46,7 +51,11 @@ class PrivateRoute extends React.Component {
                 () => this.setState({ loadingTimeout: true }),
                 loadingInterval
               )
-              return <p>Loading...</p>
+              return (
+                <EmptyScreen>
+                  <h1>Loading...</h1>
+                </EmptyScreen>
+              )
             } else {
               // else, redirects to root
               return <Redirect to="/" />

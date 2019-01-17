@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function ErrorMessage({ error }) {
-  return <p>{error}</p>
+  return <h1>{error}</h1>
 }
