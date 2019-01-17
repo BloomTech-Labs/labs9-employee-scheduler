@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
 
-export default class componentName extends Component {
+class TimeKeeper extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -14,21 +14,14 @@ export default class componentName extends Component {
   //sets the chosen time on state and assigns it to openTime or closeTime depending on if this.props.name is 'open' or 'close'
   handleTimeChange = newTime => {
     this.setState({ time: newTime.formatted })
-    const openTime = this.state.openTime
-    const closeTime = this.state.closeTime
     if (this.props.name === 'close') {
       this.setState({ closeTime: this.state.time })
-      return closeTime
     } else {
       this.setState({ openTime: this.state.time })
-      return openTime
     }
   }
 
   render() {
-    console.log('open', this.state.openTime)
-    console.log('close', this.state.closeTime)
-
     return (
       <div>
         <Timekeeper
@@ -45,3 +38,5 @@ export default class componentName extends Component {
     )
   }
 }
+
+export default TimeKeeper

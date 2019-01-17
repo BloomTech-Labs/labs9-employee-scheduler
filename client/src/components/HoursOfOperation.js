@@ -1,21 +1,9 @@
 import React, { Component } from 'react'
-import Timekeeper from './TimeKeeper'
+import Timekeeper from './HoursOfOperationModal/TimeKeeper'
+import Button from './HoursOfOperationModal/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-
 //creates a dynamic button generator
-export const Button = ({ handleHours, id }) => {
-  return (
-    <div>
-      <button id={id} onClick={handleHours} name="open">
-        open
-      </button>
-      <button id={id} onClick={handleHours} name="close">
-        close
-      </button>
-    </div>
-  )
-}
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -37,15 +25,13 @@ class HoursOfOperation extends Component {
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
-  saveAndClose = time => {
+  saveAndClose = (e, time) => {
     //TODO: will need to send the changed time to the DB here
+
     this.setState({ isOpen: false, isClose: false, time: time })
-    console.log('save and close fired')
   }
 
   render() {
-    console.log('will go to db:', this.state.time)
-
     const days = [
       'sunday',
       'monday',
