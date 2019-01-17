@@ -1,4 +1,5 @@
 import React from 'react'
+import { waitForElement } from 'react-testing-library'
 import { renderWithRedux } from '../../testing/utils'
 import Scheduler from '../components/Scheduler'
 import {

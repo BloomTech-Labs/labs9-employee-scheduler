@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Calendar from './components/Calendar'
+import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
@@ -180,6 +181,11 @@ class App extends Component {
                 component={Settings}
               />
               <Route path="/register" component={RegisterOwner} />
+              <Route path="/billing" component={Billing} />
+              <Route path="/calendar" component={Calendar} />
+              <Route path="/dashboard/:id" component={Dashboard} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/hours-of-operation" component={HoursOfOperation} />
               <Route path="/login" render={props => <Login {...props} />} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>

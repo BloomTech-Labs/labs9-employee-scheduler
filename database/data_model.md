@@ -109,7 +109,7 @@
 
 `addEvent(userId, event object)` --> returns created event object
 
-`updateEvent(eventId, changes object)`
+`updateEvent(eventId, changes object)` --> returns the updated event object
 
 `deleteEvent(eventId)`
 
