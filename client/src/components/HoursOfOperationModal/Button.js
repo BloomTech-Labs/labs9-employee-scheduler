@@ -36,9 +36,19 @@ const Container = styled('div')`
     box-shadow: ${system.shadows.button};
     padding: ${system.spacing.standardPadding};
     margin-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+      background: ${system.color.button};
+      box-shadow: ${system.shadows.buttonHoverLight};
+    }
   }
   .buttons {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    button {
+      margin: 5px;
+    }
   }
 `
