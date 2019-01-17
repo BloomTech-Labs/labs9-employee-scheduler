@@ -3,7 +3,7 @@ import Timekeeper from './HoursOfOperationModal/TimeKeeper'
 import Button from './HoursOfOperationModal/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-//creates a dynamic button generator
+import Zoom from 'react-reveal'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -56,32 +56,34 @@ class HoursOfOperation extends Component {
   render() {
     return (
       <Container>
+        {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
+
+        {this.state.isOpen === true ? (
+          <Zoom right>
+            <Timekeeper name="open" saveAndClose={this.saveAndClose} />
+          </Zoom>
+        ) : this.state.isClose === true ? (
+          <Zoom right>
+            <Timekeeper name="close" saveAndClose={this.saveAndClose} />
+          </Zoom>
+        ) : null}
         <div className="days-container">
           <h3>Hours of Operation</h3>
-          <HoursContainer>
-            {/* maps over the days and places a pair of edit buttons for each one */}
-            {Object.keys(this.state.days).map((day, i) => {
-              return (
-                <Button
-                  key={i}
-                  handleHours={this.handleHours}
-                  day={this.state.days[day]}
-                  name={day}
-                  showHandleHours={this.showHandleHours}
-                >
-                  {this.props.children}
-                </Button>
-              )
-            })}
-          </HoursContainer>
+          {/* maps over the days and places a pair of edit buttons for each one */}
+          {Object.keys(this.state.days).map((day, i) => {
+            return (
+              <Button
+                key={i}
+                handleHours={this.handleHours}
+                day={this.state.days[day]}
+                name={day}
+                showHandleHours={this.showHandleHours}
+              >
+                {this.props.children}
+              </Button>
+            )
+          })}
         </div>
-
-        {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
-        {this.state.isOpen === true ? (
-          <Timekeeper name="open" saveAndClose={this.saveAndClose} />
-        ) : this.state.isClose === true ? (
-          <Timekeeper name="close" saveAndClose={this.saveAndClose} />
-        ) : null}
       </Container>
     )
   }
@@ -89,26 +91,21 @@ class HoursOfOperation extends Component {
 
 export default HoursOfOperation
 
-const HoursContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 500px;
-`
-
 const Container = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 40px;
   display: flex;
   flex-direction: row;
+  box-shadow: ${system.shadows.other};
+  padding: ${system.spacing.standardPadding};
   .days-container {
     display: flex;
     flex-direction: column;
-    padding: ${system.spacing.bigPadding};
-    height: 100%;
-    width: 159px;
-    border: 1px solid black;
-    margin: 0 auto;
+    justify-content: space-between;
     h3 {
-      font-size: ${system.fontSizing.s};
-      margin: bottom;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
     }
   }
 `

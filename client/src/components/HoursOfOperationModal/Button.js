@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import Zoom from 'react-reveal'
 
 const Button = ({ handleHours, showHandleHours, id, day, name }) => {
   return (
@@ -9,14 +10,16 @@ const Button = ({ handleHours, showHandleHours, id, day, name }) => {
         {name}
       </button>
       {day === true ? (
-        <div className="buttons">
-          <button id={id} onClick={handleHours} name="open">
-            open
-          </button>
-          <button id={id} onClick={handleHours} name="close">
-            close
-          </button>
-        </div>
+        <Zoom down>
+          <div className="buttons">
+            <button id={id} onClick={handleHours} name="open">
+              open
+            </button>
+            <button id={id} onClick={handleHours} name="close">
+              close
+            </button>
+          </div>
+        </Zoom>
       ) : null}
     </Container>
   )
@@ -48,7 +51,10 @@ const Container = styled('div')`
     justify-content: space-between;
     width: 100%;
     button {
+      cursor: pointer;
       margin: 5px;
+      font-size: 1.8rem;
+      border: transparent;
     }
   }
 `
