@@ -16,7 +16,6 @@ router.get('/:id', (req, res) => {
 //updates hours of operation by organization id
 router.put('/:id', (req, res) => {
   const { id } = req.params
-
   updateHoursOfOperation(id, req.body)
     .then(hours => res.status(200).json(hours))
     .catch(err => res.status(500).json({ error: 'Server Error', err }))
