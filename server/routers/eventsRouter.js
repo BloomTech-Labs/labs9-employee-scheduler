@@ -46,8 +46,9 @@ router.put('/:id', async (req, res) => {
     res.status(400).json({ error: 'No fields provided to update' })
   }
   try {
-    const success = await updateEvent(id, req.body)
-    res.status(200).json(success)
+    await updateEvent(id, req.body)
+    const updated = await getEvent(id)
+    res.status(200).json(updated)
   } catch (error) {
     res.status(500).json({ error: 'Server error' })
   }

@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import EmployeePool from './EmployeePool'
-import { fetchEmployeesFromDB, createEvent } from '../../actions'
+import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
@@ -26,6 +26,10 @@ class Scheduler extends React.Component {
     if (event.type === 'new_shift') {
       this.props.createEvent({ employee, start })
     }
+  }
+
+  resizeEvent = (type, { start, end, event }) => {
+    this.props.changeEvent({ event, changes: { start, end } })
   }
 
   render() {
@@ -58,7 +62,7 @@ class Scheduler extends React.Component {
           defaultView="week"
           events={events}
           onEventDrop={this.handleDrop}
-          onEventResize={event => console.log('resize', event)}
+          onEventResize={this.resizeEvent}
           onSelectEvent={event => console.log('select', event)}
           eventPropGetter={event => ({ className: event.title.split(' ')[0] })}
           names={names}
@@ -76,5 +80,5 @@ const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent }
+  { fetchEmployeesFromDB, createEvent, changeEvent }
 )(DragSched)
