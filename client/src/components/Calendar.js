@@ -17,9 +17,13 @@ export default function Calendar(props) {
     style.push(`.${names[i]} {background: ${colors[i]};}`)
   }
 
+<<<<<<< HEAD
   style = style.join(' ')
 
   return <StyledCalendar {...props} colors={style} localizer />
+=======
+  return <StyledCalendar {...props} colors={style.join(' ')} localizer />
+>>>>>>> master
 }
 
 const StyledCalendar = styled(BigCalendar)`
@@ -36,5 +40,16 @@ const StyledCalendar = styled(BigCalendar)`
 
   .rbc-event-content {
     margin-left: 7.5px;
+  }
+
+  .rbc-header {
+    padding-top: 5px;
+  }
+
+  /* the below makes the Agenda view normally colored instead of the same color as events */
+  table,
+  tr,
+  td {
+    background: transparent !important;
   }
 `

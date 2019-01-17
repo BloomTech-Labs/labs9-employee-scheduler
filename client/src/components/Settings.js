@@ -31,7 +31,6 @@ class Settings extends Component {
       })
       .then(res => {
         const { phone, email } = res.data[0]
-        console.log(res.data[0])
         this.setState({
           user: {
             phone: phone,
