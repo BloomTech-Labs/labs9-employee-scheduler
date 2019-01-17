@@ -3,6 +3,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
+export const AUTH_INIT = 'AUTH_INIT'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
@@ -12,11 +13,13 @@ const baseURL = process.env.REACT_APP_SERVER_URL
 
 //puts token on headers for the backend
 export const authenticate = () => async dispatch => {
+  dispatch({ type: AUTH_INIT })
   // wrap in try/catch to catch firebase errors
   try {
     // try to get current user from firebase
     const { currentUser } = firebase.auth()
 
+    // if currentUser is defined, getIdToken for firebase then verify with server
     if (currentUser) {
       const idToken = await currentUser.getIdToken(/* forceRefresh */ false)
 
@@ -32,12 +35,15 @@ export const authenticate = () => async dispatch => {
           })
         })
         .catch(err => {
+          // if server verficiation fails, dispatch an error
           dispatch({ type: AUTH_FAIL, payload: { error: 'server error' } })
         })
     } else {
+      // if firebase does not have a current user logged in, dispatch an error
       dispatch({ type: AUTH_FAIL, payload: { error: 'no user info' } })
     }
   } catch (error) {
+    // if any uncaught errors in login async process, dispatch an error
     dispatch({ type: AUTH_FAIL, payload: { error: 'firebase error' } })
   }
 }
