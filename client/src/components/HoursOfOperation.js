@@ -56,23 +56,25 @@ class HoursOfOperation extends Component {
   render() {
     return (
       <Container>
-        <h1>Hours of Operation</h1>
-        <HoursContainer>
-          {/* maps over the days and places a pair of edit buttons for each one */}
-          {Object.keys(this.state.days).map((day, i) => {
-            return (
-              <Button
-                key={i}
-                handleHours={this.handleHours}
-                day={this.state.days[day]}
-                name={day}
-                showHandleHours={this.showHandleHours}
-              >
-                {this.props.children}
-              </Button>
-            )
-          })}
-        </HoursContainer>
+        <div className="days-container">
+          <h3>Hours of Operation</h3>
+          <HoursContainer>
+            {/* maps over the days and places a pair of edit buttons for each one */}
+            {Object.keys(this.state.days).map((day, i) => {
+              return (
+                <Button
+                  key={i}
+                  handleHours={this.handleHours}
+                  day={this.state.days[day]}
+                  name={day}
+                  showHandleHours={this.showHandleHours}
+                >
+                  {this.props.children}
+                </Button>
+              )
+            })}
+          </HoursContainer>
+        </div>
 
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
         {this.state.isOpen === true ? (
@@ -87,17 +89,6 @@ class HoursOfOperation extends Component {
 
 export default HoursOfOperation
 
-const P = styled.p`
-  padding: 2.5px 7.5px;
-  font-family: ${props => (props.main ? "'Lato', sans-serif" : 'inherit')};
-  font-weight: ${props => (props.main ? 'bold' : null)};
-  color: ${props =>
-    props.main ? system.color.primary : system.color.captiontext};
-  font-size: ${props =>
-    props.main ? system.fontSizing.m : system.fontSizing.sm};
-  line-height: ${system.spacing.lineHeight};
-`
-
 const HoursContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -107,4 +98,17 @@ const HoursContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  .days-container {
+    display: flex;
+    flex-direction: column;
+    padding: ${system.spacing.bigPadding};
+    height: 100%;
+    width: 159px;
+    border: 1px solid black;
+    margin: 0 auto;
+    h3 {
+      font-size: ${system.fontSizing.s};
+      margin: bottom;
+    }
+  }
 `
