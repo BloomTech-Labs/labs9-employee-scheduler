@@ -5,6 +5,8 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import EmployeePool from './EmployeePool'
+import OuterContainer from '../common/OuterContainer'
+import WeekSummary from './WeekSummary'
 import { fetchEmployeesFromDB, createEvent } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
@@ -49,24 +51,31 @@ class Scheduler extends React.Component {
     }, [])
 
     return (
-      <div style={{ display: 'flex' }}>
-        <EmployeePool employees={employees} />
-        <DnDCal
-          selectable
-          resizable
-          defaultDate={new Date()}
-          defaultView="week"
-          events={events}
-          onEventDrop={this.handleDrop}
-          onEventResize={event => console.log('resize', event)}
-          onSelectEvent={event => console.log('select', event)}
-          eventPropGetter={event => ({ className: event.title.split(' ')[0] })}
-          names={names}
-          startAccessor="start"
-          endAccessor="end"
-          draggableAccessor={event => true}
-        />
-      </div>
+      <OuterContainer>
+        <div style={{ display: 'flex' }}>
+          <EmployeePool employees={employees} />
+          <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+            <DnDCal
+              selectable
+              resizable
+              defaultDate={new Date()}
+              defaultView="week"
+              events={events}
+              onEventDrop={this.createEvent}
+              onEventResize={event => console.log(event)}
+              onSelectEvent={event => console.log(event)}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              startAccessor="start"
+              endAccessor="end"
+              draggableAccessor={event => true}
+            />
+            <WeekSummary events={events} />
+          </div>
+        </div>
+      </OuterContainer>
     )
   }
 }
