@@ -3,6 +3,7 @@ const axios = require('axios')
 export const CREATE_EVENT = 'CREATE_EVENT'
 export const UPDATE_EVENT = 'UPDATE_EVENT'
 export const EVENT_ERROR = 'EVENT_ERROR'
+export const EDIT_HOO = 'EDIT_HOO'
 
 const baseUrl = process.env.REACT_APP_SERVER_URL
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
+import { connect } from 'react-redux'
+import { editHoursOfOperations } from '../../actions/'
 
 class TimeKeeper extends Component {
   constructor(props) {
@@ -41,4 +43,11 @@ class TimeKeeper extends Component {
   }
 }
 
-export default TimeKeeper
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+
+export default connect(
+  mapStateToProps,
+  { editHoursOfOperations }
+)(TimeKeeper)
