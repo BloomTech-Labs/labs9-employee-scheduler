@@ -45,6 +45,7 @@ class HoursOfOperation extends Component {
 
   render() {
     console.log('will go to db:', this.state.time)
+    console.log(this.state.hours)
 
     const days = [
       'sunday',

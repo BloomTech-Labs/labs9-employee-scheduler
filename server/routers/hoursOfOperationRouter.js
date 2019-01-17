@@ -8,7 +8,8 @@ const {
 
 //gets the hours of operation by organization id
 router.get('/:id', (req, res) => {
-  getHoursOfOperation(req.params.id)
+  const { id } = req.params
+  getHoursOfOperation(id)
     .then(hours => res.status(200).json(hours))
     .catch(err => res.status(404).json(err))
 })
