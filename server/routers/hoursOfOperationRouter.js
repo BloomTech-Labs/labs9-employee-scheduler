@@ -20,5 +20,4 @@ router.put('/:id', (req, res) => {
     .then(hours => res.status(200).json(hours))
     .catch(err => res.status(500).json({ error: 'Server Error', err }))
 })
-
 module.exports = router

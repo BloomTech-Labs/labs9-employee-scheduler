@@ -1,13 +1,8 @@
+const { generateAllHoursOfOperation } = require('../utils/generateData')
+const ids = require('../ids.json').org_ids
+const hours = generateAllHoursOfOperation(ids)
 
-exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
-};
+exports.seed = knex =>
+  knex('hours_of_operation')
+    .delete()
+    .then(() => knex('hours_of_operation').insert(hours))
