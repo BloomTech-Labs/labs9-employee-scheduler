@@ -81,7 +81,4 @@ const mapStateToProps = ({ auth: { user, error } }) => ({
   error
 })
 
-export default connect(
-  mapStateToProps,
-  { authenticate }
-)(PrivateRoute)
+export default connect(mapStateToProps)(PrivateRoute)
