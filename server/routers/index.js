@@ -6,6 +6,7 @@ const eventsRouter = require('./eventsRouter')
 const employeesRouter = require('./employeesRouter')
 const dashboardRouter = require('./dashboardRouter')
 const paymentRouter = require('./paymentRouter')
+const hoursOfOperation = require('./hoursOfOperationRouter')
 
 module.exports = {
   organizationsRouter,
@@ -15,5 +16,6 @@ module.exports = {
   eventsRouter,
   employeesRouter,
   dashboardRouter,
-  paymentRouter
+  paymentRouter,
+  hoursOfOperation
 }
