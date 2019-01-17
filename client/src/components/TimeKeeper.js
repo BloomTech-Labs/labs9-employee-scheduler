@@ -11,6 +11,7 @@ export default class componentName extends Component {
     }
   }
 
+  //sets the chosen time on state and assigns it to openTime or closeTime depending on if this.props.name is 'open' or 'close'
   handleTimeChange = newTime => {
     this.setState({ time: newTime.formatted })
     const openTime = this.state.openTime
@@ -22,11 +23,6 @@ export default class componentName extends Component {
       this.setState({ openTime: this.state.time })
       return openTime
     }
-  }
-
-  helper = () => {
-    this.handleTimeChange()
-    this.saveTime()
   }
 
   render() {

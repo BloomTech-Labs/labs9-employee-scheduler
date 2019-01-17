@@ -26,7 +26,8 @@ class HoursOfOperation extends Component {
       time: ''
     }
   }
-
+  //opens the correct version of the timekeeper so it sends back
+  //either open time or close time
   handleHours = e => {
     if (e.target.name === 'open') {
       this.setState({ isOpen: true, isClose: false })
@@ -35,13 +36,16 @@ class HoursOfOperation extends Component {
     }
   }
 
+  //closes the time keeper and sets the time on state that we want to send back to the DB
   saveAndClose = time => {
     //TODO: will need to send the changed time to the DB here
     this.setState({ isOpen: false, isClose: false, time: time })
+    console.log('save and close fired')
   }
 
   render() {
-    console.log(this.state.time)
+    console.log('will go to db:', this.state.time)
+
     const days = [
       'sunday',
       'monday',
@@ -55,6 +59,7 @@ class HoursOfOperation extends Component {
       <Container>
         <h1>Hours of Operation</h1>
         <HoursContainer>
+          {/* maps over the days and places a pair of edit buttons for each one */}
           {days.map((button, i) => {
             return (
               <div key={i}>
@@ -65,8 +70,9 @@ class HoursOfOperation extends Component {
           })}
         </HoursContainer>
 
+        {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
         {this.state.isOpen === true ? (
-          <Timekeeper name="open" saveAndClose={this.saveAndClose} day={day} />
+          <Timekeeper name="open" saveAndClose={this.saveAndClose} />
         ) : this.state.isClose === true ? (
           <Timekeeper name="close" saveAndClose={this.saveAndClose} />
         ) : null}
