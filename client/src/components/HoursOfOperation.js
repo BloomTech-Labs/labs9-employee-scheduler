@@ -59,13 +59,14 @@ class HoursOfOperation extends Component {
             return (
               <div key={i}>
                 <p>{days[i]}</p>
-                <Button handleHours={this.handleHours}>{button.open}</Button>
+                <Button handleHours={this.handleHours}>{button}</Button>
               </div>
             )
           })}
         </HoursContainer>
+
         {this.state.isOpen === true ? (
-          <Timekeeper name="open" saveAndClose={this.saveAndClose} />
+          <Timekeeper name="open" saveAndClose={this.saveAndClose} day={day} />
         ) : this.state.isClose === true ? (
           <Timekeeper name="close" saveAndClose={this.saveAndClose} />
         ) : null}
@@ -89,11 +90,11 @@ const P = styled.p`
 
 const HoursContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   max-width: 500px;
 `
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 `
