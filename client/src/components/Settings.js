@@ -7,6 +7,7 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import Button from './common/Button'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 // This component will render out settings for the signed in user
 class Settings extends Component {
@@ -17,34 +18,43 @@ class Settings extends Component {
       user: {
         email: '',
         phone: '',
-        emailpref: true,
+        emailpref: false,
         phonepref: false
       }
     }
   }
 
-  // this CDM get url needs to be updated when the users/current route is built to get by current id
   componentDidMount() {
-    axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/users`, {
-        headers: { authorization: 'testing' }
-      })
-      .then(res => {
-        const { phone, email } = res.data[0]
-        this.setState({
-          user: {
-            phone: phone,
-            email: email
-          }
-        })
-      })
-      .catch(err => console.log(err))
+    const { phone, email, emailpref, phonepref } = this.props.user
+    console.log(this.props.user)
+    this.setState({
+      user: {
+        phone: phone,
+        email: email,
+        emailpref: !!emailpref,
+        phonepref: !!phonepref
+      }
+    })
   }
 
   editHandler = () => {
-    this.setState({
-      disabled: false
-    })
+    if (!this.state.disabled) {
+      const { phone, email, emailpref, phonepref } = this.props.user
+      document.querySelector('form').reset()
+      this.setState({
+        user: {
+          phone: phone,
+          email: email,
+          emailpref: !!emailpref,
+          phonepref: !!phonepref
+        },
+        disabled: true
+      })
+    } else {
+      this.setState({
+        disabled: false
+      })
+    }
   }
 
   changeHandler = event => {
@@ -61,6 +71,7 @@ class Settings extends Component {
     event.preventDefault()
     this.setState({
       user: {
+        ...this.state.user,
         [event.target.name]: event.target.checked
       }
     })
@@ -72,13 +83,16 @@ class Settings extends Component {
       disabled: true
     })
 
-    // need to get id off of redux state
-    // ${id} needs to go in url
-    const { user } = this.setState
+    const { user } = this.state
+    console.log(user)
     axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/users/`, user, {
-        headers: { authorization: 'testing' }
-      })
+      .put(
+        `${process.env.REACT_APP_SERVER_URL}/users/${this.props.user.id}`,
+        user,
+        {
+          headers: { authorization: this.props.token }
+        }
+      )
       .then(res => alert('Your account has been edited successfully.'))
       .catch(err => alert('Something went wrong. Try again please.'))
   }
@@ -95,7 +109,9 @@ class Settings extends Component {
           <fieldset disabled={this.state.disabled}>
             <form onSubmit={this.submitHandler}>
               {/* Replace this EDIT with a pencil icon later */}
-              <p onClick={() => this.editHandler()}>EDIT</p>
+              <p onClick={() => this.editHandler()}>
+                {this.state.disabled ? 'EDIT' : 'CANCEL'}
+              </p>
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
@@ -151,7 +167,14 @@ class Settings extends Component {
   }
 }
 
-export default Settings
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    token: state.auth.token
+  }
+}
+
+export default connect(mapStateToProps)(Settings)
 
 Settings.propTypes = {
   // add propTypes here
@@ -195,6 +218,10 @@ const Container = styled('div')`
       color: ${system.color.captiontext};
     }
 
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+    }
+
     input[type='checkbox'] {
       margin-top: 10px;
       :first-of-type {
@@ -217,7 +244,7 @@ const Input = styled.input`
   margin: 0.5rem 0 ${system.spacing.hugePadding};
   border: none;
   border-bottom: 2px solid
-    ${props => (props.disabled ? 'transparent' : '#d2d2d2')};
+    ${props => (props.disabled ? 'none !important' : '#d2d2d2')};
   transition: ${system.transition};
   :disabled {
     background: ${system.color.white};
