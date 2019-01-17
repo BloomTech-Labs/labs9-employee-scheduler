@@ -5,9 +5,9 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import EmployeePool from './EmployeePool'
+import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
 import OuterContainer from '../common/OuterContainer'
 import WeekSummary from './WeekSummary'
-import { fetchEmployeesFromDB, createEvent } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
@@ -20,14 +20,22 @@ class Scheduler extends React.Component {
 
   handleDrop = drop => {
     console.log('drop', drop)
-    const { event, start } = drop
+    const { event, start, end } = drop
     const { type, ...employee } = event
 
     // checks to see if this is the creation of a new_shift via an employee card
     // being dragged, rather than an existing event being dragged
     if (event.type === 'new_shift') {
-      this.props.createEvent({ employee, start })
+      return this.props.createEvent({ employee, start })
     }
+
+    // else, the drop is from dragging an existing shift, so it is interpreted
+    // as a change
+    return this.props.changeEvent({ event: employee, changes: { start, end } })
+  }
+
+  resizeEvent = (type, { start, end, event }) => {
+    this.props.changeEvent({ event, changes: { start, end } })
   }
 
   render() {
@@ -61,8 +69,8 @@ class Scheduler extends React.Component {
               defaultDate={new Date()}
               defaultView="week"
               events={events}
-              onEventDrop={this.createEvent}
-              onEventResize={event => console.log(event)}
+              onEventDrop={this.handleDrop}
+              onEventResize={this.resizeEvent}
               onSelectEvent={event => console.log(event)}
               eventPropGetter={event => ({
                 className: event.title.split(' ')[0]
@@ -85,5 +93,5 @@ const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent }
+  { fetchEmployeesFromDB, createEvent, changeEvent }
 )(DragSched)
