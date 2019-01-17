@@ -55,7 +55,7 @@ const InnerContainer = styled('div')`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: center;
+  align-items: baseline;
   margin: ${system.spacing.standardPadding};
 `
 

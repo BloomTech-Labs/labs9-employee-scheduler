@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
 import Scheduler from './Scheduler'
 
 // this component will house all of the main features for the create schedule page.
 const CreateSchedule = () => {
-  return (
-    <div>
-      <LeftSideBar />
-      <BreadCrumb location="Schedule" />
-      <Scheduler />
-    </div>
-  )
+  return <Scheduler />
 }
 
 export default CreateSchedule
