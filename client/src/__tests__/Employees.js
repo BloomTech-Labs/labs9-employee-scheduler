@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { waitForElement } from 'react-testing-library'
-import { renderWithRedux } from '../../testing/utils'
+import { renderWithReduxAndRouter } from '../../testing/utils'
 import Employees from '../components/Employees'
 import { fetchEmployeesFromDB } from '../actions'
 import * as axios from 'axios'
@@ -39,7 +39,7 @@ describe('employee dashboard with redux', () => {
 
     // renders the component with both Redux and Router, with the route set
     // to the matching route for this component in App
-    const { getByTestId, getByText, history } = renderWithRedux(
+    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
       <Route path="/dashboard" component={Employees} />,
       {
         route: `/dashboard`

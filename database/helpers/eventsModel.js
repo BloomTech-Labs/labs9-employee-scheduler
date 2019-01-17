@@ -7,7 +7,7 @@ const getEvents = userId => {
 }
 
 // gets an event by its id
-const getEvent = id => db('events').where('id', id)
+const getEvent = id => db('events').where('id', id).first()
 
 const addEvent = event => {
   const id = uuid()

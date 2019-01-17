@@ -10,7 +10,7 @@ const db = knex({
 })
 
 async function handle() {
-  const { cleanup, team } = await generateTeamData(db)
+  const { cleanup, team } = await generateTeamData(db, 'small')
   await fs.writeFile('static_seed.json', JSON.stringify(team), console.log)
   await cleanup()
   db.destroy()
