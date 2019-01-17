@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import NavItem from './common/NavItem'
 import Fade from 'react-reveal/Fade'
+import { connect } from 'react-redux'
 
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
@@ -18,6 +19,7 @@ class LeftSideBar extends Component {
 
   render() {
     const { toggleShow } = this
+    const { role } = this.props.auth.user
     return (
       <Container>
         <Hamburger classname="hamburger" onClick={() => toggleShow()}>
@@ -25,9 +27,18 @@ class LeftSideBar extends Component {
         </Hamburger>
         <Fade left when={this.state.show}>
           <Nav show={this.state.show}>
-            <NavItem to="/calendar">Calendar</NavItem>
-            <NavItem to="/employees">Employees</NavItem>
-            <NavItem to="/shift-calendar">Create Schedule</NavItem>
+            {/* render the uneditable calendar page for employees */}
+            {role === 'employees' ? (
+              <NavItem to="/calendar">Calendar</NavItem>
+            ) : null}
+            {/* render employees and shift-calender for supervisors and above */}
+            {role === 'supervisor' || role === 'admin' || role === 'owner' ? (
+              <>
+                <NavItem to="/employees">Employees</NavItem>
+                <NavItem to="/shift-calendar">Create Schedule</NavItem>
+              </>
+            ) : null}
+            {/* render settings page for all */}
             <NavItem to="/settings">Settings</NavItem>
           </Nav>
         </Fade>
@@ -36,7 +47,14 @@ class LeftSideBar extends Component {
   }
 }
 
-export default LeftSideBar
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(
+  mapStateToProps,
+  null
+)(LeftSideBar)
 
 LeftSideBar.propTypes = {
   // add propTypes here

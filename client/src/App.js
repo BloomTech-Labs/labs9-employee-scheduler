@@ -9,7 +9,7 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import Register from './components/Register'
+
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
