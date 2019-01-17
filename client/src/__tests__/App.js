@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
-import { renderWithRouter } from '../../testing/utils'
+import { renderWithReduxAndRouter } from '../../testing/utils'
 import App from '../App'
 import axios from 'axios'
 
@@ -11,7 +11,7 @@ describe('App component', () => {
     axios.get.mockImplementation(() =>
       Promise.resolve({ data: { message: 'hello!' } })
     )
-    const { getByText } = renderWithRouter(<App />)
+    const { getByText } = renderWithReduxAndRouter(<App />)
     expect(getByText('Cadence')).toBeInTheDocument()
   })
 

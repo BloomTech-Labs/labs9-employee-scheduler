@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Calendar from './components/Calendar'
 import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
@@ -10,11 +10,12 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import Register from './components/Register'
+
+import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
-import { authenticate, resetAuthState } from './actions' // for initial call
+import { authenticate, resetAuthState, setRedirectFlagToFalse } from './actions' // for initial call
 import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
@@ -49,9 +50,23 @@ class App extends Component {
     // this needs to trigger a redirect to `/` using history.push()
     // but first we need to reset auth state so that this method
     // doesn't keep running, pushing `/` to history on each update
-    const { userDidLogout, resetAuthState, history } = this.props
+    const {
+      userDidLogout,
+      resetAuthState,
+      history,
+      redirect,
+      setRedirectFlagToFalse
+    } = this.props
+
     if (userDidLogout) {
       resetAuthState()
+      history.push('/')
+    }
+
+    // we also need a general case of redirect where the auth state is not touched
+    // this is used by the register component
+    if (redirect) {
+      setRedirectFlagToFalse()
       history.push('/')
     }
   }
@@ -62,6 +77,8 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.props
+
     return (
       <div>
         <Global
@@ -94,19 +111,63 @@ class App extends Component {
             }
           `}
         />
-        <Route exact path="/" render={props => <Home {...props} />} />
+
+        <Route
+          exact
+          path="/"
+          render={props => {
+            if (user && (user.role === 'owner' || user.role === 'supervisor')) {
+              return <Redirect to="/shift-calendar" />
+            } else if (user && user.role === 'employee') {
+              return <Redirect to="/dashboard" />
+            } else {
+              return <Home {...props} />
+            }
+          }}
+        />
 
         <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
           <Elements>
             <Switch>
-              <Route path="/employees" component={Employees} />
-              <Route path="/shift-calendar" component={CreateSchedule} />
+              <PrivateRoute
+                access="admin"
+                path="/employees"
+                component={Employees}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/shift-calendar"
+                component={CreateSchedule}
+              />
+              <PrivateRoute
+                access="owner"
+                path="/billing"
+                component={Billing}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/calendar"
+                component={Calendar}
+              />
+              <PrivateRoute
+                access="all"
+                path="/dashboard/:id"
+                component={Dashboard}
+              />
+              <PrivateRoute
+                access="all"
+                path="/settings"
+                component={Settings}
+              />
               <Route path="/register" component={RegisterOwner} />
+<<<<<<< HEAD
               <Route path="/billing" component={Billing} />
               <Route path="/calendar" component={Calendar} />
               <Route path="/dashboard/:id" component={Dashboard} />
               <Route path="/settings" component={Settings} />
               <Route path="/hours-of-operation" component={HoursOfOperation} />
+=======
+>>>>>>> master
               <Route path="/login" render={props => <Login {...props} />} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
@@ -117,14 +178,18 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ auth: { user, userDidLogout } }) => ({
+const mapStateToProps = ({
+  auth: { user, userDidLogout },
+  registration: { redirect }
+}) => ({
   user,
-  userDidLogout
+  userDidLogout,
+  redirect
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { authenticate, resetAuthState }
+    { authenticate, resetAuthState, setRedirectFlagToFalse }
   )(App)
 )
