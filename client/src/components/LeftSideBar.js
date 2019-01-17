@@ -32,12 +32,14 @@ class LeftSideBar extends Component {
               <NavItem to="/calendar">Calendar</NavItem>
             ) : null}
             {/* render employees and shift-calender for supervisors and above */}
-            {role === 'supervisor' || role === 'admin' || role === 'owner' ? (
+            {role === 'supervisor' || role === 'owner' ? (
               <>
                 <NavItem to="/employees">Employees</NavItem>
                 <NavItem to="/shift-calendar">Create Schedule</NavItem>
               </>
             ) : null}
+            {/* Billing page viable only to owner */}
+            {role === 'owner' ? <NavItem to="/billing">Billing</NavItem> : null}
             {/* render settings page for all */}
             <NavItem to="/settings">Settings</NavItem>
           </Nav>
