@@ -13,25 +13,37 @@ export default class componentName extends Component {
 
   handleTimeChange = newTime => {
     this.setState({ time: newTime.formatted })
+    const openTime = this.state.openTime
+    const closeTime = this.state.closeTime
+    if (this.props.name === 'close') {
+      this.setState({ closeTime: this.state.time })
+      return closeTime
+    } else {
+      this.setState({ openTime: this.state.time })
+      return openTime
+    }
   }
 
-  saveTime = () => {
-    if (this.props.name === close) {
-      this.setState({ closeTime: this.state.time })
-    }
-    if (this.props.name === open) {
-      this.setState({ openTime: this.state.time })
-    }
+  helper = () => {
+    this.handleTimeChange()
+    this.saveTime()
   }
 
   render() {
+    console.log('open', this.state.openTime)
+    console.log('close', this.state.closeTime)
+
     return (
       <div>
         <Timekeeper
           time={this.state.time}
           name={this.props.name}
           onChange={this.handleTimeChange}
-          onDoneClick={() => this.props.saveAndClose(this.state.time)}
+          onDoneClick={() =>
+            this.props.name === 'open'
+              ? this.props.saveAndClose(this.state.openTime)
+              : this.props.saveAndClose(this.state.closeTime)
+          }
         />
       </div>
     )

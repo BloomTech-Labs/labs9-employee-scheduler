@@ -22,7 +22,8 @@ class HoursOfOperation extends Component {
     super()
     this.state = {
       isOpen: false,
-      isClose: false
+      isClose: false,
+      time: ''
     }
   }
 
@@ -40,6 +41,7 @@ class HoursOfOperation extends Component {
   }
 
   render() {
+    console.log(this.state.time)
     const days = [
       'sunday',
       'monday',
