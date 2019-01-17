@@ -16,4 +16,4 @@ const processDate = date => {
   }
 }
 
-module.exports = { truncateDB, processDateTime, processDate }
+module.exports = { processDateTime, processDate }
