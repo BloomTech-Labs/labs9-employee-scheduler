@@ -37,11 +37,30 @@ if (!firebase.apps.length) {
 }
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      stripe: null
+    }
+  }
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       //checks to see if there is a user logged in.
       this.props.authenticate()
     })
+
+    if (window.Stripe) {
+      this.setState({
+        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+      })
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({
+          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+        })
+      })
+    }
   }
 
   componentDidUpdate() {
@@ -125,7 +144,7 @@ class App extends Component {
           }}
         />
 
-        <StripeProvider apiKey="pk_test_HKBgYIhIo21X8kQikefX3Ei1">
+        <StripeProvider stripe={this.state.stripe}>
           <Elements>
             <Switch>
               <PrivateRoute
