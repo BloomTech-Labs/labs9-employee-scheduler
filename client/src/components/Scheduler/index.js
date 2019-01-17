@@ -10,7 +10,6 @@ import OuterContainer from '../common/OuterContainer'
 import WeekSummary from './WeekSummary'
 import BreadCrumb from '../BreadCrumb'
 import LeftSideBar from '../LeftSideBar'
-import { fetchEmployeesFromDB, createEvent } from '../../actions'
 
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
