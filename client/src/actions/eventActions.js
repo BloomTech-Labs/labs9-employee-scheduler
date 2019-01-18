@@ -28,13 +28,9 @@ export const createEvent = ({ employee, start }) => async dispatch => {
 export const changeEvent = ({ event, changes }) => async dispatch => {
   const { id } = event
   try {
-    const req = await axios.put(
-      `${baseUrl}/events/${id}`,
-      { changes },
-      {
-        headers: { authorization: 'testing' }
-      }
-    )
+    const req = await axios.put(`${baseUrl}/events/${id}`, changes, {
+      headers: { authorization: 'testing' }
+    })
     dispatch({ type: UPDATE_EVENT, payload: req.data })
   } catch (err) {
     dispatch({ type: EVENT_ERROR })

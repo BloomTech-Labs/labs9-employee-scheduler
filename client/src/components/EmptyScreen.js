@@ -6,10 +6,10 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 
 // This component will render out settings for the signed in user
-export default function({ children }) {
+export default function({ children, auth }) {
   return (
     <OuterContainer height="true">
-      <BreadCrumb location="" />
+      <BreadCrumb location="" auth={auth} />
       <Container>{children}</Container>
     </OuterContainer>
   )

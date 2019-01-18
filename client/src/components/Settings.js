@@ -42,7 +42,7 @@ class Settings extends Component {
   editHandler = () => {
     if (!this.state.disabled) {
       const { phone, email, emailpref, phonepref } = this.props.user
-      document.querySelector('form').reset()
+
       this.setState({
         user: {
           phone: phone,
