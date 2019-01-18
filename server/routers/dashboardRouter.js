@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const { getDashboard } = require('../../database/helpers')
 
-router.get('/:id', (req, res) => {
+const authorize = require('../config/customMiddleware/authorize')
+
+router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   // id is user id
   getDashboard(id)

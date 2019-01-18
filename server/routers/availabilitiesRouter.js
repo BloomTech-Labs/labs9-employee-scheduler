@@ -8,8 +8,10 @@ const {
   getUser
 } = require('../../database/helpers')
 
+const authorize = require('../config/customMiddleware/authorize')
+
 // getAvailability, takes in user id and constraints object (start, end itmes)
-router.get('/:id', (req, res) => {
+router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { constraints } = req.body
   getAvailabilities(id, constraints)
@@ -30,7 +32,7 @@ router.get('/:id', (req, res) => {
 })
 
 // addAvailability, takes in a user id and a day (week day)
-router.post('/:id', (req, res) => {
+router.post('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { day } = req.body
   addAvailability(id, day)
@@ -39,7 +41,7 @@ router.post('/:id', (req, res) => {
 })
 
 // updateAvailability, takes in availibility Id, and updates
-router.put('/:id', (req, res) => {
+router.put('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { updates } = req.body
   updateAvailability(id, updates)
@@ -48,7 +50,7 @@ router.put('/:id', (req, res) => {
 })
 
 // delete availability takes in availability id and deletes
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   deleteAvailability(id)
     .then(count => res.status(200).json(count))
