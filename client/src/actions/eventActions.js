@@ -45,7 +45,7 @@ export const editOpenHours = (orgID, changes) => async dispatch => {
   try {
     const req = await axios.put(
       `${baseUrl}/hours-of-operation/${orgID}`,
-      { open_time: changes },
+      { open_time: changes, closed: 0 },
       { headers: { authorization: 'testing' } }
     )
     dispatch({ type: OPEN_HOURS_UPDATED, payload: req.data })
@@ -58,7 +58,7 @@ export const editCloseHours = (orgID, changes) => async dispatch => {
   try {
     const req = await axios.put(
       `${baseUrl}/hours-of-operation/${orgID}`,
-      { close_time: changes },
+      { close_time: changes, closed: 0 },
       { headers: { authorization: 'testing' } }
     )
     dispatch({ type: CLOSE_HOURS_UPDATED, payload: req.data })
