@@ -17,8 +17,8 @@ class TimeKeeper extends Component {
     // function that takes in an input and coverts it from a string of '12:00' to a a number of 12.00 to match server side data format
     const convert = num => {
       const newTime = num.split(':').map(num => parseInt(num))
-      const result = newTime[0] + newTime[1] / 100
-      return result
+      const result = newTime[0] + newTime[1] / 60
+      return Number(result.toFixed(2))
     }
 
     // moment format to take 12 hour clock into a 24 hour clock for server format
