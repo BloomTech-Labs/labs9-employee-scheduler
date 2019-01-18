@@ -24,12 +24,12 @@ const authenticate = (req, res, next) => {
     )
 
     // for testing authorize middleware
-    if (req.headers.user === 'owner') {
-      req.user = 'yJgErAY0haNm0zdLSvzLUed6UXK2' // ownder
+    if (req.headers.user === 'owner' || !req.headers.user) {
+      req.user = { id: 'yJgErAY0haNm0zdLSvzLUed6UXK2' } // owner
     } else if (req.headers.user === 'supervisor') {
-      req.user = 'OsdZPBFJICgfyThBytBZhHSDtf82' // supervisor
+      req.user = { id: 'OsdZPBFJICgfyThBytBZhHSDtf82' } // supervisor
     } else if (req.headers.user === 'employee') {
-      req.user = 'xsc44X6okFgw3V2OPIIcGIMXkkz1' // employee
+      req.user = { id: 'xsc44X6okFgw3V2OPIIcGIMXkkz1' } // employee
     }
 
     return next()

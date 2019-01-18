@@ -1,5 +1,8 @@
 /* 
 
+COMMENTS HERE FOR LATER REFERENCE
+PROCEED TO CODE
+
 what are the possible cases?
 id of user making the request
 id of the resource 
@@ -37,7 +40,8 @@ const authorize = roles => async (req, res, next) => {
   if (roles.includes('all')) {
     next()
   } else {
-    const { role } = await getUser(req.user)
+    console.log(req.user)
+    const { role } = await getUser(req.user.id)
 
     if (!roles.includes(role)) {
       res.status(403).json({ error: 'Not authorized' })
