@@ -34,11 +34,13 @@ describe('eventsRouter', () => {
 
     const targetUser = team.users[0]
 
-    const now = Date.now()
+    // response is still coming back undefined
+    // therefore test is not passing
+
     const newEvent = {
-      end: processDateTime(now + 3 * 60 * 60 * 1000),
-      start: processDateTime(now),
-      user_id: targetUser.id
+      user_id: targetUser.id,
+      start: 1547388000000,
+      end: 1547416800000
     }
 
     const response = await request
