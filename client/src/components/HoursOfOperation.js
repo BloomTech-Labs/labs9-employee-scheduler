@@ -51,11 +51,15 @@ class HoursOfOperation extends Component {
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveAndClose = time => {
     //TODO: will need to send the changed time to the DB here
-    const { user } = this.props
-    if (user && user.organization_id) {
-      this.props.editHoursOfOperations(user.organization_id, time)
+    const { organization_id } = this.props.user
+    if (organization_id) {
+      //  this function takes org organization_id and new updated time data
+      this.props.editHoursOfOperations(organization_id, time)
+      console.log(organization_id)
+      console.log(time)
+      // this opens and closes the clock
+      this.setState({ isOpen: false, isClose: false, time: time })
     }
-    this.setState({ isOpen: false, isClose: false, time: time })
   }
 
   render() {

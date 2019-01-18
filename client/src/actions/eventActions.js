@@ -36,11 +36,10 @@ export const changeEvent = ({ event, changes }) => async dispatch => {
   }
 }
 
-export const editHoursOfOperations = ({ orgID, changes }) => async dispatch => {
-  const { id } = orgID
+export const editHoursOfOperations = (orgID, changes) => async dispatch => {
   try {
     const req = await axios.put(
-      `${baseUrl}/hours-of-operation/${id}`,
+      `${baseUrl}/hours-of-operation/${orgID}`,
       changes,
       { headers: { authorization: 'testing' } }
     )
