@@ -49,9 +49,9 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params
-  const { name, description } = req.body
+  const { organization_id, paid } = req.body
 
-  if (!name && !description) {
+  if (!organization_id && !paid) {
     return res.status(400).json({ error: 'No fields provided to update' })
   }
 
