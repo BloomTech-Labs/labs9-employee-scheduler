@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { addUser } = require('../../database/helpers')
+const { addUser, getInvite, addInvite } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
 
