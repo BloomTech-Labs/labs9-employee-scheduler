@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
 import { connect } from 'react-redux'
-import { editHoursOfOperations } from '../../actions/'
+import { editHoursOfOperations } from '../../actions'
 
 class TimeKeeper extends Component {
   constructor(props) {

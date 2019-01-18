@@ -3,7 +3,8 @@ const axios = require('axios')
 export const CREATE_EVENT = 'CREATE_EVENT'
 export const UPDATE_EVENT = 'UPDATE_EVENT'
 export const EVENT_ERROR = 'EVENT_ERROR'
-export const EDIT_HOO = 'EDIT_HOO'
+export const HOURS_UPDATED = 'HOURS_UPDATED'
+export const HOURS_UPDATE_FAILED = 'HOURS_UPDATE_FAILED'
 
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
@@ -32,5 +33,19 @@ export const changeEvent = ({ event, changes }) => async dispatch => {
     dispatch({ type: UPDATE_EVENT, payload: req.data })
   } catch (err) {
     dispatch({ type: EVENT_ERROR })
+  }
+}
+
+export const editHoursOfOperations = ({ orgID, changes }) => async dispatch => {
+  const { id } = orgID
+  try {
+    const req = await axios.put(
+      `${baseUrl}/hours-of-operation/${id}`,
+      changes,
+      { headers: { authorization: 'testing' } }
+    )
+    dispatch({ type: HOURS_UPDATED, payload: req.data })
+  } catch (err) {
+    dispatch({ type: HOURS_UPDATE_FAILED })
   }
 }
