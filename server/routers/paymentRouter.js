@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const stripe = require('stripe')('sk_test_JWY0VJM5YF1tYThn0Z1rMk2N')
-
 const authorize = require('../config/customMiddleware/authorize')
+const { updateOrg } = require('../../database/helpers')
 
 router.post('/', authorize(['owner']), (req, res, next) => {
-  const { token, email } = req.body
+  const { token, email, org_id } = req.body
   stripe.customers.create(
     {
       email: email,
@@ -15,10 +15,9 @@ router.post('/', authorize(['owner']), (req, res, next) => {
       if (err) {
         res.status(500).json({ message: 'Failed to create customer', err })
       } else {
-        const { id } = customer
         stripe.subscriptions.create(
           {
-            customer: id,
+            customer: customer.id,
             items: [
               {
                 plan: 'plan_ELLat7E29umz5Y'
@@ -29,11 +28,15 @@ router.post('/', authorize(['owner']), (req, res, next) => {
             if (err) {
               res.status(500).json({ message: 'Failed to subscribe', err })
             } else {
-              res.send({
+              updateOrg(org_id, {
                 subscription_id: subscription.id,
-                customer_id: id,
+                customer_id: customer.id,
                 paid: true
               })
+                .then(res => {
+                  res.send('Success')
+                })
+                .catch(err => res.send(err))
             }
           }
         )

@@ -9,6 +9,9 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import Loader from './Loader'
+import Status from './Status'
+import { fetchOrgFromDB } from '../actions'
 
 class Billing extends Component {
   constructor(props) {
@@ -16,74 +19,51 @@ class Billing extends Component {
     this.state = {
       loading: false,
       success: false,
-      error: false,
-      subscription: {
-        customer_id: '',
-        paid: false
-        //subscription_id: ''
-      }
+      error: false
     }
     this.submit = this.submit.bind(this)
+  }
+
+  componentDidMount = () => {
+    this.props.fetchOrgFromDB(this.props.user.organization_id, this.props.token)
   }
 
   async submit(ev) {
     // User clicked submit
     ev.preventDefault()
-    this.setState({ loading: true })
+    this.setState({ loading: true, success: false, error: false })
+    // Tokenize payment info by sending to Stripe server
     const { token } = await this.props.stripe.createToken({
       name: `${this.props.user.first_name} ${this.props.user.last_name}`
     })
     const submission = {
       token: token,
-      email: this.props.user.email
+      email: this.props.user.email,
+      org_id: this.props.user.organization_id
     }
+    // create customer and subscription in our back-end
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/stripe`, submission, {
         headers: { authorization: this.props.token }
       })
       .then(res => {
-        const { customer_id, paid, subscription_id } = res.data
         this.setState({
           loading: false,
           success: true,
-          subscription: {
-            customer_id: customer_id,
-            paid: paid
-            //subscription_id: subscription_id
-          }
+          error: false
         })
-        document.querySelector('form').reset()
+        document.querySelector('.StripeElement').reset()
       })
       .catch(err =>
         this.setState({
           loading: false,
+          success: false,
           error: true
         })
       )
-    axios
-      .put(
-        `${process.env.REACT_APP_SERVER_URL}/organizations/${
-          this.props.user.organization_id
-        }`,
-        this.state.subscription,
-        {
-          headers: { authorization: this.props.token }
-        }
-      )
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
   }
 
   render() {
-    const Status = () => {
-      if (this.state.success) {
-        return <Info success>Great! We'll charge you $20 once a month.</Info>
-      } else if (this.state.error) {
-        return <Info danger>Something went wrong. Try again.</Info>
-      } else {
-        return null
-      }
-    }
     return (
       <OuterContainer height="true">
         <LeftSideBar />
@@ -91,8 +71,19 @@ class Billing extends Component {
 
         <Container>
           <h1>Billing</h1>
-          <p>{this.state.loading ? 'Loading...' : null}</p>
-          <Status />
+          {this.state.loading ? <Loader /> : null}
+          {this.state.success ? (
+            <Status success={this.state.success}>
+              Great! You're signed up for our $20 / month plan, with a 14-day
+              free trial.
+            </Status>
+          ) : null}
+          {this.state.error ? (
+            <Status>
+              Hmm, something's wrong. Computers make mistakes, too! Please try
+              again.
+            </Status>
+          ) : null}
           <form onSubmit={this.submit}>
             <CardElement />
             <Button type="submit">Pay</Button>
@@ -106,28 +97,19 @@ class Billing extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    token: state.auth.token
+    token: state.auth.token,
+    payment: state.payment
   }
 }
 
-export default connect(mapStateToProps)(injectStripe(Billing))
+export default connect(
+  mapStateToProps,
+  { fetchOrgFromDB }
+)(injectStripe(Billing))
 
 Billing.propTypes = {
   // adding propTypes here
 }
-
-const Info = styled.div`
-  display: flex;
-  position: relative;
-  flex-flow: column nowrap;
-  width: 60%;
-  background: ${system.color.white};
-  padding: ${system.spacing.bigPadding};
-  border: 1px solid ${system.color.success};
-  border-radius: ${system.borders.bigRadius};
-  box-shadow: ${system.shadows.otherLight};
-  margin-bottom: 20px;
-`
 
 const Container = styled('div')`
   margin: 0 7.5rem;

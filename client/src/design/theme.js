@@ -1,6 +1,6 @@
 const system = {
   color: {
-    danger: '#990000', // red for alerts, warnings, reject actions, etc.
+    danger: 'crimson', // red for alerts, warnings, reject actions, etc.
     hoverDanger: '#b30000',
     success: '#2D936C', // green for approval, success, happy path actions, etc.
     hoverSuccess: '#33a77a',
