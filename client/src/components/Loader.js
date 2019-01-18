@@ -7,7 +7,7 @@ const Loader = () => {
   return (
     // show this component when your component is loading, request is pending, etc.
     <Container>
-      <img src={rings} />
+      <img alt="loader" src={rings} />
       <p>
         We'll get you squared away in just a moment. Thanks for your patience.
       </p>
