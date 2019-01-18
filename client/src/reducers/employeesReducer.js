@@ -7,7 +7,8 @@ import {
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT,
   UPDATE_EVENT,
-  HOURS_UPDATED,
+  OPEN_HOURS_UPDATED,
+  CLOSE_HOURS_UPDATED,
   HOURS_UPDATE_FAILED
 } from '../actions'
 
@@ -113,13 +114,19 @@ export const employeeReducer = (state = initialState, action) => {
 
 export const hoursReducer = (state = initialState, action) => {
   switch (action.type) {
-    case HOURS_UPDATED:
+    case OPEN_HOURS_UPDATED:
+      return {
+        hours: action.payload,
+        error: ''
+      }
+    case CLOSE_HOURS_UPDATED:
       return {
         hours: action.payload,
         error: ''
       }
     case HOURS_UPDATE_FAILED:
       return { ...initialState, error: 'update failed' }
+
     default:
       return state
   }

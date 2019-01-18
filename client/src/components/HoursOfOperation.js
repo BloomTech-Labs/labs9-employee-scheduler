@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
 import { connect } from 'react-redux'
-import { editHoursOfOperations } from '../actions/'
+import { editOpenHours, editCloseHours } from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -49,12 +49,22 @@ class HoursOfOperation extends Component {
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
-  saveAndClose = time => {
-    //TODO: will need to send the changed time to the DB here
+  saveOpenTime = time => {
     const { organization_id } = this.props.user
     if (organization_id) {
       //  this function takes org organization_id and new updated time data
-      this.props.editHoursOfOperations(organization_id, time)
+      this.props.editOpenHours(organization_id, time)
+      console.log(organization_id)
+      console.log(time)
+      // this opens and closes the clock
+      this.setState({ isOpen: false, isClose: false, time: time })
+    }
+  }
+
+  saveCloseTime = time => {
+    const { organization_id } = this.props.user
+    if (organization_id) {
+      this.props.editCloseHours(organization_id, time)
       console.log(organization_id)
       console.log(time)
       // this opens and closes the clock
@@ -69,11 +79,11 @@ class HoursOfOperation extends Component {
 
         {this.state.isOpen === true ? (
           <Zoom right>
-            <Timekeeper name="open" saveAndClose={this.saveAndClose} />
+            <Timekeeper name="open" saveAndClose={this.saveOpenTime} />
           </Zoom>
         ) : this.state.isClose === true ? (
           <Zoom right>
-            <Timekeeper name="close" saveAndClose={this.saveAndClose} />
+            <Timekeeper name="close" saveAndClose={this.saveCloseTime} />
           </Zoom>
         ) : null}
         <div className="days-container">
@@ -104,7 +114,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editHoursOfOperations }
+  { editOpenHours, editCloseHours }
 )(HoursOfOperation)
 
 const Container = styled.div`

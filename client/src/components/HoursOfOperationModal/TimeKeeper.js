@@ -7,8 +7,8 @@ class TimeKeeper extends Component {
     super(props)
     this.state = {
       time: '12:00 pm',
-      openTime: '',
-      closeTime: 'null'
+      openTime: null,
+      closeTime: null
     }
   }
 
