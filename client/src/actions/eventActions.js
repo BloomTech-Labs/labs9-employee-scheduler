@@ -41,12 +41,12 @@ export const changeEvent = ({ event, changes }) => async dispatch => {
   }
 }
 
-export const editOpenHours = (orgID, changes) => async dispatch => {
+export const editOpenHours = (orgID, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
       `${baseUrl}/hours-of-operation/${orgID}`,
       { open_time: changes, closed: 0 },
-      { headers: { authorization: 'testing' } }
+      { headers: { authorization: token } }
     )
     dispatch({ type: OPEN_HOURS_UPDATED, payload: req.data })
   } catch (err) {
@@ -54,12 +54,12 @@ export const editOpenHours = (orgID, changes) => async dispatch => {
   }
 }
 
-export const editCloseHours = (orgID, changes) => async dispatch => {
+export const editCloseHours = (orgID, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
       `${baseUrl}/hours-of-operation/${orgID}`,
       { close_time: changes, closed: 0 },
-      { headers: { authorization: 'testing' } }
+      { headers: { authorization: token } }
     )
     dispatch({ type: CLOSE_HOURS_UPDATED, payload: req.data })
   } catch (err) {
