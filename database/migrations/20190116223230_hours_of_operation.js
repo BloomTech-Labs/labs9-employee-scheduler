@@ -1,4 +1,3 @@
-//There is way more tables than there needs to be, it was made like this so I could use the seed for orgs.
 exports.up = knex =>
   knex.schema.createTable('hours_of_operation', table => {
     table.uuid('id').primary()
