@@ -10,14 +10,17 @@ const {
 } = require('../../database/helpers')
 const uuid = require('uuid/v4') // need here for optimizing creation of org with owner
 
-router.get('/', (req, res) => {
+const authorize = require('../config/customMiddleware/authorize')
+
+// this should only be accessable by db admins, not even owners
+router.get('/', authorize(['all']), (req, res) => {
   getUsers()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(404).json(err))
 })
 
-// this one depends on auth.
-router.post('/current', async (req, res) => {
+// return info for the authenticated user
+router.post('/current', authorize(['all']), async (req, res) => {
   const { id } = req.user
   try {
     const user = await getUser(id)
@@ -33,7 +36,7 @@ router.post('/current', async (req, res) => {
 })
 
 // get all users for org by org id
-router.get('/org/:id', async (req, res) => {
+router.get('/org/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
   getUsers(id)
     .then(user => res.status(200).json(user))
@@ -41,7 +44,7 @@ router.get('/org/:id', async (req, res) => {
 })
 
 // get single user by user id
-router.get('/:id', async (req, res) => {
+router.get('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
   try {
     const user = await getUser(id)
@@ -62,7 +65,7 @@ router.get('/:id', async (req, res) => {
 // i'll leave the generic post here for now
 
 // generic post leaving for now
-router.post('/', async (req, res) => {
+router.post('/', authorize(['owner', 'supervisor']), async (req, res) => {
   const { organization_id, first_name, last_name, role } = req.body
 
   if (!organization_id || !first_name || !last_name || !role) {
@@ -79,6 +82,7 @@ router.post('/', async (req, res) => {
 })
 
 // post owner and org
+// no authorization required to create new account
 router.post('/register/owner', async (req, res) => {
   // grab user id from client which is from firebase auth
   const { id } = req.user
@@ -140,7 +144,7 @@ router.post('/register/owner', async (req, res) => {
   }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
 
   if (!Object.keys(req.body)) {
@@ -161,7 +165,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
 
   try {

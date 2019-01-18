@@ -34,13 +34,17 @@ authorize(['owner', 'supervisor'])
 const { getUser } = require('../../../database/helpers')
 
 const authorize = roles => async (req, res, next) => {
-  const { role } = await getUser(req.user)
+  if (roles.includes('all')) {
+    next()
+  } else {
+    const { role } = await getUser(req.user)
 
-  if (!roles.includes(role)) {
-    res.status(403).json({ error: 'Not authorized' })
+    if (!roles.includes(role)) {
+      res.status(403).json({ error: 'Not authorized' })
+    } else {
+      next()
+    }
   }
-
-  next()
 }
 
 module.exports = authorize
