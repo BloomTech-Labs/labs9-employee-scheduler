@@ -8,38 +8,9 @@ import 'firebase/auth'
 import { registerAsOwner, authenticate } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Form from './Form/index'
+import Login from './Login'
 import BreadCrumb from './BreadCrumb'
 import { Container } from './common/RegisterContainer'
-
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_KEY,
-  authDomain: 'cadence-20246.firebaseapp.com',
-  databaseURL: 'https://cadence-20246.firebaseio.com',
-  projectId: 'cadence-20246',
-  storageBucket: 'cadence-20246.appspot.com',
-  messagingSenderId: '143190395098'
-}
-
-// in case firebase was already initialized
-if (!firebase.apps.length) {
-  firebase.initializeApp(config)
-}
-
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false
-  }
-}
 
 class RegisterOwner extends Component {
   state = {
@@ -119,12 +90,7 @@ class RegisterOwner extends Component {
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (!oauthSuccess) {
-      return (
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      )
+      return <Login />
     } else if (outcome) {
       return (
         <Container>
