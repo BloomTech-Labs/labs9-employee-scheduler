@@ -4,6 +4,8 @@ import Button from './HoursOfOperationModal/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
+import { connect } from 'react-redux'
+import { editHoursOfOperations } from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -54,7 +56,6 @@ class HoursOfOperation extends Component {
   }
 
   render() {
-
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
@@ -90,7 +91,14 @@ class HoursOfOperation extends Component {
   }
 }
 
-export default HoursOfOperation
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+
+export default connect(
+  mapStateToProps,
+  { editHoursOfOperations }
+)(HoursOfOperation)
 
 const Container = styled.div`
   position: absolute;

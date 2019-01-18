@@ -1,31 +1,39 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
-import { connect } from 'react-redux'
-import { editHoursOfOperations } from '../../actions'
+import moment from 'moment'
 
 class TimeKeeper extends Component {
   constructor(props) {
     super(props)
     this.state = {
       time: '12:00 pm',
-      openTime: '',
-      closeTime: ''
+      openTime: null,
+      closeTime: null
     }
   }
 
   //sets the chosen time on state and assigns it to openTime or closeTime depending on if this.props.name is 'open' or 'close'
   handleTimeChange = newTime => {
+    const convert = num => {
+      const newTime = num.split(':').map(num => parseInt(num))
+      const result = newTime[0] + newTime[1] / 100
+      return result
+    }
+
+    let myNewTime = moment(this.state.time, ['h:mm A']).format('HH:mm')
+
+    let convertedTime = convert(myNewTime)
+
     this.setState({ time: newTime.formatted })
     if (this.props.name === 'close') {
-      this.setState({ closeTime: this.state.time })
-      console.log(`close time is ${this.state.closeTime}`)
+      this.setState({ closeTime: this.state.closeTime })
     } else {
       this.setState({ openTime: this.state.time })
-      console.log(`open time is ${this.state.openTime}`)
     }
   }
 
   render() {
+    // console.log(this.state.time)
     return (
       <div>
         <Timekeeper
@@ -43,11 +51,4 @@ class TimeKeeper extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-})
-
-export default connect(
-  mapStateToProps,
-  { editHoursOfOperations }
-)(TimeKeeper)
+export default TimeKeeper
