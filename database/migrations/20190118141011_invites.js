@@ -33,6 +33,7 @@ exports.up = knex =>
       .notNullable()
     table.string('name')
     table.string('email').notNullable()
+    table.string('role').defaultTo('employee')
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('invites')
