@@ -15,6 +15,7 @@ const BreadCrumb = props => {
   // initialize content for condition
   let breadContent
   // ask the recieving component what location will be
+
   if (props.location !== 'Home') {
     breadContent = (
       <Nav fixed={false}>
@@ -24,7 +25,7 @@ const BreadCrumb = props => {
         </Container>
 
         <Container className="breadcrumbs" extra>
-          <button onClick={props.logout}>Log out</button>
+          {!props.auth ? <button onClick={props.logout}>Log out</button> : null}
         </Container>
       </Nav>
     )

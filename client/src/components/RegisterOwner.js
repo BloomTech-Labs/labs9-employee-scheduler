@@ -163,7 +163,7 @@ class RegisterOwner extends Component {
                 handleChange={handleChange}
                 ariaLabel="org-name"
               >
-                <Form.Label>Organizatoin Name</Form.Label>
+                <Form.Label>Organization Name</Form.Label>
                 <Form.TextInput />
               </Form.Group>
 
