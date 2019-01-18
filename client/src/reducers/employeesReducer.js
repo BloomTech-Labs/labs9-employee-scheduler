@@ -9,7 +9,9 @@ import {
   UPDATE_EVENT,
   OPEN_HOURS_UPDATED,
   CLOSE_HOURS_UPDATED,
-  HOURS_UPDATE_FAILED
+  HOURS_UPDATE_FAILED,
+  HOURS_FETCHED,
+  HOURS_FETCHING_FAILED
 } from '../actions'
 
 const initialState = {
@@ -126,7 +128,16 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case HOURS_UPDATE_FAILED:
       return { ...initialState, error: 'update failed' }
-
+    case HOURS_FETCHED:
+      return {
+        hours: [...action.payload],
+        error: ''
+      }
+    case HOURS_FETCHING_FAILED:
+      return {
+        ...initialState,
+        error: 'fetching failed'
+      }
     default:
       return state
   }

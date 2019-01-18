@@ -38,7 +38,6 @@ class HoursOfOperation extends Component {
 
   showHandleHours = e => {
     e.preventDefault()
-    console.log(e.target.name)
     const { days } = this.state
     this.setState({
       days: {
@@ -68,6 +67,13 @@ class HoursOfOperation extends Component {
     }
   }
 
+  closedAllDay = () => {
+    const { organization_id, token } = this.props.user
+    if (organization_id) {
+      this.props.editCloseHours(organization_id, token)
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -93,6 +99,7 @@ class HoursOfOperation extends Component {
                 day={this.state.days[day]}
                 name={day}
                 showHandleHours={this.showHandleHours}
+                closedAllDay={this.closedAllDay}
               >
                 {this.props.children}
               </Button>

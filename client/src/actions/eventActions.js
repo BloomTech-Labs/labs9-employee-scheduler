@@ -3,10 +3,11 @@ const axios = require('axios')
 export const CREATE_EVENT = 'CREATE_EVENT'
 export const UPDATE_EVENT = 'UPDATE_EVENT'
 export const EVENT_ERROR = 'EVENT_ERROR'
-export const HOURS_UPDATED = 'HOURS_UPDATED'
+export const HOURS_FETCHED = 'HOURS_FETCHED'
 export const HOURS_UPDATE_FAILED = 'HOURS_UPDATE_FAILED'
 export const CLOSE_HOURS_UPDATED = 'CLOSE_HOURS_UPDATED'
 export const OPEN_HOURS_UPDATED = 'OPEN_HOURS_UPDATED'
+export const HOURS_FETCHING_FAILED = 'HOURS_FETCHING_FAILED'
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
 export const createEvent = ({ employee, start }) => async dispatch => {
@@ -28,13 +29,9 @@ export const createEvent = ({ employee, start }) => async dispatch => {
 export const changeEvent = ({ event, changes }) => async dispatch => {
   const { id } = event
   try {
-    const req = await axios.put(
-      `${baseUrl}/events/${id}`,
-      { changes },
-      {
-        headers: { authorization: 'testing' }
-      }
-    )
+    const req = await axios.put(`${baseUrl}/events/${id}`, changes, {
+      headers: { authorization: 'testing' }
+    })
     dispatch({ type: UPDATE_EVENT, payload: req.data })
   } catch (err) {
     dispatch({ type: EVENT_ERROR })
@@ -64,5 +61,16 @@ export const editCloseHours = (orgID, changes, token) => async dispatch => {
     dispatch({ type: CLOSE_HOURS_UPDATED, payload: req.data })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
+  }
+}
+
+export const fetchHoursFromDB = (orgID, token) => async dispatch => {
+  try {
+    const req = await axios.get(`${baseUrl}/hours-of-operation/${orgID}`, {
+      headers: { authorization: token }
+    })
+    dispatch({ type: HOURS_FETCHED, payload: req.data })
+  } catch (err) {
+    dispatch({ type: HOURS_FETCHING_FAILED })
   }
 }

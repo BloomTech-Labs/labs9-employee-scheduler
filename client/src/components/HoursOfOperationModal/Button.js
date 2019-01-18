@@ -3,7 +3,14 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 import Zoom from 'react-reveal'
 
-const Button = ({ handleHours, showHandleHours, id, day, name }) => {
+const Button = ({
+  handleHours,
+  showHandleHours,
+  id,
+  day,
+  name,
+  closedAllDay
+}) => {
   return (
     <Container>
       <button name={name} onClick={showHandleHours} className="days">
@@ -22,7 +29,7 @@ const Button = ({ handleHours, showHandleHours, id, day, name }) => {
           <label className="container">
             <p>Closed All Day</p>
             <input type="checkbox" />
-            <span className="checkmark" />
+            <span className="checkmark" onClick={closedAllDay} />
           </label>
         </Zoom>
       ) : null}
