@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { keyframes } from '@emotion/core'
 import system from '../../design/theme'
 import Zoom from 'react-reveal'
 
@@ -20,10 +19,11 @@ const Button = ({ handleHours, showHandleHours, id, day, name }) => {
               close
             </button>
           </div>
-          <div className="all-day-container">
-            <input type="checkbox" name="all-day" value="Closed All Day" />
-            <label htmlFor="all-day">Closed All Day</label>
-          </div>
+          <label className="container">
+            <p>Closed All Day</p>
+            <input type="checkbox" />
+            <span className="checkmark" />
+          </label>
         </Zoom>
       ) : null}
     </Container>
@@ -32,43 +32,12 @@ const Button = ({ handleHours, showHandleHours, id, day, name }) => {
 
 export default Button
 
-const ShrinkBounce = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  33% {
-    transform: scale(0.85);
-  }
-  100% {
-    transform: scale(1);
-  }
-`
-
-const Checkboxcheck = keyframes`
-0%{
-    width: 0;
-    height: 0;
-    border-color: #212121;
-    transform: translate3d(0,0,0) rotate(45deg);
-  }
-  33%{
-    width: .2em;
-    height: 0;
-    transform: translate3d(0,0,0) rotate(45deg);
-  }
-  100%{
-    width: .2em;
-    height: .5em;
-    border-color: #212121;
-    transform: translate3d(0,-.5em,0) rotate(45deg);
-  }
-  `
-
 const Container = styled('div')`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   margin: 0 auto;
+  margin-bottom: 15px;
   .days {
     border-radius: ${system.borders.bigRadius};
     background: ${system.color.neutral};
@@ -94,82 +63,77 @@ const Container = styled('div')`
       border: transparent;
     }
   }
-  .all-day-container {
+  .container {
     display: flex;
     flex-direction: row;
-    input[type='checkbox'] {
-      height: 15px;
-      width: 15px;
-      margin-bottom: 15px;
-      cursor: pointer;
-    }
-
-    input[type='checkbox'] + label {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      margin: 0.6em 0;
-      color: #9e9e9e;
-      transition: color 250ms cubic-bezier(0.4, 0, 0.23, 1);
-    }
-    input[type='checkbox'] + label > ins {
-      position: absolute;
-      display: block;
-      bottom: 0;
-      left: 2em;
-      height: 0;
-      width: 100%;
-      overflow: hidden;
-      text-decoration: none;
-      transition: height 300ms cubic-bezier(0.4, 0, 0.23, 1);
-    }
-    input[type='checkbox'] + label > ins > i {
-      position: absolute;
-      bottom: 0;
-      font-style: normal;
-      color: #4fc3f7;
-    }
-    input[type='checkbox'] + label > span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 1em;
-      width: 1em;
-      height: 1em;
-      background: transparent;
-      border: 2px solid #9e9e9e;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 250ms cubic-bezier(0.4, 0, 0.23, 1);
-    }
-
-    input[type='checkbox'] + label:hover,
-    input[type='checkbox']:focus + label {
-      color: #000000;
-    }
-    input[type='checkbox'] + label:hover > span,
-    input[type='checkbox']:focus + label > span {
-      background: rgba(255, 255, 255, 0.1);
-    }
-    input[type='checkbox']:checked + label > ins {
+    justify-items: center;
+    height: 6px;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    p {
+      margin-top: 5px;
+      font-size: ${system.fontSizing.s};
       height: 100%;
     }
+  }
 
-    input[type='checkbox']:checked + label > span {
-      border: 0.5em solid #ffeb3b;
-      animation: ${ShrinkBounce} 200ms cubic-bezier(0.4, 0, 0.23, 1);
-    }
-    input[type='checkbox']:checked + label > span:before {
-      content: '';
-      position: absolute;
-      top: 0.6em;
-      left: 0.2em;
-      border-right: 3px solid transparent;
-      border-bottom: 3px solid transparent;
-      transform: rotate(45deg);
-      transform-origin: 0% 100%;
-      animation: Checkboxcheck 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1)
-        forwards;
-    }
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #2196f3;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 `
