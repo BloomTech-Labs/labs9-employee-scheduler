@@ -10,7 +10,8 @@ const {
   eventsRouter,
   employeesRouter,
   dashboardRouter,
-  paymentRouter
+  paymentRouter,
+  hoursOfOperationRouter
 } = require('./routers/')
 
 configureMiddleware(server)
@@ -18,7 +19,6 @@ configureMiddleware(server)
 server.get('/', (req, res) => {
   return res.status(200).json({ message: 'hello!' })
 })
-
 server.use('/organizations', organizationsRouter)
 server.use('/users', usersRouter)
 server.use('/employees', employeesRouter)
@@ -27,5 +27,6 @@ server.use('/time-off-requests', timeOffRequestsRouter)
 server.use('/events', eventsRouter)
 server.use('/dashboard', dashboardRouter)
 server.use('/stripe', paymentRouter)
+server.use('/hours-of-operation', hoursOfOperationRouter)
 
 module.exports = server

@@ -11,6 +11,7 @@ import WeekSummary from './WeekSummary'
 import BreadCrumb from '../BreadCrumb'
 import LeftSideBar from '../LeftSideBar'
 
+
 const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
 class Scheduler extends React.Component {
@@ -62,8 +63,7 @@ class Scheduler extends React.Component {
 
     return (
       <OuterContainer>
-        <LeftSideBar />
-        <BreadCrumb location="Schedule" />
+
         <div style={{ display: 'flex' }}>
           <EmployeePool employees={employees} />
           <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>

@@ -59,6 +59,17 @@
 }
 ```
 
+#### HOURS OF OPERATION
+---
+```
+{
+  id: uuid of organization
+  day: STRING
+  open: INTEGER [ 0 - 23]
+  close: INTEGER [ 0 - 23] 
+}
+```
+
 ## actions
 
 `getOrgs()`
