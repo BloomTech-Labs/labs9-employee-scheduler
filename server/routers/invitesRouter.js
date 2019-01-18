@@ -1,28 +1,25 @@
 const express = require('express')
 const router = express.Router()
-const { addUser, getInvite, addInvite } = require('../../database/helpers')
+const {
+  addUser,
+  getInvite,
+  addInvite,
+  getOrgForUser
+} = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
-
-router.post('/invite-supervisor', authorize(['owner']), invite('supervisor'))
-
-router.post(
-  '/invite-employee',
-  authorize(['owner', 'supervisor']),
-  invite('employee')
-)
 
 const invite = role => async (req, res) => {
   const { email, name } = req.body // invitee info
   const { id } = req.user // inviter id
-  const org_id = '' // make db request
+  const organization_id = await getOrgForUser(id)
 
   if (!email || !name) {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
 
   const newInvite = {
-    organization_id: org_id,
+    organization_id,
     inviter_id: id,
     name,
     email,
@@ -39,6 +36,14 @@ const invite = role => async (req, res) => {
     res.status(500).json({ error: 'Error' })
   }
 }
+
+router.post('/invite-supervisor', authorize(['owner']), invite('supervisor'))
+
+router.post(
+  '/invite-employee',
+  authorize(['owner', 'supervisor']),
+  invite('employee')
+)
 
 router.post(
   '/register/:id',

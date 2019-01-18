@@ -15,6 +15,11 @@ const getOrgs = orgId => {
 // gets org by id
 const getOrg = id => db('organizations').where('id', id)
 
+const getOrgForUser = id =>
+  db('users as u')
+    .join('organizations as o', { 'u.id': 'o.user_id' })
+    .select('o.id')
+
 const addOrg = org => {
   const id = uuid()
   return db('organizations')
@@ -40,6 +45,7 @@ const deleteOrg = orgId => {
 module.exports = {
   getOrgs,
   getOrg,
+  getOrgForUser,
   addOrg,
   updateOrg,
   deleteOrg
