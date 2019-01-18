@@ -57,6 +57,7 @@ export default function WeekSummary(props) {
     }
   }
 
+
   return (
     <Div>
       {summaries.map((summary, i) => (

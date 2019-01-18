@@ -25,7 +25,6 @@ router.get('/:id', authorize(['all']), (req, res) => {
 router.post('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { date, reason } = req.body
-  console.log(req.body)
   if (!date || !reason)
     return res.status(400).json({ error: 'Missing required field(s)' })
 
@@ -41,7 +40,6 @@ router.post('/:id', authorize(['all']), (req, res) => {
 router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   // const { status } = req.body
-  console.log(req.body)
 
   updateTimeOffRequest(id, req.body)
     .then(result => {

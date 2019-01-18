@@ -1,4 +1,10 @@
-import { AUTH_SUCCESS, AUTH_FAIL, LOGOUT, RESET_AUTH_STATE } from '../actions'
+import {
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  LOGOUT,
+  RESET_AUTH_STATE,
+  AUTH_INIT
+} from '../actions'
 
 const initialState = {
   user: null,
@@ -9,10 +15,12 @@ const initialState = {
 //puts a user and token on state
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_INIT:
+      return { ...state, error: '', userDidLogout: false }
     case AUTH_SUCCESS:
-      return { ...state, ...action.payload, error: '', userDidLogout: false }
+      return { ...state, ...action.payload }
     case AUTH_FAIL:
-      return { ...state, error: action.payload.error, userDidLogout: false }
+      return { ...state, error: action.payload.error }
     case LOGOUT:
       return { ...initialState, userDidLogout: true }
     case RESET_AUTH_STATE:

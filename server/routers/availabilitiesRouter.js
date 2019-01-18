@@ -49,7 +49,7 @@ router.put('/:id', authorize(['all']), (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
-// deleteavailability takes in availability id and deletes
+// delete availability takes in availability id and deletes
 router.delete('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   deleteAvailability(id)
