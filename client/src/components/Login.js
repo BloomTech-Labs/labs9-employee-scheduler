@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
+  signInFlow: 'redirect',
   // We will display Google and Facebook as auth providers.
   signInSuccessUrl: '/',
   signInOptions: [
