@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const {
+  getUser,
   addUser,
   getInvite,
-  addInvite,
-  getOrgForUser
+  addInvite
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
@@ -12,7 +12,7 @@ const authorize = require('../config/customMiddleware/authorize')
 const invite = role => async (req, res) => {
   const { email, name } = req.body // invitee info
   const { id } = req.user // inviter id
-  const organization_id = await getOrgForUser(id)
+  const { organization_id } = await getUser(id)
 
   if (!email || !name) {
     res.status(400).json({ error: 'Missing required field(s)' })
