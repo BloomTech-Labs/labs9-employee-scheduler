@@ -120,11 +120,14 @@ class Settings extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
             <Status success={this.state.success}>
-              We successfully edited your profile. Now get back to work :P
+              We successfully edited your profile. Now get back to work
+              &#x1F609;
             </Status>
           ) : null}
           {this.state.error ? (
-            <Status>Hmm, something's wrong. Give it another shot.</Status>
+            <Status>
+              Hmm, something's wrong. Give it another shot. &#x1f91e;
+            </Status>
           ) : null}
 
           <fieldset disabled={this.state.disabled}>
