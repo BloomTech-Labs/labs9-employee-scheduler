@@ -22,6 +22,16 @@ const authenticate = (req, res, next) => {
     console.log(
       'This authentication middleware has a testing loophole that must be removed in production'
     )
+
+    // for testing authorize middleware
+    if (req.headers.user === 'owner' || !req.headers.user) {
+      req.user = { id: 'yJgErAY0haNm0zdLSvzLUed6UXK2' } // owner
+    } else if (req.headers.user === 'supervisor') {
+      req.user = { id: 'OsdZPBFJICgfyThBytBZhHSDtf82' } // supervisor
+    } else if (req.headers.user === 'employee') {
+      req.user = { id: 'xsc44X6okFgw3V2OPIIcGIMXkkz1' } // employee
+    }
+
     return next()
   }
   if (idToken) {

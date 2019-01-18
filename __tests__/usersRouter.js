@@ -12,7 +12,9 @@ describe('/users route', () => {
     it('returns all users', async () => {
       const expected = await knex('users')
 
-      const response = await request.get('/users').set('authorization', 'token')
+      const response = await request
+        .get('/users')
+        .set('authorization', 'testing')
 
       expect(response.status).toEqual(200)
       expect(response.body.length).toEqual(expected.length)
@@ -31,7 +33,7 @@ describe('/users route', () => {
 
       const response = await request
         .get(`/users/org/${id}`)
-        .set('authorization', 'token')
+        .set('authorization', 'testing')
 
       expect(response.status).toEqual(200)
       expect(response.body.length).toEqual(expected.length)
@@ -50,7 +52,7 @@ describe('/users route', () => {
 
       const response = await request
         .get(`/users/${user.id}`)
-        .set('authorization', 'token')
+        .set('authorization', 'testing')
 
       let { body } = response
       body = {
@@ -77,7 +79,7 @@ describe('/users route', () => {
 
       const response = await request
         .get(`/users/${user.id}`)
-        .set('authorization', 'token')
+        .set('authorization', 'testing')
 
       expect(response.status).toEqual(404)
       expect(response.body).toEqual({ message: 'User not found.' })
@@ -97,7 +99,7 @@ describe('/users route', () => {
       const response = await request
         .put(`/users/${target.id}`)
         .send(changes)
-        .set('authorization', 'token')
+        .set('authorization', 'testing')
 
       let updatedUser = await knex('users')
         .where({ id: target.id })
@@ -128,7 +130,7 @@ describe('/users route', () => {
 
       const response = await request
         .put(`/users/${user.id}`)
-        .set('authorization', user.id)
+        .set('authorization', 'testing')
 
       expect(response.status).toEqual(404)
       expect(response.body).toEqual({ error: 'User not found' })

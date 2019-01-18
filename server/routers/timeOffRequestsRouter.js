@@ -9,8 +9,10 @@ const {
   getTimeOffRequest
 } = require('../../database/helpers')
 
+const authorize = require('../config/customMiddleware/authorize')
+
 //get time off request
-router.get('/:id', (req, res) => {
+router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   getTimeOffRequests(id)
     .then(request => res.status(200).json(request))
@@ -20,7 +22,7 @@ router.get('/:id', (req, res) => {
 })
 
 //add time off request
-router.post('/:id', (req, res) => {
+router.post('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { date, reason } = req.body
   if (!date || !reason)
@@ -35,7 +37,7 @@ router.post('/:id', (req, res) => {
 })
 
 //update time off request
-router.put('/:id', (req, res) => {
+router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   // const { status } = req.body
 
@@ -54,14 +56,14 @@ router.put('/:id', (req, res) => {
 })
 
 //delete time off request
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
     .then(res => res.status(200).json(res))
     .catch(err => res.status(404).json({ err: 'Error deleting request', err }))
 })
 
-router.get('/', (req, res) => {
+router.get('/', authorize(['owner', 'supervisor']), (req, res) => {
   getTimeOffRequestsForOrg()
     .then(res => res.status(200).json(res))
     .catch(err =>

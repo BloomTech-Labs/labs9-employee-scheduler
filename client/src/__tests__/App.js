@@ -3,8 +3,10 @@ import { render, fireEvent } from 'react-testing-library'
 import { renderWithReduxAndRouter } from '../../testing/utils'
 import App from '../App'
 import axios from 'axios'
+import firebase from 'firebase/app'
 
 jest.mock('axios')
+jest.mock('firebase')
 
 describe('App component', () => {
   it('renders hello', () => {

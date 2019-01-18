@@ -8,13 +8,15 @@ const {
   deleteOrg
 } = require('../../database/helpers')
 
-router.get('/', (req, res) => {
+const authorize = require('../config/customMiddleware/authorize')
+
+router.get('/', authorize(['owner']), (req, res) => {
   getOrgs()
     .then(orgs => res.status(200).json(orgs))
     .catch(err => res.status(500).json(err))
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   getOrgs(id)
     .then(org => {
@@ -30,7 +32,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', authorize(['owner']), async (req, res) => {
   const { name } = req.body
 
   if (!name) {
@@ -47,11 +49,11 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorize(['owner']), async (req, res) => {
   const { id } = req.params
-  const { name, description } = req.body
+  const { organization_id, paid } = req.body
 
-  if (!name && !description) {
+  if (!organization_id && !paid) {
     return res.status(400).json({ error: 'No fields provided to update' })
   }
 
@@ -64,7 +66,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorize(['owner']), async (req, res) => {
   const { id } = req.params
 
   try {
