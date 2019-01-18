@@ -13,7 +13,6 @@ export default combineReducers({
   employees: employeesReducer,
   employee: employeeReducer,
   registration: registerReducer,
-  hours: hoursReducer
+  hours: hoursReducer,
   organization: paymentReducer
-
 })
