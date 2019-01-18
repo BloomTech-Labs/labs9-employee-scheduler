@@ -10,6 +10,7 @@ exports.up = knex =>
       .float('close_time')
       .notNullable()
       .defaultTo(16)
+
     table.boolean('closed')
     table
       .uuid('organization_id')

@@ -6,12 +6,16 @@ import {
   UPDATE_TIME_OFF_REQUEST_SUCCESS,
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT,
-  UPDATE_EVENT
+  UPDATE_EVENT,
+  OPEN_HOURS_UPDATED,
+  CLOSE_HOURS_UPDATED,
+  HOURS_UPDATE_FAILED
 } from '../actions'
 
 const initialState = {
   employees: [],
   employee: [],
+  hours: [],
   error: ''
 }
 
@@ -102,6 +106,26 @@ export const employeeReducer = (state = initialState, action) => {
       }
     case FETCH_EMPLOYEE_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching failed' }
+
+    default:
+      return state
+  }
+}
+
+export const hoursReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case OPEN_HOURS_UPDATED:
+      return {
+        hours: action.payload,
+        error: ''
+      }
+    case CLOSE_HOURS_UPDATED:
+      return {
+        hours: action.payload,
+        error: ''
+      }
+    case HOURS_UPDATE_FAILED:
+      return { ...initialState, error: 'update failed' }
 
     default:
       return state

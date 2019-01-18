@@ -4,6 +4,8 @@ import Button from './HoursOfOperationModal/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
+import { connect } from 'react-redux'
+import { editOpenHours, editCloseHours } from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -47,25 +49,37 @@ class HoursOfOperation extends Component {
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
-  saveAndClose = (e, time) => {
-    //TODO: will need to send the changed time to the DB here
+  saveOpenTime = time => {
+    const { organization_id, token } = this.props.user
+    if (organization_id) {
+      //  this function takes org organization_id and new updated time data
+      this.props.editOpenHours(organization_id, time, token)
+      // this opens and closes the clock
+      this.setState({ isOpen: false, isClose: false, time: time })
+    }
+  }
 
-    this.setState({ isOpen: false, isClose: false, time: time })
+  saveCloseTime = time => {
+    const { organization_id, token } = this.props.user
+    if (organization_id) {
+      this.props.editCloseHours(organization_id, time, token)
+      // this opens and closes the clock
+      this.setState({ isOpen: false, isClose: false, time: time })
+    }
   }
 
   render() {
-
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
 
         {this.state.isOpen === true ? (
           <Zoom right>
-            <Timekeeper name="open" saveAndClose={this.saveAndClose} />
+            <Timekeeper name="open" saveAndClose={this.saveOpenTime} />
           </Zoom>
         ) : this.state.isClose === true ? (
           <Zoom right>
-            <Timekeeper name="close" saveAndClose={this.saveAndClose} />
+            <Timekeeper name="close" saveAndClose={this.saveCloseTime} />
           </Zoom>
         ) : null}
         <div className="days-container">
@@ -90,7 +104,14 @@ class HoursOfOperation extends Component {
   }
 }
 
-export default HoursOfOperation
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+
+export default connect(
+  mapStateToProps,
+  { editOpenHours, editCloseHours }
+)(HoursOfOperation)
 
 const Container = styled.div`
   position: absolute;

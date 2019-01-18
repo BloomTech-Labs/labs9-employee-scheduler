@@ -28,7 +28,6 @@ export const authenticate = () => async dispatch => {
           headers: { authorization: idToken }
         })
         .then(res => {
-          console.log(res.data)
           dispatch({
             type: AUTH_SUCCESS,
             payload: { user: res.data, token: idToken }

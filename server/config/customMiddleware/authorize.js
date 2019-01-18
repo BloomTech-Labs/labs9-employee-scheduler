@@ -40,7 +40,6 @@ const authorize = roles => async (req, res, next) => {
   if (roles.includes('all')) {
     next()
   } else {
-    console.log(req.user)
     const { role } = await getUser(req.user.id)
 
     if (!roles.includes(role)) {
