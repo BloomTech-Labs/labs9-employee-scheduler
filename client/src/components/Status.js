@@ -35,7 +35,7 @@ const Container = styled.div`
     font-size: ${system.fontSizing.m};
 
     span {
-      margin-left: 5px;
+      margin: 5px;
     }
   }
 
