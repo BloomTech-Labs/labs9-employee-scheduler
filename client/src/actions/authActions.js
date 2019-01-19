@@ -8,7 +8,6 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
-export const UPDATE_USER = 'UPDATE_USER'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
