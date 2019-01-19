@@ -5,7 +5,12 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
 import { connect } from 'react-redux'
-import { editOpenHours, editCloseHours, fetchHoursFromDB } from '../actions/'
+import {
+  editOpenHours,
+  editCloseHours,
+  fetchHoursFromDB,
+  closeAndOpenHours
+} from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -27,18 +32,18 @@ class HoursOfOperation extends Component {
     }
   }
 
-  componentDidMount() {
-    if (this.props.user) {
-      if (!this.props.hours.hours.length) {
-        const { organization_id } = this.props.user
-        this.props.fetchHoursFromDB(organization_id, this.props.token)
-      }
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.user) {
+  //     if (!this.props.hours.hours) {
+  //       const { organization_id } = this.props.user
+  //       this.props.fetchHoursFromDB(organization_id, this.props.token)
+  //     }
+  //   }
+  // }
 
   // componentDidUpdate() {
-  //   if (this.props.user) {
-  //     if (!this.props.hours.hours.length) {
+  //   if (this.props.user && this.props.user.organization_id) {
+  //     if (!this.props.hours.hours) {
   //       const { organization_id } = this.props.user
   //       this.props.fetchHoursFromDB(organization_id, this.props.token)
   //     }
@@ -57,13 +62,17 @@ class HoursOfOperation extends Component {
 
   showHandleHours = e => {
     e.preventDefault()
+    const { organization_id } = this.props.user
     const { days } = this.state
+    const { token } = this.props
+    this.props.fetchHoursFromDB(organization_id, token)
     this.setState({
       days: {
         ...days,
         [e.target.name]: !days[e.target.name]
       }
     })
+    console.log(this.props.hours.hours)
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
@@ -138,7 +147,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editOpenHours, editCloseHours, fetchHoursFromDB }
+  { editOpenHours, editCloseHours, fetchHoursFromDB, closeAndOpenHours }
 )(HoursOfOperation)
 
 const Container = styled.div`
