@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
 import { connect } from 'react-redux'
-import { editOpenHours, editCloseHours } from '../actions/'
+import { editOpenHours, editCloseHours, fetchHoursFromDB } from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
@@ -26,7 +26,26 @@ class HoursOfOperation extends Component {
       }
     }
   }
-  //opens the correct version of the timekeeper so it sends back
+
+  componentDidMount() {
+    if (this.props.user) {
+      if (!this.props.hours.hours.length) {
+        const { organization_id } = this.props.user
+        this.props.fetchHoursFromDB(organization_id, this.props.token)
+      }
+    }
+  }
+
+  // componentDidUpdate() {
+  //   if (this.props.user) {
+  //     if (!this.props.hours.hours.length) {
+  //       const { organization_id } = this.props.user
+  //       this.props.fetchHoursFromDB(organization_id, this.props.token)
+  //     }
+  //   }
+  // }
+
+  // //opens the correct version of the timekeeper so it sends back
   //either open time or close time
   handleHours = e => {
     if (e.target.name === 'open') {
@@ -49,28 +68,28 @@ class HoursOfOperation extends Component {
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
-    const { organization_id, token } = this.props.user
+    const { organization_id } = this.props.user
     if (organization_id) {
       //  this function takes org organization_id and new updated time data
-      this.props.editOpenHours(organization_id, time, token)
+      this.props.editOpenHours(organization_id, time, this.props.token)
       // this opens and closes the clock
       this.setState({ isOpen: false, isClose: false, time: time })
     }
   }
 
   saveCloseTime = time => {
-    const { organization_id, token } = this.props.user
+    const { organization_id } = this.props.user
     if (organization_id) {
-      this.props.editCloseHours(organization_id, time, token)
+      this.props.editCloseHours(organization_id, time, this.props.token)
       // this opens and closes the clock
       this.setState({ isOpen: false, isClose: false, time: time })
     }
   }
 
   closedAllDay = () => {
-    const { organization_id, token } = this.props.user
+    const { organization_id } = this.props.user
     if (organization_id) {
-      this.props.editCloseHours(organization_id, token)
+      this.props.fetchHoursFromDB(organization_id, this.props.token)
     }
   }
 
@@ -112,12 +131,14 @@ class HoursOfOperation extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  token: state.auth.token,
+  user: state.auth.user,
+  hours: state.hours
 })
 
 export default connect(
   mapStateToProps,
-  { editOpenHours, editCloseHours }
+  { editOpenHours, editCloseHours, fetchHoursFromDB }
 )(HoursOfOperation)
 
 const Container = styled.div`
