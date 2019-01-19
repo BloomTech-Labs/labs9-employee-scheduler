@@ -30,8 +30,10 @@ class Card extends Component {
         {/* Employee Phone */}
         <P>{phone}</P>
 
-        <Availability availabilities={availabilities} />
-        <TimeOff timeOffRequests={time_off_requests} />
+        <div>
+          <Availability availabilities={availabilities} />
+          <TimeOff timeOffRequests={time_off_requests} />
+        </div>
       </Container>
     )
   }
@@ -41,6 +43,12 @@ export default Card
 
 Card.propTypes = {
   // adding propTypes here
+  first_name: propTypes.string,
+  last_name: propTypes.string,
+  email: propTypes.string,
+  phone: propTypes.string,
+  availabilities: propTypes.array,
+  time_off_requests: propTypes.array
 }
 
 const Container = styled('div')`

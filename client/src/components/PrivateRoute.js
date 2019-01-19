@@ -1,9 +1,11 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import ErrorMessage from './ErrorMessage'
 import EmptyScreen from './EmptyScreen'
 import propTypes from 'prop-types'
+
+import Loader from './Loader'
+import Status from './Status'
 
 // takes in a component and it's props and wraps in App.js as
 // <PrivateRoute exact path="<routePath>" />
@@ -36,7 +38,7 @@ class PrivateRoute extends React.Component {
                 )
                 return (
                   <EmptyScreen>
-                    <ErrorMessage error={error} />
+                    <Status>{`Ruh-roh, something's wrong: ${error}`}</Status>
                   </EmptyScreen>
                 )
               }
@@ -53,7 +55,7 @@ class PrivateRoute extends React.Component {
               )
               return (
                 <EmptyScreen>
-                  <h1>Loading...</h1>
+                  <Loader />
                 </EmptyScreen>
               )
             } else {

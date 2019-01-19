@@ -4,7 +4,7 @@ const FourOhFour = () => {
   return (
     <div>
       <h1>
-        404: Can't find this page{' '}
+        404: Can't find this page
         <span role="img" aria-label="confused emojie">
           🤷‍♂️
         </span>

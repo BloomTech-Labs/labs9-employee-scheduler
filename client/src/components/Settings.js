@@ -8,6 +8,8 @@ import system from '../design/theme'
 import Button from './common/Button'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import Status from './Status'
+import Loader from './Loader'
 
 const phonePattern =
   '^(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$'
@@ -18,6 +20,9 @@ class Settings extends Component {
     super(props)
     this.state = {
       disabled: true,
+      loading: false,
+      error: false,
+      success: false,
       user: {
         email: '',
         phone: '',
@@ -42,7 +47,7 @@ class Settings extends Component {
   editHandler = () => {
     if (!this.state.disabled) {
       const { phone, email, emailpref, phonepref } = this.props.user
-      document.querySelector('form').reset()
+
       this.setState({
         user: {
           phone: phone,
@@ -81,7 +86,10 @@ class Settings extends Component {
   submitHandler = event => {
     event.preventDefault()
     this.setState({
-      disabled: true
+      disabled: true,
+      loading: true,
+      error: false,
+      success: false
     })
 
     const { user } = this.state
@@ -93,8 +101,12 @@ class Settings extends Component {
           headers: { authorization: this.props.token }
         }
       )
-      .then(res => alert('Your account has been edited successfully.'))
-      .catch(err => alert('Something went wrong. Try again please.'))
+      .then(res =>
+        this.setState({ loading: false, success: true, error: false })
+      )
+      .catch(err =>
+        this.setState({ loading: false, error: true, success: false })
+      )
   }
 
   render() {
@@ -105,6 +117,15 @@ class Settings extends Component {
 
         <Container>
           <h1 data-testid="settings">Settings</h1>
+          {this.state.loading ? <Loader /> : null}
+          {this.state.success ? (
+            <Status success={this.state.success}>
+              We successfully edited your profile. Now get back to work :P
+            </Status>
+          ) : null}
+          {this.state.error ? (
+            <Status>Hmm, something's wrong. Give it another shot.</Status>
+          ) : null}
 
           <fieldset disabled={this.state.disabled}>
             <form onSubmit={this.submitHandler}>
@@ -178,6 +199,8 @@ export default connect(mapStateToProps)(Settings)
 
 Settings.propTypes = {
   // add propTypes here
+  user: propTypes.object,
+  token: propTypes.string.isRequired
 }
 
 const Container = styled('div')`
@@ -220,6 +243,7 @@ const Container = styled('div')`
 
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px white inset;
+      box-shadow: 0 0 0px 1000px white inset;
     }
 
     input[type='checkbox'] {

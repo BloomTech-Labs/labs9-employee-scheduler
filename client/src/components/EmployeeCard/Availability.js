@@ -9,19 +9,59 @@ class Availability extends Component {
   render() {
     const { availabilities } = this.props
 
-    return (
-      <CardContainer avail>
-        {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
-         in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
-        <p>Availability</p>
-        {availabilities &&
-          availabilities.map(({ id, day, time }) => (
-            //temporarily adds ids tp the DOM for easy access for testing
-            <p key={id}>{`${day} ${time}`}</p>
-          ))}
-      </CardContainer>
-    )
+    if (availabilities === []) {
+      return null
+    } else {
+      return (
+        <CardContainer avail>
+          {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
+           in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
+          <h6>Employee Availability</h6>
+          {availabilities &&
+            availabilities.map(({ id, day, time }) => (
+              //temporarily adds ids tp the DOM for easy access for testing
+              <Avails key={id}>
+                <p>{day}</p>
+                <span>{time}</span>
+              </Avails>
+            ))}
+        </CardContainer>
+      )
+    }
   }
 }
 
 export default Availability
+
+Availability.propTypes = {
+  // adding propTypes here
+  availabilities: propTypes.array
+}
+
+const Avails = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${system.color.neutral};
+
+  :last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  p {
+    font-weight: bold;
+    font-size: ${system.fontSizing.sm};
+    color: ${system.color.lightgrey};
+  }
+
+  /* We should be able to change this span color based on the status being passed to it */
+  span {
+    color: ${system.color.bodytext};
+    font-size: ${system.fontSizing.s};
+  }
+`

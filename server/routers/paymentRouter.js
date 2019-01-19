@@ -45,4 +45,18 @@ router.post('/', authorize(['owner']), (req, res, next) => {
   )
 })
 
+router.delete('/:id', authorize(['owner']), (req, res, next) => {
+  const { subscription_id } = req.body
+  stripe.subscriptions.del(subscription_id)
+  updateOrg(org_id, {
+    subscription_id: null,
+    customer_id: null,
+    paid: false
+  })
+    .then(res => {
+      res.send('Cancelled')
+    })
+    .catch(err => res.send(err))
+})
+
 module.exports = router

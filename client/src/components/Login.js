@@ -33,7 +33,7 @@ class Login extends Component {
       return <Redirect to="/" />
     } else {
       return (
-        <EmptyScreen>
+        <EmptyScreen auth>
           <StyledFirebaseAuth
             uiConfig={uiConfig}
             firebaseAuth={firebase.auth()}

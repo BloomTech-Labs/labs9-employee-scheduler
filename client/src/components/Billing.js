@@ -17,6 +17,7 @@ class Billing extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      paid: false,
       loading: false,
       success: false,
       error: false
@@ -27,6 +28,11 @@ class Billing extends Component {
   componentDidMount = () => {
     this.props.fetchOrgFromDB(this.props.user.organization_id, this.props.token)
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   this.props.fetchOrgFromDB(this.props.user.organization_id, this.props.token)
+  //   console.log(this.props.organization)
+  // }
 
   async submit(ev) {
     // User clicked submit
@@ -47,12 +53,39 @@ class Billing extends Component {
         headers: { authorization: this.props.token }
       })
       .then(res => {
+        console.log(res.data)
         this.setState({
           loading: false,
           success: true,
           error: false
         })
-        document.querySelector('.StripeElement').reset()
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({
+          loading: false,
+          success: false,
+          error: true
+        })
+      })
+  }
+
+  cancelSub = () => {
+    axios
+      .delete(
+        `${process.env.REACT_APP_SERVER_URL}/stripe/${
+          this.props.organization.subscription_id
+        }`,
+        {
+          headers: { authorization: this.props.token }
+        }
+      )
+      .then(res => {
+        this.setState({
+          loading: false,
+          success: true,
+          error: false
+        })
       })
       .catch(err =>
         this.setState({
@@ -95,10 +128,11 @@ class Billing extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.organization)
   return {
     user: state.auth.user,
     token: state.auth.token,
-    payment: state.payment
+    organization: state.organization.details
   }
 }
 
@@ -109,6 +143,10 @@ export default connect(
 
 Billing.propTypes = {
   // adding propTypes here
+  user: propTypes.object,
+  fetchOrgFromDB: propTypes.func.isRequired,
+  token: propTypes.string.isRequired,
+  error: propTypes.string
 }
 
 const Container = styled('div')`
