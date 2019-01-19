@@ -14,6 +14,11 @@ const initialState = {
 
 export const hoursReducer = (state = initialState, action) => {
   switch (action.type) {
+    case HOURS_FETCHED:
+      return {
+        hours: action.payload,
+        error: ''
+      }
     case HOURS_UPDATED: // set day to closed
       return {
         hours: action.payload,
@@ -31,11 +36,6 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case HOURS_UPDATE_FAILED:
       return { ...initialState, error: 'update failed' }
-    case HOURS_FETCHED:
-      return {
-        hours: [action.payload],
-        error: ''
-      }
     case HOURS_FETCHING_FAILED:
       return {
         ...initialState,

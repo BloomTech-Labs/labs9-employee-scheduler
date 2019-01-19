@@ -28,7 +28,8 @@ class HoursOfOperation extends Component {
         thursday: false,
         friday: false,
         saturday: false
-      }
+      },
+      error: ''
     }
   }
 
@@ -46,6 +47,10 @@ class HoursOfOperation extends Component {
       this.props.fetchHoursFromDB(organization_id, this.props.token)
       console.log(this.props.hours)
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.errors ? { errors: nextProps.errors } : null
   }
 
   // //opens the correct version of the timekeeper so it sends back
@@ -95,15 +100,13 @@ class HoursOfOperation extends Component {
   closedAllDay = () => {
     const { organization_id } = this.props.user
     let hours
-    if (organization_id) {
-      this.props.hours.hours === 0 ||
-      this.props.hours.hours === '' ||
-      this.props.hours.hours === null ||
-      this.props.hours.hours === undefined
-        ? (hours = 1)
-        : (hours = 0)
-      this.props.closeAndOpenHours(organization_id, hours, this.props.token)
-    }
+    this.props.hours.hours === 0 ||
+    this.props.hours.hours === '' ||
+    this.props.hours.hours === null ||
+    this.props.hours.hours === undefined
+      ? (hours = false)
+      : (hours = true)
+    this.props.closeAndOpenHours(organization_id, hours, this.props.token)
   }
 
   render() {
