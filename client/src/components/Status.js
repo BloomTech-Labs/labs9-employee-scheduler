@@ -33,6 +33,10 @@ const Container = styled.div`
     color: ${system.color.white};
     margin-left: ${system.spacing.bigPadding};
     font-size: ${system.fontSizing.m};
+
+    span {
+      margin: 5px;
+    }
   }
 
   img {
