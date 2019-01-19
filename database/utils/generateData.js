@@ -206,7 +206,7 @@ const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
   const existingDates = existing.map(day => day.date)
   const statusRand = Math.random()
   const status =
-    statusRand < 0.5 ? 'pending' : statusRand < 0.75 ? 'confirmed' : 'denied'
+    statusRand < 0.5 ? 'pending' : statusRand < 0.75 ? 'approved' : 'denied'
 
   while (day === undefined) {
     const candidate = generateRandomBetween(1, 14)
