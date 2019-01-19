@@ -32,23 +32,21 @@ class HoursOfOperation extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   if (this.props.user) {
-  //     if (!this.props.hours.hours) {
-  //       const { organization_id } = this.props.user
-  //       this.props.fetchHoursFromDB(organization_id, this.props.token)
-  //     }
-  //   }
-  // }
+  componentDidMount() {
+    if (this.props.user && !this.props.hours) {
+      const { organization_id } = this.props.user
+      this.props.fetchHoursFromDB(organization_id, this.props.token)
+      console.log(this.props.hours)
+    }
+  }
 
-  // componentDidUpdate() {
-  //   if (this.props.user && this.props.user.organization_id) {
-  //     if (!this.props.hours.hours) {
-  //       const { organization_id } = this.props.user
-  //       this.props.fetchHoursFromDB(organization_id, this.props.token)
-  //     }
-  //   }
-  // }
+  componentDidUpdate(nextProps) {
+    if (this.props.user !== nextProps.user) {
+      const { organization_id } = this.props.user
+      this.props.fetchHoursFromDB(organization_id, this.props.token)
+      console.log(this.props.hours)
+    }
+  }
 
   // //opens the correct version of the timekeeper so it sends back
   //either open time or close time
@@ -72,7 +70,6 @@ class HoursOfOperation extends Component {
         [e.target.name]: !days[e.target.name]
       }
     })
-    console.log(this.props.hours.hours)
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
@@ -97,12 +94,20 @@ class HoursOfOperation extends Component {
 
   closedAllDay = () => {
     const { organization_id } = this.props.user
+    let hours
     if (organization_id) {
-      this.props.fetchHoursFromDB(organization_id, this.props.token)
+      this.props.hours.hours === 0 ||
+      this.props.hours.hours === '' ||
+      this.props.hours.hours === null ||
+      this.props.hours.hours === undefined
+        ? (hours = 1)
+        : (hours = 0)
+      this.props.closeAndOpenHours(organization_id, hours, this.props.token)
     }
   }
 
   render() {
+    console.log(this.props.hours.hours)
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
