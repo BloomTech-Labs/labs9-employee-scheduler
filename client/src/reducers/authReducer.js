@@ -3,7 +3,8 @@ import {
   AUTH_FAIL,
   LOGOUT,
   RESET_AUTH_STATE,
-  AUTH_INIT
+  AUTH_INIT,
+  UPDATE_USER
 } from '../actions'
 
 const initialState = {
