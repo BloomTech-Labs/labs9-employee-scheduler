@@ -47,6 +47,20 @@ export const authenticate = () => async dispatch => {
   }
 }
 
+export const updateUserSettings = token => async dispatch => {
+  axios
+    .post(`${baseURL}/users/current`, null, {
+      headers: { authorization: token }
+    })
+    .then(res => {
+      dispatch({
+        type: AUTH_SUCCESS,
+        payload: { user: res.data }
+      })
+    })
+    .catch(err => console.log(err))
+}
+
 export const logout = () => async dispatch => {
   try {
     await firebase.auth().signOut()
