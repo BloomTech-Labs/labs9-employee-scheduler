@@ -10,30 +10,30 @@ import { connect } from 'react-redux'
 const baseURL = process.env.REACT_APP_SERVER_URL
 
 export const StatusContent = ({ id, status, handleTimeOff }) => {
-  if (status === 'confirmed') {
+  if (status === 'approved') {
     return (
-      <button id={id} name="deny" onClick={handleTimeOff}>
-        deny
-      </button>
+      <Action id={id} name="deny" onClick={handleTimeOff}>
+        &#x2716;
+      </Action>
     )
   }
   if (status === 'pending') {
     return (
-      <>
-        <button id={id} name="deny" onClick={handleTimeOff}>
-          deny
-        </button>
-        <button id={id} name="approve" onClick={handleTimeOff}>
-          approve
-        </button>
-      </>
+      <Div className="buttons">
+        <Action id={id} name="approve" onClick={handleTimeOff} approve>
+          &#x2714;
+        </Action>
+        <Action id={id} name="deny" onClick={handleTimeOff}>
+          &#x2716;
+        </Action>
+      </Div>
     )
   }
   if (status === 'denied') {
     return (
-      <button id={id} name="approve" onClick={handleTimeOff}>
-        approve
-      </button>
+      <Action id={id} name="approve" onClick={handleTimeOff} approve>
+        &#x2714;
+      </Action>
     )
   }
 
@@ -59,25 +59,38 @@ class TimeOff extends Component {
   render() {
     const { timeOffRequests } = this.props
 
-    return (
-      <CardContainer>
-        {/* Employee's Time Off */}
-        {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
-        When it's on the employees directory page, it should show pending PTO */}
-        <p>Requested Time Off</p>
-        {timeOffRequests &&
-          timeOffRequests.map(({ id, date, status }) => (
-            <React.Fragment key={id}>
-              <p>{`${date} ${status}`}</p>
-              <StatusContent
-                id={id}
-                status={status}
-                handleTimeOff={this.handleTimeOff}
-              />
-            </React.Fragment>
-          ))}
-      </CardContainer>
-    )
+    if (timeOffRequests === []) {
+      return null // for some reason this is not working... we want to be able to hide the entire container if there are no requests
+    } else {
+      return (
+        <CardContainer>
+          {/* Employee's Time Off */}
+          {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
+          When it's on the employees directory page, it should show pending PTO */}
+          <h6>Requested Time Off</h6>
+          {timeOffRequests &&
+            timeOffRequests.map(({ id, date, status }) => (
+              <PTO key={id}>
+                <div className="text">
+                  <p>
+                    {/* Reformatting the date below */}
+                    {date
+                      .split('-')
+                      .slice(1, 3)
+                      .join('/')}
+                  </p>
+                  <span status={status}>{status}</span>
+                </div>
+                <StatusContent
+                  id={id}
+                  status={status}
+                  handleTimeOff={this.handleTimeOff}
+                />
+              </PTO>
+            ))}
+        </CardContainer>
+      )
+    }
   }
 }
 
@@ -87,5 +100,63 @@ export default connect(
 )(TimeOff)
 
 TimeOff.propTypes = {
-  // adding propTypes here
+  timeOffRequests: propTypes.array
 }
+
+const Div = styled.div`
+  .buttons {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+`
+
+const PTO = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${system.color.neutral};
+
+  :last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .text {
+    display: flex;
+    flex-flow: column nowrap;
+
+    p {
+      font-weight: bold;
+      font-size: ${system.fontSizing.sm};
+      color: ${system.color.lightgrey};
+    }
+
+    /* We should be able to change this span color based on the status being passed to it */
+    span {
+      color: ${system.color.bodytext};
+      font-size: ${system.fontSizing.s};
+      padding-left: 0.5rem;
+    }
+  }
+`
+
+const Action = styled.button`
+  background: ${props =>
+    props.approve ? system.color.success : system.color.danger};
+  cursor: pointer;
+  border-radius: ${system.borders.radius};
+  border: ${system.borders.transparent};
+  color: ${system.color.neutral};
+  box-shadow: ${system.shadows.button};
+  font-size: ${system.fontSizing.sm};
+  transition: ${system.transition};
+  outline: none;
+  margin-right: 5px;
+  :hover {
+    box-shadow: ${system.shadows.other};
+  }
+`
