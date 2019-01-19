@@ -126,7 +126,7 @@ class Settings extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
             <Status success={this.state.success}>
-              We successfully edited your profile. Now get back to work
+              We've successfully edited your profile. Now get back to work
               &#x1F609;
             </Status>
           ) : null}
