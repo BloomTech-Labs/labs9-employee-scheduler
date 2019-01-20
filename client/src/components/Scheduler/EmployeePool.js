@@ -3,11 +3,15 @@ import EmployeeResource from './EmployeeResource'
 import styled from '@emotion/styled'
 
 export default function(props) {
-  const { employees } = props
+  const { employees, updateDragState } = props
   return (
     <Container>
       {employees.map(employee => (
-        <EmployeeResource key={employee.id} employee={employee} />
+        <EmployeeResource
+          key={employee.id}
+          employee={employee}
+          updateDragState={updateDragState}
+        />
       ))}
     </Container>
   )
