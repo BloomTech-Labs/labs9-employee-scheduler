@@ -16,11 +16,12 @@ class HoursOfOperation extends Component {
   constructor() {
     super()
     this.state = {
-      isOpen: false,
-      isClose: false,
+      isOpen: false, // open time clock show/hide
+      isClose: false, // close time clock show/hide
       time: '',
-      show: false,
+      show: false, // show or hide the open/close buttons
       days: {
+        // which day clock is open
         sunday: false,
         monday: false,
         tuesday: false,
@@ -29,7 +30,9 @@ class HoursOfOperation extends Component {
         friday: false,
         saturday: false
       },
-      dayData: {},
+      allDayData: [], // keeps all days data
+      dayData: {}, // keeps individual day data
+      selectedIndex: null, // keeps selected index of the day saved
       error: ''
     }
   }
@@ -72,7 +75,9 @@ class HoursOfOperation extends Component {
         ...days,
         [e.target.name]: !days[e.target.name] //change individual day
       },
-      dayData: hours[parsedDay] //keep the data for this day on state
+      dayData: hours[parsedDay], //keep the data for this day on state
+      allDayData: hours, // saves data of all days to state
+      selectedIndex: parsedDay // sends selected day index num to state
     })
   }
 
@@ -81,18 +86,20 @@ class HoursOfOperation extends Component {
     // const { organization_id } = this.props.user
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     console.log(time)
+    const { allDayData, dayData, selectedIndex } = this.state
     this.setState({
       dayData: { ...this.state.dayData, open_time: time },
       isOpen: false,
       isClose: false
     })
 
-    //  this function takes org id, user token, and new updated time data
-    this.props.editOpenHours(
-      organization_id,
-      this.state.dayData.open_time,
-      this.props.token
+    // check all of the days in state and replace the edited one
+    const replaceDate = allDayData.map((item, i) =>
+      i === selectedIndex ? (item = dayData) : item
     )
+    const sendData = replaceDate
+    //  this function takes org id, user token, and new updated time data
+    this.props.editOpenHours(organization_id, sendData, this.props.token)
   }
 
   saveCloseTime = time => {
@@ -108,14 +115,8 @@ class HoursOfOperation extends Component {
   closedAllDay = () => {
     // const { organization_id } = this.props.user
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    let hours
-    this.props.hours.hours === 0 ||
-    this.props.hours.hours === '' ||
-    this.props.hours.hours === null ||
-    this.props.hours.hours === undefined
-      ? (hours = false)
-      : (hours = true)
-    this.props.closeAndOpenHours(organization_id, hours, this.props.token)
+
+    // this.props.closeAndOpenHours(organization_id, hours, this.props.token)
   }
 
   render() {
@@ -125,11 +126,19 @@ class HoursOfOperation extends Component {
 
         {this.state.isOpen === true ? (
           <Zoom right>
-            <Timekeeper name="open" saveAndClose={this.saveOpenTime} />
+            <Timekeeper
+              name="open"
+              saveAndClose={this.saveOpenTime}
+              day={`Open time`}
+            />
           </Zoom>
         ) : this.state.isClose === true ? (
           <Zoom right>
-            <Timekeeper name="close" saveAndClose={this.saveCloseTime} />
+            <Timekeeper
+              name="close"
+              saveAndClose={this.saveCloseTime}
+              day={`Close time`}
+            />
           </Zoom>
         ) : null}
         <div className="days-container">

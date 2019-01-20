@@ -14,7 +14,7 @@ export const editOpenHours = (orgID, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
       `${baseUrl}/hours-of-operation/${orgID}`,
-      { day: { open_time: changes, closed: 0 } },
+      [...changes],
       { headers: { authorization: token } }
     )
     dispatch({ type: OPEN_HOURS_UPDATED, payload: req.data })

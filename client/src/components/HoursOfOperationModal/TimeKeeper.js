@@ -48,6 +48,7 @@ class TimeKeeper extends Component {
               : this.props.saveAndClose(this.state.closeTime)
           }
         />
+        <p>{this.props.day}</p>
       </div>
     )
   }
