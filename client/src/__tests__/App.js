@@ -12,8 +12,6 @@ jest.mock('firebase/auth')
 
 describe('App component', () => {
   it('renders hello', () => {
-    console.log(firebase)
-    expect(firebase).toMatch({})
     axios.get.mockImplementation(() =>
       Promise.resolve({ data: { message: 'hello!' } })
     )

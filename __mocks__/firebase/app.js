@@ -10,17 +10,17 @@ firebaseAuth = Object.assign(firebaseAuth, {
 let firebase = {}
 
 firebase = Object.assign(firebase, {
-  apps: [],
-  initializeApp: req => {
-    if (req.apiKey) {
-      return firebase
-    } else {
-      throw new Error('apiKey is expected')
-    }
-  },
-  auth: () => {
+  auth() {
     return firebaseAuth
-  }
+  },
+  apps: []
+  // initializeApp(req) {
+  //   if (req.apiKey) {
+  //     return firebase
+  //   } else {
+  //     throw new Error('apiKey is expected')
+  //   }
+  // }
 })
 
-module.exports = firebase
+export default firebase
