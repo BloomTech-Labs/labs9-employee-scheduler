@@ -4,7 +4,7 @@ import EmployeeCard from '../EmployeeCard/Card'
 import styled from '@emotion/styled'
 
 const EmployeeEvent = props => {
-  const { connectDragSource, event, employee } = props
+  const { connectDragSource, employee, updateDragState } = props
   return connectDragSource(
     <div style={{ opacity: props.isDragging ? '.7' : undefined }}>
       <EmployeeCard {...employee} />
@@ -14,9 +14,15 @@ const EmployeeEvent = props => {
 
 const eventSource = {
   beginDrag(props) {
-    return { event: { ...props.employee, type: 'new_shift' }, anchor: 'drop' }
+    const { employee, updateDragState } = props
+    updateDragState(employee)
+    return {}
   },
-  endDrag(props) {}
+  endDrag(props, monitor) {
+    if (monitor.didDrop()) {
+      props.updateDragState(null)
+    }
+  }
 }
 
 const collectSource = (connect, monitor) => {

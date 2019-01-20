@@ -11,7 +11,9 @@ import BreadCrumb from '../BreadCrumb'
 import LeftSideBar from '../LeftSideBar'
 
 class Scheduler extends React.Component {
-  state = { events: [] }
+  state = {
+    draggedEmployee: null
+  }
 
   componentDidMount() {
     this.props.fetchEmployeesFromDB()
@@ -30,9 +32,15 @@ class Scheduler extends React.Component {
   }
 
   createEvent = ({ start, end }) => {
-    const employee = this.props.employees[0]
-    return this.props.createEvent({ employee, start })
+    const { draggedEmployee } = this.state
+    if (draggedEmployee) {
+      this.props.createEvent({ employee: draggedEmployee, start })
+      this.setState({ draggedEmployee: null })
+    }
   }
+
+  updateDragState = (draggedEmployee = null) =>
+    this.setState({ draggedEmployee })
 
   render() {
     const { employees } = this.props
@@ -60,7 +68,10 @@ class Scheduler extends React.Component {
         <BreadCrumb location="Schedule" />
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
         <div style={{ display: 'flex' }}>
-          <EmployeePool employees={employees} />
+          <EmployeePool
+            employees={employees}
+            updateDragState={this.updateDragState}
+          />
           <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
             <DropCal
               events={events}
@@ -68,6 +79,7 @@ class Scheduler extends React.Component {
                 className: event.title.split(' ')[0]
               })}
               names={names}
+              updateDragState={this.updateDragState}
               onEventDrop={this.handleDrop}
               onEventResize={this.resizeEvent}
               onSelectSlot={this.createEvent}
