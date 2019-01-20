@@ -66,4 +66,5 @@ function renderWithReduxAndRouter(
     history
   }
 }
+
 export { renderWithRouter, renderWithRedux, renderWithReduxAndRouter }

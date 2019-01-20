@@ -58,7 +58,6 @@ describe('eventsRouter', () => {
       end: processDateTime(createdEvent.end)
     }
 
-    console.log(response.body)
     expect(response.status).toEqual(201)
     expect(response.body).toMatchObject(createdEvent)
     expect(createdEvent).toMatchObject(newEvent)

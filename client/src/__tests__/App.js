@@ -12,10 +12,22 @@ jest.mock('firebase/auth')
 
 describe('App component', () => {
   it('renders hello', () => {
+    // SETUP
+    // mock setup
     axios.get.mockImplementation(() =>
       Promise.resolve({ data: { message: 'hello!' } })
     )
+    firebase.auth = jest.fn().mockReturnValue({
+      onAuthStateChanged: cb => () => cb()
+    })
+    // provide stripejs node in head element to play nice with async stripe loading
+    // note, this is a form of mocking out stripe
+    const stripejs = document.createElement('script')
+    stripejs.id = 'stripe-js'
+    document.head.appendChild(stripejs)
+
     const { getByText } = renderWithReduxAndRouter(<App />)
+
     expect(getByText('Cadence')).toBeInTheDocument()
   })
 

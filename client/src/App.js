@@ -45,8 +45,6 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    console.log(firebase)
-    console.log(firebase.auth)
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       //checks to see if there is a user logged in.
       this.props.authenticate()

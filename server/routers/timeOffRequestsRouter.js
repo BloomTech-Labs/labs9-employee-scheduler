@@ -43,7 +43,6 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 
   updateTimeOffRequest(id, req.body)
     .then(result => {
-      console.log(result)
       return getTimeOffRequest(id)
     })
     .then(result => res.status(200).json(result))
