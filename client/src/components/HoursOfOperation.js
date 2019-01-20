@@ -66,9 +66,9 @@ class HoursOfOperation extends Component {
     this.setState({
       days: {
         ...days,
-        [e.target.name]: !days[e.target.name]
+        [e.target.name]: !days[e.target.name] //change individual day
       },
-      dayData: hours[parsedDay]
+      dayData: hours[parsedDay] //keep the data for this day on state
     })
   }
 
@@ -76,20 +76,25 @@ class HoursOfOperation extends Component {
   saveOpenTime = time => {
     // const { organization_id } = this.props.user
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    const day = this.state.selectedDay
-    const { hours } = this.props.hours
+    const day = this.state.dayData.open_time
+    console.log(time)
+    console.log(day)
+    this.setState({
+      day: time
+      // isOpen: false,
+      // isClose: false
+    })
 
-    console.log(hours[day])
-
+    console.log(day)
     //  this function takes org id and new updated time data
-    this.props.editOpenHours(
-      organization_id,
-      time,
-      this.props.token,
-      hours[day] //gets all data for that day
-    )
-    // this opens and closes the clock
-    this.setState({ isOpen: false, isClose: false, time: time })
+    // this.props.editOpenHours(
+    //   organization_id,
+    //   time,
+    //   this.props.token,
+    //   hours[day] //gets all data for that day
+    // )
+    // // this opens and closes the clock
+    // this.setState({ isOpen: false, isClose: false, time: time })
   }
 
   saveCloseTime = time => {
@@ -116,7 +121,6 @@ class HoursOfOperation extends Component {
   }
 
   render() {
-    console.log(this.state.dayData)
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
