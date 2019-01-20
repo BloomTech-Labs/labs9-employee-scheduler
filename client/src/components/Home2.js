@@ -6,8 +6,8 @@ import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
-import headerImg from '../img/header.svg'
-import heroImg from '../img/hero.svg'
+import headerImg from '../img/header.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import heroImg from '../img/hero.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
 import Fade from 'react-reveal/Fade'
 
 const Home = () => {
