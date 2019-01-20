@@ -67,4 +67,16 @@ function renderWithReduxAndRouter(
   }
 }
 
-export { renderWithRouter, renderWithRedux, renderWithReduxAndRouter }
+function setupStripeNode() {
+  // provide stripejs node in head element to play nice with async stripe loading
+  // note, this is a form of mocking out stripe
+  const stripejs = document.createElement('script')
+  stripejs.id = 'stripe-js'
+  document.head.appendChild(stripejs)
+}
+export {
+  renderWithRouter,
+  renderWithRedux,
+  renderWithReduxAndRouter,
+  setupStripeNode
+}
