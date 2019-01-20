@@ -59,7 +59,7 @@ const Container = styled('div')`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: ${props => (props.extra ? '150px' : null)};
+  width: ${props => (props.extra ? '225px' : null)};
   a {
     font-size: ${props =>
       props.logo ? system.fontSizing.l : system.fontSizing.m};
@@ -67,7 +67,12 @@ const Container = styled('div')`
     color: ${system.color.neutral};
     text-decoration: none;
     text-align: center;
+    padding: ${system.spacing.standardPadding};
+    border: ${props =>
+      props.logo ? null : `1px solid ${system.color.neutral}`};
+    border-radius: ${system.borders.radius};
   }
+
   p {
     font-size: ${system.fontSizing.s};
     color: ${system.color.neutral};
