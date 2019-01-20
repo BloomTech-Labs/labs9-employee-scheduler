@@ -29,7 +29,7 @@ class HoursOfOperation extends Component {
         friday: false,
         saturday: false
       },
-      dayData: [],
+      dayData: {},
       error: ''
     }
   }
@@ -48,6 +48,8 @@ class HoursOfOperation extends Component {
   // //opens the correct version of the timekeeper so it sends back
   //either open time or close time
   handleHours = e => {
+    e.preventDefault()
+    e.stopPropagation()
     if (e.target.name === 'open') {
       this.setState({ isOpen: true, isClose: false })
     } else {
@@ -58,6 +60,8 @@ class HoursOfOperation extends Component {
   // slides out clock
   showHandleHours = e => {
     e.preventDefault()
+    e.stopPropagation()
+
     // const { organization_id } = this.props.user
     const unParsedDay = e.target.id
     const { hours } = this.props.hours
@@ -76,25 +80,19 @@ class HoursOfOperation extends Component {
   saveOpenTime = time => {
     // const { organization_id } = this.props.user
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    const day = this.state.dayData.open_time
     console.log(time)
-    console.log(day)
     this.setState({
-      day: time
-      // isOpen: false,
-      // isClose: false
+      dayData: { ...this.state.dayData, open_time: time },
+      isOpen: false,
+      isClose: false
     })
 
-    console.log(day)
-    //  this function takes org id and new updated time data
-    // this.props.editOpenHours(
-    //   organization_id,
-    //   time,
-    //   this.props.token,
-    //   hours[day] //gets all data for that day
-    // )
-    // // this opens and closes the clock
-    // this.setState({ isOpen: false, isClose: false, time: time })
+    //  this function takes org id, user token, and new updated time data
+    this.props.editOpenHours(
+      organization_id,
+      this.state.dayData.open_time,
+      this.props.token
+    )
   }
 
   saveCloseTime = time => {
