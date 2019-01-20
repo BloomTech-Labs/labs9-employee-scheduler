@@ -29,8 +29,7 @@ class HoursOfOperation extends Component {
         friday: false,
         saturday: false
       },
-      selectedDay: null,
-      dataData: [],
+      dayData: [],
       error: ''
     }
   }
@@ -39,7 +38,6 @@ class HoursOfOperation extends Component {
     if (this.props.user !== null) {
       const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
       this.props.fetchHoursFromDB(organization_id, this.props.token)
-      console.log(this.props.hours)
     }
   }
 
@@ -62,6 +60,7 @@ class HoursOfOperation extends Component {
     e.preventDefault()
     // const { organization_id } = this.props.user
     const unParsedDay = e.target.id
+    const { hours } = this.props.hours
     const parsedDay = parseInt(unParsedDay)
     const { days } = this.state
     this.setState({
@@ -69,7 +68,7 @@ class HoursOfOperation extends Component {
         ...days,
         [e.target.name]: !days[e.target.name]
       },
-      selectedDay: parsedDay
+      dayData: hours[parsedDay]
     })
   }
 
@@ -80,13 +79,17 @@ class HoursOfOperation extends Component {
     const day = this.state.selectedDay
     const { hours } = this.props.hours
 
-    console.log(console.log(hours[day]))
-    // if (organization_id) {
-    //   //  this function takes org organization_id and new updated time data
-    //   this.props.editOpenHours(organization_id, time, this.props.token, day)
-    //   // this opens and closes the clock
-    //   this.setState({ isOpen: false, isClose: false, time: time })
-    // }
+    console.log(hours[day])
+
+    //  this function takes org id and new updated time data
+    this.props.editOpenHours(
+      organization_id,
+      time,
+      this.props.token,
+      hours[day] //gets all data for that day
+    )
+    // this opens and closes the clock
+    this.setState({ isOpen: false, isClose: false, time: time })
   }
 
   saveCloseTime = time => {
@@ -113,6 +116,7 @@ class HoursOfOperation extends Component {
   }
 
   render() {
+    console.log(this.state.dayData)
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
