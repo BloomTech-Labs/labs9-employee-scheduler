@@ -30,7 +30,7 @@ class HoursOfOperation extends Component {
         saturday: false
       },
       selectedDay: null,
-      dayIndex: null,
+      dataData: [],
       error: ''
     }
   }
@@ -61,26 +61,16 @@ class HoursOfOperation extends Component {
   showHandleHours = e => {
     e.preventDefault()
     // const { organization_id } = this.props.user
-    const dayId = e.target.id
-    let newId
-    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
+    const unParsedDay = e.target.id
+    const parsedDay = parseInt(unParsedDay)
     const { days } = this.state
-    const { hours } = this.props.hours
-
     this.setState({
       days: {
         ...days,
         [e.target.name]: !days[e.target.name]
       },
-      selectedDay: parseInt(dayId)
+      selectedDay: parsedDay
     })
-
-    // for (let i = 0; i < hours.length; i++) {
-    //   if (dayId === hours[i]) return (newId = hours[i])
-    // }
-    console.log(hours.length)
-
-    // console.log(currentDay)
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
@@ -88,12 +78,15 @@ class HoursOfOperation extends Component {
     // const { organization_id } = this.props.user
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     const day = this.state.selectedDay
-    if (organization_id) {
-      //  this function takes org organization_id and new updated time data
-      this.props.editOpenHours(organization_id, time, this.props.token, day)
-      // this opens and closes the clock
-      this.setState({ isOpen: false, isClose: false, time: time })
-    }
+    const { hours } = this.props.hours
+
+    console.log(console.log(hours[day]))
+    // if (organization_id) {
+    //   //  this function takes org organization_id and new updated time data
+    //   this.props.editOpenHours(organization_id, time, this.props.token, day)
+    //   // this opens and closes the clock
+    //   this.setState({ isOpen: false, isClose: false, time: time })
+    // }
   }
 
   saveCloseTime = time => {
