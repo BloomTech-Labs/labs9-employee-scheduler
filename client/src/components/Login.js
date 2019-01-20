@@ -8,6 +8,8 @@ import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
+console.log(firebase)
+
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
