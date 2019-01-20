@@ -1,17 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Calendar from '../Calendar'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
 import OuterContainer from '../common/OuterContainer'
 import WeekSummary from './WeekSummary'
 import BreadCrumb from '../BreadCrumb'
 import LeftSideBar from '../LeftSideBar'
-
-const DnDCal = withDragAndDrop(Calendar, { backend: false })
 
 class Scheduler extends React.Component {
   state = { events: [] }
@@ -36,7 +33,7 @@ class Scheduler extends React.Component {
     return this.props.changeEvent({ event: employee, changes: { start, end } })
   }
 
-  resizeEvent = (type, { start, end, event }) => {
+  resizeEvent = ({ end, start, event }) => {
     this.props.changeEvent({ event, changes: { start, end } })
   }
 
@@ -68,22 +65,15 @@ class Scheduler extends React.Component {
         <div style={{ display: 'flex' }}>
           <EmployeePool employees={employees} />
           <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
-            <DnDCal
-              selectable
-              resizable
-              defaultDate={new Date()}
-              defaultView="week"
+            <DropCal
               events={events}
-              onEventDrop={this.handleDrop}
-              onEventResize={this.resizeEvent}
-              onSelectEvent={event => console.log(event)}
               eventPropGetter={event => ({
                 className: event.title.split(' ')[0]
               })}
               names={names}
-              startAccessor="start"
-              endAccessor="end"
-              draggableAccessor={event => true}
+              onEventDrop={this.handleDrop}
+              onEventResize={this.resizeEvent}
+              onSelectEvent={event => console.log(event)}
             />
             <WeekSummary events={events} />
           </div>
