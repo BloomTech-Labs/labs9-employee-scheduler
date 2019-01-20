@@ -22,19 +22,16 @@ class Scheduler extends React.Component {
     const { event, start, end } = drop
     const { type, ...employee } = event
 
-    // checks to see if this is the creation of a new_shift via an employee card
-    // being dragged, rather than an existing event being dragged
-    if (event.type === 'new_shift') {
-      return this.props.createEvent({ employee, start })
-    }
-
-    // else, the drop is from dragging an existing shift, so it is interpreted
-    // as a change
     return this.props.changeEvent({ event: employee, changes: { start, end } })
   }
 
   resizeEvent = ({ end, start, event }) => {
     this.props.changeEvent({ event, changes: { start, end } })
+  }
+
+  createEvent = ({ start, end }) => {
+    const employee = this.props.employees[0]
+    return this.props.createEvent({ employee, start })
   }
 
   render() {
@@ -73,7 +70,7 @@ class Scheduler extends React.Component {
               names={names}
               onEventDrop={this.handleDrop}
               onEventResize={this.resizeEvent}
-              onSelectEvent={event => console.log(event)}
+              onSelectSlot={this.createEvent}
             />
             <WeekSummary events={events} />
           </div>

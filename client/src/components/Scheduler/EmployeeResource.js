@@ -26,4 +26,4 @@ const collectSource = (connect, monitor) => {
   }
 }
 
-export default DragSource('event', eventSource, collectSource)(EmployeeEvent)
+export default DragSource('SHIFT', eventSource, collectSource)(EmployeeEvent)

@@ -69,9 +69,8 @@ const click = (x, y) => {
 const dropSpec = {
   drop(props, monitor, component) {
     // Obtain the dragged item
-    const item = monitor.getItem()
-    console.log(component)
     const { x, y } = monitor.getClientOffset()
+    console.log(x, y)
     click(x, y)
   }
 }
@@ -83,7 +82,7 @@ const DropCal = ({
   names,
   onEventDrop,
   onEventResize,
-  onSelectEvent
+  onSelectSlot
 }) => {
   console.log()
   return connectDropTarget(
@@ -100,7 +99,7 @@ const DropCal = ({
         names={names}
         onEventDrop={onEventDrop}
         onEventResize={onEventResize}
-        onSelectEvent={onSelectEvent}
+        onSelectSlot={onSelectSlot}
       />
     </div>
   )
