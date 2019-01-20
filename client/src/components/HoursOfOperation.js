@@ -35,34 +35,13 @@ class HoursOfOperation extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    if (this.props.user !== nextProps.user.user) {
+  componentDidMount() {
+    if (this.props.user !== null) {
+      const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
       this.props.fetchHoursFromDB(organization_id, this.props.token)
-    }
-
-    if (this.props.hours.hours !== nextProps.hours.hours) {
-      this.props.fetchHoursFromDB(organization_id, this.props.token)
+      console.log(this.props.hours)
     }
   }
-
-  // componentDidMount() {
-  //   if (this.props.user && !this.props.hours) {
-  //     // const { organization_id } = this.props.user
-  //     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-  //     this.props.fetchHoursFromDB(organization_id, this.props.token)
-  //     console.log(this.props.hours)
-  //   }
-  // }
-
-  // componentDidUpdate(nextProps) {
-  //   if (this.props.user !== nextProps.user) {
-  //     // const { organization_id } = this.props.user
-  //     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-  //     this.props.fetchHoursFromDB(organization_id, this.props.token)
-  //     console.log(this.props.hours)
-  //   }
-  // }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     return nextProps.errors ? { errors: nextProps.errors } : null
@@ -86,9 +65,8 @@ class HoursOfOperation extends Component {
     let newId
     const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     const { days } = this.state
-    const { token } = this.props
     const { hours } = this.props.hours
-    this.props.fetchHoursFromDB(organization_id, token)
+
     this.setState({
       days: {
         ...days,
