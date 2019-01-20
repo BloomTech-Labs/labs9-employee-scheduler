@@ -19,8 +19,7 @@ class Scheduler extends React.Component {
     this.props.fetchEmployeesFromDB()
   }
 
-  handleDrop = drop => {
-    console.log('drop', drop)
+  moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
 
@@ -80,7 +79,7 @@ class Scheduler extends React.Component {
               })}
               names={names}
               updateDragState={this.updateDragState}
-              onEventDrop={this.handleDrop}
+              onEventDrop={this.moveEvent}
               onEventResize={this.resizeEvent}
               onSelectSlot={this.createEvent}
             />
