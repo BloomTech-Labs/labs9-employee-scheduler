@@ -5,10 +5,8 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
-import OuterContainer from '../common/OuterContainer'
+
 import WeekSummary from './WeekSummary'
-import BreadCrumb from '../BreadCrumb'
-import LeftSideBar from '../LeftSideBar'
 
 class Scheduler extends React.Component {
   state = {
@@ -62,31 +60,26 @@ class Scheduler extends React.Component {
     }, [])
 
     return (
-      <OuterContainer>
-        <LeftSideBar />
-        <BreadCrumb location="Schedule" />
-        {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
-        <div style={{ display: 'flex' }}>
-          <EmployeePool
-            employees={employees}
+      <div style={{ display: 'flex' }}>
+        <EmployeePool
+          employees={employees}
+          updateDragState={this.updateDragState}
+        />
+        <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+          <DropCal
+            events={events}
+            eventPropGetter={event => ({
+              className: event.title.split(' ')[0]
+            })}
+            names={names}
             updateDragState={this.updateDragState}
+            onEventDrop={this.moveEvent}
+            onEventResize={this.resizeEvent}
+            onSelectSlot={this.createEvent}
           />
-          <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
-            <DropCal
-              events={events}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
-              names={names}
-              updateDragState={this.updateDragState}
-              onEventDrop={this.moveEvent}
-              onEventResize={this.resizeEvent}
-              onSelectSlot={this.createEvent}
-            />
-            <WeekSummary events={events} />
-          </div>
+          <WeekSummary events={events} />
         </div>
-      </OuterContainer>
+      </div>
     )
   }
 }
