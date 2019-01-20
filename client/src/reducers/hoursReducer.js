@@ -16,7 +16,7 @@ export const hoursReducer = (state = initialState, action) => {
   switch (action.type) {
     case HOURS_FETCHED:
       return {
-        hours: action.payload,
+        hours: [...action.payload],
         error: ''
       }
     case HOURS_UPDATED: // set day to closed
@@ -26,12 +26,12 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case OPEN_HOURS_UPDATED:
       return {
-        hours: action.payload,
+        hours: { ...initialState, open_time: action.payload },
         error: ''
       }
     case CLOSE_HOURS_UPDATED:
       return {
-        hours: action.payload,
+        hours: { ...initialState, close_time: action.payload },
         error: ''
       }
     case HOURS_UPDATE_FAILED:

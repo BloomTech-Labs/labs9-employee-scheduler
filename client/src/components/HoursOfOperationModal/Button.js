@@ -13,7 +13,7 @@ const Button = ({
 }) => {
   return (
     <Container>
-      <button name={name} onClick={showHandleHours} className="days">
+      <button name={name} onClick={showHandleHours} className="days" id={id}>
         {name}
       </button>
       {day === true ? (

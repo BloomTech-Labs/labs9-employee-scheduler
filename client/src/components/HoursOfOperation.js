@@ -35,7 +35,8 @@ class HoursOfOperation extends Component {
 
   componentDidMount() {
     if (this.props.user && !this.props.hours) {
-      const { organization_id } = this.props.user
+      // const { organization_id } = this.props.user
+      const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
       this.props.fetchHoursFromDB(organization_id, this.props.token)
       console.log(this.props.hours)
     }
@@ -43,7 +44,8 @@ class HoursOfOperation extends Component {
 
   componentDidUpdate(nextProps) {
     if (this.props.user !== nextProps.user) {
-      const { organization_id } = this.props.user
+      // const { organization_id } = this.props.user
+      const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
       this.props.fetchHoursFromDB(organization_id, this.props.token)
       console.log(this.props.hours)
     }
@@ -63,9 +65,12 @@ class HoursOfOperation extends Component {
     }
   }
 
+  // slides out clock
   showHandleHours = e => {
     e.preventDefault()
-    const { organization_id } = this.props.user
+    // const { organization_id } = this.props.user
+    console.log(e.target.id)
+    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     const { days } = this.state
     const { token } = this.props
     this.props.fetchHoursFromDB(organization_id, token)
@@ -79,7 +84,8 @@ class HoursOfOperation extends Component {
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
-    const { organization_id } = this.props.user
+    // const { organization_id } = this.props.user
+    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     if (organization_id) {
       //  this function takes org organization_id and new updated time data
       this.props.editOpenHours(organization_id, time, this.props.token)
@@ -89,7 +95,8 @@ class HoursOfOperation extends Component {
   }
 
   saveCloseTime = time => {
-    const { organization_id } = this.props.user
+    // const { organization_id } = this.props.user
+    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     if (organization_id) {
       this.props.editCloseHours(organization_id, time, this.props.token)
       // this opens and closes the clock
@@ -98,7 +105,8 @@ class HoursOfOperation extends Component {
   }
 
   closedAllDay = () => {
-    const { organization_id } = this.props.user
+    // const { organization_id } = this.props.user
+    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
     let hours
     this.props.hours.hours === 0 ||
     this.props.hours.hours === '' ||
@@ -110,7 +118,6 @@ class HoursOfOperation extends Component {
   }
 
   render() {
-    console.log(this.props.hours.hours)
     return (
       <Container>
         {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
@@ -130,6 +137,7 @@ class HoursOfOperation extends Component {
           {Object.keys(this.state.days).map((day, i) => {
             return (
               <Button
+                id={i}
                 key={i}
                 handleHours={this.handleHours}
                 day={this.state.days[day]}

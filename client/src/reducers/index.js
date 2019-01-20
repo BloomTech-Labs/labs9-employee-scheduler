@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { authReducer } from './authReducer'
-import { employeesReducer, employeeReducer } from './employeesReducer'
+import { employeesReducer } from './employeesReducer'
+import { employeeReducer } from './employeeReducer'
 import { registerReducer } from './registerReducer'
 import { paymentReducer } from './paymentReducer'
 import { hoursReducer } from './hoursReducer'
