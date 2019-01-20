@@ -50,7 +50,6 @@ const DropCal = ({
   onEventResize,
   onSelectSlot
 }) => {
-  console.log()
   return connectDropTarget(
     <div>
       <DnDCal

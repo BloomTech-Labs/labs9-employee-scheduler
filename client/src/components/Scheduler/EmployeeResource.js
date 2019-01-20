@@ -13,13 +13,7 @@ class EmployeeEvent extends React.Component {
     img.onload = () => connectDragPreview(img)
   }
   render() {
-    const {
-      connectDragSource,
-      isDragging,
-      connectDragPreview,
-      employee
-    } = this.props
-    console.log(connectDragPreview)
+    const { connectDragSource, isDragging, employee } = this.props
 
     return connectDragSource(
       <div style={{ opacity: isDragging ? '.7' : undefined }}>
