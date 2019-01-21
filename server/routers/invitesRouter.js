@@ -1,4 +1,5 @@
 const express = require('express')
+const uuid = require('uuid/v4')
 const router = express.Router()
 const {
   getUser,
@@ -19,7 +20,10 @@ const invite = role => async (req, res) => {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
 
+  const inviteId = uuid()
+
   const newInvite = {
+    id: inviteId,
     organization_id,
     inviter_id: id,
     name,
@@ -29,9 +33,8 @@ const invite = role => async (req, res) => {
 
   const success = await addInvite(newInvite)
 
-  // send email here
-
   if (success) {
+    sendInvite(email, inviteId)
     res.status(201).json({ message: 'Added invite' })
   } else {
     res.status(500).json({ error: 'Error' })
