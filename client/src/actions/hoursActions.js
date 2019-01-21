@@ -12,7 +12,7 @@ const baseUrl = process.env.REACT_APP_SERVER_URL
 // edits the open time for a specific day
 export const editOpenHours = (hourId, changes, token) => async dispatch => {
   try {
-    const req = await axios.put(
+    await axios.put(
       `${baseUrl}/hours-of-operation/${hourId}`,
       { open_time: changes },
       { headers: { authorization: token } }
