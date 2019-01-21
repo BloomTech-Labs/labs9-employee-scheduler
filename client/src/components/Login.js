@@ -8,25 +8,24 @@ import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'redirect',
-  // We will display Google and Facebook as auth providers.
-  signInSuccessUrl: '/',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  credentialHelper: 'none',
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false
-  }
-}
-
 class Login extends Component {
+  uiConfig = {
+    // Configure FirebaseUI.
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'redirect',
+    // We will display Google and Facebook as auth providers.
+    signInSuccessUrl: '/',
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ],
+    credentialHelper: 'none',
+    callbacks: {
+      // Avoid redirects after sign-in.
+      signInSuccessWithAuthResult: () => false
+    }
+  }
   render() {
     if (this.props.user) {
       // redirect to home once/if user is in the store
@@ -35,7 +34,7 @@ class Login extends Component {
       return (
         <EmptyScreen auth>
           <StyledFirebaseAuth
-            uiConfig={uiConfig}
+            uiConfig={this.uiConfig}
             firebaseAuth={firebase.auth()}
           />
         </EmptyScreen>

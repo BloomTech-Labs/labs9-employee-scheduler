@@ -15,4 +15,4 @@ const admin = {
   }
 }
 
-module.exports = admin
+module.exports = { default: admin }

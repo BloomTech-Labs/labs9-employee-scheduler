@@ -1,19 +1,30 @@
 import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
-import { renderWithReduxAndRouter } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import App from '../App'
 import axios from 'axios'
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
+// this import style is required for proper codesplitting of firebase
 
 jest.mock('axios')
-jest.mock('firebase')
+jest.mock('firebase/app')
+jest.mock('firebase/auth')
 
 describe('App component', () => {
   it('renders hello', () => {
+    // SETUP
     axios.get.mockImplementation(() =>
       Promise.resolve({ data: { message: 'hello!' } })
     )
+    firebase.auth = jest.fn().mockReturnValue({
+      onAuthStateChanged: cb => () => cb()
+    })
+    setupStripeNode()
+
+    // Render
     const { getByText } = renderWithReduxAndRouter(<App />)
+
+    // Assert
     expect(getByText('Cadence')).toBeInTheDocument()
   })
 

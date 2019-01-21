@@ -55,7 +55,6 @@ class Billing extends Component {
         headers: { authorization: this.props.token }
       })
       .then(res => {
-        console.log(res.data)
         this.setState({
           loading: false,
           signupSuccess: true,
@@ -95,7 +94,6 @@ class Billing extends Component {
         headers: { authorization: this.props.token }
       })
       .then(res => {
-        console.log('deleted')
         this.props.fetchOrgFromDB(
           this.props.user.organization_id,
           this.props.token
@@ -219,7 +217,6 @@ class Billing extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.organization)
   return {
     user: state.auth.user,
     token: state.auth.token,

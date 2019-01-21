@@ -38,7 +38,6 @@ class HoursOfOperation extends Component {
 
   showHandleHours = e => {
     e.preventDefault()
-    console.log(e.target.name)
     const { days } = this.state
     this.setState({
       days: {
