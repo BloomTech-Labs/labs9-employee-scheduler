@@ -6,9 +6,10 @@ import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
-import headerImg from '../img/header.svg'
-import heroImg from '../img/hero.svg'
+import headerImg from '../img/header.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import heroImg from '../img/hero.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
 import Fade from 'react-reveal/Fade'
+import Footer from './Footer'
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Container>
         <section id="hero">
           <img id="header-img" src={headerImg} />
+          <div id="video">Video Placeholder</div>
           <img id="hero-img" src={heroImg} />
           <Fade top>
             <h1>Scheduling your employees is hard.</h1>
@@ -77,6 +79,10 @@ const Home = () => {
 
         <section id="social-proof">
           <h1>Here's what our users have to say:</h1>
+          <p>
+            This is real feedback we've gotten on social media and during user
+            tests. We hope you'll love Cadence as much as they do.
+          </p>
           <div className="cards">
             <Fade top>
               <div className="card">
@@ -107,20 +113,39 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="payment">
-          <h1>Pricing Information</h1>
+        <section id="pricing">
+          <h1>Here are our pricing plans.</h1>
+          <p>
+            No matter the size of your business, we will always work hard to
+            accommodate your needs.
+          </p>
           <div className="cards">
             <Fade top>
               <div className="card">
-                <h2>Small to Medium Business</h2>
+                <h2>SMB Plan</h2>
                 <h3>$20 / month</h3>
-                <p>Feature feature feature</p>
-                <Button>Sign Up</Button>
+                <ul>
+                  <li>Up to 20 users</li>
+                  <li>Easy-to-use graphical interface</li>
+                  <li>Owner, Supervisor, & Employee Views</li>
+                </ul>
+                <Button>Sign Up Now</Button>
+              </div>
+              <div className="card">
+                <h2>Enterprise Plan</h2>
+                <h3>Contact Us</h3>
+                <ul>
+                  <li>Supports unlimited users</li>
+                  <li>Data Exports & API Access</li>
+                  <li>Audit Trails & Reporting</li>
+                </ul>
+                <Button disabled>Coming Soon</Button>
               </div>
             </Fade>
           </div>
         </section>
       </Container>
+      <Footer />
     </OuterContainer>
   )
 }
@@ -135,10 +160,10 @@ const Container = styled('div')`
   position: relative;
 
   section {
-    padding-bottom: 20rem;
+    padding-bottom: 15rem;
 
     h1 {
-      padding: 150px 0 0;
+      padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
       width: 65rem;
     }
@@ -148,10 +173,15 @@ const Container = styled('div')`
       color: ${system.color.bodytext};
       font-size: ${system.fontSizing.ml};
       width: 60rem;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       line-height: ${system.spacing.lineHeight};
     }
+  }
 
+  #hero {
+    h1 {
+      padding: 200px 0 0;
+    }
     #header-img {
       position: absolute;
       top: 2rem;
@@ -162,6 +192,19 @@ const Container = styled('div')`
       position: absolute;
       top: 15rem;
       right: 0rem;
+    }
+
+    #video {
+      position: absolute;
+      color: white;
+      text-align: center;
+      top: 21rem;
+      right: 15rem;
+      width: 480px;
+      height: 270px;
+      z-index: 50;
+      background: black;
+      border-radius: ${system.borders.bigRadius};
     }
 
     button {
@@ -208,10 +251,6 @@ const Container = styled('div')`
   }
 
   #social-proof {
-    h1 {
-      padding: 0 0 50px;
-    }
-
     .card {
       background: #333;
       position: relative;
@@ -228,6 +267,33 @@ const Container = styled('div')`
       p {
         color: ${system.color.white};
       }
+    }
+  }
+
+  #pricing {
+    .card {
+      background: ${system.color.neutral};
+    }
+
+    h2 {
+      font-size: ${system.fontSizing.ml};
+      text-align: center;
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      color: ${system.color.primary};
+      font-size: ${system.fontSizing.m};
+      margin-bottom: 2.5rem;
+    }
+
+    li {
+      font-size: ${system.fontSizing.sm};
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      margin: 25px 0;
     }
   }
 `
