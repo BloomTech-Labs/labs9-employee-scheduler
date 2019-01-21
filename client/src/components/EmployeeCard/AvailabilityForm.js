@@ -4,8 +4,9 @@ import Form from '../Form/index'
 import axios from 'axios'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import { connect } from 'react-redux'
 
-export default class AvailabilityForm extends Component {
+class AvailabilityForm extends Component {
   render() {
     return (
       <div>
@@ -15,3 +16,8 @@ export default class AvailabilityForm extends Component {
     )
   }
 }
+
+export default connect(
+  mapStateToProps,
+  { editAvailability }
+)(AvailabilityForm)
