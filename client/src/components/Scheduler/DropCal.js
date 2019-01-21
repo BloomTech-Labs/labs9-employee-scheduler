@@ -48,11 +48,13 @@ const DropCal = ({
   names,
   onEventDrop,
   onEventResize,
-  onSelectSlot
+  onSelectSlot,
+  onSelectEvent
 }) => {
   return connectDropTarget(
     <div>
       <DnDCal
+        popup
         selectable
         resizable
         defaultDate={new Date()}
@@ -65,6 +67,7 @@ const DropCal = ({
         onEventDrop={onEventDrop}
         onEventResize={onEventResize}
         onSelectSlot={onSelectSlot}
+        onSelectEvent={onSelectEvent}
       />
     </div>
   )
