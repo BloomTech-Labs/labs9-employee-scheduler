@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP8G8 img by STIL
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
@@ -17,9 +16,9 @@ const Home = () => {
       <BreadCrumb location="Home" />
       <Container>
         <section id="hero">
-          <img id="header-img" src={headerImg} />
+          <img id="header-img" alt="header" src={headerImg} />
           <div id="video">Video Placeholder</div>
-          <img id="hero-img" src={heroImg} />
+          <img id="hero-img" alt="hero" src={heroImg} />
           <Fade top>
             <h1>Scheduling your employees is hard.</h1>
             <p>
