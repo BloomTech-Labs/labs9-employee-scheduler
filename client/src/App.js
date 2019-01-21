@@ -156,6 +156,11 @@ class App extends Component {
               />
               <PrivateRoute
                 access="admin"
+                path="/hours-of-operation"
+                component={HoursOfOperation}
+              />
+              <PrivateRoute
+                access="admin"
                 path="/shift-calendar"
                 component={CreateSchedule}
               />

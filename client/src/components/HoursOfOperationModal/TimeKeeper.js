@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
 import moment from 'moment'
+import styled from '@emotion/styled'
+import system from '../../design/theme'
+import propTypes from 'prop-types'
 
 class TimeKeeper extends Component {
   constructor(props) {
@@ -14,7 +17,7 @@ class TimeKeeper extends Component {
 
   //sets the chosen time on state and assigns it to openTime or closeTime depending on if this.props.name is 'open' or 'close'
   handleTimeChange = newTime => {
-    // function that takes in an input and coverts it from a string of '12:00' to a a number of 12.00 to match server side data format
+    // function that takes in an input and coverts it from a string of '12:30' to a number of 12.5 to match server side data format
     const convert = num => {
       const newTime = num.split(':').map(num => parseInt(num))
       const result = newTime[0] + newTime[1] / 60
@@ -35,9 +38,8 @@ class TimeKeeper extends Component {
   }
 
   render() {
-    // console.log(this.state.time)
     return (
-      <div>
+      <Container>
         <Timekeeper
           time={this.state.time}
           name={this.props.name}
@@ -48,9 +50,29 @@ class TimeKeeper extends Component {
               : this.props.saveAndClose(this.state.closeTime)
           }
         />
-      </div>
+        <p>{this.props.day}</p>
+      </Container>
     )
   }
 }
 
 export default TimeKeeper
+
+TimeKeeper.propTypes = {
+  handleTimeChange: propTypes.func.isRequired,
+  saveAndClose: propTypes.func.isRequired,
+  time: propTypes.string.isRequired
+}
+
+const Container = styled('div')`
+  padding: ${system.spacing.standardPadding};
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  p {
+    font-size: ${system.fontSizing.ml};
+    text-align: center;
+    margin-top: 20px;
+  }
+`
