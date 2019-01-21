@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Timekeeper from 'react-timekeeper'
 import moment from 'moment'
+import styled from '@emotion/styled'
+import system from '../../design/theme'
 
 class TimeKeeper extends Component {
   constructor(props) {
@@ -37,7 +39,7 @@ class TimeKeeper extends Component {
   render() {
     // console.log(this.state.time)
     return (
-      <div>
+      <Container>
         <Timekeeper
           time={this.state.time}
           name={this.props.name}
@@ -49,9 +51,22 @@ class TimeKeeper extends Component {
           }
         />
         <p>{this.props.day}</p>
-      </div>
+      </Container>
     )
   }
 }
 
 export default TimeKeeper
+
+const Container = styled('div')`
+  padding: ${system.spacing.standardPadding};
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  p {
+    font-size: ${system.fontSizing.ml};
+    text-align: center;
+    margin-top: 20px;
+  }
+`

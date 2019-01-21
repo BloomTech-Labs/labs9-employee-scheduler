@@ -95,12 +95,12 @@ class HoursOfOperation extends Component {
     this.props.editOpenHours(dayId, time, this.props.token)
   }
 
-  closedAllDay = () => {
+  closedAllDay = (e, idx) => {
+    e.preventDefault()
+    e.stopPropagation()
     const { dayId } = this.state
     let closed
-    this.props.hours.hours[this.state.dayId].closed === 1
-      ? (closed = 0)
-      : (closed = 1)
+    this.props.hours.hours[idx].closed === 1 ? (closed = 0) : (closed = 1)
     this.setState({
       isOpen: false,
       isClose: false
@@ -110,9 +110,10 @@ class HoursOfOperation extends Component {
   }
 
   render() {
+    console.log(this.props.hours.hours)
     return (
       <Container>
-        {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
+        {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
 
         {this.state.isOpen === true ? (
           <Zoom right>
@@ -143,7 +144,13 @@ class HoursOfOperation extends Component {
                 day={this.state.days[day]}
                 name={day}
                 showHandleHours={e => this.showHandleHours(e, i)}
-                closedAllDay={this.closedAllDay}
+                closedAllDay={e => this.closedAllDay(e, i)}
+                // closed={
+                //   this.props.user.organization_id &&
+                //   this.props.hours.hours.closed
+                //     ? 'closed'
+                //     : null
+                // }
               >
                 {this.props.children}
               </Button>

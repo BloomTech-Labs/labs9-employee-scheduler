@@ -9,11 +9,18 @@ const Button = ({
   id,
   day,
   name,
-  closedAllDay
+  closedAllDay,
+  closed
 }) => {
   return (
     <Container>
-      <button name={name} onClick={showHandleHours} className="days" id={id}>
+      <button
+        closed={closed}
+        name={name}
+        onClick={showHandleHours}
+        className="days"
+        id={id}
+      >
         {name}
       </button>
       {day === true ? (
@@ -68,6 +75,7 @@ const Container = styled('div')`
       margin: 5px;
       font-size: 1.8rem;
       border: transparent;
+      opacity: ${props => (props.closed ? '0.4' : '1')};
     }
   }
   .container {
