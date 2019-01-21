@@ -44,15 +44,14 @@ const getOrg = id => db('organizations').where('id', id)
 
 const addOrg = org => {
   const id = org.id ? org.id : uuid()
-  console.log(id)
   return db('organizations')
     .insert({ id, ...org })
     .then(res => {
-      console.log(res)
-      insertHoursForNewOrg(id)
+      console.log(id)
+      return insertHoursForNewOrg(id)
     })
     .then(res => {
-      console.log(res)
+      console.log(id)
       return id
     })
 }

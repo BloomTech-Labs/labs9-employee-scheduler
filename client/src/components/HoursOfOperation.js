@@ -75,7 +75,7 @@ class HoursOfOperation extends Component {
         dayId: hours[idx].id //keep the data for this day on state
       })
     } else {
-      console.log('it is empty')
+      console.log('No hours in database')
     }
   }
 
