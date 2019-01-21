@@ -51,11 +51,11 @@ export const fetchHoursFromDB = (orgID, token) => async dispatch => {
 }
 
 // sets a day to closed all day or not
-export const closeAndOpenHours = (orgId, changes, token) => async dispatch => {
+export const closeAndOpenHours = (dayId, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
-      `${baseUrl}/hours-of-operation/${orgId}`,
-      { close: changes },
+      `${baseUrl}/hours-of-operation/${dayId}`,
+      { closed: changes },
       { headers: { authorization: token } }
     )
     dispatch({ type: HOURS_UPDATED, payload: req.data })

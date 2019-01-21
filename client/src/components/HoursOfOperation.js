@@ -78,7 +78,6 @@ class HoursOfOperation extends Component {
   saveOpenTime = time => {
     const { dayId } = this.state
     this.setState({
-      dayData: { ...this.state.dayData, open_time: time },
       isOpen: false,
       isClose: false
     })
@@ -89,7 +88,6 @@ class HoursOfOperation extends Component {
   saveCloseTime = time => {
     const { dayId } = this.state
     this.setState({
-      dayData: { ...this.state.dayData, close_time: time },
       isOpen: false,
       isClose: false
     })
@@ -98,10 +96,17 @@ class HoursOfOperation extends Component {
   }
 
   closedAllDay = () => {
-    // const { organization_id } = this.props.user
-    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
+    const { dayId } = this.state
+    let closed
+    this.props.hours.hours[this.state.dayId].closed === 1
+      ? (closed = 0)
+      : (closed = 1)
+    this.setState({
+      isOpen: false,
+      isClose: false
+    })
 
-    // this.props.closeAndOpenHours(organization_id, hours, this.props.token)
+    this.props.editOpenHours(dayId, closed, this.props.token)
   }
 
   render() {

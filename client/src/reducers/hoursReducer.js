@@ -53,7 +53,15 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case CLOSE_HOURS_UPDATED:
       return {
-        hours: { close_time: action.payload },
+        hours: state.hours.map((item, index) => {
+          if (index !== action.index) {
+            return item
+          }
+          return {
+            ...item,
+            ...action.item
+          }
+        }),
         loading: false,
         error: ''
       }
