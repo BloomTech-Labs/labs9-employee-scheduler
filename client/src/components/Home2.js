@@ -250,6 +250,14 @@ const Container = styled('div')`
     }
   }
 
+  #features {
+    .card {
+      h2 {
+        color: ${system.color.primary};
+      }
+    }
+  }
+
   #social-proof {
     .card {
       background: #333;
