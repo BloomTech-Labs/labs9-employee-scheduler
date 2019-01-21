@@ -83,18 +83,18 @@ class HoursOfOperation extends Component {
       isClose: false
     })
 
-    //  this function takes org id, user token, and new updated time data
     this.props.editOpenHours(dayId, time, this.props.token)
   }
 
   saveCloseTime = time => {
-    // const { organization_id } = this.props.user
-    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    if (organization_id) {
-      this.props.editCloseHours(organization_id, time, this.props.token)
-      // this opens and closes the clock
-      this.setState({ isOpen: false, isClose: false, time: time })
-    }
+    const { dayId } = this.state
+    this.setState({
+      dayData: { ...this.state.dayData, close_time: time },
+      isOpen: false,
+      isClose: false
+    })
+
+    this.props.editOpenHours(dayId, time, this.props.token)
   }
 
   closedAllDay = () => {
