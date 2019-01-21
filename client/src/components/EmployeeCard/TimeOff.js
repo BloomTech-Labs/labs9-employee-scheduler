@@ -151,7 +151,9 @@ const PTO = styled.div`
           ? system.color.success
           : props.status === 'denied'
           ? system.color.danger
-          : system.color.lightgrey};
+          : props.pool && props.status === 'pending'
+          ? system.color.lightgrey
+          : system.color.bodytext};
       font-size: ${props =>
         props.pool ? system.fontSizing.sm : system.fontSizing.s};
       font-weight: ${props => (props.pool ? 'bold' : 'normal')};
