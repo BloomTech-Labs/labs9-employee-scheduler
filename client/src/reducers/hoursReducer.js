@@ -30,8 +30,6 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case HOURS_UPDATED: // set day to closed
       const { hourId, changes } = action.payload
-      console.log(hourId)
-      console.log(changes)
       return {
         hours: state.hours.map(item => {
           // if this is not the item I want to update, leave it alone

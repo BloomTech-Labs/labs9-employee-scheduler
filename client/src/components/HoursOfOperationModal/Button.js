@@ -10,9 +10,7 @@ const Button = ({
   id,
   day,
   name,
-  // closedAllDay,
-  handleCheck,
-  isChecked
+  closedAllDay
 }) => {
   return (
     <Container>
@@ -29,13 +27,9 @@ const Button = ({
               close
             </button>
           </div>
-          <label className="container">
-            <Checkbox
-              handleCheck={handleCheck}
-              checked={isChecked}
-              name={name}
-            />
-          </label>
+          <div className="container">
+            <Checkbox closedAllDay={closedAllDay} />
+          </div>
         </Zoom>
       ) : null}
     </Container>
@@ -81,8 +75,8 @@ const Container = styled('div')`
     justify-items: center;
     height: 6px;
     position: relative;
-    padding-left: 35px;
     margin-bottom: 12px;
+    padding: 0 15px;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;

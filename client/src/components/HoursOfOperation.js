@@ -166,8 +166,7 @@ class HoursOfOperation extends Component {
                 day={this.state.days[day]}
                 name={day}
                 showHandleHours={e => this.showHandleHours(e, i)}
-                // closedAllDay={e => this.closedAllDay(e, i)}
-                handleCheck={this.handleCheck}
+                closedAllDay={e => this.closedAllDay(e, i)}
               >
                 {this.props.children}
               </Button>
