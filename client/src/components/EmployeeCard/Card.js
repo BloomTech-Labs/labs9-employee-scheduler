@@ -14,7 +14,9 @@ class Card extends Component {
       first_name,
       last_name,
       email,
+      emailpref,
       phone,
+      phonepref,
       availabilities,
       time_off_requests
     } = this.props
@@ -24,10 +26,16 @@ class Card extends Component {
         <P main>{`${first_name} ${last_name}`}</P>
 
         {/* Employee Email */}
-        <P>{email}</P>
+        <P>
+          {email}
+          {Boolean(emailpref) ? <span> (pref)</span> : null}
+        </P>
 
         {/* Employee Phone */}
-        <P>{phone}</P>
+        <P>
+          {phone}
+          {Boolean(phonepref) ? <span> (pref)</span> : null}
+        </P>
 
         <div>
           {/* the below two things should conditionally render based on whether there is data or not */}
@@ -71,4 +79,10 @@ const P = styled.p`
   font-size: ${props =>
     props.main ? system.fontSizing.m : system.fontSizing.sm};
   line-height: ${system.spacing.lineHeight};
+
+  span {
+    font-size: ${system.fontSizing.s};
+    color: ${system.color.bodytext};
+    font-weight: bold;
+  }
 `
