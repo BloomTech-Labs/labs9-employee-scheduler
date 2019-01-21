@@ -13,7 +13,23 @@ class LeftSideBar extends Component {
     show: false
   }
 
+  componentWillUnmount() {
+    // cleans up the event listener for handling clicks outside the nav
+    if (this.state.show) {
+      document.removeEventListener('click', this.handlePageClick)
+    }
+  }
+
+  handlePageClick = e => {
+    this.toggleShow()
+  }
+
   toggleShow = () => {
+    if (!this.state.show) {
+      document.addEventListener('click', this.handlePageClick)
+    } else {
+      document.removeEventListener('click', this.handlePageClick)
+    }
     this.setState({ show: !this.state.show })
   }
 
