@@ -3,6 +3,7 @@ import Timekeeper from 'react-timekeeper'
 import moment from 'moment'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import propTypes from 'prop-types'
 
 class TimeKeeper extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class TimeKeeper extends Component {
 
   //sets the chosen time on state and assigns it to openTime or closeTime depending on if this.props.name is 'open' or 'close'
   handleTimeChange = newTime => {
-    // function that takes in an input and coverts it from a string of '12:00' to a a number of 12.00 to match server side data format
+    // function that takes in an input and coverts it from a string of '12:30' to a number of 12.5 to match server side data format
     const convert = num => {
       const newTime = num.split(':').map(num => parseInt(num))
       const result = newTime[0] + newTime[1] / 60
@@ -37,7 +38,6 @@ class TimeKeeper extends Component {
   }
 
   render() {
-    // console.log(this.state.time)
     return (
       <Container>
         <Timekeeper
@@ -57,6 +57,12 @@ class TimeKeeper extends Component {
 }
 
 export default TimeKeeper
+
+TimeKeeper.propTypes = {
+  handleTimeChange: propTypes.func.isRequired,
+  saveAndClose: propTypes.func.isRequired,
+  time: propTypes.string.isRequired
+}
 
 const Container = styled('div')`
   padding: ${system.spacing.standardPadding};

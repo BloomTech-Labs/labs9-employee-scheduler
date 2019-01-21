@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import Zoom from 'react-reveal'
+import Checkbox from './Checkbox'
 
 const Button = ({
   handleHours,
@@ -9,18 +10,13 @@ const Button = ({
   id,
   day,
   name,
-  closedAllDay,
-  closed
+  // closedAllDay,
+  handleCheck,
+  isChecked
 }) => {
   return (
     <Container>
-      <button
-        closed={closed ? closed : null}
-        name={name}
-        onClick={showHandleHours}
-        className="days"
-        id={id}
-      >
+      <button name={name} onClick={showHandleHours} className="days" id={id}>
         {name}
       </button>
       {day === true ? (
@@ -34,9 +30,11 @@ const Button = ({
             </button>
           </div>
           <label className="container">
-            <p>Closed All Day</p>
-            <input type="checkbox" />
-            <span className="checkmark" onClick={closedAllDay} />
+            <Checkbox
+              handleCheck={handleCheck}
+              checked={isChecked}
+              name={name}
+            />
           </label>
         </Zoom>
       ) : null}
@@ -75,7 +73,6 @@ const Container = styled('div')`
       margin: 5px;
       font-size: 1.8rem;
       border: transparent;
-      opacity: ${props => (props.closed ? '0.4' : '1')};
     }
   }
   .container {
@@ -96,59 +93,5 @@ const Container = styled('div')`
       font-size: ${system.fontSizing.s};
       height: 100%;
     }
-  }
-
-  /* Hide the browser's default checkbox */
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-  }
-
-  /* On mouse-over, add a grey background color */
-  .container:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-
-  /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
-    background-color: #2196f3;
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
-
-  /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  /* Style the checkmark/indicator */
-  .container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
   }
 `
