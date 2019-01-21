@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -36,6 +37,18 @@ class Scheduler extends React.Component {
     }
   }
 
+  deleteEvent = event => {
+    console.log(event)
+    const { title, start, end } = event
+    const eventText = `${title}
+    Begin: ${moment(start).format('ddd, MMMM Do, h:mm a')} 
+    End: ${moment(end).format('ddd, MMMM Do, h:mm a')} 
+    `
+    const r = window.confirm(
+      'Would you like to cancel this shift?\n\n' + eventText
+    )
+  }
+
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
 
@@ -67,6 +80,7 @@ class Scheduler extends React.Component {
         />
         <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
           <DropCal
+            popover
             events={events}
             eventPropGetter={event => ({
               className: event.title.split(' ')[0]
@@ -76,6 +90,7 @@ class Scheduler extends React.Component {
             onEventDrop={this.moveEvent}
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
+            onSelectEvent={this.deleteEvent}
           />
           <WeekSummary events={events} />
         </div>
