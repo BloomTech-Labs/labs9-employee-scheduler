@@ -4,7 +4,7 @@ const system = {
     hoverDanger: '#b30000',
     success: '#2D936C', // green for approval, success, happy path actions, etc.
     hoverSuccess: '#33a77a',
-    primary: '#115599', // calm & deep blue for main color fields in app. Can be used for headers as well.
+    primary: '#535fd7', // vibrant purple for energy // alt is 26368b: calm & deep blue for main color fields in app. Can be used for headers as well.
     hoverPrimary: '#1462b0',
     neutral: '#f4f4f4', // for backgrounds & expanses of white space
     bodytext: '#333333', // for large sections of copy

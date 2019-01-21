@@ -42,7 +42,6 @@ const generateHoursOfOperation = (org_id = uuid()) => {
 
 // Generates a group of orgs' hours of operation based off a list of ids
 const generateAllHoursOfOperation = ids => {
-  console.log(ids)
   return ids.reduce((acc, id) => {
     const theseHours = generateHoursOfOperation(id)
     return [...acc, ...theseHours]
@@ -314,7 +313,6 @@ const insertOrg = (
 // Second: a cleanup function, which is an async function that should be
 // called to clean up the database afterwards
 const generateTeamData = async (knex, size) => {
-  console.log(size)
   const team = populateOrg({ size })
   await insertOrg(team, knex)
 

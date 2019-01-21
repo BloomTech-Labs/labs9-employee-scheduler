@@ -51,9 +51,8 @@ router.post('/', authorize(['owner']), async (req, res) => {
 
 router.put('/:id', authorize(['owner']), async (req, res) => {
   const { id } = req.params
-  const { organization_id, paid } = req.body
 
-  if (!organization_id && !paid) {
+  if (!Object.keys(req.body).length) {
     return res.status(400).json({ error: 'No fields provided to update' })
   }
 

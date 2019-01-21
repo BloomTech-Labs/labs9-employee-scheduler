@@ -61,17 +61,13 @@ export const employeesReducer = (state = initialState, action) => {
     }
     case UPDATE_EVENT: {
       const { payload: event } = action
-      console.log(event)
-      console.log(state)
       return {
         ...state,
         employees: state.employees.map(employee => {
-          console.log(employee)
           if (employee.id === event.user_id) {
             return {
               ...employee,
               events: employee.events.map(candidate => {
-                console.log(candidate.id, event.id)
                 if (candidate.id === event.id) {
                   return event
                 } else {

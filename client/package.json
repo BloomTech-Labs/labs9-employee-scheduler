@@ -10,9 +10,9 @@
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
+    "react-big-calendar": "^0.20.3",
     "react-datepicker": "^2.0.0",
-    "react-big-calendar": "^0.19.2",
-    "react-dnd": "2.6.0",
+    "react-dnd": "^7.0.2",
     "react-dnd-html5-backend": "^7.0.2",
     "react-dom": "^16.7.0",
     "react-firebaseui": "^3.1.2",
@@ -41,6 +41,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "firebase-mock": "^2.2.10",
     "history": "^4.7.2",
     "jest-dom": "^3.0.0",
     "react-testing-library": "^5.4.4"

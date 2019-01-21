@@ -1,29 +1,52 @@
 import React from 'react'
 import { DragSource } from 'react-dnd'
 import EmployeeCard from '../EmployeeCard/Card'
+import circle from '../../img/circle.svg'
 import styled from '@emotion/styled'
+import system from '../../design/theme'
 
-const EmployeeEvent = props => {
-  const { connectDragSource, event, employee } = props
-  return connectDragSource(
-    <div style={{ opacity: props.isDragging ? '.7' : undefined }}>
-      <EmployeeCard {...employee} />
-    </div>
-  )
+class EmployeeEvent extends React.Component {
+  componentDidMount() {
+    const { connectDragPreview } = this.props
+    const img = new Image()
+    img.src = circle
+    img.onload = () => connectDragPreview(img)
+  }
+  render() {
+    const { connectDragSource, isDragging, employee } = this.props
+
+    return connectDragSource(
+      <div style={{ opacity: isDragging ? '.7' : undefined }}>
+        <EmployeeCard {...employee} />
+      </div>
+    )
+  }
 }
 
 const eventSource = {
   beginDrag(props) {
-    return { event: { ...props.employee, type: 'new_shift' }, anchor: 'drop' }
+    const { employee, updateDragState } = props
+    updateDragState(employee)
+    return {}
   },
-  endDrag(props) {}
+  endDrag(props, monitor) {
+    if (monitor.didDrop()) {
+      props.updateDragState(null)
+    }
+  }
 }
 
 const collectSource = (connect, monitor) => {
   return {
     isDragging: monitor.isDragging(),
-    connectDragSource: connect.dragSource()
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview()
   }
 }
 
-export default DragSource('event', eventSource, collectSource)(EmployeeEvent)
+const DragNameCard = styled.h2`
+  padding: ${system.spacing.bigPadding};
+  font-size: ${system.fontSizing.ml};
+`
+
+export default DragSource('SHIFT', eventSource, collectSource)(EmployeeEvent)

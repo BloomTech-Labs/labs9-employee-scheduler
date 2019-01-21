@@ -17,7 +17,9 @@ export default function Calendar(props) {
     style.push(`.${names[i]} {background: ${colors[i]};}`)
   }
 
-  return <StyledCalendar {...props} colors={style.join(' ')} localizer />
+  return (
+    <StyledCalendar {...props} colors={style.join(' ')} localizer={localizer} />
+  )
 }
 
 const StyledCalendar = styled(BigCalendar)`
