@@ -13,8 +13,28 @@ class LeftSideBar extends Component {
     show: false
   }
 
+  ref = React.createRef()
+
+  handlePageClick = e => {
+    const nav = this.ref.current
+    if (!nav.contains(e.target)) {
+      this.toggleShow()
+    }
+  }
+
   toggleShow = () => {
+    if (!this.state.show) {
+      document.addEventListener('click', this.handlePageClick)
+    } else {
+      document.removeEventListener('click', this.handlePageClick)
+    }
     this.setState({ show: !this.state.show })
+  }
+
+  componentWillUnmount() {
+    if (this.state.show) {
+      document.removeEventListener('click', this.handlePageClick)
+    }
   }
 
   render() {
@@ -26,7 +46,7 @@ class LeftSideBar extends Component {
           &#9776;
         </Hamburger>
         <Fade left when={this.state.show}>
-          <Nav show={this.state.show}>
+          <Nav show={this.state.show} ref={this.ref}>
             {/* render the uneditable calendar page for employees */}
             {role === 'employees' ? (
               <NavItem to="/calendar">Calendar</NavItem>
