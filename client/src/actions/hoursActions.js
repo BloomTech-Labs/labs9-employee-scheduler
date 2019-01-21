@@ -17,7 +17,7 @@ export const editOpenHours = (hourId, changes, token) => async dispatch => {
       { open_time: changes },
       { headers: { authorization: token } }
     )
-    await dispatch({ type: OPEN_HOURS_UPDATED, payload: changes })
+    await dispatch({ type: OPEN_HOURS_UPDATED, payload: { hourId, changes } })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }
@@ -31,7 +31,7 @@ export const editCloseHours = (hourId, changes, token) => async dispatch => {
       { close_time: changes },
       { headers: { authorization: token } }
     )
-    dispatch({ type: CLOSE_HOURS_UPDATED, payload: req.data })
+    dispatch({ type: CLOSE_HOURS_UPDATED, payload: { hourId, changes } })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }
@@ -51,14 +51,14 @@ export const fetchHoursFromDB = (orgID, token) => async dispatch => {
 }
 
 // sets a day to closed all day or not
-export const closeAndOpenHours = (dayId, changes, token) => async dispatch => {
+export const closeAndOpenHours = (hourId, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
-      `${baseUrl}/hours-of-operation/${dayId}`,
+      `${baseUrl}/hours-of-operation/${hourId}`,
       { closed: changes },
       { headers: { authorization: token } }
     )
-    dispatch({ type: HOURS_UPDATED, payload: req.data })
+    dispatch({ type: HOURS_UPDATED, payload: { hourId, changes } })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }

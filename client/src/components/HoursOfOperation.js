@@ -106,11 +106,10 @@ class HoursOfOperation extends Component {
       isClose: false
     })
 
-    this.props.editOpenHours(dayId, closed, this.props.token)
+    this.props.closeAndOpenHours(dayId, closed, this.props.token)
   }
 
   render() {
-    console.log(this.props.hours.hours)
     return (
       <Container>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
@@ -146,10 +145,7 @@ class HoursOfOperation extends Component {
                 showHandleHours={e => this.showHandleHours(e, i)}
                 closedAllDay={e => this.closedAllDay(e, i)}
                 // closed={
-                //   this.props.user.organization_id &&
-                //   this.props.hours.hours.closed
-                //     ? 'closed'
-                //     : null
+                //   this.props.hours.hours[i].closed === 0 ? 'true' : 'false'
                 // }
               >
                 {this.props.children}

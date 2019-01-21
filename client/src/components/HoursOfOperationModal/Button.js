@@ -15,7 +15,7 @@ const Button = ({
   return (
     <Container>
       <button
-        closed={closed}
+        closed={closed ? closed : null}
         name={name}
         onClick={showHandleHours}
         className="days"

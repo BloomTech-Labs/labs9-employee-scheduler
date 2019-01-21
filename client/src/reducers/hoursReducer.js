@@ -29,23 +29,35 @@ export const hoursReducer = (state = initialState, action) => {
         error: ''
       }
     case HOURS_UPDATED: // set day to closed
+      const { hourId, changes } = action.payload
+      console.log(hourId)
+      console.log(changes)
       return {
-        ...state,
-        hours: action.payload,
-        loading: false,
-        error: ''
-      }
-    case OPEN_HOURS_UPDATED:
-      return {
-        hours: state.hours.map((item, index) => {
+        hours: state.hours.map(item => {
           // if this is not the item I want to update, leave it alone
-          if (index !== action.index) {
+          if (item.id !== hourId) {
             return item
           }
           // else return the an updated value
           return {
             ...item,
-            ...action.item
+            closed: changes
+          }
+        }),
+        loading: false,
+        error: ''
+      }
+    case OPEN_HOURS_UPDATED:
+      return {
+        hours: state.hours.map(item => {
+          // if this is not the item I want to update, leave it alone
+          if (item.id !== hourId) {
+            return item
+          }
+          // else return the an updated value
+          return {
+            ...item,
+            open_time: changes
           }
         }),
         loading: false,
@@ -53,13 +65,13 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case CLOSE_HOURS_UPDATED:
       return {
-        hours: state.hours.map((item, index) => {
-          if (index !== action.index) {
+        hours: state.hours.map(item => {
+          if (item.id !== hourId) {
             return item
           }
           return {
             ...item,
-            ...action.item
+            close_time: changes
           }
         }),
         loading: false,
