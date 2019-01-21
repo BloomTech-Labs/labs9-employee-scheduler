@@ -5,7 +5,8 @@ const {
   getOrg,
   addOrg,
   updateOrg,
-  deleteOrg
+  deleteOrg,
+  insertHoursForNewOrg
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
@@ -42,6 +43,7 @@ router.post('/', authorize(['owner']), async (req, res) => {
   try {
     const id = await addOrg(req.body)
     const newOrg = await getOrg(id)
+    await insertHoursForNewOrg(newOrg)
     res.status(201).json(newOrg)
   } catch (error) {
     console.log(error)
