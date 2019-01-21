@@ -39,9 +39,16 @@ class Card extends Component {
 
         <div>
           {/* the below two things should conditionally render based on whether there is data or not */}
-          <Availability availabilities={availabilities} />
+          {availabilities && availabilities.length ? (
+            <Availability availabilities={availabilities} />
+          ) : null}
 
-          <TimeOff timeOffRequests={time_off_requests} view={this.props.view} />
+          {time_off_requests && time_off_requests.length ? (
+            <TimeOff
+              timeOffRequests={time_off_requests}
+              view={this.props.view}
+            />
+          ) : null}
         </div>
       </Container>
     )
