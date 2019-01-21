@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
-//updates hours of operation by organization id
+//updates hours of operation by hours id
 router.put('/:id', (req, res) => {
   const { id } = req.params
   updateHoursOfOperation(id, req.body)

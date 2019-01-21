@@ -10,14 +10,14 @@ export const HOURS_LOADING = 'HOURS_LOADING'
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
 // edits the open time for a specific day
-export const editOpenHours = (orgID, changes, token) => async dispatch => {
+export const editOpenHours = (hourId, changes, token) => async dispatch => {
   try {
     const req = await axios.put(
-      `${baseUrl}/hours-of-operation/${orgID}`,
-      [...changes],
+      `${baseUrl}/hours-of-operation/${hourId}`,
+      { open_time: changes },
       { headers: { authorization: token } }
     )
-    dispatch({ type: OPEN_HOURS_UPDATED, payload: req.data })
+    await dispatch({ type: OPEN_HOURS_UPDATED, payload: changes })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }

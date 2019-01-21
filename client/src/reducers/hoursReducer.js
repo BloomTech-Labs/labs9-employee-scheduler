@@ -37,7 +37,9 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case OPEN_HOURS_UPDATED:
       return {
-        hours: action.payload,
+        hours: state.hours.map(item =>
+          item.id === action.payload.id ? action.payload : item
+        ),
         loading: false,
         error: ''
       }

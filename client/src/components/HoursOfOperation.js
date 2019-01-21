@@ -30,10 +30,7 @@ class HoursOfOperation extends Component {
         friday: false,
         saturday: false
       },
-      allDayData: [], // keeps all days data
-      dayData: {}, // keeps individual day data
-      selectedIndex: null, // keeps selected index of the day saved
-      error: ''
+      dayId: '' // selected day id
     }
   }
 
@@ -65,42 +62,29 @@ class HoursOfOperation extends Component {
     e.preventDefault()
     e.stopPropagation()
 
-    // const { organization_id } = this.props.user
-
     const { hours } = this.props.hours
-    const parsedDay = idx
     const { days } = this.state
-    console.log(parsedDay)
+
     this.setState({
       days: {
         ...days,
         [e.target.name]: !days[e.target.name] //change individual day
       },
-      dayData: hours[parsedDay], //keep the data for this day on state
-      allDayData: hours, // saves data of all days to state
-      selectedIndex: parsedDay // sends selected day index num to state
+      dayId: hours[idx].id //keep the data for this day on state
     })
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
-    // const { organization_id } = this.props.user
-    const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
-    console.log(time)
-    const { allDayData, dayData, selectedIndex } = this.state
+    const { dayId } = this.state
     this.setState({
       dayData: { ...this.state.dayData, open_time: time },
       isOpen: false,
       isClose: false
     })
 
-    // check all of the days in state and replace the edited one
-    const replaceDate = allDayData.map((item, i) =>
-      i === selectedIndex ? (item = dayData) : item
-    )
-    const sendData = replaceDate
     //  this function takes org id, user token, and new updated time data
-    this.props.editOpenHours(organization_id, sendData, this.props.token)
+    this.props.editOpenHours(dayId, time, this.props.token)
   }
 
   saveCloseTime = time => {
