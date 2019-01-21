@@ -5,7 +5,12 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
-import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
+import {
+  fetchEmployeesFromDB,
+  createEvent,
+  changeEvent,
+  deleteEvent
+} from '../../actions'
 
 import WeekSummary from './WeekSummary'
 
@@ -38,7 +43,6 @@ class Scheduler extends React.Component {
   }
 
   deleteEvent = event => {
-    console.log(event)
     const { title, start, end } = event
     const eventText = `${title}
     Begin: ${moment(start).format('ddd, MMMM Do, h:mm a')} 
@@ -47,6 +51,10 @@ class Scheduler extends React.Component {
     const r = window.confirm(
       'Would you like to cancel this shift?\n\n' + eventText
     )
+
+    if (r) {
+      return this.props.deleteEvent(event)
+    }
   }
 
   updateDragState = (draggedEmployee = null) =>
@@ -104,5 +112,5 @@ const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent, changeEvent }
+  { fetchEmployeesFromDB, createEvent, changeEvent, deleteEvent }
 )(DragSched)
