@@ -37,9 +37,17 @@ export const hoursReducer = (state = initialState, action) => {
       }
     case OPEN_HOURS_UPDATED:
       return {
-        hours: state.hours.map(item =>
-          item.id === action.payload.id ? action.payload : item
-        ),
+        hours: state.hours.map((item, index) => {
+          // if this is not the item I want to update, leave it alone
+          if (index !== action.index) {
+            return item
+          }
+          // else return the an updated value
+          return {
+            ...item,
+            ...action.item
+          }
+        }),
         loading: false,
         error: ''
       }
