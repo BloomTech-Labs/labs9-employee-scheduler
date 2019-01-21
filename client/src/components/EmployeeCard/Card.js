@@ -18,7 +18,6 @@ class Card extends Component {
       availabilities,
       time_off_requests
     } = this.props
-
     return (
       <Container>
         {/* Employee Name */}
@@ -31,8 +30,10 @@ class Card extends Component {
         <P>{phone}</P>
 
         <div>
+          {/* the below two things should conditionally render based on whether there is data or not */}
           <Availability availabilities={availabilities} />
-          <TimeOff timeOffRequests={time_off_requests} />
+
+          <TimeOff timeOffRequests={time_off_requests} view={this.props.view} />
         </div>
       </Container>
     )
