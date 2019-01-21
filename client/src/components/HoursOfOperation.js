@@ -61,15 +61,16 @@ class HoursOfOperation extends Component {
   }
 
   // slides out clock
-  showHandleHours = e => {
+  showHandleHours = (e, idx) => {
     e.preventDefault()
     e.stopPropagation()
 
     // const { organization_id } = this.props.user
-    const unParsedDay = e.target.id
+
     const { hours } = this.props.hours
-    const parsedDay = parseInt(unParsedDay)
+    const parsedDay = idx
     const { days } = this.state
+    console.log(parsedDay)
     this.setState({
       days: {
         ...days,
@@ -152,7 +153,7 @@ class HoursOfOperation extends Component {
                 handleHours={this.handleHours}
                 day={this.state.days[day]}
                 name={day}
-                showHandleHours={this.showHandleHours}
+                showHandleHours={e => this.showHandleHours(e, i)}
                 closedAllDay={this.closedAllDay}
               >
                 {this.props.children}
