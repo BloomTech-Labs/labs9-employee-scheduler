@@ -6,7 +6,7 @@ import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
-import Home from './components/Home'
+import Home2 from './components/Home2'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
@@ -130,28 +130,34 @@ class App extends Component {
             }
           `}
         />
-
-        <Route
-          exact
-          path="/"
-          render={props => {
-            if (user && (user.role === 'owner' || user.role === 'supervisor')) {
-              return <Redirect to="/shift-calendar" />
-            } else if (user && user.role === 'employee') {
-              return <Redirect to="/dashboard" />
-            } else {
-              return <Home {...props} />
-            }
-          }}
-        />
-
         <StripeProvider stripe={this.state.stripe}>
           <Elements>
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => {
+                  if (
+                    user &&
+                    (user.role === 'owner' || user.role === 'supervisor')
+                  ) {
+                    return <Redirect to="/shift-calendar" />
+                  } else if (user && user.role === 'employee') {
+                    return <Redirect to="/dashboard" />
+                  } else {
+                    return <Home2 {...props} />
+                  }
+                }}
+              />
               <PrivateRoute
                 access="admin"
                 path="/employees"
                 component={Employees}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/hours-of-operation"
+                component={HoursOfOperation}
               />
               <PrivateRoute
                 access="admin"
@@ -179,11 +185,6 @@ class App extends Component {
                 component={Settings}
               />
               <Route path="/register" component={RegisterOwner} />
-              <Route path="/billing" component={Billing} />
-              <Route path="/calendar" component={Calendar} />
-              <Route path="/dashboard/:id" component={Dashboard} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/hours-of-operation" component={HoursOfOperation} />
               <Route path="/login" render={props => <Login {...props} />} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>

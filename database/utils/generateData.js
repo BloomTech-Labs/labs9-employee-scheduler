@@ -15,12 +15,21 @@ const generateOrgs = ids => ids.map(generateOrg)
 // Generates hours of operation by org id
 const generateHoursOfOperation = (org_id = uuid()) => {
   let hours = []
+  let day = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ]
   for (let i = 0; i < 7; i++) {
     let open = Math.random() > 0.3
     let thisDay = {
       id: uuid(),
       organization_id: org_id,
-      day: generateRandomBetween(0, 6),
+      day: day[i],
       open_time: open ? Math.random() * 12 : 0,
       close_time: open ? Math.random() * 12 + 12 : 24,
       closed: !open
@@ -33,7 +42,6 @@ const generateHoursOfOperation = (org_id = uuid()) => {
 
 // Generates a group of orgs' hours of operation based off a list of ids
 const generateAllHoursOfOperation = ids => {
-  console.log(ids)
   return ids.reduce((acc, id) => {
     const theseHours = generateHoursOfOperation(id)
     return [...acc, ...theseHours]
@@ -206,7 +214,7 @@ const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
   const existingDates = existing.map(day => day.date)
   const statusRand = Math.random()
   const status =
-    statusRand < 0.5 ? 'pending' : statusRand < 0.75 ? 'confirmed' : 'denied'
+    statusRand < 0.5 ? 'pending' : statusRand < 0.75 ? 'approved' : 'denied'
 
   while (day === undefined) {
     const candidate = generateRandomBetween(1, 14)
@@ -305,7 +313,6 @@ const insertOrg = (
 // Second: a cleanup function, which is an async function that should be
 // called to clean up the database afterwards
 const generateTeamData = async (knex, size) => {
-  console.log(size)
   const team = populateOrg({ size })
   await insertOrg(team, knex)
 

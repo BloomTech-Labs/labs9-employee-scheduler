@@ -4,7 +4,7 @@ import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 // import bgImg from '../img/fff.jpg'
-import bg from '../img/bg.jpg' // https://unsplash.com/photos/PypjzKTUqLo img by Roman Bozhko
+import bg from '../img/bg.png' // https://unsplash.com/photos/PypjzKTUqLo img by Roman Bozhko
 import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP8G8 img by STIL
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'

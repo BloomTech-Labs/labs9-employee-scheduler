@@ -17,11 +17,14 @@ class Billing extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      paid: false,
       loading: false,
-      success: false,
+      signupSuccess: false,
+      cancelSuccess: false,
       error: false
     }
     this.submit = this.submit.bind(this)
+    this.cancelSub = this.cancelSub.bind(this)
   }
 
   componentDidMount = () => {
@@ -31,7 +34,12 @@ class Billing extends Component {
   async submit(ev) {
     // User clicked submit
     ev.preventDefault()
-    this.setState({ loading: true, success: false, error: false })
+    this.setState({
+      loading: true,
+      signupSuccess: false,
+      cancelSuccess: false,
+      error: false
+    })
     // Tokenize payment info by sending to Stripe server
     const { token } = await this.props.stripe.createToken({
       name: `${this.props.user.first_name} ${this.props.user.last_name}`
@@ -49,21 +57,119 @@ class Billing extends Component {
       .then(res => {
         this.setState({
           loading: false,
-          success: true,
+          signupSuccess: true,
+          cancelSuccess: false,
           error: false
         })
-        document.querySelector('.StripeElement').reset()
+        this.props.fetchOrgFromDB(
+          this.props.user.organization_id,
+          this.props.token
+        )
       })
-      .catch(err =>
+      .catch(err => {
+        console.log(err)
         this.setState({
           loading: false,
-          success: false,
+          signupSuccess: false,
+          cancelSuccess: false,
           error: true
         })
-      )
+      })
+  }
+
+  cancelSub = ev => {
+    ev.preventDefault()
+    this.setState({
+      loading: true,
+      signupSuccess: false,
+      cancelSuccess: false,
+      error: false
+    })
+    const submission = {
+      subscription_id: this.props.organization.subscription_id,
+      org_id: this.props.user.organization_id
+    }
+    axios
+      .put(`${process.env.REACT_APP_SERVER_URL}/stripe`, submission, {
+        headers: { authorization: this.props.token }
+      })
+      .then(res => {
+        this.props.fetchOrgFromDB(
+          this.props.user.organization_id,
+          this.props.token
+        )
+        this.setState({
+          loading: false,
+          signupSuccess: false,
+          cancelSuccess: true,
+          error: false
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({
+          loading: false,
+          signupSuccess: false,
+          cancelSuccess: false,
+          error: true
+        })
+      })
   }
 
   render() {
+    if (Boolean(this.props.organization.paid)) {
+      return (
+        <OuterContainer height="true">
+          <LeftSideBar />
+          <BreadCrumb location="Billing" />
+
+          <Container>
+            <h1>Billing</h1>
+
+            {this.state.loading ? <Loader /> : null}
+            {this.state.signupSuccess ? (
+              <Status success={this.state.signupSuccess}>
+                You're signed up for our $20/mo plan, with a 14-day free trial!
+                <span role="img" aria-label="smiling eyes emoji">
+                  &#x1F60A;
+                </span>
+              </Status>
+            ) : null}
+            {this.state.cancelSuccess ? (
+              <Status success={this.state.cancelSuccess}>
+                You've successfully canceled your account, but we're sad to see
+                you go.
+                <span role="img" aria-label="weeping emoji">
+                  &#x1F62D;
+                </span>
+              </Status>
+            ) : null}
+            {this.state.error ? (
+              <Status>
+                Something's wrong. Computers make mistakes, too!
+                <span role="img" aria-label="wink emoji">
+                  &#x1F916;
+                </span>
+                Please try again.
+              </Status>
+            ) : null}
+
+            <form onSubmit={this.cancelSub}>
+              <p>
+                This will be a features list to remind you what you're paying
+                for. That damn button below should be crimson... can't figure it
+                out, emotion not playing nice.
+              </p>
+              <Button className="danger" type="submit">
+                Delete
+              </Button>
+              {/* this button should be system.color.danger -- can't figure it out */}
+            </form>
+          </Container>
+        </OuterContainer>
+      )
+    }
+
     return (
       <OuterContainer height="true">
         <LeftSideBar />
@@ -71,19 +177,35 @@ class Billing extends Component {
 
         <Container>
           <h1>Billing</h1>
+
           {this.state.loading ? <Loader /> : null}
-          {this.state.success ? (
-            <Status success={this.state.success}>
-              Great! You're signed up for our $20 / month plan, with a 14-day
-              free trial.
+          {this.state.signupSuccess ? (
+            <Status success={this.state.signupSuccess}>
+              You're signed up for our $20/mo plan, with a 14-day free trial!
+              <span role="img" aria-label="smiling eyes emoji">
+                &#x1F60A;
+              </span>
+            </Status>
+          ) : null}
+          {this.state.cancelSuccess ? (
+            <Status success={this.state.cancelSuccess}>
+              You've successfully canceled your account, but we're sad to see
+              you go.
+              <span role="img" aria-label="weeping emoji">
+                &#x1F62D;
+              </span>
             </Status>
           ) : null}
           {this.state.error ? (
             <Status>
-              Hmm, something's wrong. Computers make mistakes, too! Please try
-              again.
+              Something's wrong. Computers make mistakes, too!
+              <span role="img" aria-label="wink emoji">
+                &#x1F916;
+              </span>
+              Please try again.
             </Status>
           ) : null}
+
           <form onSubmit={this.submit}>
             <CardElement />
             <Button type="submit">Pay</Button>
@@ -98,7 +220,7 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     token: state.auth.token,
-    payment: state.payment
+    organization: state.organization.details
   }
 }
 
@@ -109,6 +231,10 @@ export default connect(
 
 Billing.propTypes = {
   // adding propTypes here
+  user: propTypes.object,
+  fetchOrgFromDB: propTypes.func.isRequired,
+  token: propTypes.string.isRequired,
+  error: propTypes.string
 }
 
 const Container = styled('div')`

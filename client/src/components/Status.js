@@ -8,7 +8,7 @@ const Status = props => {
   return (
     // Pass this component a "success" boolean from your component's state. It will handle the rest.
     <Container success={props.success}>
-      <img src={props.success ? check : x} />
+      <img alt="status icon" src={props.success ? check : x} />
       <p>{props.children}</p>
     </Container>
   )
@@ -33,6 +33,10 @@ const Container = styled.div`
     color: ${system.color.white};
     margin-left: ${system.spacing.bigPadding};
     font-size: ${system.fontSizing.m};
+
+    span {
+      margin: 5px;
+    }
   }
 
   img {
