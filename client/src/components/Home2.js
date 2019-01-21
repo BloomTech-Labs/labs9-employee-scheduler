@@ -204,6 +204,7 @@ const Container = styled('div')`
       height: 270px;
       z-index: 50;
       background: black;
+      box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
     }
 
