@@ -6,6 +6,7 @@ const {
   getInvite,
   addInvite
 } = require('../../database/helpers')
+const sendInvite = require('../utils/email')
 
 const authorize = require('../config/customMiddleware/authorize')
 
@@ -75,5 +76,10 @@ router.post(
     }
   }
 )
+
+router.post('/send-test', (req, res) => {
+  console.log('sending email to test account')
+  sendInvite('samuelmachat@gmail.com')
+})
 
 module.exports = router
