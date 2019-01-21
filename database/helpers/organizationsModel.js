@@ -24,8 +24,9 @@ const insertHoursForNewOrg = org_id => {
     }
     hours.push(thisDay)
   }
-  console.log(hours)
-  return db('hours_of_operation').insert(hours)
+  return db('hours_of_operation')
+    .insert(hours)
+    .returning('id')
 }
 
 // if no param all users
@@ -48,11 +49,9 @@ const addOrg = org => {
   return db('organizations')
     .insert({ id, ...org })
     .then(res => {
-      console.log(res)
-      insertHoursForNewOrg(id)
+      return insertHoursForNewOrg(id)
     })
     .then(res => {
-      console.log(res)
       return id
     })
 }
