@@ -1,4 +1,5 @@
 const db = require('../dbConfig')
+const uuid = require('uuid/v4')
 
 //get hours of operation
 const getHoursOfOperation = orgId => {
@@ -12,7 +13,18 @@ const updateHoursOfOperation = (hourId, updates) => {
     .update(updates)
 }
 
+const addHour = hour => {
+  const id = uuid()
+  return db('hours_of_operation as h')
+    .insert({
+      id,
+      ...hour
+    })
+    .then(() => id)
+}
+
 module.exports = {
   getHoursOfOperation,
-  updateHoursOfOperation
+  updateHoursOfOperation,
+  addHour
 }
