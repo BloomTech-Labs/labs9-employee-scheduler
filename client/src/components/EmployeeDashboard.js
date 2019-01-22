@@ -22,8 +22,10 @@ class EmployeeDashboard extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params
-    this.props.fetchSingleEmployeeFromDB(id)
+    const { id } = this.props.auth
+    if (id) {
+      this.props.fetchSingleEmployeeFromDB(id)
+    }
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -127,6 +129,25 @@ class EmployeeDashboard extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    employee: state.employee,
+    error: state.error,
+    auth: state.auth.user
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchSingleEmployeeFromDB }
+)(EmployeeDashboard)
+
+EmployeeDashboard.propTypes = {
+  employee: propTypes.object,
+  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
+  error: propTypes.string
+}
+
 const Container = styled('div')`
   width: 100%;
   padding: ${system.spacing.container};
@@ -182,20 +203,3 @@ const Container = styled('div')`
     }
   }
 `
-const mapStateToProps = state => {
-  return {
-    employee: state.employee,
-    error: state.error
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { fetchSingleEmployeeFromDB }
-)(EmployeeDashboard)
-
-EmployeeDashboard.propTypes = {
-  employee: propTypes.object,
-  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
-  error: propTypes.string
-}
