@@ -111,33 +111,51 @@ class Scheduler extends React.Component {
       ]
     }, [])
 
-    let hourRange = events.reduce(
-      (acc, event) => {
-        let returnVal = { ...acc }
-        const eventStart = event.start.getHours()
-        const eventEnd = event.end.getHours()
-        if (eventStart < acc.min) {
-          returnVal.min = eventStart
-        }
-        if (eventEnd > acc.max) {
-          returnVal.max = eventEnd
-        }
-        return returnVal
-      },
-      { min: 0, max: 24 }
-    )
-    hourRange = (function() {
+    // calculate hour ranges
+    let hourRange = (function() {
+      let firstDay = hours.find(day => !day.closed)
+      let numRange =
+        !hours.length || !firstDay
+          ? // make sure hours of operation have been received and there is
+            // an open day, otherwise do full day range
+            { min: 0, max: 24 }
+          : hours.reduce(
+              (acc, day) => {
+                let returnVal = { ...acc }
+                const dayStart = day.open_time
+                const dayEnd = day.close_time
+
+                if (day.closed) {
+                  return returnVal
+                }
+                if (dayStart < acc.min) {
+                  returnVal.min = dayStart
+                }
+                if (dayEnd > acc.max) {
+                  returnVal.max = dayEnd
+                }
+                return returnVal
+              },
+              {
+                min: hours[0].open_time,
+                max: hours[0].close_time
+              }
+            )
+      // convert hour ranges into dates as this is what react-big-calendar consumes
       let today = new Date()
       return {
         min: new Date(
           today.getFullYear(),
           today.getMonth(),
-          Math.floor(hourRange.min)
+          today.getDate(),
+          Math.floor(numRange.min)
         ),
         max: new Date(
           today.getFullYear(),
           today.getMonth(),
-          Math.ceil(hourRange.max)
+          today.getDate(),
+          Math.ceil(numRange.max) - 1,
+          59
         )
       }
     })()
