@@ -16,6 +16,10 @@ exports.up = knex =>
     // for both below value is '0-23'
     table.integer('start_time')
     table.integer('end_time')
+    table
+      .boolean('off')
+      .defaultTo(1)
+      .notNullable()
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('availabilities')

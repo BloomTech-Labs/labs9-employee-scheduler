@@ -15,7 +15,8 @@ class AvailabilityForm extends Component {
     this.state = {
       availability: [],
       start_time: null,
-      end_time: null
+      end_time: null,
+      off: false
     }
   }
 
@@ -39,7 +40,7 @@ class AvailabilityForm extends Component {
 
   render() {
     console.log(this.state.start_time)
-    console.log(this.state)
+    console.log(this.props.availability)
 
     return (
       <div>
