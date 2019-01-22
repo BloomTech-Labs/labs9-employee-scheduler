@@ -10,6 +10,7 @@ import Home2 from './components/Home2'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+import AvailabilityForm from './components/EmployeeCard/AvailabilityForm'
 
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -183,6 +184,11 @@ class App extends Component {
                 access="all"
                 path="/settings"
                 component={Settings}
+              />
+              <PrivateRoute
+                access="all"
+                path="/update-availability"
+                component={AvailabilityForm}
               />
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />

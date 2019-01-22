@@ -6,7 +6,7 @@ import {
 } from '../actions'
 
 const initialState = {
-  availability: {},
+  availability: [],
   error: ''
 }
 
