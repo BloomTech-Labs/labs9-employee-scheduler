@@ -1,193 +1,307 @@
-import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import React from 'react'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-// import bgImg from '../img/fff.jpg'
-import bg from '../img/bg.png' // https://unsplash.com/photos/PypjzKTUqLo img by Roman Bozhko
-import bgSmall from '../img/bg-small.jpg' //https://unsplash.com/photos/zv5QSKaP8G8 img by STIL
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
-import stripe from '../img/stripe.png'
+import headerImg from '../img/header.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import heroImg from '../img/hero.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import Fade from 'react-reveal/Fade'
+import Footer from './Footer'
 
-// this is the main landing page, it will house the payment options and main site branding styles. The nav here will display as Sign Up || Sign In.
-// if a user is logged in already, it will display the Schedule now button and the navbar will change to logout.
 const Home = () => {
   return (
     <OuterContainer>
       <BreadCrumb location="Home" />
       <Container>
-        <h1>Scheduling your employees is hard.</h1>
-        <p>
-          Cadence is an easy-to-use shift scheduling tool. You'll never have to
-          waste time worrying about wasting time ever again.
-        </p>
-        <Button type="text">
-          <LinkItem to="/employees">Schedule Now</LinkItem>
-        </Button>
+        <section id="hero">
+          <img id="header-img" alt="header" src={headerImg} />
+          <div id="video">Video Placeholder</div>
+          <img id="hero-img" alt="hero" src={heroImg} />
+          <Fade top>
+            <h1>Scheduling your employees is hard.</h1>
+            <p>
+              Cadence is an easy-to-use shift scheduling tool. You'll never have
+              to waste time worrying about wasting time ever again.
+            </p>
+            <Button type="text">
+              <LinkItem to="/employees">Schedule Now</LinkItem>
+            </Button>
+          </Fade>
+        </section>
+
+        <section id="features">
+          <h1>Meet Cadence.</h1>
+          <p>
+            Cadence is here to make scheduling shifts for your business quick
+            and painless. Here are some of the key features:
+          </p>
+          <div className="cards">
+            <Fade top>
+              <div className="card">
+                <h2>Schedule Shifts Visually</h2>
+                <p>
+                  With Cadence, you don't have to rely on spreadsheets or legacy
+                  software from the 90s. <br />
+                  <br /> Our simple calendar interface lets you see who's
+                  scheduled when and make updates right there. We'll even
+                  summarize information about how many people are working and
+                  for how long.
+                </p>
+              </div>
+              <div className="card">
+                <h2>See Employees at a Glance</h2>
+                <p>
+                  You'll never need to fret about knowing who's available when
+                  ever again.
+                  <br />
+                  <br /> With our employee directory, you can easily see all of
+                  your employees' info from availability to contact details. You
+                  can even edit employee availability and add new employees.
+                </p>
+              </div>
+              <div className="card">
+                <h2>Manage Time Off</h2>
+                <p>
+                  Know exactly which employees are taking time off before it
+                  catches you unaware. <br />
+                  <br /> With our PTO management system, you'll be able to
+                  approve or deny pending PTO requests. Better yet, your
+                  employees will be able to see their upcoming shifts and PTO
+                  instantly.
+                </p>
+              </div>
+            </Fade>
+          </div>
+        </section>
+
+        <section id="social-proof">
+          <h1>Here's what our users have to say:</h1>
+          <p>
+            This is real feedback we've gotten on social media and during user
+            tests. We hope you'll love Cadence as much as they do.
+          </p>
+          <div className="cards">
+            <Fade top>
+              <div className="card">
+                <div className="stripe" />
+                <p>
+                  Cadence is very cool. Now, I always know which Robin is
+                  helping me out on a given night.
+                </p>
+                <h2>—Batman</h2>
+              </div>
+              <div className="card">
+                <div className="stripe" />
+                <p>
+                  Cadence changed my life. I can now better plan which Robin
+                  should help Batman.
+                </p>
+                <h2>—Oracle</h2>
+              </div>
+              <div className="card">
+                <div className="stripe" />
+                <p>
+                  I can attest that the guys who made Cadence are both gentlemen
+                  and scholars.
+                </p>
+                <h2>—Robin</h2>
+              </div>
+            </Fade>
+          </div>
+        </section>
+
+        <section id="pricing">
+          <h1>Here are our pricing plans.</h1>
+          <p>
+            No matter the size of your business, we will always work hard to
+            accommodate your needs.
+          </p>
+          <div className="cards">
+            <Fade top>
+              <div className="card">
+                <h2>SMB Plan</h2>
+                <h3>$20 / month</h3>
+                <ul>
+                  <li>Up to 20 users</li>
+                  <li>Easy-to-use graphical interface</li>
+                  <li>Owner, Supervisor, & Employee Views</li>
+                </ul>
+                <Button>Sign Up Now</Button>
+              </div>
+              <div className="card">
+                <h2>Enterprise Plan</h2>
+                <h3>Contact Us</h3>
+                <ul>
+                  <li>Supports unlimited users</li>
+                  <li>Data Exports & API Access</li>
+                  <li>Audit Trails & Reporting</li>
+                </ul>
+                <Button disabled>Coming Soon</Button>
+              </div>
+            </Fade>
+          </div>
+        </section>
       </Container>
-      <Features>
-        <div className="card-container">
-          <h1>Features</h1>
-          <p>
-            Cadence has the features that your business needs to keep organized.
-            We are interactive and easy to use. Join today to get your business
-            started on these amazing features.
-          </p>
-          <ul>
-            <li>
-              <i className="fas fa-check" /> Interactive Drag and Drop Calander
-            </li>
-            <li>
-              <i className="fas fa-check" /> Schedule Employee Shifts Weekly
-            </li>
-            <li>
-              <i className="fas fa-check" /> Approve and Deny Time off Requests
-            </li>
-            <li>
-              <i className="fas fa-check" /> Added Security of oAuth and Stripe
-            </li>
-          </ul>
-        </div>
-        <div className="card-container">
-          <h1>Easy to get started</h1>
-          <p>
-            Scheduling can be hard. Let Cadence do the work for you and help you
-            keep track so that you can focus on your business.
-          </p>
-          <ul>
-            <li>
-              <i className="far fa-thumbs-up" />
-              Sign in through oAuth
-            </li>
-            <li>
-              <i className="far fa-thumbs-up" />
-              Create your Cadence Account
-            </li>
-            <li>
-              <i className="far fa-thumbs-up" />
-              Create your organization
-            </li>
-            <li>
-              <i className="far fa-thumbs-up" />
-              Add your employees to it
-            </li>
-            <li>
-              <i className="far fa-thumbs-up" />
-              Begin filling the spaces
-            </li>
-          </ul>
-        </div>
-        <div className="card-container">
-          <h1>Secure Payment</h1>
-          <p>
-            Cadence offers it's users some of the best security features. We
-            want your information to remain your information. Stripe helps us
-            accomplish this by manageming billing details so you never have to
-            worry about anything happening to financial data.
-          </p>
-          <img src={stripe} alt="stripe logo" />
-        </div>
-      </Features>
+      <Footer />
     </OuterContainer>
   )
 }
 
 export default Home
 
-Home.propTypes = {
-  // add propTypes here
-}
-
 const Container = styled('div')`
-  margin: 7.5rem 0 0;
-  height: 118rem;
-  background-image: url(${bg});
-  background-position: center;
-  background-size: cover;
+  margin: 5rem 5rem 0;
+  padding: 0 4rem;
+  background: white;
+  box-shadow: ${system.shadows.otherLight};
+  position: relative;
 
-  h1 {
-    padding: 75px 0 0;
-    font-size: ${system.fontSizing.xl};
-    width: 65rem;
-  }
-  p {
-    padding: ${system.spacing.bigPadding};
-    color: ${system.color.bodytext};
-    font-size: ${system.fontSizing.ml};
-    width: 60rem;
-    margin-bottom: 25px;
-  }
-  button {
-    margin-left: 2.5rem;
-    a {
-      color: ${system.color.neutral};
-    }
-  }
+  section {
+    padding-bottom: 15rem;
 
-  @media (max-width: 500px) {
-    background-image: url(${bgSmall});
-    width: 675px;
-    height: 50rem;
     h1 {
-      margin: 50px auto 50px auto;
-      height: 30px;
-      padding: 42px;
+      padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
-      color: ${system.color.bodytext};
+      width: 65rem;
     }
-  }
-`
-const Features = styled('div')`
-  margin: 0 auto;
-  margin: 100px auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: ${system.color.neutral};
-  max-width: 1614px;
-  @media (max-width: 500px) {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-    width: 670px;
-    padding: ${system.spacing.hugePadding};
-  }
-  .card-container {
-    display: flex;
-    width: 500px;
-    height: 537px;
-    position: relative;
-    flex-flow: column nowrap;
-    background: ${system.color.white};
-    padding: ${system.spacing.bigPadding};
-    border-radius: ${system.borders.bigRadius};
-    box-shadow: ${system.shadows.otherLight};
-    @media (max-width: 500px) {
-      margin: 30px auto;
-      justify-content: space-around;
-      width: 100%;
-    }
+
     p {
-      margin-bottom: 38px;
-      font-size: ${system.fontSizing.m};
+      padding: ${system.spacing.bigPadding};
+      color: ${system.color.bodytext};
+      font-size: ${system.fontSizing.ml};
+      width: 60rem;
+      margin-bottom: 30px;
+      line-height: ${system.spacing.lineHeight};
     }
-    ul {
-      i.fa-check {
-        margin-right: 10px;
-        font-size: ${system.fontSizing.l};
-        color: ${system.color.success};
+  }
+
+  #hero {
+    h1 {
+      padding: 200px 0 0;
+    }
+    #header-img {
+      position: absolute;
+      top: 2rem;
+      right: 0rem;
+    }
+
+    #hero-img {
+      position: absolute;
+      top: 15rem;
+      right: 0rem;
+    }
+
+    #video {
+      position: absolute;
+      color: white;
+      text-align: center;
+      top: 21rem;
+      right: 15rem;
+      width: 480px;
+      height: 270px;
+      z-index: 50;
+      background: black;
+      box-shadow: ${system.shadows.buttonHover};
+      border-radius: ${system.borders.bigRadius};
+    }
+
+    button {
+      margin-left: 2.5rem;
+
+      a {
+        color: ${system.color.neutral};
       }
-      i.fa-thumbs-up {
-        margin-right: 20px;
-        font-size: ${system.fontSizing.l};
-        color: ${system.color.primary};
-      }
-      li {
-        margin-bottom: 38px;
+    }
+  }
+
+  .cards {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .card {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      width: 25%;
+      background: ${system.color.white};
+      padding: ${system.spacing.bigPadding};
+      border-radius: ${system.borders.bigRadius};
+      box-shadow: 0 16px 48px rgba(32, 41, 50, 0.12);
+
+      h2 {
         font-size: ${system.fontSizing.m};
       }
+
+      p {
+        font-size: ${system.fontSizing.sm};
+      }
+
+      h2,
+      p {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        line-height: ${system.spacing.lineHeight};
+      }
+    }
+  }
+
+  #features {
+    .card {
+      h2 {
+        color: ${system.color.primary};
+      }
+    }
+  }
+
+  #social-proof {
+    .card {
+      background: #333;
+      position: relative;
+      .stripe {
+        position: absolute;
+        top: 0;
+        border-radius: ${system.borders.radius} ${system.borders.radius} 0 0;
+        height: 20px;
+        width: 100%;
+        background: linear-gradient(65deg, #535fd7 0, #69effd 100%);
+      }
+
+      h2,
+      p {
+        color: ${system.color.white};
+      }
+    }
+  }
+
+  #pricing {
+    .card {
+      background: ${system.color.neutral};
+    }
+
+    h2 {
+      font-size: ${system.fontSizing.ml};
+      text-align: center;
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      color: ${system.color.primary};
+      font-size: ${system.fontSizing.m};
+      margin-bottom: 2.5rem;
+    }
+
+    li {
+      font-size: ${system.fontSizing.sm};
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      margin: 25px 0;
     }
   }
 `

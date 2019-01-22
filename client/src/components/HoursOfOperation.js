@@ -38,7 +38,7 @@ class HoursOfOperation extends Component {
 
   componentDidMount() {
     if (this.props.user !== null) {
-      const organization_id = '3cf77159-32e3-4812-9740-67e5c065bbca'
+      const { organization_id } = this.props.user
       this.props.fetchHoursFromDB(organization_id, this.props.token)
     }
   }
@@ -65,15 +65,18 @@ class HoursOfOperation extends Component {
     e.stopPropagation()
 
     const { hours } = this.props.hours
-    const { days } = this.state
-
-    this.setState({
-      days: {
-        ...days,
-        [e.target.name]: !days[e.target.name] //change individual day
-      },
-      dayId: hours[idx].id //keep the data for this day on state
-    })
+    if (Object.keys(hours).length > 0) {
+      const { days } = this.state
+      this.setState({
+        days: {
+          ...days,
+          [e.target.name]: !days[e.target.name] //change individual day
+        },
+        dayId: hours[idx].id //keep the data for this day on state
+      })
+    } else {
+      console.log('No hours in database')
+    }
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB

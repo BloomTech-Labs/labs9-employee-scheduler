@@ -10,7 +10,11 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+<<<<<<< HEAD
 import Join from './components/Join'
+=======
+import system from './design/theme'
+>>>>>>> master
 
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -107,6 +111,15 @@ class App extends Component {
             html {
               font-size: 62.5%;
               font-family: 'Nunito', sans-serif;
+              ::-webkit-scrollbar {
+                width: 8px;
+                background-color: rgba(0, 0, 0, 0.041);
+              }
+              ::-webkit-scrollbar-thumb {
+                background: ${system.color.lightgrey};
+                width: 8px;
+                border-radius: 50px;
+              }
             }
 
             * {
@@ -133,23 +146,25 @@ class App extends Component {
           `}
         />
 
-        <Route
-          exact
-          path="/"
-          render={props => {
-            if (user && (user.role === 'owner' || user.role === 'supervisor')) {
-              return <Redirect to="/shift-calendar" />
-            } else if (user && user.role === 'employee') {
-              return <Redirect to="/dashboard" />
-            } else {
-              return <Home {...props} />
-            }
-          }}
-        />
-
         <StripeProvider stripe={this.state.stripe}>
           <Elements>
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => {
+                  if (
+                    user &&
+                    (user.role === 'owner' || user.role === 'supervisor')
+                  ) {
+                    return <Redirect to="/shift-calendar" />
+                  } else if (user && user.role === 'employee') {
+                    return <Redirect to="/dashboard" />
+                  } else {
+                    return <Home {...props} />
+                  }
+                }}
+              />
               <PrivateRoute
                 access="admin"
                 path="/employees"

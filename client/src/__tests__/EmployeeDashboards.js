@@ -1,13 +1,15 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { render, waitForElement } from 'react-testing-library'
-import { renderWithReduxAndRouter } from '../../testing/utils'
-import EmployeeDashboard from '../components/EmployeeDashboard'
-import { fetchSingleEmployeefromDB } from '../actions'
+import { waitForElement } from 'react-testing-library'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import App from '../App'
 import * as axios from 'axios'
+import * as firebase from 'firebase/app'
+jest.mock('firebase/app')
+jest.mock('firebase/auth')
 
 jest.mock('axios')
+jest.mock('firebase/app')
+jest.mock('firebase/auth')
 
 // this is the mocked data to be returned
 const employee = {
@@ -38,10 +40,36 @@ describe('employee dashboard with redux', () => {
     // by the component, the test works appropriately.
     axios.get.mockImplementation(() => Promise.resolve({ data: employee }))
 
-    // renders the component with both Redux and Router, with the route set
+    // mock out firebase auth
+    firebase.auth = jest.fn().mockImplementation(() => {
+      return {
+        onAuthStateChanged: cb => {
+          cb()
+          return () => {}
+        },
+        currentUser: {
+          getIdToken: () => Promise.resolve('token')
+        }
+      }
+    })
+
+    // mock out axios authenticaton call to our server
+    axios.post.mockImplementation(
+      (path, body, { headers: { authorization } }) => {
+        if (authorization === 'token') {
+          const { shifts, time_off, ...rest } = employee
+          return Promise.resolve({ data: { ...rest } })
+        }
+      }
+    )
+
+    // setup of document to play nice with Striple component
+    setupStripeNode()
+
+    // renders the App with both Redux and Router, with the route set
     // to the matching route for this component in App
     const { getByTestId, getByText, history } = renderWithReduxAndRouter(
-      <Route path="/dashboard/:id" component={EmployeeDashboard} />,
+      <App />,
       {
         route: `/dashboard/${employee.id}`
       }
@@ -56,4 +84,3 @@ describe('employee dashboard with redux', () => {
     expect(getByTestId('reason').textContent).toBe(employee.time_off[0].reason)
   })
 })
-
