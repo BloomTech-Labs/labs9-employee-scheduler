@@ -4,15 +4,7 @@ const uuid = require('uuid/v4')
 // creates hours for 7 days for a new org
 const insertHoursForNewOrg = org_id => {
   let hours = []
-  let day = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-  ]
+  let day = [0, 1, 2, 3, 4, 5, 6]
   for (let i = 0; i < 7; i++) {
     let thisDay = {
       id: uuid(),

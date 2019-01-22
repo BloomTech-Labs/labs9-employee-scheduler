@@ -15,15 +15,7 @@ const generateOrgs = ids => ids.map(generateOrg)
 // Generates hours of operation by org id
 const generateHoursOfOperation = (org_id = uuid()) => {
   let hours = []
-  let day = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-  ]
+  let day = [0, 1, 2, 3, 4, 5, 6]
   for (let i = 0; i < 7; i++) {
     let open = Math.random() > 0.3
     let thisDay = {
