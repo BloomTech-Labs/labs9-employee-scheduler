@@ -1,10 +1,10 @@
 import React from 'react'
 import { fireEvent } from 'react-testing-library'
-import { renderWithRouter } from '../../testing/utils'
+import { renderWithReduxAndRouter } from '../../testing/utils'
 import Register from '../components/Register'
 
 const setup = () => {
-  const utils = renderWithRouter(<Register />)
+  const utils = renderWithReduxAndRouter(<Register />)
   const firstName = utils.getByLabelText('first-name')
   const lastName = utils.getByLabelText('last-name')
   const email = utils.getByLabelText('email')
@@ -23,7 +23,7 @@ const setup = () => {
 describe('Register Component', () => {
   it('should render the register form on sign up click', () => {
     const route = '/some-route'
-    const { getByTestId } = renderWithRouter(<Register />, { route })
+    const { getByTestId } = renderWithReduxAndRouter(<Register />, { route })
     expect(getByTestId('register-form').textContent).toBe('Register')
   })
   it('should take a first name value on input to state', () => {
