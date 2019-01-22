@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
+// import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -17,20 +17,36 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: ''
+      errors: '',
+      day: {
+        sunday: {
+          startTime: null,
+          endTime: null
+        },
+        Monday: {
+          startTime: null,
+          endTime: null
+        },
+        Tuesday: {
+          startTime: null,
+          endTime: null
+        }
+      }
     }
   }
 
   componentDidMount() {
     const { id } = this.props.auth
-    if (id) {
-      this.props.fetchSingleEmployeeFromDB(id)
-    }
+    this.props.fetchSingleEmployeeFromDB(id)
   }
 
   componentDidUpdate(prevProps, nextProps) {
     if (prevProps.error !== this.props.error) {
       this.setState({ error: this.props.error })
+    }
+
+    if (prevProps.auth.id !== this.props.auth.id) {
+      this.props.fetchSingleEmployeeFromDB(this.props.auth.id)
     }
   }
 
@@ -42,6 +58,7 @@ class EmployeeDashboard extends Component {
   // }
 
   render() {
+    console.log(this.props.auth)
     const { employee } = this.props.employee
     let assignedShift
     let approvedTimeOff
@@ -65,7 +82,11 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      assignedShift = <p>Loading...</p>
+      assignedShift = (
+        <Message>
+          <p>You haven't been Assigned yet</p>
+        </Message>
+      )
     }
 
     if (Object.keys(employee).length === 0) {
@@ -93,7 +114,11 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      approvedTimeOff = <p>No Time off Approved yet</p>
+      approvedTimeOff = (
+        <Message>
+          <p>No Request Status to display</p>
+        </Message>
+      )
     }
 
     return (
@@ -147,6 +172,11 @@ EmployeeDashboard.propTypes = {
   fetchSingleEmployeeFromDB: propTypes.func.isRequired,
   error: propTypes.string
 }
+
+const Message = styled('div')`
+  margin-top: 30px;
+  font-size: ${system.fontSizing.sm};
+`
 
 const Container = styled('div')`
   width: 100%;
