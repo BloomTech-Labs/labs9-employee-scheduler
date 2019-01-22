@@ -3,6 +3,7 @@ const {
   users,
   availabilities,
   timeOffRequests,
+  hoursOfOperation,
   events
 } = require('../static_seed.json')
 
@@ -12,6 +13,7 @@ exports.seed = function(knex, Promise) {
     .del()
     .where('id', organization.id)
     .then(function() {
+      console.log(hoursOfOperation)
       // Inserts seed entries
       return knex('organizations')
         .insert(organization)
@@ -27,6 +29,7 @@ exports.seed = function(knex, Promise) {
         .then(() => {
           return knex('events').insert(events)
         })
+        .then(() => knex('hours_of_operation').insert(hoursOfOperation))
       // .catch(err => {
       //   for (i in err) {
       //     console.log(err[i])

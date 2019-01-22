@@ -7,6 +7,7 @@ import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import {
   fetchEmployeesFromDB,
+  fetchHoursFromDB,
   createEvent,
   changeEvent,
   deleteEvent
@@ -21,7 +22,14 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     this.props.fetchEmployeesFromDB()
+    const { organization_id } = this.props.user
+    this.props.fetchHoursFromDB(organization_id, this.props.token)
+    this.props.fetchHoursFromDB(this.props.token)
   }
 
   moveEvent = drop => {
@@ -84,7 +92,7 @@ class Scheduler extends React.Component {
     this.setState({ draggedEmployee })
 
   render() {
-    const { employees } = this.props
+    const { employees, hours } = this.props
 
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
@@ -102,6 +110,37 @@ class Scheduler extends React.Component {
         })
       ]
     }, [])
+
+    let hourRange = events.reduce(
+      (acc, event) => {
+        let returnVal = { ...acc }
+        const eventStart = event.start.getHours()
+        const eventEnd = event.end.getHours()
+        if (eventStart < acc.min) {
+          returnVal.min = eventStart
+        }
+        if (eventEnd > acc.max) {
+          returnVal.max = eventEnd
+        }
+        return returnVal
+      },
+      { min: 0, max: 24 }
+    )
+    hourRange = (function() {
+      let today = new Date()
+      return {
+        min: new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          Math.floor(hourRange.min)
+        ),
+        max: new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          Math.ceil(hourRange.max)
+        )
+      }
+    })()
 
     return (
       <div style={{ display: 'flex' }}>
@@ -123,6 +162,8 @@ class Scheduler extends React.Component {
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
             onRangeChange={this.updateRange}
+            min={hourRange.min}
+            max={hourRange.max}
           />
           <WeekSummary
             range={
@@ -141,10 +182,21 @@ class Scheduler extends React.Component {
   }
 }
 
-const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
+const mapStateToProps = ({ employees, hours, auth }) => ({
+  employees: employees.employees,
+  hours: hours.hours,
+  user: auth.user,
+  token: auth.token
+})
 
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent, changeEvent, deleteEvent }
+  {
+    fetchEmployeesFromDB,
+    fetchHoursFromDB,
+    createEvent,
+    changeEvent,
+    deleteEvent
+  }
 )(DragSched)

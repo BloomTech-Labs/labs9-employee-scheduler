@@ -37,6 +37,8 @@ authorize(['owner', 'supervisor'])
 const { getUser } = require('../../../database/helpers')
 
 const authorize = roles => async (req, res, next) => {
+  console.log('authorize 40', roles)
+  console.log('authorize 41', req.user)
   if (roles.includes('all')) {
     next()
   } else {

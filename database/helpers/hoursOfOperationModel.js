@@ -3,6 +3,7 @@ const uuid = require('uuid/v4')
 
 //get hours of operation
 const getHoursOfOperation = orgId => {
+  console.log(orgId)
   return db('hours_of_operation as h').where({ 'h.organization_id': orgId })
 }
 

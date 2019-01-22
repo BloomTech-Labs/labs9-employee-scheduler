@@ -4,6 +4,64 @@
         "name": "Stehr, Keebler and Feil",
         "description": "Adipisci beatae amet qui sed porro totam voluptates voluptatem."
     },
+    "hoursOfOperation": [
+      {
+          "id": "6ce0b902-7b91-4951-b4f1-b36242c94590",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 0,
+          "open_time": 9,
+          "close_time": 57,
+          "closed": false
+      },
+      {
+          "id": "ad7554d9-db20-445a-b0c2-fa2718fd0d45",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 1,
+          "open_time": 9,
+          "close_time": 17,
+          "closed": false
+      },
+      {
+          "id": "531ddfea-690f-4d88-870b-a9686c870b2f",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 2,
+          "open_time": 8,
+          "close_time": 17,
+          "closed": false
+      },
+      {
+          "id": "88912667-a25e-42d0-b704-915adade76ea",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 3,
+          "open_time": 9,
+          "close_time": 18,
+          "closed": false
+      },
+      {
+          "id": "507c624b-ee21-4161-8cfd-107211d0b26f",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 4,
+          "open_time": 9,
+          "close_time": 17,
+          "closed": false
+      },
+      {
+          "id": "af2c64b6-3541-4182-ba47-c333f77fdc66",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 5,
+          "open_time": 0,
+          "close_time": 24,
+          "closed": true
+      },
+      {
+          "id": "93f53cc8-f413-4954-aaa0-1fa9e598a4b6",
+          "organization_id": "9126df31-2607-4166-9c0c-d0a300c59c62",
+          "day": 6,
+          "open_time": 9,
+          "close_time": 17,
+          "closed": false
+      }
+  ],
     "users": [
         {
             "id": "yJgErAY0haNm0zdLSvzLUed6UXK2",

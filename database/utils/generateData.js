@@ -404,5 +404,6 @@ module.exports = {
   populateOrg,
   generateTeamData,
   structureEmployees,
+  generateHoursOfOperation,
   generateAllHoursOfOperation
 }
