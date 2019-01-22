@@ -1,5 +1,8 @@
 const options = [
   {
+    label: 'edit'
+  },
+  {
     label: '12:00 am',
     value: 0
   },
