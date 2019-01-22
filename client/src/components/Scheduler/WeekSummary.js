@@ -39,7 +39,7 @@ class WeekSummary extends React.Component {
     }
     const eventsArr = []
     const summaries = []
-    filtered.map(event => {
+    filtered.forEach(event => {
       event = {
         employee: event.title,
         day: event.start.toLocaleDateString('en-US', 'numeric'),
@@ -82,7 +82,7 @@ class WeekSummary extends React.Component {
       let check = []
 
       // populating the check array with the correctly formatted dates.
-      summaries.map(summary => {
+      summaries.forEach(summary => {
         check.push(summary.day)
       })
 
@@ -92,7 +92,7 @@ class WeekSummary extends React.Component {
         .filter(function(obj) {
           return check.indexOf(obj) == -1
         })
-        .map(unique => {
+        .forEach(unique => {
           summaries.push({ day: unique, hours: 0, employees: 0 })
         })
       return summaries.sort(this.sortFunction)
