@@ -23,17 +23,23 @@ class AvailabilityForm extends Component {
     this.setState({
       availability: this.props.getAvailability(user)
     })
-    console.log()
   }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
-    console.log(this.state)
+  }
+
+  updateAvailability = () => {
+    let newTime
+    if (this.state.start_time === !null) {
+      newTime = this.state.start_time
+    }
+    this.props.editAvailability(newTime)
   }
 
   render() {
     console.log(this.state.start_time)
-    console.log(this.props.getAvailability())
+    console.log(this.state)
 
     return (
       <div>
@@ -42,7 +48,7 @@ class AvailabilityForm extends Component {
           return (
             <div key={a.id}>
               <Form.Group>
-                <Form.Label>{a.day}</Form.Label>
+                <Form.Label>Day: {a.day}</Form.Label>
               </Form.Group>
               <SelectList
                 label="start time"
@@ -51,6 +57,14 @@ class AvailabilityForm extends Component {
                 changeHandler={this.handleChange}
                 options={options}
                 ariaLabel="start time"
+              />
+              <SelectList
+                label="end time"
+                name="end_time"
+                value={a.end_time}
+                changeHandler={this.handleChange}
+                options={options}
+                ariaLabel="end time"
               />
             </div>
           )
@@ -63,7 +77,6 @@ class AvailabilityForm extends Component {
 const mapStateToProps = state => {
   return {
     availability: state.availability.availability
-    // getAvailability: state.availability
   }
 }
 
