@@ -37,7 +37,7 @@ export const changeEvent = ({ event, changes }) => async dispatch => {
 
 export const deleteEvent = ({ user_id, id }) => async dispatch => {
   try {
-    await axios.delete(`${baseUrl}/events/${user_id}`, {
+    await axios.delete(`${baseUrl}/events/${id}`, {
       headers: { authorization: 'testing' }
     })
     dispatch({

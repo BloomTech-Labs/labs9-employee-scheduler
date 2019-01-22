@@ -65,7 +65,9 @@ router.put('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
 router.delete('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
   try {
+    console.log(id)
     const success = await deleteEvent(id)
+    console.log(success)
     res.status(200).json(success)
   } catch (error) {
     console.log(error)
