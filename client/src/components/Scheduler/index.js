@@ -25,8 +25,28 @@ class Scheduler extends React.Component {
   }
 
   validateEvent = ({ userId, eventTimes }) => {
-    console.log(userId)
-    console.log(eventTimes)
+    const employee = this.props.employees.filter(({ id }) => id === userId)[0]
+    console.log(employee)
+
+    let conflicts = false
+
+    // step 1
+    // check for conflicts with approved day off requests
+    employee.time_off_requests.forEach(({ date, status }) => {
+      if (
+        status === 'approved' &&
+        moment(eventTimes.start).isSame(date, 'day')
+      ) {
+        console.log('conflict with approved time off request')
+        conflicts = true
+      }
+    })
+
+    // step 2
+    // grab day from eventTimes.start, compare to availabilities
+
+    // step 3
+    // compare start and end times to availabilities
   }
 
   moveEvent = drop => {
