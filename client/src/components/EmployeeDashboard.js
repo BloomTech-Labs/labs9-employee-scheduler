@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-
+import moment from 'moment'
 // import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
@@ -58,7 +58,7 @@ class EmployeeDashboard extends Component {
   // }
 
   render() {
-    console.log(this.props.auth)
+    console.log(this.props.employee.employee)
     const { employee } = this.props.employee
     let assignedShift
     let approvedTimeOff
@@ -70,11 +70,13 @@ class EmployeeDashboard extends Component {
             return (
               <div className="details" key={item.id}>
                 <div className="date">
-                  <p>{item.day}</p>
+                  <p>
+                    {moment(item.start).format('MMM Do, h:mma')} to{' '}
+                    {moment(item.end).format('h:mma')}
+                  </p>
                 </div>
                 <div>
                   <p>{item.time}</p>
-                  <p>hello</p>
                 </div>
               </div>
             )
@@ -127,7 +129,7 @@ class EmployeeDashboard extends Component {
         <BreadCrumb location="Employee Dashboard" />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {employee.first_name}</h1>
+            <h1>Welcome {this.props.auth.first_name}</h1>
           </div>
           <div className="wrapper">
             <div className="assigned-wrapper">
@@ -198,7 +200,8 @@ const Container = styled('div')`
       margin: ${system.spacing.bigPadding};
       border-radius: ${system.borders.bigRadius};
       width: 300px;
-      box-shadow: ${system.shadows.otherLight};
+      box-shadow: ${system.shadows.other};
+      text-align: center;
       .title {
         width: 100%;
         max-width: 268px;
@@ -209,7 +212,7 @@ const Container = styled('div')`
           display: flex;
           flex-direction: row;
           width: 100%;
-          justify-content: space-between;
+          justify-content: center;
           margin: 33px auto;
           .date {
             min-width: 128px;
@@ -218,6 +221,8 @@ const Container = styled('div')`
             width: 300px;
           }
           p {
+            text-align: center;
+
             width: 100%;
             padding: 2.5px 7.5px;
             font-family: ${props =>
@@ -225,7 +230,7 @@ const Container = styled('div')`
             font-weight: ${props => (props.main ? 'bold' : null)};
             color: ${props =>
               props.main ? system.color.primary : system.color.captiontext};
-            font-size: ${system.fontSizing.m};
+            font-size: ${system.fontSizing.sm};
             line-height: ${system.spacing.lineHeight};
           }
         }

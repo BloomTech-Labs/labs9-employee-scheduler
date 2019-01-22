@@ -8,23 +8,11 @@ const getDashboard = async userId => {
   const shifts = await db('users as u')
     .where({ 'u.id': userId })
     .join('events as e', { 'u.id': 'e.user_id' })
-    .select('e.id', 'e.day', 'e.start_time', 'e.end_time')
-    .reduce((acc, { id, day, start_time, end_time }) => {
-      const weekdays = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
-      ]
+    .select('e.id', 'e.start', 'e.end')
+    .reduce((acc, { id, start, end }) => {
       // do a little clever formatting with the date formatting
       // depending on calendar api this might change later
-      return [
-        ...acc,
-        { id, day: weekdays[day], time: `${start_time}am-${end_time - 12}pm` }
-      ]
+      return [...acc, { id, start, end }]
     }, [])
 
   const timeOff = await db('users as u')
