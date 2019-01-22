@@ -8,26 +8,22 @@ import CardContainer from '../common/CardContainer'
 class Availability extends Component {
   render() {
     const { availabilities } = this.props
-
-    if (availabilities === []) {
-      return null
-    } else {
-      return (
-        <CardContainer avail>
-          {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
+    // the below should not render if there is no data being pass to it. This is not working though...
+    return availabilities === [] ? null : (
+      <CardContainer avail>
+        {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
-          <h6>Employee Availability</h6>
-          {availabilities &&
-            availabilities.map(({ id, day, time }) => (
-              //temporarily adds ids tp the DOM for easy access for testing
-              <Avails key={id}>
-                <p>{day}</p>
-                <span>{time}</span>
-              </Avails>
-            ))}
-        </CardContainer>
-      )
-    }
+        <h6>Employee Availability</h6>
+        {availabilities &&
+          availabilities.map(({ id, day, time }) => (
+            //temporarily adds ids tp the DOM for easy access for testing
+            <Avails key={id}>
+              <p>{day}</p>
+              <span>{time.split('-').join(' - ')}</span>
+            </Avails>
+          ))}
+      </CardContainer>
+    )
   }
 }
 
@@ -44,8 +40,8 @@ const Avails = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
   border-bottom: 1px solid ${system.color.neutral};
 
   :last-child {

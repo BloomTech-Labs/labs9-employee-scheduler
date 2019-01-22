@@ -6,11 +6,12 @@ import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
-import Home2 from './components/Home2'
+import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
 import AvailabilityForm from './components/EmployeeCard/AvailabilityForm'
+import system from './design/theme'
 
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -106,6 +107,15 @@ class App extends Component {
             html {
               font-size: 62.5%;
               font-family: 'Nunito', sans-serif;
+              ::-webkit-scrollbar {
+                width: 8px;
+                background-color: rgba(0, 0, 0, 0.041);
+              }
+              ::-webkit-scrollbar-thumb {
+                background: ${system.color.lightgrey};
+                width: 8px;
+                border-radius: 50px;
+              }
             }
 
             * {
@@ -146,7 +156,7 @@ class App extends Component {
                   } else if (user && user.role === 'employee') {
                     return <Redirect to="/dashboard" />
                   } else {
-                    return <Home2 {...props} />
+                    return <Home {...props} />
                   }
                 }}
               />

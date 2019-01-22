@@ -12,10 +12,6 @@ jest.mock('firebase/auth')
 
 describe('App component', () => {
   it('renders hello', () => {
-    // SETUP
-    axios.get.mockImplementation(() =>
-      Promise.resolve({ data: { message: 'hello!' } })
-    )
     firebase.auth = jest.fn().mockReturnValue({
       onAuthStateChanged: cb => () => cb()
     })

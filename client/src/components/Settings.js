@@ -150,6 +150,7 @@ class Settings extends Component {
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
+                id="email"
                 name="email"
                 placeholder="ex. bruce@waynecorp.com"
                 onChange={this.changeHandler}
@@ -160,6 +161,7 @@ class Settings extends Component {
               <label htmlFor="phone">Phone</label>
               <Input
                 type="tel"
+                id="phone"
                 name="phone"
                 placeholder="ex. 111-111-1111"
                 pattern={phonePattern}
@@ -174,6 +176,7 @@ class Settings extends Component {
                 <Input
                   type="checkbox"
                   name="emailpref"
+                  id="emailpref"
                   onChange={this.checkHandler}
                   aria-label="emailpref"
                   checked={this.state.user.emailpref}
@@ -183,6 +186,7 @@ class Settings extends Component {
                 <Input
                   type="checkbox"
                   name="phonepref"
+                  id="phonepref"
                   onChange={this.checkHandler}
                   aria-label="phonepref"
                   checked={this.state.user.phonepref}

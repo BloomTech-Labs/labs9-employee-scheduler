@@ -4,7 +4,8 @@ import {
   UPDATE_TIME_OFF_REQUEST_SUCCESS,
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT,
-  UPDATE_EVENT
+  UPDATE_EVENT,
+  DELETE_EVENT
 } from '../actions'
 
 const initialState = {
@@ -73,6 +74,26 @@ export const employeesReducer = (state = initialState, action) => {
                 } else {
                   return candidate
                 }
+              })
+            }
+          } else {
+            return employee
+          }
+        })
+      }
+    }
+    case DELETE_EVENT: {
+      const {
+        payload: { user_id, event_id }
+      } = action
+      return {
+        ...state,
+        employees: state.employees.map(employee => {
+          if (employee.id === user_id) {
+            return {
+              ...employee,
+              events: employee.events.filter(candidate => {
+                return candidate.id !== event_id
               })
             }
           } else {

@@ -27,27 +27,16 @@ const Container = styled.div`
   padding: ${system.spacing.standardPadding};
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
-  margin-bottom: 20px;
+  margin: 20px 0;
 
   p {
     color: ${system.color.white};
     margin-left: ${system.spacing.bigPadding};
     font-size: ${system.fontSizing.m};
-
-    span {
-      margin: 5px;
-    }
   }
 
   img {
     height: 50px;
     width: 50px;
   }
-
-  /* span {
-    font-size: 30px;
-    color: ${system.color.white};
-    text-align: center;
-    margin: 10px 15px;
-  } */
 `

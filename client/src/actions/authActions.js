@@ -17,7 +17,7 @@ export const authenticate = () => async dispatch => {
   // wrap in try/catch to catch firebase errors
   try {
     // try to get current user from firebase
-    const { currentUser } = await firebase.auth()
+    const { currentUser } = firebase.auth()
 
     // if currentUser is defined, getIdToken for firebase then verify with server
     if (currentUser) {
