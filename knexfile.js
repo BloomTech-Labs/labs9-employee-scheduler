@@ -13,16 +13,12 @@ module.exports = {
     seeds: { directory: './database/seeds' }
   },
   production: {
-    client: 'sqlite3',
-    connection: { filename: './database/db.sqlite3' },
-    useNullAsDefault: true,
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: './database/migrations',
       tableName: 'dbmigrations'
     },
-    seeds: { directory: './database/seeds' },
-    pool: {
-      afterCreate: (conn, cb) => conn.run('PRAGMA foreign_keys = ON', cb)
-    }
+    seeds: { directory: './database/seeds' }
   }
 }
