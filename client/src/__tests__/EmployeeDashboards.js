@@ -1,11 +1,7 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { render, waitForElement } from 'react-testing-library'
+import { waitForElement } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
-// import EmployeeDashboard from '../components/EmployeeDashboard'
 import App from '../App'
-import { fetchSingleEmployeefromDB } from '../actions'
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
 jest.mock('firebase/app')
