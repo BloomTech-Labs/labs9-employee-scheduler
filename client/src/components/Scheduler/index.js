@@ -24,20 +24,31 @@ class Scheduler extends React.Component {
     this.props.fetchEmployeesFromDB()
   }
 
+  validateEvent = ({ userId, eventTimes }) => {
+    console.log(userId)
+    console.log(eventTimes)
+  }
+
   moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
+    this.validateEvent({ userId: employee.user_id, eventTimes: { start, end } })
 
     return this.props.changeEvent({ event: employee, changes: { start, end } })
   }
 
   resizeEvent = ({ end, start, event }) => {
+    this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
     this.props.changeEvent({ event, changes: { start, end } })
   }
 
   createEvent = ({ start, end }) => {
     const { draggedEmployee } = this.state
     if (draggedEmployee) {
+      this.validateEvent({
+        userId: draggedEmployee.id,
+        eventTimes: { start, end }
+      })
       this.props.createEvent({ employee: draggedEmployee, start })
       this.setState({ draggedEmployee: null })
     }
