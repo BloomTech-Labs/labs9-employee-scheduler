@@ -10,11 +10,9 @@ const authorize = require('../config/customMiddleware/authorize')
 
 //gets the hours of operation by organization id
 router.get('/:id', (req, res) => {
-  console.log('router 13', req.params)
   const { id } = req.params
   getHoursOfOperation(id)
     .then(hours => {
-      console.log(hours)
       return res.status(200).json(hours)
     })
     .catch(err => {

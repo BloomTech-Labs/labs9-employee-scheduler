@@ -16,11 +16,9 @@ admin.initializeApp({
 //checks to see if there is a token and verifies it
 const authenticate = (req, res, next) => {
   const idToken = req.headers.authorization
-  console.log(idToken)
   // this is a testing convenience to allow testing while firebase
   // is in process. It must be removed for production environment
   if (idToken && idToken === 'testing') {
-    console.log(
       'This authentication middleware has a testing loophole that must be removed in production'
     )
 

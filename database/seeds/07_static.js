@@ -13,7 +13,6 @@ exports.seed = function(knex, Promise) {
     .del()
     .where('id', organization.id)
     .then(function() {
-      console.log(hoursOfOperation)
       // Inserts seed entries
       return knex('organizations')
         .insert(organization)
