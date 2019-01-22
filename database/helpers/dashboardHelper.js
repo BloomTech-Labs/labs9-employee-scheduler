@@ -21,9 +21,10 @@ const getDashboard = async userId => {
     .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
     .reduce((acc, { id, date, status, reason }) => {
       // return only confirmed time off
-      return status === 'confirmed'
-        ? [...acc, { id, date, status, reason }]
-        : acc
+      // return new Date(date - 2)
+      console.log(new Date(date - 2))
+      return [...acc, { id, date, status, reason }]
+      // : acc
     }, [])
 
   return {
