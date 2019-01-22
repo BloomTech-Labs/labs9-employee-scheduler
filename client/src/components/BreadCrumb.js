@@ -2,6 +2,8 @@ import React from 'react'
 import LinkItem from './common/LinkItem'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+// import logo1 from '../img/logo1.png'
+import logo2 from '../img/logo2.png'
 
 // this will benefit from being refactored once Breadcrumb is getting loaded by App.js
 // once that happens we'll simply be able to this method down as props
@@ -14,17 +16,19 @@ import { connect } from 'react-redux'
 const BreadCrumb = props => {
   // initialize content for condition
   let breadContent
-  // ask the recieving component what location will be
+  // ask the receiving component what location will be
 
   if (props.location !== 'Home') {
     breadContent = (
       <Nav fixed={false}>
         <Container logo>
-          <LinkItem to="/">Cadence</LinkItem>
+          <LinkItem to="/">
+            <img src={logo2} alt="logo" />
+          </LinkItem>
           <p> {props.location}</p>
         </Container>
 
-        <Container className="breadcrumbs" extra>
+        <Container className="breadcrumbs">
           {!props.auth ? <button onClick={props.logout}>Log out</button> : null}
         </Container>
       </Nav>
@@ -34,7 +38,9 @@ const BreadCrumb = props => {
     breadContent = (
       <Nav fixed={true}>
         <Container logo>
-          <LinkItem to="/">Cadence</LinkItem>
+          <LinkItem to="/">
+            <img src={logo2} alt="logo" />
+          </LinkItem>
         </Container>
 
         <Container className="breadcrumbs" extra>
@@ -60,22 +66,34 @@ const Container = styled('div')`
   align-items: center;
   justify-content: space-between;
   width: ${props => (props.extra ? '225px' : null)};
-  a {
+
+  img {
+    height: 2.75rem;
+    width: auto;
+  }
+
+  a,
+  button {
     font-size: ${props =>
-      props.logo ? system.fontSizing.l : system.fontSizing.m};
+      props.logo ? system.fontSizing.l : system.fontSizing.sm};
     font-weight: ${props => (props.logo ? 'bold' : null)};
-    color: ${system.color.neutral};
+    color: ${system.color.white};
+    background: transparent;
     text-decoration: none;
     text-align: center;
-    padding: ${system.spacing.standardPadding};
-    border: ${props =>
-      props.logo ? null : `1px solid ${system.color.neutral}`};
+    padding: ${props => (props.logo ? null : system.spacing.standardPadding)};
+    border: ${props => (props.logo ? null : `1px solid ${system.color.white}`)};
     border-radius: ${system.borders.radius};
+    transition: ${system.transition};
+    :hover {
+      background: ${props => (props.logo ? null : system.color.white)};
+      color: ${props => (props.logo ? null : system.color.primary)};
+    }
   }
 
   p {
     font-size: ${system.fontSizing.s};
-    color: ${system.color.neutral};
+    color: ${system.color.white};
     margin: 5px 15px 0;
     word-spacing: 5px;
   }

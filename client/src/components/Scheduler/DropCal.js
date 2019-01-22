@@ -49,7 +49,8 @@ const DropCal = ({
   onEventDrop,
   onEventResize,
   onSelectSlot,
-  onSelectEvent
+  onSelectEvent,
+  onRangeChange
 }) => {
   return connectDropTarget(
     <div>
@@ -68,6 +69,7 @@ const DropCal = ({
         onEventResize={onEventResize}
         onSelectSlot={onSelectSlot}
         onSelectEvent={onSelectEvent}
+        onRangeChange={onRangeChange}
       />
     </div>
   )

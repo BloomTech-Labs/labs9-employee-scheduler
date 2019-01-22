@@ -6,7 +6,7 @@ import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
-import Home2 from './components/Home2'
+import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
@@ -155,7 +155,7 @@ class App extends Component {
                   } else if (user && user.role === 'employee') {
                     return <Redirect to="/dashboard" />
                   } else {
-                    return <Home2 {...props} />
+                    return <Home {...props} />
                   }
                 }}
               />

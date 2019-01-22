@@ -16,7 +16,8 @@ import WeekSummary from './WeekSummary'
 
 class Scheduler extends React.Component {
   state = {
-    draggedEmployee: null
+    draggedEmployee: null,
+    range: null
   }
 
   componentDidMount() {
@@ -54,6 +55,28 @@ class Scheduler extends React.Component {
 
     if (r) {
       return this.props.deleteEvent(event)
+    }
+  }
+
+  updateRange = range => {
+    if (Array.isArray(range) && range.length === 1) {
+      this.setState({
+        range: {
+          start: moment(range[0]).startOf('day')._d,
+          end: moment(range[0]).endOf('day')._d
+        }
+      })
+    } else if (Array.isArray(range)) {
+      this.setState({
+        range: range
+      })
+    } else {
+      this.setState({
+        range: {
+          start: moment(range.start).startOf('day')._d,
+          end: moment(range.end).endOf('day')._d
+        }
+      })
     }
   }
 
@@ -99,8 +122,19 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
+            onRangeChange={this.updateRange}
           />
-          <WeekSummary events={events} />
+          <WeekSummary
+            range={
+              this.state.range
+                ? this.state.range
+                : {
+                    start: moment().startOf('week')._d,
+                    end: moment().endOf('week')._d
+                  }
+            }
+            events={events}
+          />
         </div>
       </div>
     )
