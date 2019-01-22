@@ -9,7 +9,7 @@ const getHoursOfOperation = orgId => {
 //update hours of operation
 const updateHoursOfOperation = (hourId, updates) => {
   return db('hours_of_operation as h')
-    .where({ 'h.organization_id': orgId })
+    .where({ 'h.id': hourId })
     .update(updates)
 }
 
