@@ -10,11 +10,8 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-<<<<<<< HEAD
 import Join from './components/Join'
-=======
 import system from './design/theme'
->>>>>>> master
 
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
