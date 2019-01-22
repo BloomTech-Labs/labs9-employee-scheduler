@@ -14,24 +14,42 @@ class Card extends Component {
       first_name,
       last_name,
       email,
+      emailpref,
       phone,
+      phonepref,
       availabilities,
       time_off_requests
     } = this.props
-
     return (
-      <Container>
+      <Container data-testid="employee-card">
         {/* Employee Name */}
         <P main>{`${first_name} ${last_name}`}</P>
 
         {/* Employee Email */}
-        <P>{email}</P>
+        <P>
+          {email}
+          {Boolean(emailpref) ? <span> (pref)</span> : null}
+        </P>
 
         {/* Employee Phone */}
-        <P>{phone}</P>
+        <P>
+          {phone}
+          {Boolean(phonepref) ? <span> (pref)</span> : null}
+        </P>
 
-        <Availability availabilities={availabilities} />
-        <TimeOff timeOffRequests={time_off_requests} />
+        <div>
+          {/* the below two things should conditionally render based on whether there is data or not */}
+          {availabilities && availabilities.length ? (
+            <Availability availabilities={availabilities} />
+          ) : null}
+
+          {time_off_requests && time_off_requests.length ? (
+            <TimeOff
+              timeOffRequests={time_off_requests}
+              view={this.props.view}
+            />
+          ) : null}
+        </div>
       </Container>
     )
   }
@@ -41,6 +59,12 @@ export default Card
 
 Card.propTypes = {
   // adding propTypes here
+  first_name: propTypes.string,
+  last_name: propTypes.string,
+  email: propTypes.string,
+  phone: propTypes.string,
+  availabilities: propTypes.array,
+  time_off_requests: propTypes.array
 }
 
 const Container = styled('div')`
@@ -62,4 +86,10 @@ const P = styled.p`
   font-size: ${props =>
     props.main ? system.fontSizing.m : system.fontSizing.sm};
   line-height: ${system.spacing.lineHeight};
+
+  span {
+    font-size: ${system.fontSizing.s};
+    color: ${system.color.bodytext};
+    font-weight: bold;
+  }
 `

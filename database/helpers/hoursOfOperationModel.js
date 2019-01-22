@@ -1,20 +1,30 @@
 const db = require('../dbConfig')
+const uuid = require('uuid/v4')
 
 //get hours of operation
 const getHoursOfOperation = orgId => {
-  return db('hours_of_operation as h')
-    .where({ 'h.id': orgId })
-    .first()
+  return db('hours_of_operation as h').where({ 'h.organization_id': orgId })
 }
 
 //update hours of operation
-const updateHoursOfOperation = (orgId, updates) => {
+const updateHoursOfOperation = (hourId, updates) => {
   return db('hours_of_operation as h')
-    .where({ 'h.id': orgId })
+    .where({ 'h.id': hourId })
     .update(updates)
+}
+
+const addHour = hour => {
+  const id = uuid()
+  return db('hours_of_operation as h')
+    .insert({
+      id,
+      ...hour
+    })
+    .then(() => id)
 }
 
 module.exports = {
   getHoursOfOperation,
-  updateHoursOfOperation
+  updateHoursOfOperation,
+  addHour
 }

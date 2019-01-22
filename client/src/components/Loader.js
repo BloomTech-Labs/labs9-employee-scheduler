@@ -8,7 +8,12 @@ const Loader = () => {
     // show this component when your component is loading, request is pending, etc.
     <Container>
       <img alt="loader" src={rings} />
-      <p>We'll get you sorted in just a moment. Thanks for your patience.</p>
+      <p>
+        We'll get you sorted in just a moment. Thanks for your patience.{' '}
+        <span role="img" aria-label="hourglass done emoji">
+          &#x231B;
+        </span>
+      </p>
     </Container>
   )
 }
@@ -31,6 +36,9 @@ const Container = styled.div`
     color: ${system.color.white};
     margin-left: ${system.spacing.bigPadding};
     font-size: ${system.fontSizing.m};
+    span {
+      margin: 0 5px;
+    }
   }
 
   img {

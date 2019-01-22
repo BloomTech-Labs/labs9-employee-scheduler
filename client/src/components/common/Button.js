@@ -8,7 +8,7 @@ const Button = props => {
 
 export default Button
 
-const StyledButton = styled('button')`
+const StyledButton = styled.button`
   /* some styles go here */
   cursor: pointer;
   border-radius: ${system.borders.radius};

@@ -4,18 +4,25 @@ import Button from './HoursOfOperationModal/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Zoom from 'react-reveal'
+import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { editOpenHours, editCloseHours } from '../actions/'
+import {
+  editOpenHours,
+  editCloseHours,
+  fetchHoursFromDB,
+  closeAndOpenHours
+} from '../actions/'
 
 class HoursOfOperation extends Component {
   constructor() {
     super()
     this.state = {
-      isOpen: false,
-      isClose: false,
+      isOpen: false, // open time clock show/hide
+      isClose: false, // close time clock show/hide
       time: '',
-      show: false,
+      show: false, // show or hide the open/close buttons
       days: {
+        // which day clock is open
         sunday: false,
         monday: false,
         tuesday: false,
@@ -23,12 +30,28 @@ class HoursOfOperation extends Component {
         thursday: false,
         friday: false,
         saturday: false
-      }
+      },
+      dayId: '', // selected day id
+      checked: new Map()
     }
   }
-  //opens the correct version of the timekeeper so it sends back
+
+  componentDidMount() {
+    if (this.props.user !== null) {
+      const { organization_id } = this.props.user
+      this.props.fetchHoursFromDB(organization_id, this.props.token)
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.errors ? { errors: nextProps.errors } : null
+  }
+
+  // //opens the correct version of the timekeeper so it sends back
   //either open time or close time
   handleHours = e => {
+    e.preventDefault()
+    e.stopPropagation()
     if (e.target.name === 'open') {
       this.setState({ isOpen: true, isClose: false })
     } else {
@@ -36,50 +59,102 @@ class HoursOfOperation extends Component {
     }
   }
 
-  showHandleHours = e => {
+  // slides out clock
+  showHandleHours = (e, idx) => {
     e.preventDefault()
-    console.log(e.target.name)
-    const { days } = this.state
-    this.setState({
-      days: {
-        ...days,
-        [e.target.name]: !days[e.target.name]
-      }
-    })
+    e.stopPropagation()
+
+    const { hours } = this.props.hours
+    if (Object.keys(hours).length > 0) {
+      const { days } = this.state
+      this.setState({
+        days: {
+          ...days,
+          [e.target.name]: !days[e.target.name] //change individual day
+        },
+        dayId: hours[idx].id //keep the data for this day on state
+      })
+    } else {
+      console.log('No hours in database')
+    }
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
-    const { organization_id, token } = this.props.user
-    if (organization_id) {
-      //  this function takes org organization_id and new updated time data
-      this.props.editOpenHours(organization_id, time, token)
-      // this opens and closes the clock
-      this.setState({ isOpen: false, isClose: false, time: time })
-    }
+    const { dayId } = this.state
+    this.setState(function(prevState) {
+      return {
+        isOpen: !prevState.isOpen,
+        isClose: !prevState.isClosed
+      }
+    })
+
+    this.props.editOpenHours(dayId, time, this.props.token)
   }
 
   saveCloseTime = time => {
-    const { organization_id, token } = this.props.user
-    if (organization_id) {
-      this.props.editCloseHours(organization_id, time, token)
-      // this opens and closes the clock
-      this.setState({ isOpen: false, isClose: false, time: time })
-    }
+    const { dayId } = this.state
+    this.setState(function(prevState) {
+      return {
+        isOpen: !prevState.isOpen,
+        isClose: !prevState.isClosed
+      }
+    })
+
+    this.props.editOpenHours(dayId, time, this.props.token)
+  }
+
+  closedAllDay = (e, idx) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { dayId } = this.state
+    let closed
+    this.props.hours.hours[idx].closed === 1 ? (closed = 0) : (closed = 1)
+    this.setState({
+      isOpen: false,
+      isClose: false,
+      checked: !this.state.checked
+    })
+
+    this.props.closeAndOpenHours(dayId, closed, this.props.token)
+  }
+
+  checkBox = e => {
+    e.stopPropagation()
+    const item = e.target.name
+    const isChecked = e.target.checked
+    this.setState(function(prevState) {
+      return {
+        checked: !prevState.checked.set(item, isChecked)
+      }
+    })
+  }
+
+  handleCheck = e => {
+    e.persist()
+    console.log(e.target)
   }
 
   render() {
     return (
       <Container>
-        {/* opens either a diffeernce instance of the timekeeper based on if it's editing open or close time */}
+        {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
 
         {this.state.isOpen === true ? (
           <Zoom right>
-            <Timekeeper name="open" saveAndClose={this.saveOpenTime} />
+            <Timekeeper
+              name="open"
+              saveAndClose={this.saveOpenTime}
+              day={`Open time`}
+            />
           </Zoom>
         ) : this.state.isClose === true ? (
           <Zoom right>
-            <Timekeeper name="close" saveAndClose={this.saveCloseTime} />
+            <Timekeeper
+              name="close"
+              saveAndClose={this.saveCloseTime}
+              day={`Close time`}
+            />
           </Zoom>
         ) : null}
         <div className="days-container">
@@ -88,11 +163,13 @@ class HoursOfOperation extends Component {
           {Object.keys(this.state.days).map((day, i) => {
             return (
               <Button
+                id={i}
                 key={i}
                 handleHours={this.handleHours}
                 day={this.state.days[day]}
                 name={day}
-                showHandleHours={this.showHandleHours}
+                showHandleHours={e => this.showHandleHours(e, i)}
+                closedAllDay={e => this.closedAllDay(e, i)}
               >
                 {this.props.children}
               </Button>
@@ -105,13 +182,27 @@ class HoursOfOperation extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  token: state.auth.token,
+  user: state.auth.user,
+  hours: state.hours
 })
 
 export default connect(
   mapStateToProps,
-  { editOpenHours, editCloseHours }
+  { editOpenHours, editCloseHours, fetchHoursFromDB, closeAndOpenHours }
 )(HoursOfOperation)
+
+HoursOfOperation.propTypes = {
+  editOpenHours: propTypes.func.isRequired,
+  editCloseHours: propTypes.func.isRequired,
+  fetchHoursFromDB: propTypes.func.isRequired,
+  closeAndOpenHours: propTypes.func.isRequired,
+  showHandleHours: propTypes.func,
+  closeAllDay: propTypes.func,
+  handleHours: propTypes.func,
+  saveCloseTime: propTypes.func,
+  saveOpenTime: propTypes.func
+}
 
 const Container = styled.div`
   position: absolute;

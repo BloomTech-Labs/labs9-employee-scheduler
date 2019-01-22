@@ -2,9 +2,9 @@ exports.up = knex =>
   knex.schema.createTable('hours_of_operation', table => {
     table.uuid('id').primary()
     table.integer('day').notNullable()
-    table.float('open_time').notNullable()
-    table.float('close_time').notNullable()
-    table.boolean('closed')
+    table.float('open_time').defaultTo(9)
+    table.float('close_time').defaultTo(17)
+    table.boolean('closed').defaultTo(1)
     table
       .uuid('organization_id')
       .references('id')

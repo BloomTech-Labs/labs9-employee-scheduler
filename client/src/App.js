@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+import system from './design/theme'
 
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -105,6 +106,15 @@ class App extends Component {
             html {
               font-size: 62.5%;
               font-family: 'Nunito', sans-serif;
+              ::-webkit-scrollbar {
+                width: 8px;
+                background-color: rgba(0, 0, 0, 0.041);
+              }
+              ::-webkit-scrollbar-thumb {
+                background: ${system.color.lightgrey};
+                width: 8px;
+                border-radius: 50px;
+              }
             }
 
             * {
@@ -153,6 +163,11 @@ class App extends Component {
                 access="admin"
                 path="/employees"
                 component={Employees}
+              />
+              <PrivateRoute
+                access="admin"
+                path="/hours-of-operation"
+                component={HoursOfOperation}
               />
               <PrivateRoute
                 access="admin"

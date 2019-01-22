@@ -13,7 +13,19 @@ class LeftSideBar extends Component {
     show: false
   }
 
+  componentWillUnmount() {
+    // cleans up the event listener for handling clicks outside the nav
+    if (this.state.show) {
+      document.removeEventListener('click', this.toggleShow)
+    }
+  }
+
   toggleShow = () => {
+    if (!this.state.show) {
+      document.addEventListener('click', this.toggleShow)
+    } else {
+      document.removeEventListener('click', this.toggleShow)
+    }
     this.setState({ show: !this.state.show })
   }
 
@@ -76,11 +88,11 @@ const Hamburger = styled.div`
 
 const Nav = styled.nav`
   background: ${system.color.white};
-  box-shadow: ${system.shadows.otherLight};
+  box-shadow: ${system.shadows.other};
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  border-top: none;
+  border: 1px solid ${system.color.primary};
   border-left: none;
   border-radius: ${system.borders.radius};
   width: 150px;

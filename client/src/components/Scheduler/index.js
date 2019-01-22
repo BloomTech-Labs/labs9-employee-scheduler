@@ -1,44 +1,87 @@
 import React from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
-import Calendar from '../Calendar'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
-import { fetchEmployeesFromDB, createEvent, changeEvent } from '../../actions'
-import OuterContainer from '../common/OuterContainer'
-import WeekSummary from './WeekSummary'
-import BreadCrumb from '../BreadCrumb'
-import LeftSideBar from '../LeftSideBar'
+import {
+  fetchEmployeesFromDB,
+  createEvent,
+  changeEvent,
+  deleteEvent
+} from '../../actions'
 
-const DnDCal = withDragAndDrop(Calendar, { backend: false })
+import WeekSummary from './WeekSummary'
 
 class Scheduler extends React.Component {
-  state = { events: [] }
+  state = {
+    draggedEmployee: null,
+    range: null
+  }
 
   componentDidMount() {
     this.props.fetchEmployeesFromDB()
   }
 
-  handleDrop = drop => {
-    console.log('drop', drop)
+  moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
 
-    // checks to see if this is the creation of a new_shift via an employee card
-    // being dragged, rather than an existing event being dragged
-    if (event.type === 'new_shift') {
-      return this.props.createEvent({ employee, start })
-    }
-
-    // else, the drop is from dragging an existing shift, so it is interpreted
-    // as a change
     return this.props.changeEvent({ event: employee, changes: { start, end } })
   }
 
-  resizeEvent = (type, { start, end, event }) => {
+  resizeEvent = ({ end, start, event }) => {
     this.props.changeEvent({ event, changes: { start, end } })
   }
+
+  createEvent = ({ start, end }) => {
+    const { draggedEmployee } = this.state
+    if (draggedEmployee) {
+      this.props.createEvent({ employee: draggedEmployee, start })
+      this.setState({ draggedEmployee: null })
+    }
+  }
+
+  deleteEvent = event => {
+    const { title, start, end } = event
+    const eventText = `${title}
+    Begin: ${moment(start).format('ddd, MMMM Do, h:mm a')} 
+    End: ${moment(end).format('ddd, MMMM Do, h:mm a')} 
+    `
+    const r = window.confirm(
+      'Would you like to cancel this shift?\n\n' + eventText
+    )
+
+    if (r) {
+      return this.props.deleteEvent(event)
+    }
+  }
+
+  updateRange = range => {
+    if (Array.isArray(range) && range.length === 1) {
+      this.setState({
+        range: {
+          start: moment(range[0]).startOf('day')._d,
+          end: moment(range[0]).endOf('day')._d
+        }
+      })
+    } else if (Array.isArray(range)) {
+      this.setState({
+        range: range
+      })
+    } else {
+      this.setState({
+        range: {
+          start: moment(range.start).startOf('day')._d,
+          end: moment(range.end).endOf('day')._d
+        }
+      })
+    }
+  }
+
+  updateDragState = (draggedEmployee = null) =>
+    this.setState({ draggedEmployee })
 
   render() {
     const { employees } = this.props
@@ -61,34 +104,39 @@ class Scheduler extends React.Component {
     }, [])
 
     return (
-      <OuterContainer>
-        <LeftSideBar />
-        <BreadCrumb location="Schedule" />
-        {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
-        <div style={{ display: 'flex' }}>
-          <EmployeePool employees={employees} />
-          <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
-            <DnDCal
-              selectable
-              resizable
-              defaultDate={new Date()}
-              defaultView="week"
-              events={events}
-              onEventDrop={this.handleDrop}
-              onEventResize={this.resizeEvent}
-              onSelectEvent={event => console.log(event)}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
-              names={names}
-              startAccessor="start"
-              endAccessor="end"
-              draggableAccessor={event => true}
-            />
-            <WeekSummary events={events} />
-          </div>
+      <div style={{ display: 'flex' }}>
+        <EmployeePool
+          employees={employees}
+          updateDragState={this.updateDragState}
+        />
+        <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+          <DropCal
+            popover
+            events={events}
+            eventPropGetter={event => ({
+              className: event.title.split(' ')[0]
+            })}
+            names={names}
+            updateDragState={this.updateDragState}
+            onEventDrop={this.moveEvent}
+            onEventResize={this.resizeEvent}
+            onSelectSlot={this.createEvent}
+            onSelectEvent={this.deleteEvent}
+            onRangeChange={this.updateRange}
+          />
+          <WeekSummary
+            range={
+              this.state.range
+                ? this.state.range
+                : {
+                    start: moment().startOf('week')._d,
+                    end: moment().endOf('week')._d
+                  }
+            }
+            events={events}
+          />
         </div>
-      </OuterContainer>
+      </div>
     )
   }
 }
@@ -98,5 +146,5 @@ const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent, changeEvent }
+  { fetchEmployeesFromDB, createEvent, changeEvent, deleteEvent }
 )(DragSched)

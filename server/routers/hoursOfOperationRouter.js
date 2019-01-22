@@ -6,6 +6,8 @@ const {
   updateHoursOfOperation
 } = require('../../database/helpers')
 
+const authorize = require('../config/customMiddleware/authorize')
+
 //gets the hours of operation by organization id
 router.get('/:id', (req, res) => {
   const { id } = req.params
@@ -14,11 +16,12 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(404).json(err))
 })
 
-//updates hours of operation by organization id
-router.put('/:id', (req, res) => {
+//updates hours of operation by hours id
+router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   updateHoursOfOperation(id, req.body)
     .then(hours => res.status(200).json(hours))
     .catch(err => res.status(500).json({ error: 'Server Error', err }))
 })
+
 module.exports = router

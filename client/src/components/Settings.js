@@ -10,6 +10,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Status from './Status'
 import Loader from './Loader'
+import { updateUserSettings } from '../actions'
 
 const phonePattern =
   '^(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$'
@@ -86,7 +87,6 @@ class Settings extends Component {
   submitHandler = event => {
     event.preventDefault()
     this.setState({
-      disabled: true,
       loading: true,
       error: false,
       success: false
@@ -101,9 +101,15 @@ class Settings extends Component {
           headers: { authorization: this.props.token }
         }
       )
-      .then(res =>
-        this.setState({ loading: false, success: true, error: false })
-      )
+      .then(res => {
+        this.setState({
+          loading: false,
+          success: true,
+          error: false,
+          disabled: true
+        })
+        this.props.updateUserSettings(this.props.token)
+      })
       .catch(err =>
         this.setState({ loading: false, error: true, success: false })
       )
@@ -120,11 +126,19 @@ class Settings extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
             <Status success={this.state.success}>
-              We successfully edited your profile. Now get back to work :P
+              We've successfully edited your profile. Now get back to work
+              <span role="img" aria-label="wink emoji">
+                &#x1F609;
+              </span>
             </Status>
           ) : null}
           {this.state.error ? (
-            <Status>Hmm, something's wrong. Give it another shot.</Status>
+            <Status>
+              Hmm, something's wrong. Give it another shot.
+              <span role="img" aria-label="fingers crossed emoji">
+                &#x1f91e;
+              </span>
+            </Status>
           ) : null}
 
           <fieldset disabled={this.state.disabled}>
@@ -136,6 +150,7 @@ class Settings extends Component {
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
+                id="email"
                 name="email"
                 placeholder="ex. bruce@waynecorp.com"
                 onChange={this.changeHandler}
@@ -146,6 +161,7 @@ class Settings extends Component {
               <label htmlFor="phone">Phone</label>
               <Input
                 type="tel"
+                id="phone"
                 name="phone"
                 placeholder="ex. 111-111-1111"
                 pattern={phonePattern}
@@ -160,6 +176,7 @@ class Settings extends Component {
                 <Input
                   type="checkbox"
                   name="emailpref"
+                  id="emailpref"
                   onChange={this.checkHandler}
                   aria-label="emailpref"
                   checked={this.state.user.emailpref}
@@ -169,6 +186,7 @@ class Settings extends Component {
                 <Input
                   type="checkbox"
                   name="phonepref"
+                  id="phonepref"
                   onChange={this.checkHandler}
                   aria-label="phonepref"
                   checked={this.state.user.phonepref}
@@ -195,7 +213,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Settings)
+export default connect(
+  mapStateToProps,
+  { updateUserSettings }
+)(Settings)
 
 Settings.propTypes = {
   // add propTypes here
