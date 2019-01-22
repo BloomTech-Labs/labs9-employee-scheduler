@@ -1,1 +1,1 @@
-web: knex migrate:latest && npx knex seed:run && node server/index.js
+web: knex migrate:latest --env production && npx knex seed:run && node server/index.js
