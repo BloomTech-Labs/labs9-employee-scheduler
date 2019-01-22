@@ -68,7 +68,7 @@ const Container = styled('div')`
   width: ${props => (props.extra ? '225px' : null)};
 
   img {
-    height: 3.5rem;
+    height: 2.75rem;
     width: auto;
   }
 
@@ -81,7 +81,7 @@ const Container = styled('div')`
     background: transparent;
     text-decoration: none;
     text-align: center;
-    padding: ${system.spacing.standardPadding};
+    padding: ${props => (props.logo ? null : system.spacing.standardPadding)};
     border: ${props => (props.logo ? null : `1px solid ${system.color.white}`)};
     border-radius: ${system.borders.radius};
     transition: ${system.transition};
