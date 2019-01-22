@@ -18,8 +18,7 @@ class WeekSummary extends React.Component {
     return dateA > dateB ? 1 : -1
   }
 
-  rangeFilter = (events, range) => {
-    console.log(range)
+  filterAndSummarize = (events, range) => {
     let filtered = null
     if (Array.isArray(range) && range.length === 1) {
       filtered = events.filter(
@@ -34,15 +33,10 @@ class WeekSummary extends React.Component {
           event.end <= moment(range[6]).endOf('day')
       )
     } else {
-      console.log(events)
       filtered = events.filter(
         event => event.start >= range.start && event.end <= range.end
       )
     }
-    return filtered
-  }
-
-  summarize = filtered => {
     const eventsArr = []
     const summaries = []
     filtered.map(event => {
@@ -82,19 +76,39 @@ class WeekSummary extends React.Component {
         hours: counts[i].hours
       }
     }
-    return summaries
+
+    if (Array.isArray(range) && range.length > 1) {
+      // we want to check whether the summaries contain the range dates. If not, we want to push the empty dates.
+      let check = []
+
+      // populating the check array with the correctly formatted dates.
+      summaries.map(summary => {
+        check.push(summary.day)
+      })
+
+      // mapping the range into the right format, filtering for uniques (i.e. not present in the check array), and push into summaries
+      range
+        .map(item => item.toLocaleDateString('en-US', 'numeric'))
+        .filter(function(obj) {
+          return check.indexOf(obj) == -1
+        })
+        .map(unique => {
+          summaries.push({ day: unique, hours: 0, employees: 0 })
+        })
+      return summaries.sort(this.sortFunction)
+    } else {
+      return summaries
+    }
   }
 
   render() {
     const { events, range } = this.props
-    const filtered = this.rangeFilter(events, range)
-    const summaries = this.summarize(filtered)
-    console.log(summaries)
+    let summaries = this.filterAndSummarize(events, range)
     return (
       <Div>
         {summaries
           ? summaries.map((summary, i) => (
-              <DailySummary key={i} summary={summary} />
+              <DailySummary key={summary.day} summary={summary} />
             ))
           : null}
       </Div>

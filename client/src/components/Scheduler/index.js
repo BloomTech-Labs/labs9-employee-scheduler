@@ -78,7 +78,6 @@ class Scheduler extends React.Component {
         }
       })
     }
-    console.log(range)
   }
 
   updateDragState = (draggedEmployee = null) =>
