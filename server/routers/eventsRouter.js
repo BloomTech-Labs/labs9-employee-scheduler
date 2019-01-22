@@ -65,10 +65,11 @@ router.put('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
 router.delete('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   const { id } = req.params
   try {
-    console.log(id)
     const success = await deleteEvent(id)
-    console.log(success)
-    res.status(200).json(success)
+    if (success === 0) {
+      return res.status(404).send({ error: 'Event not found' })
+    }
+    return res.status(200).json(success)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
