@@ -56,7 +56,7 @@ router.post('/register/:id', async (req, res) => {
   const { email, phone, firstName, lastName } = req.body // user info
   const { organization_id, role } = await getInvite(id) // grab info from the invite
 
-  if (!email || !phone || !firstName || !lastName) {
+  if (!email || !firstName || !lastName) {
     res.status(400).json({ error: 'Missing required field(s)' })
   }
 
@@ -76,11 +76,6 @@ router.post('/register/:id', async (req, res) => {
   } else {
     res.status(500).json({ error: 'Error' })
   }
-})
-
-router.post('/send-test', (req, res) => {
-  console.log('sending email to test account')
-  sendInvite('samuelmachat@gmail.com')
 })
 
 module.exports = router

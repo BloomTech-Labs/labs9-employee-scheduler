@@ -32,6 +32,26 @@ export const registerAsOwner = packet => async dispatch => {
     })
 }
 
+export const registerViaJoinOrg = (packet, inviteId) => async dispatch => {
+  const idToken = await firebase.auth().currentUser.getIdToken(false)
+
+  axios
+    .post(`${baseURL}/invites/register/${inviteId}`, packet, {
+      headers: { authorization: idToken }
+    })
+    .then(res => {
+      dispatch({
+        type: REGISTER_AS_OWNER_SUCCESS,
+        payload: res.data
+      })
+      dispatch(authenticate())
+      dispatch(setRedirectFlagToTrue())
+    })
+    .catch(error => {
+      dispatch({ type: REGISTER_AS_OWNER_FAIL })
+    })
+}
+
 export const setRedirectFlagToTrue = () => ({
   type: SET_REDIRECT_FLAG_TO_TRUE
 })

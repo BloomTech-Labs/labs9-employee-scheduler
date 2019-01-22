@@ -51,12 +51,15 @@ class Join extends Component {
     e.preventDefault()
     const { email, phone, firstName, lastName } = this.state
 
-    this.props.registerViaJoinOrg({
-      email,
-      phone,
-      firstName,
-      lastName
-    })
+    this.props.registerViaJoinOrg(
+      {
+        email,
+        phone,
+        firstName,
+        lastName
+      },
+      this.props.match.params.id
+    )
   }
 
   render() {
@@ -139,7 +142,7 @@ class Join extends Component {
                 <Form.TextInput />
               </Form.Group>
 
-              <button className="register">Register Organization</button>
+              <button className="register">Complete Registration</button>
             </form>
           </div>
         </Container>

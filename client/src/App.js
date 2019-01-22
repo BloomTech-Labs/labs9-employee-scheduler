@@ -187,7 +187,7 @@ class App extends Component {
               <Route path="/settings" component={Settings} />
               <Route path="/hours-of-operation" component={HoursOfOperation} />
               <Route path="/login" render={props => <Login {...props} />} />
-              <Route path="/join" component={Join} />
+              <Route path="/join/:id" component={Join} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
