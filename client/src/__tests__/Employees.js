@@ -1,6 +1,7 @@
 import React from 'react'
 import App from '../App'
 import { waitForElement } from 'react-testing-library'
+import moment from 'moment'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import {
   structureEmployees,
@@ -8,15 +9,10 @@ import {
 } from '../../../database/utils/generateData'
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
-import moment from 'moment'
-jest.mock('firebase/app')
-jest.mock('firebase/auth')
 
 jest.mock('axios')
 jest.mock('firebase/app')
 jest.mock('firebase/auth')
-
-jest.mock('axios')
 
 // generates test data
 const org = populateOrg({ size: 6 })
@@ -81,7 +77,7 @@ describe('employee dashboard with redux', () => {
     const timeR = employees.find(
       employee => employee.time_off_requests.length > 0
     ).time_off_requests
-    expect(container.textContent).toMatch(moment(timeR[0].date).format('M/D'))
+    expect(container.textContent).toMatch(moment(timeR[0].date).format('MM/DD'))
 
     const avails = employees.find(
       employee => employee.availabilities.length > 0
