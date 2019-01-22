@@ -11,6 +11,7 @@ import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
 import AvailabilityForm from './components/EmployeeCard/AvailabilityForm'
+import Join from './components/Join'
 import system from './design/theme'
 
 import PrivateRoute from './components/PrivateRoute'
@@ -46,6 +47,7 @@ class App extends Component {
       stripe: null
     }
   }
+
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       //checks to see if there is a user logged in.
@@ -141,6 +143,7 @@ class App extends Component {
             }
           `}
         />
+
         <StripeProvider stripe={this.state.stripe}>
           <Elements>
             <Switch>
@@ -202,6 +205,7 @@ class App extends Component {
               />
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
+              <Route path="/join/:id" component={Join} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>

@@ -6,6 +6,7 @@ const events = require('./eventsModel')
 const employees = require('./employeesHelper')
 const dashboard = require('./dashboardHelper')
 const hoursOfOperation = require('./hoursOfOperationModel')
+const invites = require('./invitesModel')
 
 module.exports = {
   ...organizations,
@@ -15,5 +16,6 @@ module.exports = {
   ...events,
   ...employees,
   ...dashboard,
-  ...hoursOfOperation
+  ...hoursOfOperation,
+  ...invites
 }
