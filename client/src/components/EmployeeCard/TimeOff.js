@@ -5,6 +5,7 @@ import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
 import { dispoTimeOffRequests } from '../../actions'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
 const baseURL = process.env.REACT_APP_SERVER_URL
@@ -74,13 +75,7 @@ class TimeOff extends Component {
                 status={status}
               >
                 <div className="text">
-                  <p>
-                    {/* Reformatting the date below */}
-                    {date
-                      .split('-')
-                      .slice(1, 3)
-                      .join('/')}
-                  </p>
+                  <p>{moment(date).format('MM / DD')}</p>
                   <p className="status" status={status}>
                     {status}
                   </p>
