@@ -59,7 +59,14 @@ class Scheduler extends React.Component {
   }
 
   updateRange = range => {
-    if (Array.isArray()) {
+    if (Array.isArray(range) && range.length === 1) {
+      this.setState({
+        range: {
+          start: moment(range[0]).startOf('day')._d,
+          end: moment(range[0]).endOf('day')._d
+        }
+      })
+    } else if (Array.isArray(range)) {
       this.setState({
         range: range
       })
@@ -71,6 +78,7 @@ class Scheduler extends React.Component {
         }
       })
     }
+    console.log(range)
   }
 
   updateDragState = (draggedEmployee = null) =>
