@@ -3,6 +3,18 @@ import { fireEvent } from 'react-testing-library'
 import { renderWithRouter } from '../../testing/utils'
 import Settings from '../components/Settings'
 
+const user = {
+  id: 'xsc44X6okFgw3V2OPIIcGIMXkkz1',
+  organization_id: '9126df31-2607-4166-9c0c-d0a300c59c62',
+  first_name: 'Chasity',
+  last_name: 'Gerhold',
+  role: 'employee',
+  email: 'test2@test.com',
+  phone: '325-317-5476 x405',
+  emailpref: true,
+  phonepref: false
+}
+
 const setup = () => {
   const utils = renderWithRouter(<Settings />)
   const email = utils.getByLabelText('email')
@@ -20,6 +32,7 @@ const setup = () => {
 }
 
 describe('Settings Component', () => {
+  beforeAll(() => {})
   it('should render the settings header', () => {
     const route = '/settings'
     const { getByTestId } = renderWithRouter(<Settings />, { route })

@@ -21,7 +21,7 @@ class Card extends Component {
       time_off_requests
     } = this.props
     return (
-      <Container>
+      <Container data-testid="employee-card">
         {/* Employee Name */}
         <P main>{`${first_name} ${last_name}`}</P>
 
