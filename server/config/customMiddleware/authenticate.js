@@ -19,7 +19,6 @@ const authenticate = (req, res, next) => {
   // this is a testing convenience to allow testing while firebase
   // is in process. It must be removed for production environment
   if (idToken && idToken === 'testing') {
-    console.log(
       'This authentication middleware has a testing loophole that must be removed in production'
     )
 
