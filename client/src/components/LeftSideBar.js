@@ -40,8 +40,11 @@ class LeftSideBar extends Component {
         <Fade left when={this.state.show}>
           <Nav show={this.state.show}>
             {/* render the uneditable calendar page for employees */}
-            {role === 'employees' ? (
-              <NavItem to="/calendar">Calendar</NavItem>
+            {role === 'employee' ? (
+              <>
+                <NavItem to="/dashboard">Dashboard</NavItem>
+                <NavItem to="/calendar">Calendar</NavItem>
+              </>
             ) : null}
             {/* render employees and shift-calender for supervisors and above */}
             {role === 'supervisor' || role === 'owner' ? (
