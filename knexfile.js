@@ -10,8 +10,7 @@ module.exports = {
       directory: './database/migrations',
       tableName: 'dbmigrations'
     },
-    seeds: { directory: './database/seeds' },
-    debug: true
+    seeds: { directory: './database/seeds' }
   },
   production: {
     client: 'pg',
