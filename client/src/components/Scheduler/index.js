@@ -65,12 +65,28 @@ class Scheduler extends React.Component {
 
     // step 3
     // compare start and end times to availabilities
+    const availabilityForDay =
+      employee.availabilities.filter(
+        ({ day }) => day === moment(eventTimes.start).day()
+      )[0] || null
 
-    employee.availabilities.forEach(({ day, start_time, end_time }) => {
-      if (moment(eventTimes.start).day() === day) {
-        console.log('conflict with availabilities')
+    if (availabilityForDay) {
+      // start time must be earlier than or the same as eventTimes.start
+      // end_time must be later than or the same as eventTimes.end
+      console.log(availabilityForDay)
+      console.log(availabilityForDay.start_time)
+      console.log(moment(eventTimes.start).hour())
+      console.log(availabilityForDay.end_time)
+      console.log(moment(eventTimes.end).hour())
+
+      if (
+        !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
+        !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
+      ) {
+        console.log('conflict with availability window')
+        conflicts = true
       }
-    })
+    }
   }
 
   moveEvent = drop => {
