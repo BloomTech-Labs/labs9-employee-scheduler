@@ -1,4 +1,5 @@
 const db = require('../dbConfig')
+const moment = require('moment')
 
 const getDashboard = async userId => {
   const user = await db('users as u')
@@ -21,10 +22,9 @@ const getDashboard = async userId => {
     .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
     .reduce((acc, { id, date, status, reason }) => {
       // return only confirmed time off
-      // return new Date(date - 2)
-      console.log(new Date(date - 2))
-      return [...acc, { id, date, status, reason }]
-      // : acc
+
+      let twoDays = moment(date).diff(Date.now(), 'day')
+      return twoDays > -2 ? [...acc, { id, date, status, reason }] : acc
     }, [])
 
   return {
