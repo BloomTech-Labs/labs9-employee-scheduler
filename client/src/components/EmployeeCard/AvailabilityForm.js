@@ -84,12 +84,14 @@ class AvailabilityForm extends Component {
     console.log('update fired')
     this.state.days.map(day => {
       console.log(day)
-      this.props.editAvailability(user, {
-        start_time: day.startTime,
-        end_time: day.endTime,
-        off: day.off,
-        id: day.id
-      })
+      return day.id
+        ? this.props.editAvailability(user, {
+            start_time: day.startTime,
+            end_time: day.endTime,
+            off: day.off,
+            id: day.id
+          })
+        : null
     })
   }
 
