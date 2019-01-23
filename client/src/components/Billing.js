@@ -166,10 +166,25 @@ class Billing extends Component {
             ) : null}
 
             <form onSubmit={this.deleteHandler}>
-              <p>
-                This will be a features list to remind you what you're paying
-                for.
-              </p>
+              <h6 id="instructions">
+                Here's what's included in the $20 / month SMB Plan:
+              </h6>
+              <ul>
+                <li>A simple calendar interface to manage shifts</li>
+                <li>
+                  An employee directory to add new users and adjust
+                  availability.
+                </li>
+                <li>
+                  A PTO management system for employees' time off requests.
+                </li>
+                <li>
+                  A convenient dashboard where an employee can see their shifts
+                  and time off.
+                </li>
+                <li>Up to 20 seats in our software.</li>
+                <li>Different views for you, supervisors, and employees.</li>
+              </ul>
               <Button className="danger" type="submit">
                 Delete
               </Button>
@@ -216,6 +231,22 @@ class Billing extends Component {
           ) : null}
 
           <form onSubmit={this.submit}>
+            <h6 id="instructions">
+              Here's what's included in the $20 / month SMB Plan:
+            </h6>
+            <ul>
+              <li>A simple calendar interface to manage shifts</li>
+              <li>
+                An employee directory to add new users and adjust availability.
+              </li>
+              <li>A PTO management system for employees' time off requests.</li>
+              <li>
+                A convenient dashboard where an employee can see their shifts
+                and time off.
+              </li>
+              <li>Up to 20 seats in our software.</li>
+              <li>Different views for you, supervisors, and employees.</li>
+            </ul>
             <CardElement />
             <Button type="submit">Pay</Button>
           </form>
@@ -263,6 +294,20 @@ const Container = styled('div')`
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
     margin-bottom: 20px;
+
+    #instructions {
+      font-size: ${system.fontSizing.m};
+      color: ${system.color.bodytext};
+    }
+
+    ul {
+      list-style-type: disc;
+      margin: 2rem;
+      li {
+        font-size: ${system.fontSizing.sm};
+        margin-bottom: 1rem;
+      }
+    }
 
     .StripeElement {
       padding: 10px;

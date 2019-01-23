@@ -147,6 +147,9 @@ class Settings extends Component {
               <p className="edit" onClick={() => this.editHandler()}>
                 {this.state.disabled ? 'EDIT' : 'CANCEL'}
               </p>
+              <h6 id="instructions">
+                You can view & edit your contact details here.
+              </h6>
               <label htmlFor="email">Contact Email</label>
               <Input
                 type="email"
@@ -243,6 +246,12 @@ const Container = styled('div')`
     padding: ${system.spacing.bigPadding};
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
+
+    #instructions {
+      font-size: ${system.fontSizing.m};
+      margin-bottom: 50px;
+      color: ${system.color.bodytext};
+    }
 
     .edit {
       position: absolute;
