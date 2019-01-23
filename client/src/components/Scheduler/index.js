@@ -35,82 +35,90 @@ class Scheduler extends React.Component {
 
   validateEvent = ({ userId, eventTimes }) => {
     const employee = this.props.employees.filter(({ id }) => id === userId)[0]
-    console.log(employee)
-
-    let conflicts = false
 
     // step 1
     // check for conflicts with approved day off requests
+    let conflicts = false
+
     employee.time_off_requests.forEach(({ date, status }) => {
       if (
         status === 'approved' &&
         moment(eventTimes.start).isSame(date, 'day')
       ) {
-        console.log('conflict with approved time off request')
         conflicts = true
       }
     })
 
-    // step 2
-    // grab day from eventTimes.start, compare to availabilities
-    const availableDays = employee.availabilities.reduce(
-      (acc, { day }) => [...acc, day],
-      []
-    )
-
-    if (!availableDays.includes(moment(eventTimes.start).day())) {
-      console.log('conflict with day off')
-      conflicts = true
+    if (conflicts) {
+      window.alert(
+        'Cannot schedule an employee during an approved time off request'
+      )
+      return false
     }
 
-    // step 3
-    // compare start and end times to availabilities
+    // step 2
+    // check for the event falling inside an availability window
     const availabilityForDay =
       employee.availabilities.filter(
         ({ day }) => day === moment(eventTimes.start).day()
       )[0] || null
 
-    if (availabilityForDay) {
-      // start time must be earlier than or the same as eventTimes.start
-      // end_time must be later than or the same as eventTimes.end
-      console.log(availabilityForDay)
-      console.log(availabilityForDay.start_time)
-      console.log(moment(eventTimes.start).hour())
-      console.log(availabilityForDay.end_time)
-      console.log(moment(eventTimes.end).hour())
-
-      if (
-        !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
-        !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
-      ) {
-        console.log('conflict with availability window')
-        conflicts = true
-      }
+    if (!availabilityForDay) {
+      window.alert(
+        'Cannot schedule an employee on a day they are not available'
+      )
+      return false
     }
+
+    // start time must be earlier than or the same as eventTimes.start
+    // end_time must be later than or the same as eventTimes.end
+    if (
+      !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
+      !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
+    ) {
+      window.alert(
+        'Cannot schedule an employee outside their availability window'
+      )
+      return false
+    }
+
+    // if everything went okay
+    return true
   }
 
   moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
-    this.validateEvent({ userId: employee.user_id, eventTimes: { start, end } })
-
-    return this.props.changeEvent({ event: employee, changes: { start, end } })
+    if (
+      this.validateEvent({
+        userId: employee.user_id,
+        eventTimes: { start, end }
+      })
+    ) {
+      this.props.changeEvent({ event: employee, changes: { start, end } })
+    }
   }
 
   resizeEvent = ({ end, start, event }) => {
-    this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
-    this.props.changeEvent({ event, changes: { start, end } })
+    if (
+      this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
+    ) {
+      this.props.changeEvent({ event, changes: { start, end } })
+    }
   }
 
   createEvent = ({ start, end }) => {
     const { draggedEmployee } = this.state
     if (draggedEmployee) {
-      this.validateEvent({
-        userId: draggedEmployee.id,
-        eventTimes: { start, end }
-      })
-      this.props.createEvent({ employee: draggedEmployee, start })
-      this.setState({ draggedEmployee: null })
+      if (
+        this.validateEvent({
+          userId: draggedEmployee.id,
+          eventTimes: { start, end }
+        })
+      ) {
+        this.props.createEvent({ employee: draggedEmployee, start })
+        this.setState({ draggedEmployee: null })
+      }
     }
   }
 
