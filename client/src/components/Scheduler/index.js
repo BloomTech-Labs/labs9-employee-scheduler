@@ -53,9 +53,24 @@ class Scheduler extends React.Component {
 
     // step 2
     // grab day from eventTimes.start, compare to availabilities
+    const availableDays = employee.availabilities.reduce(
+      (acc, { day }) => [...acc, day],
+      []
+    )
+
+    if (!availableDays.includes(moment(eventTimes.start).day())) {
+      console.log('conflict with day off')
+      conflicts = true
+    }
 
     // step 3
     // compare start and end times to availabilities
+
+    employee.availabilities.forEach(({ day, start_time, end_time }) => {
+      if (moment(eventTimes.start).day() === day) {
+        console.log('conflict with availabilities')
+      }
+    })
   }
 
   moveEvent = drop => {
