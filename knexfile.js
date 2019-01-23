@@ -1,3 +1,4 @@
+console.log(process.env.DATABASE_URL)
 module.exports = {
   development: {
     client: 'postgresql',
@@ -14,7 +15,8 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: `${process.env.DATABASE_URL}?ssl=true`,
+    connection: `${process.env.DATABASE_URL}`,
+    ssl: true,
     migrations: {
       directory: './database/migrations',
       tableName: 'dbmigrations'
