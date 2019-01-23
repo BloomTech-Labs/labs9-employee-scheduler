@@ -16,7 +16,8 @@ import { connect } from 'react-redux'
 class DeleteButton extends React.Component {
   state = {
     active: 'centerMe',
-    span: 'Delete'
+    span: 'Delete',
+    done: false
   }
 
   toggleClass = () => {
@@ -29,21 +30,27 @@ class DeleteButton extends React.Component {
     }
 
     if (active === 'centerMe confirm') {
-      return this.setState({ active: 'centerMe confirm done', span: 'Deleted' })
+      this.setState({ active: 'centerMe confirm done', span: 'Deleted' })
+      setTimeout(() => {
+        return this.setState({ done: true })
+      }, 2000)
     }
   }
 
   render() {
-    const { active, span } = this.state
+    const { active, span, done } = this.state
     return (
       <DeleteConatainer>
-        <button className={active} onClick={this.toggleClass}>
+        <button
+          className={active}
+          onClick={done ? this.props.done : this.toggleClass}
+        >
           <div className="icon">
             <i className="fas fa-trash-alt" />
             <i className="fas fa-question" />
             <i className="fas fa-check" />
           </div>
-          <div class="text">
+          <div className="text">
             <span>{span}</span>
           </div>
         </button>
@@ -72,6 +79,10 @@ class EmployeeDashboard extends Component {
     if (prevProps.auth.id !== this.props.auth.id) {
       this.props.fetchSingleEmployeeFromDB(this.props.auth.id)
     }
+  }
+
+  DeleteRequest = e => {
+    console.log('clicked')
   }
 
   // for when we adding loading state to redux
@@ -126,23 +137,25 @@ class EmployeeDashboard extends Component {
           {employee.time_off.map(item => {
             return (
               <div className="details" key={item.id}>
-                <div className="date">
-                  <h6>Date</h6>
-                  <p data-testid="date">
-                    {moment(item.date).format('MMM Do, h:mma')}
-                  </p>
-                </div>
-                <div className="reason">
-                  <h6>Reason</h6>
-                  <p data-testid="reason">{item.reason}</p>
-                  {/* needs logic added to the button to remove the request */}
-                </div>
-                <div className="status">
-                  <h6>Status</h6>
-                  <p>{item.status}</p>
+                <div className="box">
+                  <div className="date">
+                    <h6>Date</h6>
+                    <p data-testid="date">
+                      {moment(item.date).format('MMM Do, h:mma')}
+                    </p>
+                  </div>
+                  <div className="reason">
+                    <h6>Reason</h6>
+                    <p data-testid="reason">{item.reason}</p>
+                    {/* needs logic added to the button to remove the request */}
+                  </div>
+                  <div className="status">
+                    <h6>Status</h6>
+                    <p>{item.status}</p>
+                  </div>
                 </div>
                 <div className="button">
-                  <DeleteButton />
+                  <DeleteButton done={this.deleteRequest} />
                 </div>
               </div>
             )
@@ -216,12 +229,15 @@ const Message = styled('div')`
 
 const DeleteConatainer = styled('div')`
   button {
+    margin-left: 20px;
     display: flex;
     cursor: pointer;
     border: 0;
-    /* background: transparent; */
+    background: transparent;
+    padding: 0;
     outline: 0;
     overflow: hidden;
+
     .icon {
       position: relative;
       background: #1d242b;
@@ -237,10 +253,10 @@ const DeleteConatainer = styled('div')`
         width: 30px;
         transition: 0.2s all;
       }
-      .fas-check {
+      .fa-check {
         color: #38bb7c;
       }
-      .fas-question {
+      .fa-question {
         color: #2492ff;
       }
       &:after {
@@ -262,8 +278,7 @@ const DeleteConatainer = styled('div')`
       width: 0;
       height: 30px;
       overflow: hidden;
-      font-family: 'Roboto', sans-serif;
-      background: $red;
+      background: ${system.color.primary};
       text-align: center;
       line-height: 30px;
       color: #fff;
@@ -299,20 +314,20 @@ const DeleteConatainer = styled('div')`
         }
       }
     }
-    .confirm {
+    &.confirm {
       .icon {
         border-radius: 0;
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
         .fas {
           transform: translateY(-30px);
-        }
-        &:after {
-          right: -2px;
+          &:after {
+            right: -2px;
+          }
         }
       }
       .text {
-        background: #2492ff;
+        background: ${system.color.danger};
         width: 120px;
         span {
           opacity: 1;
@@ -333,7 +348,7 @@ const DeleteConatainer = styled('div')`
         }
       }
       .text {
-        background: #38bb7c;
+        background: ${system.color.success};
         width: 120px;
         span {
           opacity: 1;
@@ -432,25 +447,34 @@ const TofWrapper = styled('div')`
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: center;
+    /* justify-content: center; */
     margin: 33px auto;
-    .date {
-      min-width: 128px;
+    .button {
+      width: 20%;
     }
-    .reason {
-      width: 300px;
-    }
+    .box {
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      .date {
+        min-width: 128px;
+      }
+      .reason {
+        width: 300px;
+      }
 
-    p {
-      text-align: center;
-      width: 100%;
-      padding: 2.5px 7.5px;
-      font-family: ${props => (props.main ? "'Lato', sans-serif" : 'inherit')};
-      font-weight: ${props => (props.main ? 'bold' : null)};
-      color: ${props =>
-        props.main ? system.color.primary : system.color.captiontext};
-      font-size: ${system.fontSizing.sm};
-      line-height: ${system.spacing.lineHeight};
+      p {
+        text-align: center;
+        width: 100%;
+        padding: 2.5px 7.5px;
+        font-family: ${props =>
+          props.main ? "'Lato', sans-serif" : 'inherit'};
+        font-weight: ${props => (props.main ? 'bold' : null)};
+        color: ${props =>
+          props.main ? system.color.primary : system.color.captiontext};
+        font-size: ${system.fontSizing.sm};
+        line-height: ${system.spacing.lineHeight};
+      }
     }
   }
 `
