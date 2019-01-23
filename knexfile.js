@@ -21,6 +21,10 @@ module.exports = {
       directory: './database/migrations',
       tableName: 'dbmigrations'
     },
+    pool: {
+      min: 2,
+      max: 10
+    },
     seeds: { directory: './database/seeds' }
   }
 }
