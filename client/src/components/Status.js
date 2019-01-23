@@ -21,6 +21,7 @@ const Container = styled.div`
   position: relative;
   flex-flow: row nowrap;
   align-items: center;
+  line-height: 1.25;
   width: 60%;
   background: ${props =>
     props.success ? system.color.success : system.color.danger};
@@ -38,5 +39,18 @@ const Container = styled.div`
   img {
     height: 50px;
     width: 50px;
+  }
+
+  @media ${system.breakpoints[1]} {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 290px;
+    text-align: center;
+
+    p {
+      margin: 1rem 0;
+      font-size: ${system.fontSizing.sm};
+    }
   }
 `
