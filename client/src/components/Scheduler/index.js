@@ -33,22 +33,92 @@ class Scheduler extends React.Component {
     this.props.fetchHoursFromDB(this.props.token)
   }
 
+  validateEvent = ({ userId, eventTimes }) => {
+    const employee = this.props.employees.filter(({ id }) => id === userId)[0]
+
+    // step 1
+    // check for conflicts with approved day off requests
+    let conflicts = false
+
+    employee.time_off_requests.forEach(({ date, status }) => {
+      if (
+        status === 'approved' &&
+        moment(eventTimes.start).isSame(date, 'day')
+      ) {
+        conflicts = true
+      }
+    })
+
+    if (conflicts) {
+      window.alert(
+        'Cannot schedule an employee during an approved time off request'
+      )
+      return false
+    }
+
+    // step 2
+    // check for the event falling inside an availability window
+    const availabilityForDay =
+      employee.availabilities.filter(
+        ({ day }) => day === moment(eventTimes.start).day()
+      )[0] || null
+
+    if (!availabilityForDay) {
+      window.alert(
+        'Cannot schedule an employee on a day they are not available'
+      )
+      return false
+    }
+
+    // start time must be earlier than or the same as eventTimes.start
+    // end_time must be later than or the same as eventTimes.end
+    if (
+      !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
+      !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
+    ) {
+      window.alert(
+        'Cannot schedule an employee outside their availability window'
+      )
+      return false
+    }
+
+    // if everything went okay
+    return true
+  }
+
   moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
-
-    return this.props.changeEvent({ event: employee, changes: { start, end } })
+    if (
+      this.validateEvent({
+        userId: employee.user_id,
+        eventTimes: { start, end }
+      })
+    ) {
+      this.props.changeEvent({ event: employee, changes: { start, end } })
+    }
   }
 
   resizeEvent = ({ end, start, event }) => {
-    this.props.changeEvent({ event, changes: { start, end } })
+    if (
+      this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
+    ) {
+      this.props.changeEvent({ event, changes: { start, end } })
+    }
   }
 
   createEvent = ({ start, end }) => {
     const { draggedEmployee } = this.state
     if (draggedEmployee) {
-      this.props.createEvent({ employee: draggedEmployee, start })
-      this.setState({ draggedEmployee: null })
+      if (
+        this.validateEvent({
+          userId: draggedEmployee.id,
+          eventTimes: { start, end }
+        })
+      ) {
+        this.props.createEvent({ employee: draggedEmployee, start })
+        this.setState({ draggedEmployee: null })
+      }
     }
   }
 

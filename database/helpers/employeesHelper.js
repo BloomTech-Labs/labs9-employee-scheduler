@@ -26,21 +26,12 @@ const getEmployees = async orgId => {
       'a.end_time'
     )
     .reduce((acc, current) => {
-      // to display the date nicely for the front end to consume
-      const weekdays = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
-      ]
       const { user_id, availability_id, day, start_time, end_time } = current
       const newItem = {
         id: availability_id,
-        day: weekdays[day],
-        time: `${start_time}am-${end_time - 12}pm`
+        day,
+        start_time,
+        end_time
       }
 
       if (acc[user_id]) {
