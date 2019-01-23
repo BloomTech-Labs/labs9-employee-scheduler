@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   availability: [],
-  loading: false,
   error: ''
 }
 
@@ -22,13 +21,19 @@ export const availabilityReducer = (state = initialState, action) => {
     case UPDATE_AVAILABILITY:
       return {
         ...state,
-        availability: action.payload,
-        loading: false
+        availability: state.availability.map(a => {
+          console.log(a, action.payload)
+          if (a.id === action.payload.id) {
+            return action.payload
+          } else {
+            return a
+          }
+        })
       }
     case UPDATE_AVAILABILITY_FAIL:
       return { ...state, error: 'failed to load' }
     case GET_AVAILABILITY:
-      return { availability: action.payload, loading: false }
+      return { availability: action.payload }
     case GET_AVAILABILITY_FAIL:
       return { error: action.payload }
     default:

@@ -27,29 +27,6 @@ export const getAvailability = employeeId => dispatch => {
     )
 }
 
-// export const editAvailability = (employeeId, changes) => dispatch => {
-//   axios
-//     .put(
-//       `${baseURL}/availabilities/${employeeId}`,
-//       { changes },
-//       {
-//         headers: { authorization: 'testing' }
-//       }
-//     )
-//     .then(res => {
-//       dispatch({
-//         type: UPDATE_AVAILABILITY,
-//         payload: res.data
-//       })
-//     })
-//     .catch(error =>
-//       dispatch({
-//         type: UPDATE_AVAILABILITY_FAIL,
-//         payload: error
-//       })
-//     )
-// }
-
 export const editAvailability = ({
   changes,
   availability
@@ -65,22 +42,11 @@ export const editAvailability = ({
         headers: { authorization: 'testing' }
       }
     )
-    if (res.data > 0) {
-      const updatedRes = await axios.get(
-        `${baseURL}/availabilities/${employeeId}`,
-        {
-          headers: { authorization: 'testing' }
-        }
-      )
-      dispatch({
-        type: UPDATE_AVAILABILITY,
-        payload: updatedRes.data
-      })
-    } else {
-      dispatch({
-        type: UPDATE_AVAILABILITY_FAIL
-      })
-    }
+
+    dispatch({
+      type: UPDATE_AVAILABILITY,
+      payload: res.data
+    })
   } catch (error) {
     dispatch({
       type: UPDATE_AVAILABILITY_FAIL

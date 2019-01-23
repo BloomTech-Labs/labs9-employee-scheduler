@@ -3,10 +3,24 @@ const db = require('../dbConfig')
 // for availabilities
 const getAvailabilities = (userId, constraints) => {
   if (userId) {
-    return db('availabilities as a').where({ 'a.user_id': userId }).orderBy('a.day')
+    return db('availabilities as a')
+      .where({ 'a.user_id': userId })
+      .orderBy('a.day')
     // .return(constraints)
   }
-} // default to showing next week, constraints is object
+
+  // default to showing next week, constraints is object
+}
+
+const getAvailability = id => {
+  if (id) {
+    return db('availabilities as a')
+      .where({ 'a.id': id })
+      .first()
+    // .return(constraints)
+  }
+}
+
 const addAvailability = (userId, day) => {
   return db('availabilities as a')
     .where({ 'a.user_id': userId })
@@ -32,5 +46,6 @@ module.exports = {
   getAvailabilities,
   addAvailability,
   updateAvailability,
-  deleteAvailability
+  deleteAvailability,
+  getAvailability
 }
