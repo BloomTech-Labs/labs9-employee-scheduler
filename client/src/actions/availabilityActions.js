@@ -31,7 +31,6 @@ export const editAvailability = ({
   changes,
   availability
 }) => async dispatch => {
-  console.log(availability)
   const { id: availabilityId, user_id: employeeId } = availability
 
   try {

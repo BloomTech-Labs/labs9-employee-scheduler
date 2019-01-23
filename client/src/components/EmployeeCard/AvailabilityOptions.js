@@ -36,7 +36,7 @@ const options = [
   },
   {
     label: '4:00 am',
-    value: 4.5
+    value: 4
   },
   {
     label: '4:30 am',

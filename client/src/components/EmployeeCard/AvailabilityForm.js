@@ -19,8 +19,7 @@ class AvailabilityForm extends Component {
           name: 'sunday',
           startTime: undefined,
           endTime: undefined,
-          off: false,
-          id: ''
+          off: false
         },
         {
           name: 'monday',
@@ -70,7 +69,8 @@ class AvailabilityForm extends Component {
     this.setState({
       days: this.state.days.map(day => {
         if (day.name === targetDay) {
-          //property is either the start time or end time
+          // "processed' sets the property to a boolean or a number because it defaulted
+          // to a string on the server without this
           const processed = property === 'off' ? Boolean(value) : Number(value)
           return { ...day, [property]: processed, availability }
         } else {
@@ -80,10 +80,9 @@ class AvailabilityForm extends Component {
     })
   }
 
+  //checks to see which availabilities have been updated and sends the changes to the server
   updateAvailability = () => {
-    console.log('update fired')
     this.state.days.map(day => {
-      console.log(day)
       return day.availability
         ? this.props.editAvailability({
             availability: day.availability,
@@ -98,16 +97,15 @@ class AvailabilityForm extends Component {
   }
 
   render() {
-    console.log(this.props.availability)
     return (
       <div>
         <h5>Edit Availability</h5>
+        {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.map((a, i) => {
-          console.log(this.state.days[i].startTime)
-
           return (
             <div key={a.id}>
               <Availability
+                // uses local state to display the names of the days because the db sends a number
                 day={this.state.days[i].name}
                 startTime={a.start_time}
                 endTime={a.end_time}
@@ -117,7 +115,6 @@ class AvailabilityForm extends Component {
                 endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
                 submit={this.props.getAvailability}
-                //at this point, a.id is causing an error in the map
                 availability={a}
               />
             </div>

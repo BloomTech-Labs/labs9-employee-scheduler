@@ -12,6 +12,7 @@ const getAvailabilities = (userId, constraints) => {
   // default to showing next week, constraints is object
 }
 
+//gets a single availability
 const getAvailability = id => {
   if (id) {
     return db('availabilities as a')
@@ -25,7 +26,7 @@ const addAvailability = (userId, day) => {
   return db('availabilities as a')
     .where({ 'a.user_id': userId })
     .insert(day)
-} // adds new day, dayis object
+} // adds new day, day is object
 
 // updates existing day, updates is object
 const updateAvailability = (availabilityId, updates) => {

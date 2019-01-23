@@ -21,8 +21,8 @@ export const availabilityReducer = (state = initialState, action) => {
     case UPDATE_AVAILABILITY:
       return {
         ...state,
+        //map makes it so only the times that are updated are sent to the server
         availability: state.availability.map(a => {
-          console.log(a, action.payload)
           if (a.id === action.payload.id) {
             return action.payload
           } else {

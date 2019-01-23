@@ -23,7 +23,6 @@ class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    console.log('clicked')
   }
 
   render() {

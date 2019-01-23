@@ -4,6 +4,7 @@ import SelectList from '../common/SelectList'
 import options from './AvailabilityOptions'
 
 const Availability = props => {
+  //both functions pass in the correct params depending on if it's for start or end time.
   const handleUpdateStart = e => {
     props.handleChange(
       props.day,
@@ -25,6 +26,7 @@ const Availability = props => {
         label="start time"
         name={props.startTimeValue}
         value={props.startTimeValue}
+        //see function above
         changeHandler={handleUpdateStart}
         options={options}
         ariaLabel="start time"
@@ -34,6 +36,7 @@ const Availability = props => {
         label="end time"
         name={props.day}
         value={props.endTimeValue}
+        //see function above
         changeHandler={handleUpdateEnd}
         options={options}
         ariaLabel="end time"
