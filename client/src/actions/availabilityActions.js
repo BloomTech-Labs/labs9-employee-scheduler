@@ -48,3 +48,23 @@ export const editAvailability = (employeeId, changes) => dispatch => {
       })
     )
 }
+
+// export const editAvailability = (employeeId, changes) => async dispatch => {
+//   try {
+//     const res = await axios.put(
+//       `${baseURL}/availabilities/${employeeId}`,
+//       { changes },
+//       {
+//         headers: { authorization: 'testing' }
+//       }
+//     )
+//     dispatch({
+//       type: UPDATE_AVAILABILITY,
+//       payload: res.data
+//     })
+//   } catch (error) {
+//     dispatch({
+//       type: UPDATE_AVAILABILITY_FAIL
+//     })
+//   }
+// }

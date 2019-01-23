@@ -5,10 +5,10 @@ import options from './AvailabilityOptions'
 
 const Availability = props => {
   const handleUpdateStart = e => {
-    props.handleChange(props.day, 'startTime', e.target.value)
+    props.handleChange(props.day, 'startTime', e.target.value, 'id', props.id)
   }
   const handleUpdateEnd = e => {
-    props.handleChange(props.day, 'endTime', e.target.value)
+    props.handleChange(props.day, 'endTime', e.target.value, 'id', props.id)
   }
   return (
     <div key={props.id}>

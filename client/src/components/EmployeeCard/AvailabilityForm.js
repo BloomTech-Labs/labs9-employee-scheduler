@@ -7,17 +7,20 @@ import Button from '../common/Button'
 import Availability from './AvailabilitySelect'
 
 const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
+
 class AvailabilityForm extends Component {
   constructor() {
     super()
     this.state = {
       availability: [],
+      loading: false,
       days: [
         {
           name: 'sunday',
           startTime: undefined,
           endTime: undefined,
-          off: false
+          off: false,
+          id: ''
         },
         {
           name: 'monday',
@@ -60,17 +63,16 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      availability: this.props.getAvailability(user)
-    })
+    this.setState({ availability: this.props.getAvailability(user) })
   }
 
-  handleChange = (targetDay, property, time) => {
+  handleChange = (targetDay, property, time, id, requestId) => {
+    console.log(requestId)
     this.setState({
       days: this.state.days.map(day => {
         if (day.name === targetDay) {
           //property is either the start time or end time
-          return { ...day, [property]: time }
+          return { ...day, [property]: time, [id]: requestId }
         } else {
           return day
         }
@@ -85,7 +87,8 @@ class AvailabilityForm extends Component {
       this.props.editAvailability(user, {
         start_time: day.startTime,
         end_time: day.endTime,
-        off: day.off
+        off: day.off,
+        id: day.id
       })
     })
   }
@@ -111,6 +114,7 @@ class AvailabilityForm extends Component {
                 endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
                 submit={this.props.getAvailability}
+                id={a.id}
               />
             </div>
           )

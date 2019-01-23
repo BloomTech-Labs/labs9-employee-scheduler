@@ -41,11 +41,13 @@ router.post('/:id', authorize(['all']), (req, res) => {
 })
 
 // updateAvailability, takes in availibility Id, and updates
+
+//how do we get the availability id out of req.body?
 router.put('/:id', authorize(['all']), (req, res) => {
-  const { id } = req.params
-  const { updates } = req.body
-  console.log('updates', updates)
-  updateAvailability(id, updates)
+  const { id } = req.body
+  const updates = req.body
+  console.log('updates--', updates, 'id--', req.p)
+  updateAvailability(id, req.body)
     .then(days => res.status(200).json(days))
     .catch(err => res.status(404).json(err))
 })
