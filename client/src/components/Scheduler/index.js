@@ -26,11 +26,27 @@ class Scheduler extends React.Component {
     this.fetchData()
   }
 
+  componentDidUpdate() {
+    if (this.props.employees && this.props.hours) {
+      this.getScheduleCoverage()
+    }
+  }
+
   fetchData() {
     this.props.fetchEmployeesFromDB()
     const { organization_id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchHoursFromDB(this.props.token)
+  }
+
+  getScheduleCoverage = () => {
+    const { hours, employees } = this.props
+
+    const shifts = employees.reduce(
+      (acc, { events }) => [...acc, ...events],
+      []
+    )
+    console.log(shifts)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
