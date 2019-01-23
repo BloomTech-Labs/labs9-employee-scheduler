@@ -5,7 +5,6 @@
   "dependencies": {
     "@emotion/core": "^10.0.6",
     "@emotion/styled": "^10.0.6",
-    "antd": "^3.12.4",
     "axios": "^0.18.0",
     "firebase": "^5.7.2",
     "moment": "^2.23.0",
