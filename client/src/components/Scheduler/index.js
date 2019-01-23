@@ -42,14 +42,37 @@ class Scheduler extends React.Component {
   getScheduleCoverage = () => {
     const { hours, employees } = this.props
 
+    // combine all shifts into a single array
     const shifts = employees.reduce(
       (acc, { events }) => [...acc, ...events],
       []
     )
+
+    // initialize an object keyed by all open days on the schedule
+    const days = hours.reduce(
+      (acc, { day, closed }) => (!closed ? { ...acc, [day]: [] } : { ...acc }),
+      {}
+    )
+
+    // populate days object with all corresponding shifts
+    shifts.forEach(shift => {
+      const shiftDay = moment(shift.start).day()
+      if (days[shiftDay]) {
+        days[shiftDay].push(shift)
+      }
+    })
+
+    Object.keys(days).forEach(key => {})
+
     console.log(shifts)
+    console.log(hours)
+    console.log(days)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
+    // also block:
+    // 1. shift collisions
+    // 2. if store is closed
     const employee = this.props.employees.filter(({ id }) => id === userId)[0]
 
     // step 1
