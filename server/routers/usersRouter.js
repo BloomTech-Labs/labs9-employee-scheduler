@@ -31,6 +31,7 @@ router.post('/current', authorize(['all']), async (req, res) => {
       return res.status(404).send({ message: 'User not found.' })
     }
   } catch (err) {
+    console.log(err)
     return res.status(500).send()
   }
 })

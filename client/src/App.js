@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Calendar from './components/Calendar'
-import HoursOfOperation from './components/HoursOfOperation'
 import Employees from './components/Employees'
 import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
@@ -167,11 +166,6 @@ class App extends Component {
                 access="admin"
                 path="/employees"
                 component={Employees}
-              />
-              <PrivateRoute
-                access="admin"
-                path="/hours-of-operation"
-                component={HoursOfOperation}
               />
               <PrivateRoute
                 access="admin"

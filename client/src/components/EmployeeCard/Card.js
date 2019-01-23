@@ -16,7 +16,7 @@ class Card extends Component {
     const r = window.confirm(
       `Are you sure you want to delete ${this.props.first_name} ${
         this.props.last_name
-      }'s account? This action is irreversible.`
+      }'s account and all associated data? This action is irreversible.`
     )
 
     if (r) {
@@ -29,7 +29,7 @@ class Card extends Component {
       .delete(`${process.env.REACT_APP_SERVER_URL}/users/${id}`, {
         headers: { authorization: this.props.token }
       })
-      .then(res => this.props.fetchEmployeesFromDB(org_id))
+      .then(res => this.props.fetchEmployeesFromDB(org_id, this.props.token))
       .catch(err => console.log(err))
   }
 
