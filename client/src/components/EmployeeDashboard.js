@@ -23,7 +23,7 @@ class EmployeeDashboard extends Component {
 
   componentDidMount() {
     const { id } = this.props.auth
-    this.props.fetchSingleEmployeeFromDB(id)
+    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -32,7 +32,7 @@ class EmployeeDashboard extends Component {
     }
 
     if (prevProps.auth.id !== this.props.auth.id) {
-      this.props.fetchSingleEmployeeFromDB(this.props.auth.id)
+      this.props.fetchSingleEmployeeFromDB(this.props.auth.id, this.props.token)
     }
   }
 
@@ -146,7 +146,8 @@ const mapStateToProps = state => {
   return {
     employee: state.employee,
     error: state.error,
-    auth: state.auth.user
+    auth: state.auth.user,
+    token: state.auth.token
   }
 }
 

@@ -15,7 +15,8 @@ import AddEmployee from './AddEmployee'
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
   componentDidMount() {
-    this.props.fetchEmployeesFromDB()
+    const { org_id, token, fetchEmployeesFromDB } = this.props
+    fetchEmployeesFromDB(org_id, token)
   }
 
   render() {
@@ -64,7 +65,9 @@ const InnerContainer = styled('div')`
 
 const mapStateToProps = state => {
   return {
-    employees: state.employees.employees
+    org_id: state.auth.user.organization_id,
+    employees: state.employees.employees,
+    token: state.auth.token
   }
 }
 

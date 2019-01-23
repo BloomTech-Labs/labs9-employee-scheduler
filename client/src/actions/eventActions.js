@@ -7,7 +7,7 @@ export const DELETE_EVENT = 'DELETE_EVENT'
 
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
-export const createEvent = ({ employee, start }) => async dispatch => {
+export const createEvent = ({ employee, start }, token) => async dispatch => {
   try {
     const processed = {
       user_id: employee.id,
@@ -15,7 +15,7 @@ export const createEvent = ({ employee, start }) => async dispatch => {
       end: new Date(start.getTime() + 1000 * 60 * 60)
     }
     const req = await axios.post(`${baseUrl}/events`, processed, {
-      headers: { authorization: 'testing ' }
+      headers: { authorization: token }
     })
     dispatch({ type: CREATE_EVENT, payload: req.data })
   } catch (err) {
@@ -23,11 +23,11 @@ export const createEvent = ({ employee, start }) => async dispatch => {
   }
 }
 
-export const changeEvent = ({ event, changes }) => async dispatch => {
+export const changeEvent = ({ event, changes }, token) => async dispatch => {
   const { id } = event
   try {
     const req = await axios.put(`${baseUrl}/events/${id}`, changes, {
-      headers: { authorization: 'testing' }
+      headers: { authorization: token }
     })
     dispatch({ type: UPDATE_EVENT, payload: req.data })
   } catch (err) {
@@ -35,10 +35,10 @@ export const changeEvent = ({ event, changes }) => async dispatch => {
   }
 }
 
-export const deleteEvent = ({ user_id, id }) => async dispatch => {
+export const deleteEvent = ({ user_id, id }, token) => async dispatch => {
   try {
     await axios.delete(`${baseUrl}/events/${id}`, {
-      headers: { authorization: 'testing' }
+      headers: { authorization: token }
     })
     dispatch({
       type: DELETE_EVENT,
