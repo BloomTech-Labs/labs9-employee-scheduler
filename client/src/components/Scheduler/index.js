@@ -30,7 +30,6 @@ class Scheduler extends React.Component {
     this.props.fetchEmployeesFromDB()
     const { organization_id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
-    this.props.fetchHoursFromDB(this.props.token)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
