@@ -33,7 +33,7 @@ export const availabilityReducer = (state = initialState, action) => {
     case UPDATE_AVAILABILITY_FAIL:
       return { ...state, error: 'failed to load' }
     case GET_AVAILABILITY:
-      return { availability: action.payload }
+      return { ...state, availability: action.payload }
     case GET_AVAILABILITY_FAIL:
       return { error: action.payload }
     default:
