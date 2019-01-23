@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
+
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-
-import { registerAsOwner, authenticate } from '../actions' // for calling once all data is in
+import { registerAsOwner, authenticate, registerReset } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Form from './Form/index'
 import Login from './Login'
+import Status from './Status'
+import EmptyScreen from './EmptyScreen'
 import BreadCrumb from './BreadCrumb'
 import { Container } from './common/RegisterContainer'
 
@@ -47,6 +49,7 @@ class RegisterOwner extends Component {
   }
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
+    this.props.registerReset()
     this.unregisterAuthObserver()
   }
 
@@ -89,7 +92,15 @@ class RegisterOwner extends Component {
     const { handleChange, handleSubmit } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
-    if (!oauthSuccess) {
+    if (this.props.user) {
+      return (
+        <EmptyScreen>
+          <Status>
+            You are logged in as a registered user. Please logout to register
+          </Status>
+        </EmptyScreen>
+      )
+    } else if (!oauthSuccess) {
       return <Login />
     } else if (outcome) {
       return (
@@ -187,9 +198,12 @@ class RegisterOwner extends Component {
   }
 }
 
-const mapStateToProps = ({ registration }) => ({ registration })
+const mapStateToProps = ({ registration, auth }) => ({
+  registration,
+  user: auth.user
+})
 
 export default connect(
   mapStateToProps,
-  { registerAsOwner, authenticate }
+  { registerAsOwner, authenticate, registerReset }
 )(RegisterOwner)

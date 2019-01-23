@@ -6,6 +6,7 @@ import { authenticate } from './'
 
 export const REGISTER_AS_OWNER_SUCCESS = 'REGISTER_AS_OWNER_SUCCESS'
 export const REGISTER_AS_OWNER_FAIL = 'REGISTER_AS_OWNER_FAIL'
+export const REGISTER_RESET = 'REGISTER_RESET'
 
 export const SET_REDIRECT_FLAG_TO_TRUE = 'SET_REDIRECT_FLAG_TO_TRUE'
 export const SET_REDIRECT_FLAG_TO_FALSE = 'SET_REDIRECT_FLAG_TO_FALSE'
@@ -51,6 +52,8 @@ export const registerViaJoinOrg = (packet, inviteId) => async dispatch => {
       dispatch({ type: REGISTER_AS_OWNER_FAIL })
     })
 }
+
+export const registerReset = () => ({ type: REGISTER_RESET })
 
 export const setRedirectFlagToTrue = () => ({
   type: SET_REDIRECT_FLAG_TO_TRUE
