@@ -44,6 +44,7 @@ router.post('/:id', authorize(['all']), (req, res) => {
 router.put('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { updates } = req.body
+  console.log('updates', updates)
   updateAvailability(id, updates)
     .then(days => res.status(200).json(days))
     .catch(err => res.status(404).json(err))

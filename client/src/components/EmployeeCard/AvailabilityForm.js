@@ -1,49 +1,12 @@
 import React, { Component } from 'react'
-import Form from '../Form/index'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import { connect } from 'react-redux'
 import { getAvailability, editAvailability } from '../../actions'
-import SelectList from '../common/SelectList'
 import Button from '../common/Button'
-import options from './AvailabilityOptions'
+import Availability from './AvailabilitySelect'
 
 const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
-
-const Availability = props => {
-  const handleUpdateStart = e => {
-    props.handleChange(props.day, 'startTime', e.target.value)
-  }
-  const handleUpdateEnd = e => {
-    props.handleChange(props.day, 'endTime', e.target.value)
-  }
-  return (
-    <div key={props.id}>
-      <Form.Group>
-        <Form.Label>Day: {props.day}</Form.Label>
-      </Form.Group>
-      <p>Start Time: {props.startTime} </p>
-      <SelectList
-        label="start time"
-        name={props.startTimeValue}
-        value={props.startTimeValue}
-        changeHandler={handleUpdateStart}
-        options={options}
-        ariaLabel="start time"
-      />
-      <p>End Time: {props.endTime}</p>
-      <SelectList
-        label="end time"
-        name={props.day}
-        value={props.endTimeValue}
-        changeHandler={handleUpdateEnd}
-        options={options}
-        ariaLabel="end time"
-      />
-    </div>
-  )
-}
-
 class AvailabilityForm extends Component {
   constructor() {
     super()
@@ -128,7 +91,7 @@ class AvailabilityForm extends Component {
   }
 
   render() {
-    console.log(this.props.availability)
+    console.log(this.state.availability)
 
     return (
       <div>
