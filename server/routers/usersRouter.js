@@ -22,6 +22,7 @@ router.get('/', authorize(['all']), (req, res) => {
 // return info for the authenticated user
 router.post('/current', authorize(['all']), async (req, res) => {
   const { id } = req.user
+  console.log(req.user)
   try {
     const user = await getUser(id)
 
@@ -31,6 +32,7 @@ router.post('/current', authorize(['all']), async (req, res) => {
       return res.status(404).send({ message: 'User not found.' })
     }
   } catch (err) {
+    console.log(err)
     return res.status(500).send()
   }
 })
