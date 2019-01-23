@@ -17,21 +17,7 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: '',
-      day: {
-        sunday: {
-          startTime: null,
-          endTime: null
-        },
-        Monday: {
-          startTime: null,
-          endTime: null
-        },
-        Tuesday: {
-          startTime: null,
-          endTime: null
-        }
-      }
+      errors: ''
     }
   }
 
