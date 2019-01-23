@@ -62,6 +62,7 @@ class Scheduler extends React.Component {
       }
     })
 
+    // for each day
     Object.keys(days).forEach(key => {
       // sort shifts by start time
       const sortedShifts = days[key].sort((a, b) =>
@@ -69,7 +70,7 @@ class Scheduler extends React.Component {
       )
 
       // merge shifts
-      // this reduce is taking shifts and combining them into blocks of time
+      // take shifts and combine them into blocks of time
       const mergedShifts = sortedShifts.reduce((acc, { start, end }) => {
         if (!acc.length) {
           // start by initializing with first shift
@@ -91,15 +92,23 @@ class Scheduler extends React.Component {
         }
       }, [])
 
-      console.log('SORTED SHIFTS')
-      console.log(sortedShifts)
       console.log('MERGED SHIFTS')
       console.log(mergedShifts)
-    })
 
-    // console.log(shifts)
-    // console.log(hours)
-    // console.log(days)
+      // calculate total shift coverage in hours
+      const totalHoursCovered = mergedShifts.reduce((acc, { start, end }) => {
+        return acc + moment.duration(moment(end).diff(start)).asHours()
+      }, 0)
+
+      console.log(totalHoursCovered)
+
+      //   const totalHoursCovered = 0
+
+      //   mergedShifts.forEach(({ start, end }) => {
+      //     const blockDuration = moment.duration(moment(end).diff(start)).asHours()
+      //     console.log(blockDuration)
+      //   })
+    })
   }
 
   validateEvent = ({ userId, eventTimes }) => {
