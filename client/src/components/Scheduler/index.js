@@ -110,7 +110,10 @@ class Scheduler extends React.Component {
         eventTimes: { start, end }
       })
     ) {
-      this.props.changeEvent({ event: employee, changes: { start, end } })
+      this.props.changeEvent(
+        { event: employee, changes: { start, end } },
+        this.props.token
+      )
     }
   }
 
@@ -211,7 +214,7 @@ class Scheduler extends React.Component {
           employees={employees}
           updateDragState={this.updateDragState}
         />
-        <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+        <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
           <DropCal
             popover
             events={events}
