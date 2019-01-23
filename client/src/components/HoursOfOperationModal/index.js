@@ -248,9 +248,9 @@ const Container = styled.div`
   }
 
   &.hidden {
-    z-index: 0;
+    z-index: -1;
     opacity: 0;
-    transition: z-index 0.7s, opacity 0.5s linear;
+    transition: z-index 0.9s, opacity 0.5s linear;
 
     & > div {
       transform: scaleY(0);
