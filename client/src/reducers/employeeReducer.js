@@ -17,7 +17,6 @@ export const employeeReducer = (state = initialState, action) => {
       }
     case FETCH_EMPLOYEE_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching failed' }
-
     default:
       return state
   }

@@ -7,7 +7,10 @@ import moment from 'moment'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import { fetchSingleEmployeeFromDB } from '../actions/employeesActions'
+import {
+  fetchSingleEmployeeFromDB,
+  deleteTimeOffRequest
+} from '../actions/employeesActions'
 
 import { connect } from 'react-redux'
 
@@ -41,19 +44,29 @@ class DeleteButton extends React.Component {
     const { active, span, done } = this.state
     return (
       <DeleteConatainer>
-        <button
-          className={active}
-          onClick={done ? this.props.done : this.toggleClass}
-        >
-          <div className="icon">
-            <i className="fas fa-trash-alt" />
-            <i className="fas fa-question" />
-            <i className="fas fa-check" />
-          </div>
-          <div className="text">
-            <span>{span}</span>
-          </div>
-        </button>
+        {done === false ? (
+          <button className={active} onClick={this.toggleClass}>
+            <div className="icon">
+              <i className="fas fa-trash-alt" />
+              <i className="fas fa-question" />
+              <i className="fas fa-check" />
+            </div>
+            <div className="text">
+              <span>{span}</span>
+            </div>
+          </button>
+        ) : (
+          <button className={active} onClick={this.props.deleteExpiredRequest}>
+            <div className="icon">
+              <i className="fas fa-trash-alt" />
+              <i className="fas fa-question" />
+              <i className="fas fa-check" />
+            </div>
+            <div className="text">
+              <span>{span}</span>
+            </div>
+          </button>
+        )}
       </DeleteConatainer>
     )
   }
@@ -81,8 +94,9 @@ class EmployeeDashboard extends Component {
     }
   }
 
-  DeleteRequest = e => {
-    console.log('clicked')
+  deleteExpiredRequest = e => {
+    const { token } = this.props.auth
+    this.props.deleteTimeOffRequest(token)
   }
 
   // for when we adding loading state to redux
@@ -154,9 +168,9 @@ class EmployeeDashboard extends Component {
                     <p>{item.status}</p>
                   </div>
                 </div>
-                <div className="button">
-                  <DeleteButton done={this.deleteRequest} />
-                </div>
+                <DeleteButton
+                  deleteExpiredRequest={this.deleteExpiredRequest}
+                />
               </div>
             )
           })}
@@ -213,7 +227,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSingleEmployeeFromDB }
+  { fetchSingleEmployeeFromDB, deleteTimeOffRequest }
 )(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
@@ -231,13 +245,14 @@ const DeleteConatainer = styled('div')`
   button {
     margin-left: 20px;
     display: flex;
+    margin-top: 36px;
+    align-items: center;
     cursor: pointer;
     border: 0;
     background: transparent;
     padding: 0;
     outline: 0;
     overflow: hidden;
-
     .icon {
       position: relative;
       background: #1d242b;
@@ -443,19 +458,16 @@ const TofWrapper = styled('div')`
   width: 500px;
   box-shadow: ${system.shadows.other};
   text-align: center;
+
   .details {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    /* justify-content: center; */
     margin: 33px auto;
-    .button {
-      width: 20%;
-    }
+
     .box {
       display: flex;
       flex-direction: row;
-      width: 80%;
+      width: 90%;
       .date {
         min-width: 128px;
       }

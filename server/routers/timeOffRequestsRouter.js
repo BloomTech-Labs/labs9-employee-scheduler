@@ -32,7 +32,7 @@ router.post('/:id', authorize(['all']), (req, res) => {
     .then(request => res.status(200).json(request))
     .catch(err => {
       console.log(err)
-      res.status(404).json({ err: 'Error with request', err })
+      res.status(404).json({ error: 'Error with request', err })
     })
 })
 
@@ -50,7 +50,7 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
       console.log(err)
       return res
         .status(404)
-        .json({ err: 'Error getting time off requests', err })
+        .json({ error: 'Error getting time off requests', err })
     })
 })
 
@@ -59,14 +59,14 @@ router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
     .then(res => res.status(200).json(res))
-    .catch(err => res.status(404).json({ err: 'Error deleting request', err }))
+    .catch(err => res.status(404).json({ error: 'Error deleting request', err }))
 })
 
 router.get('/', authorize(['owner', 'supervisor']), (req, res) => {
   getTimeOffRequestsForOrg()
     .then(res => res.status(200).json(res))
     .catch(err =>
-      res.status(404).json({ err: 'Error getting time off requests', err })
+      res.status(404).json({ error: 'Error getting time off requests', err })
     )
 })
 
