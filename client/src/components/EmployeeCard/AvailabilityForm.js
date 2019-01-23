@@ -62,7 +62,7 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    this.props.getAvailability(user)
+    this.props.getAvailability(user, this.props.token)
   }
 
   handleChange = (targetDay, property, value, availability) => {
@@ -90,7 +90,8 @@ class AvailabilityForm extends Component {
               start_time: day.startTime,
               end_time: day.endTime,
               off: day.off
-            }
+            },
+            token: this.props.token
           })
         : null
     })
@@ -128,7 +129,8 @@ class AvailabilityForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    availability: state.availability.availability
+    availability: state.availability.availability,
+    token: state.auth.token
   }
 }
 

@@ -8,10 +8,10 @@ export const AVAILABILITY_LOADING = 'AVAILABILITY_LOADING'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
-export const getAvailability = employeeId => dispatch => {
+export const getAvailability = (employeeId, token) => dispatch => {
   axios
     .get(`${baseURL}/availabilities/${employeeId}`, {
-      headers: { authorization: 'testing' }
+      headers: { authorization: token }
     })
     .then(res => {
       dispatch({
@@ -29,7 +29,8 @@ export const getAvailability = employeeId => dispatch => {
 
 export const editAvailability = ({
   changes,
-  availability
+  availability,
+  token
 }) => async dispatch => {
   const { id: availabilityId, user_id: employeeId } = availability
 
@@ -38,7 +39,7 @@ export const editAvailability = ({
       `${baseURL}/availabilities/${availabilityId}`,
       changes,
       {
-        headers: { authorization: 'testing' }
+        headers: { authorization: token }
       }
     )
 
