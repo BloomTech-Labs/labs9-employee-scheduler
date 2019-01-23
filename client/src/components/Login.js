@@ -30,6 +30,8 @@ class Login extends Component {
     if (this.props.user) {
       // redirect to home once/if user is in the store
       return <Redirect to="/" />
+    } else if (this.props.isNewUser) {
+      return <Redirect to="/register" />
     } else {
       return (
         <EmptyScreen auth>
@@ -45,7 +47,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    isNewUser: state.auth.isNewUser
   }
 }
 

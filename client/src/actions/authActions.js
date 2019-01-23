@@ -8,6 +8,7 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
+export const UNREGISTERED_ACCOUNT = 'UNREGISTERED_ACCOUNT'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -34,8 +35,15 @@ export const authenticate = () => async dispatch => {
           })
         })
         .catch(err => {
-          // if server verficiation fails, dispatch an error
-          dispatch({ type: AUTH_FAIL, payload: { error: 'server error' } })
+          // a 404 indicates successful authentication but that the account has not registered
+          if (err.response.status === 404) {
+            return dispatch({ type: UNREGISTERED_ACCOUNT })
+          }
+          // if server verficiation otherwise fails, dispatch an error
+          return dispatch({
+            type: AUTH_FAIL,
+            payload: { error: 'server error' }
+          })
         })
     } else {
       // if firebase does not have a current user logged in, dispatch an error

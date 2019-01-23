@@ -76,7 +76,7 @@ LeftSideBar.propTypes = {
 
 const Container = styled.nav`
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   top: 0;
 `
 

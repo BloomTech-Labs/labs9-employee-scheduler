@@ -18,7 +18,13 @@ export default function Calendar(props) {
   }
 
   return (
-    <StyledCalendar {...props} colors={style.join(' ')} localizer={localizer} />
+    <StyledCalendar
+      {...props}
+      colors={style.join(' ')}
+      localizer={localizer}
+      views={['week', 'day']}
+      step={30}
+    />
   )
 }
 
