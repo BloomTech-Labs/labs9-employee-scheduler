@@ -40,7 +40,6 @@ const Availability = props => {
         options={options}
         ariaLabel="end time"
       />
-      <Button onSubmit={props.updateAvailability}>submit</Button>
     </div>
   )
 }
@@ -106,8 +105,8 @@ class AvailabilityForm extends Component {
   handleChange = (targetDay, property, time) => {
     this.setState({
       days: this.state.days.map(day => {
-        // console.log(e.target.name, e.target.value)
         if (day.name === targetDay) {
+          //property is either the start time or end time
           return { ...day, [property]: time }
         } else {
           return day
@@ -116,8 +115,16 @@ class AvailabilityForm extends Component {
     })
   }
 
-  updateAvailability = days => {
-  if {}
+  updateAvailability = () => {
+    console.log('update fired')
+    this.state.days.map(day => {
+      if (day.startTime !== null) {
+        this.props.editAvailability(user, { start_time: day.startTime })
+      }
+      if (day.endTime !== null) {
+        this.props.editAvailability(user, { end_time: day.endTime })
+      }
+    })
   }
 
   render() {
@@ -140,10 +147,12 @@ class AvailabilityForm extends Component {
                 startTimeValue={this.state.days[i].startTime}
                 endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
+                submit={this.props.getAvailability}
               />
             </div>
           )
         })}
+        <button onClick={this.updateAvailability}>submit</button>
       </div>
     )
   }
