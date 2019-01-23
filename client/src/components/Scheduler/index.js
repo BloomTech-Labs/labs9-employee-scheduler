@@ -62,11 +62,44 @@ class Scheduler extends React.Component {
       }
     })
 
-    Object.keys(days).forEach(key => {})
+    Object.keys(days).forEach(key => {
+      // sort shifts by start time
+      const sortedShifts = days[key].sort((a, b) =>
+        moment(a.start).isAfter(b.start)
+      )
 
-    console.log(shifts)
-    console.log(hours)
-    console.log(days)
+      // merge shifts
+      // this reduce is taking shifts and combining them into blocks of time
+      const mergedShifts = sortedShifts.reduce((acc, { start, end }) => {
+        if (!acc.length) {
+          // start by initializing with first shift
+          return [{ start, end }]
+        } else {
+          if (moment(start).isAfter(acc[acc.length - 1].end)) {
+            // if shifts are not overlapping
+            return [...acc, { start, end }]
+          } else if (moment(end).isBefore(acc[acc.length - 1].end)) {
+            // if new shift exists within previous block
+            return [...acc]
+          } else {
+            // if we need to replace last block with a combined block
+            return [
+              ...acc.slice(0, acc.length - 1),
+              { start: acc[acc.length - 1].start, end }
+            ]
+          }
+        }
+      }, [])
+
+      console.log('SORTED SHIFTS')
+      console.log(sortedShifts)
+      console.log('MERGED SHIFTS')
+      console.log(mergedShifts)
+    })
+
+    // console.log(shifts)
+    // console.log(hours)
+    // console.log(days)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
