@@ -24,7 +24,12 @@ const getDashboard = async userId => {
       // return only confirmed time off
 
       let twoDays = moment(date).diff(Date.now(), 'day')
-      return twoDays > -2 ? [...acc, { id, date, status, reason }] : acc
+
+      // this will check if the denied request is older than two days
+      // and hide it from employee view so that it doesn't build up
+      return twoDays < -2 && status === 'denied'
+        ? [...acc, { id, date, status, reason }]
+        : acc
     }, [])
 
   return {
