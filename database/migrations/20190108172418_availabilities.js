@@ -14,8 +14,8 @@ exports.up = knex =>
     table.integer('day').notNullable() // 0-6 for Sunday-Saturday
 
     // for both below value is '0-23'
-    table.integer('start_time')
-    table.integer('end_time')
+    table.float('start_time')
+    table.float('end_time')
     table
       .boolean('off')
       .defaultTo(1)

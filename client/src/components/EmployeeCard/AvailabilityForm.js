@@ -63,16 +63,16 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    this.setState({ availability: this.props.getAvailability(user) })
+    this.props.getAvailability(user)
   }
 
-  handleChange = (targetDay, property, time, id, requestId) => {
-    console.log(requestId)
+  handleChange = (targetDay, property, value, availability) => {
     this.setState({
       days: this.state.days.map(day => {
         if (day.name === targetDay) {
           //property is either the start time or end time
-          return { ...day, [property]: time, [id]: requestId }
+          const processed = property === 'off' ? Boolean(value) : Number(value)
+          return { ...day, [property]: processed, availability }
         } else {
           return day
         }
@@ -84,20 +84,21 @@ class AvailabilityForm extends Component {
     console.log('update fired')
     this.state.days.map(day => {
       console.log(day)
-      return day.id
-        ? this.props.editAvailability(user, {
-            start_time: day.startTime,
-            end_time: day.endTime,
-            off: day.off,
-            id: day.id
+      return day.availability
+        ? this.props.editAvailability({
+            availability: day.availability,
+            changes: {
+              start_time: day.startTime,
+              end_time: day.endTime,
+              off: day.off
+            }
           })
         : null
     })
   }
 
   render() {
-    console.log(this.state.availability)
-
+    console.log(this.props.availability)
     return (
       <div>
         <h5>Edit Availability</h5>
@@ -116,7 +117,8 @@ class AvailabilityForm extends Component {
                 endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
                 submit={this.props.getAvailability}
-                id={a.id}
+                //at this point, a.id is causing an error in the map
+                availability={a}
               />
             </div>
           )

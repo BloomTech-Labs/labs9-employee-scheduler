@@ -199,7 +199,7 @@ class App extends Component {
                 component={Settings}
               />
               <PrivateRoute
-                access="admin"
+                access="all"
                 path="/update-availability"
                 component={AvailabilityForm}
               />

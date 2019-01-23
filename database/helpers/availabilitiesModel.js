@@ -3,7 +3,7 @@ const db = require('../dbConfig')
 // for availabilities
 const getAvailabilities = (userId, constraints) => {
   if (userId) {
-    return db('availabilities as a').where({ 'a.user_id': userId })
+    return db('availabilities as a').where({ 'a.user_id': userId }).orderBy('a.day')
     // .return(constraints)
   }
 } // default to showing next week, constraints is object
@@ -15,6 +15,7 @@ const addAvailability = (userId, day) => {
 
 // updates existing day, updates is object
 const updateAvailability = (availabilityId, updates) => {
+  console.log(updates)
   return db('availabilities as a')
     .where({ 'a.id': availabilityId })
     .update(updates)
