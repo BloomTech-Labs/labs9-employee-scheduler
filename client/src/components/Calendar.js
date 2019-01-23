@@ -11,7 +11,28 @@ const localizer = BigCalendar.momentLocalizer(moment)
 
 export default function Calendar(props) {
   const { names } = props
-  const colors = ['#ed9a42', '#aa4465', '#00a5bf', '#4c723a', '#6d318c']
+  const colors = [
+    '#E91E63',
+    '#3F51B5',
+    '#ff7473',
+    '#79bd9a',
+    '#8F2D56',
+    '#C89EC4',
+    '#2196F3',
+    '#03A9F4',
+    '#00BCD4',
+    '#009688',
+    '#00695C',
+    '#D84315',
+    '#FFC107',
+    '#FF5722',
+    '#AD1457',
+    '#6200EA',
+    '#2962FF',
+    '#00838F',
+    '#FF8F00',
+    '#558B2F'
+  ]
   let style = []
   for (let i = 0; i < names.length; i++) {
     style.push(`.${names[i]} {background: ${colors[i]};}`)
