@@ -54,7 +54,7 @@ class TimeOff extends Component {
       response = 'approved'
     }
     //calls function from redux actions
-    this.props.dispoTimeOffRequests(id, response)
+    this.props.dispoTimeOffRequests(id, response, this.props.token)
   }
 
   render() {
@@ -95,8 +95,14 @@ class TimeOff extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { dispoTimeOffRequests }
 )(TimeOff)
 

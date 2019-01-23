@@ -12,13 +12,11 @@ export const DELETE_TIME_OFF_REQUEST_FAILED = 'DELETE_TIME_OFF_REQUEST_FAILED'
 const baseURL = process.env.REACT_APP_SERVER_URL
 
 // the id here is for testing purposes. eventually it will be known on the backend based on the user's auth
-export const fetchEmployeesFromDB = (
-  orgId = '21e4c744-9fc0-45d9-af6b-3ed2776c1bfe'
-) => dispatch => {
+export const fetchEmployeesFromDB = (orgId, token) => dispatch => {
   if (orgId) {
     axios
       .get(`${baseURL}/employees/${orgId}`, {
-        headers: { authorization: 'testing' }
+        headers: { authorization: token }
       })
       .then(res => {
         dispatch({
@@ -31,7 +29,7 @@ export const fetchEmployeesFromDB = (
     // will probably roll both these routes into one once auth is up and running
     // for now just gonna leave this one here, leave it "decommissioned"
     axios
-      .get(`${baseURL}/users/`, { headers: { authorization: 'testing' } })
+      .get(`${baseURL}/users/`, { headers: { authorization: token } })
       .then(res => {
         dispatch({
           type: FETCH_EMPLOYEES_FROM_DB_SUCCESS,
@@ -46,10 +44,10 @@ export const fetchEmployeesFromDB = (
 }
 
 // fetches a single employee by user id
-export const fetchSingleEmployeeFromDB = userid => dispatch => {
+export const fetchSingleEmployeeFromDB = (userid, token) => dispatch => {
   axios
     .get(`${baseURL}/dashboard/${userid}`, {
-      headers: { authorization: 'testing' }
+      headers: { authorization: token }
     })
     .then(res =>
       dispatch({
@@ -65,13 +63,13 @@ export const fetchSingleEmployeeFromDB = userid => dispatch => {
 }
 
 //dispositions employee time off requests
-export const dispoTimeOffRequests = (timeOffId, status) => dispatch => {
+export const dispoTimeOffRequests = (timeOffId, status, token) => dispatch => {
   axios
     .put(
       `${baseURL}/time-off-requests/${timeOffId}`,
       { status },
       {
-        headers: { authorization: 'testing' }
+        headers: { authorization: token }
       }
     )
     .then(res =>
@@ -82,7 +80,8 @@ export const dispoTimeOffRequests = (timeOffId, status) => dispatch => {
     )
     .catch(error =>
       dispatch({
-        type: UPDATE_TIME_OFF_REQUEST_FAIL
+        type: UPDATE_TIME_OFF_REQUEST_FAIL,
+        payload: error
       })
     )
 }
