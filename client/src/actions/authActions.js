@@ -36,7 +36,7 @@ export const authenticate = () => async dispatch => {
         })
         .catch(err => {
           // a 404 indicates successful authentication but that the account has not registered
-          if (err.response.status === 404) {
+          if (err.response && err.response.status === 404) {
             return dispatch({ type: UNREGISTERED_ACCOUNT })
           }
           // if server verficiation otherwise fails, dispatch an error
