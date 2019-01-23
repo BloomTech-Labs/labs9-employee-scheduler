@@ -8,7 +8,7 @@ export default function DailySummary(props) {
     <Div>
       <h6>{day}</h6>
       <p>{`Employees: ${employees}`}</p>
-      <p>{`Total Hours: ${hours}`}</p>
+      <p>{`Total Hours: ${Math.round(hours)}`}</p>
     </Div>
   )
 }
