@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
+import moment from 'moment'
+// import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -22,13 +22,17 @@ class EmployeeDashboard extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params
+    const { id } = this.props.auth
     this.props.fetchSingleEmployeeFromDB(id)
   }
 
   componentDidUpdate(prevProps, nextProps) {
     if (prevProps.error !== this.props.error) {
       this.setState({ error: this.props.error })
+    }
+
+    if (prevProps.auth.id !== this.props.auth.id) {
+      this.props.fetchSingleEmployeeFromDB(this.props.auth.id)
     }
   }
 
@@ -40,6 +44,7 @@ class EmployeeDashboard extends Component {
   // }
 
   render() {
+    console.log(this.props.employee.employee)
     const { employee } = this.props.employee
     let assignedShift
     let approvedTimeOff
@@ -51,11 +56,13 @@ class EmployeeDashboard extends Component {
             return (
               <div className="details" key={item.id}>
                 <div className="date">
-                  <p>{item.day}</p>
+                  <p>
+                    {moment(item.start).format('MMM Do, h:mma')} to{' '}
+                    {moment(item.end).format('h:mma')}
+                  </p>
                 </div>
                 <div>
                   <p>{item.time}</p>
-                  <p>hello</p>
                 </div>
               </div>
             )
@@ -63,7 +70,11 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      assignedShift = <p>Loading...</p>
+      assignedShift = (
+        <Message>
+          <p>You haven't been Assigned yet</p>
+        </Message>
+      )
     }
 
     if (Object.keys(employee).length === 0) {
@@ -91,7 +102,11 @@ class EmployeeDashboard extends Component {
         </React.Fragment>
       )
     } else {
-      approvedTimeOff = <p>No Time off Approved yet</p>
+      approvedTimeOff = (
+        <Message>
+          <p>No Request Status to display</p>
+        </Message>
+      )
     }
 
     return (
@@ -100,7 +115,7 @@ class EmployeeDashboard extends Component {
         <BreadCrumb location="Employee Dashboard" />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {employee.first_name}</h1>
+            <h1>Welcome {this.props.auth.first_name}</h1>
           </div>
           <div className="wrapper">
             <div className="assigned-wrapper">
@@ -127,6 +142,30 @@ class EmployeeDashboard extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    employee: state.employee,
+    error: state.error,
+    auth: state.auth.user
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchSingleEmployeeFromDB }
+)(EmployeeDashboard)
+
+EmployeeDashboard.propTypes = {
+  employee: propTypes.object,
+  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
+  error: propTypes.string
+}
+
+const Message = styled('div')`
+  margin-top: 30px;
+  font-size: ${system.fontSizing.sm};
+`
+
 const Container = styled('div')`
   width: 100%;
   padding: ${system.spacing.container};
@@ -147,7 +186,8 @@ const Container = styled('div')`
       margin: ${system.spacing.bigPadding};
       border-radius: ${system.borders.bigRadius};
       width: 300px;
-      box-shadow: ${system.shadows.otherLight};
+      box-shadow: ${system.shadows.other};
+      text-align: center;
       .title {
         width: 100%;
         max-width: 268px;
@@ -158,7 +198,7 @@ const Container = styled('div')`
           display: flex;
           flex-direction: row;
           width: 100%;
-          justify-content: space-between;
+          justify-content: center;
           margin: 33px auto;
           .date {
             min-width: 128px;
@@ -167,6 +207,8 @@ const Container = styled('div')`
             width: 300px;
           }
           p {
+            text-align: center;
+
             width: 100%;
             padding: 2.5px 7.5px;
             font-family: ${props =>
@@ -174,7 +216,7 @@ const Container = styled('div')`
             font-weight: ${props => (props.main ? 'bold' : null)};
             color: ${props =>
               props.main ? system.color.primary : system.color.captiontext};
-            font-size: ${system.fontSizing.m};
+            font-size: ${system.fontSizing.sm};
             line-height: ${system.spacing.lineHeight};
           }
         }
@@ -182,20 +224,3 @@ const Container = styled('div')`
     }
   }
 `
-const mapStateToProps = state => {
-  return {
-    employee: state.employee,
-    error: state.error
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { fetchSingleEmployeeFromDB }
-)(EmployeeDashboard)
-
-EmployeeDashboard.propTypes = {
-  employee: propTypes.object,
-  fetchSingleEmployeeFromDB: propTypes.func.isRequired,
-  error: propTypes.string
-}

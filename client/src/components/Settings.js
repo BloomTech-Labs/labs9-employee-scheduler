@@ -144,10 +144,10 @@ class Settings extends Component {
           <fieldset disabled={this.state.disabled}>
             <form onSubmit={this.submitHandler}>
               {/* Replace this EDIT with a pencil icon later */}
-              <p onClick={() => this.editHandler()}>
+              <p className="edit" onClick={() => this.editHandler()}>
                 {this.state.disabled ? 'EDIT' : 'CANCEL'}
               </p>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Contact Email</label>
               <Input
                 type="email"
                 id="email"
@@ -244,13 +244,20 @@ const Container = styled('div')`
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
 
-    p {
+    .edit {
       position: absolute;
       top: 25px;
       right: 25px;
+      font-size: ${system.fontSizing.s};
+      color: ${system.color.primary};
+      padding: 5px;
+      border-radius: ${system.borders.radius};
+      border: 1px solid ${system.color.primary};
       cursor: pointer;
+      transition: ${system.transition};
       :hover {
-        color: ${system.color.primary};
+        color: ${system.color.white};
+        background: ${system.color.primary};
       }
     }
 

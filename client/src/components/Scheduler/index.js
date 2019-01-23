@@ -7,10 +7,12 @@ import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import {
   fetchEmployeesFromDB,
+  fetchHoursFromDB,
   createEvent,
   changeEvent,
   deleteEvent
 } from '../../actions'
+import { getHoursOfOperationRange } from '../../utlls'
 
 import WeekSummary from './WeekSummary'
 
@@ -21,25 +23,117 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  componentDidUpdate() {
+    if (this.props.employees && this.props.hours) {
+      this.getScheduleCoverage()
+    }
+  }
+
+  fetchData() {
     this.props.fetchEmployeesFromDB()
+    const { organization_id } = this.props.user
+    this.props.fetchHoursFromDB(organization_id, this.props.token)
+  }
+
+  getScheduleCoverage = () => {
+    const { hours, employees } = this.props
+
+    const shifts = employees.reduce(
+      (acc, { events }) => [...acc, ...events],
+      []
+    )
+    console.log(shifts)
+  }
+
+  validateEvent = ({ userId, eventTimes }) => {
+    const employee = this.props.employees.filter(({ id }) => id === userId)[0]
+
+    // step 1
+    // check for conflicts with approved day off requests
+    let conflicts = false
+
+    employee.time_off_requests.forEach(({ date, status }) => {
+      if (
+        status === 'approved' &&
+        moment(eventTimes.start).isSame(date, 'day')
+      ) {
+        conflicts = true
+      }
+    })
+
+    if (conflicts) {
+      window.alert(
+        'Cannot schedule an employee during an approved time off request'
+      )
+      return false
+    }
+
+    // step 2
+    // check for the event falling inside an availability window
+    const availabilityForDay =
+      employee.availabilities.filter(
+        ({ day }) => day === moment(eventTimes.start).day()
+      )[0] || null
+
+    if (!availabilityForDay) {
+      window.alert(
+        'Cannot schedule an employee on a day they are not available'
+      )
+      return false
+    }
+
+    // start time must be earlier than or the same as eventTimes.start
+    // end_time must be later than or the same as eventTimes.end
+    if (
+      !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
+      !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
+    ) {
+      window.alert(
+        'Cannot schedule an employee outside their availability window'
+      )
+      return false
+    }
+
+    // if everything went okay
+    return true
   }
 
   moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
-
-    return this.props.changeEvent({ event: employee, changes: { start, end } })
+    if (
+      this.validateEvent({
+        userId: employee.user_id,
+        eventTimes: { start, end }
+      })
+    ) {
+      this.props.changeEvent({ event: employee, changes: { start, end } })
+    }
   }
 
   resizeEvent = ({ end, start, event }) => {
-    this.props.changeEvent({ event, changes: { start, end } })
+    if (
+      this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
+    ) {
+      this.props.changeEvent({ event, changes: { start, end } })
+    }
   }
 
   createEvent = ({ start, end }) => {
     const { draggedEmployee } = this.state
     if (draggedEmployee) {
-      this.props.createEvent({ employee: draggedEmployee, start })
-      this.setState({ draggedEmployee: null })
+      if (
+        this.validateEvent({
+          userId: draggedEmployee.id,
+          eventTimes: { start, end }
+        })
+      ) {
+        this.props.createEvent({ employee: draggedEmployee, start })
+        this.setState({ draggedEmployee: null })
+      }
     }
   }
 
@@ -84,7 +178,7 @@ class Scheduler extends React.Component {
     this.setState({ draggedEmployee })
 
   render() {
-    const { employees } = this.props
+    const { employees, hours } = this.props
 
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
@@ -102,6 +196,8 @@ class Scheduler extends React.Component {
         })
       ]
     }, [])
+
+    let hourRange = getHoursOfOperationRange(hours)
 
     return (
       <div style={{ display: 'flex' }}>
@@ -123,6 +219,8 @@ class Scheduler extends React.Component {
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
             onRangeChange={this.updateRange}
+            min={hourRange.min}
+            max={hourRange.max}
           />
           <WeekSummary
             range={
@@ -141,10 +239,21 @@ class Scheduler extends React.Component {
   }
 }
 
-const mapStateToProps = ({ employees }) => ({ employees: employees.employees })
+const mapStateToProps = ({ employees, hours, auth }) => ({
+  employees: employees.employees,
+  hours: hours.hours,
+  user: auth.user,
+  token: auth.token
+})
 
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB, createEvent, changeEvent, deleteEvent }
+  {
+    fetchEmployeesFromDB,
+    fetchHoursFromDB,
+    createEvent,
+    changeEvent,
+    deleteEvent
+  }
 )(DragSched)

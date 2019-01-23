@@ -4,6 +4,16 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
 
+const weekdays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+
 // this component should render the employee's weekly availability. It, in the future, will also have the ability to turn into a form to update such info.
 class Availability extends Component {
   render() {
@@ -15,11 +25,11 @@ class Availability extends Component {
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
         <h6>Employee Availability</h6>
         {availabilities &&
-          availabilities.map(({ id, day, time }) => (
+          availabilities.map(({ id, day, start_time, end_time }) => (
             //temporarily adds ids tp the DOM for easy access for testing
             <Avails key={id}>
-              <p>{day}</p>
-              <span>{time.split('-').join(' - ')}</span>
+              <p>{weekdays[day]}</p>
+              <span>{`${start_time} - ${end_time - 12}`}</span>
             </Avails>
           ))}
       </CardContainer>

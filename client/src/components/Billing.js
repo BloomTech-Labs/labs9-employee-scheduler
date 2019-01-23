@@ -77,6 +77,17 @@ class Billing extends Component {
       })
   }
 
+  deleteHandler = ev => {
+    ev.preventDefault()
+    const r = window.confirm(
+      'Are you sure you want to cancel your subscription?'
+    )
+
+    if (r) {
+      return this.cancelSub(ev)
+    }
+  }
+
   cancelSub = ev => {
     ev.preventDefault()
     this.setState({
@@ -123,7 +134,7 @@ class Billing extends Component {
           <LeftSideBar />
           <BreadCrumb location="Billing" />
 
-          <Container>
+          <Container danger>
             <h1>Billing</h1>
 
             {this.state.loading ? <Loader /> : null}
@@ -154,16 +165,14 @@ class Billing extends Component {
               </Status>
             ) : null}
 
-            <form onSubmit={this.cancelSub}>
+            <form onSubmit={this.deleteHandler}>
               <p>
                 This will be a features list to remind you what you're paying
-                for. That damn button below should be crimson... can't figure it
-                out, emotion not playing nice.
+                for.
               </p>
               <Button className="danger" type="submit">
                 Delete
               </Button>
-              {/* this button should be system.color.danger -- can't figure it out */}
             </form>
           </Container>
         </OuterContainer>
@@ -281,6 +290,7 @@ const Container = styled('div')`
     button {
       width: 150px;
       margin-top: 40px;
+      background: ${props => (props.danger ? system.color.danger : null)};
     }
   }
 `
