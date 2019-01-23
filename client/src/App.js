@@ -189,7 +189,7 @@ class App extends Component {
               />
               <PrivateRoute
                 access="all"
-                path="/dashboard/:id"
+                path="/dashboard"
                 component={Dashboard}
               />
               <PrivateRoute

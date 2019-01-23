@@ -1,4 +1,5 @@
 const db = require('../dbConfig')
+const moment = require('moment')
 
 const getDashboard = async userId => {
   const user = await db('users as u')
@@ -8,23 +9,11 @@ const getDashboard = async userId => {
   const shifts = await db('users as u')
     .where({ 'u.id': userId })
     .join('events as e', { 'u.id': 'e.user_id' })
-    .select('e.id', 'e.day', 'e.start_time', 'e.end_time')
-    .reduce((acc, { id, day, start_time, end_time }) => {
-      const weekdays = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
-      ]
+    .select('e.id', 'e.start', 'e.end')
+    .reduce((acc, { id, start, end }) => {
       // do a little clever formatting with the date formatting
       // depending on calendar api this might change later
-      return [
-        ...acc,
-        { id, day: weekdays[day], time: `${start_time}am-${end_time - 12}pm` }
-      ]
+      return [...acc, { id, start, end }]
     }, [])
 
   const timeOff = await db('users as u')
@@ -33,7 +22,12 @@ const getDashboard = async userId => {
     .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
     .reduce((acc, { id, date, status, reason }) => {
       // return only confirmed time off
-      return status === 'confirmed'
+
+      let twoDays = moment(date).diff(Date.now(), 'day')
+
+      // this will check if the denied request is older than two days
+      // and hide it from employee view so that it doesn't build up
+      return twoDays < -2 && status === 'denied'
         ? [...acc, { id, date, status, reason }]
         : acc
     }, [])
