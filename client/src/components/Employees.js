@@ -26,7 +26,7 @@ class Employees extends Component {
         <BreadCrumb location="Employees" />
         <LeftSideBar />
         <MidContainer>
-          <h1>Employees</h1>
+          <h1>Employee Directory</h1>
           <AddEmployee />
           <InnerContainer>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
