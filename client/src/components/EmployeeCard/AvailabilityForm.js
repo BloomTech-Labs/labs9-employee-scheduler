@@ -11,6 +11,12 @@ import options from './AvailabilityOptions'
 const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
 
 const Availability = props => {
+  const handleUpdateStart = e => {
+    props.handleChange(props.day, 'startTime', e.target.value)
+  }
+  const handleUpdateEnd = e => {
+    props.handleChange(props.day, 'endTime', e.target.value)
+  }
   return (
     <div key={props.id}>
       <Form.Group>
@@ -21,7 +27,7 @@ const Availability = props => {
         label="start time"
         name={props.startTimeValue}
         value={props.startTimeValue}
-        changeHandler={props.changeHandler}
+        changeHandler={handleUpdateStart}
         options={options}
         ariaLabel="start time"
       />
@@ -30,11 +36,11 @@ const Availability = props => {
         label="end time"
         name={props.day}
         value={props.endTimeValue}
-        changeHandler={props.changeHandler}
+        changeHandler={handleUpdateEnd}
         options={options}
         ariaLabel="end time"
       />
-      {/* <Button onSubmit={this.updateAvailability} /> */}
+      <Button onSubmit={props.updateAvailability}>submit</Button>
     </div>
   )
 }
@@ -44,9 +50,6 @@ class AvailabilityForm extends Component {
     super()
     this.state = {
       availability: [],
-      start_time: null,
-      end_time: null,
-      off: false,
       days: [
         {
           name: 'sunday',
@@ -100,15 +103,21 @@ class AvailabilityForm extends Component {
     })
   }
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-    this.updateAvailability()
+  handleChange = (targetDay, property, time) => {
+    this.setState({
+      days: this.state.days.map(day => {
+        // console.log(e.target.name, e.target.value)
+        if (day.name === targetDay) {
+          return { ...day, [property]: time }
+        } else {
+          return day
+        }
+      })
+    })
   }
 
-  updateAvailability = () => {
-    let newStartTime = this.state.start_time
-
-    console.log('newTime', newStartTime)
+  updateAvailability = days => {
+  if {}
   }
 
   render() {
@@ -118,7 +127,8 @@ class AvailabilityForm extends Component {
       <div>
         <h5>Edit Availability</h5>
         {this.props.availability.map((a, i) => {
-          console.log(this.state.days[i])
+          console.log(this.state.days[i].startTime)
+
           return (
             <div key={a.id}>
               <Availability
@@ -126,9 +136,10 @@ class AvailabilityForm extends Component {
                 startTime={a.start_time}
                 endTime={a.end_time}
                 off={a.off}
-                name={this.state.days[i].name}
+                name={this.state.days[i]}
                 startTimeValue={this.state.days[i].startTime}
                 endTimeValue={this.state.days[i].endTime}
+                handleChange={this.handleChange}
               />
             </div>
           )
