@@ -9,7 +9,7 @@ const Loader = () => {
     <Container>
       <img alt="loader" src={rings} />
       <p>
-        We'll get you sorted in just a moment. Thanks for your patience.{' '}
+        We'll get you sorted momentarily. Thanks for your patience.{' '}
         <span role="img" aria-label="hourglass done emoji">
           &#x231B;
         </span>
@@ -31,18 +31,33 @@ const Container = styled.div`
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
   margin-bottom: 20px;
+  line-height: 1.25;
 
   p {
     color: ${system.color.white};
     margin-left: ${system.spacing.bigPadding};
     font-size: ${system.fontSizing.m};
-    span {
-      margin: 0 5px;
-    }
   }
 
   img {
     height: 50px;
     width: 50px;
+  }
+
+  @media ${system.breakpoints[1]} {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 290px;
+    text-align: center;
+
+    p {
+      margin: 1rem 0;
+      font-size: ${system.fontSizing.sm};
+
+      span {
+        margin-left: 0.25rem;
+      }
+    }
   }
 `

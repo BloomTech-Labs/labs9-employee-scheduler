@@ -32,7 +32,11 @@ const system = {
     grey: '1px solid #666'
   },
 
-  breakpoints: ['max-width: 50rem', 'max-width: 90rem', 'max-width: 120rem'],
+  breakpoints: [
+    '(max-width: 50rem)',
+    '(max-width: 90rem)',
+    '(max-width: 120rem)'
+  ],
   // for media queries -- express them as @media ${system.breakpoints[0]} {styles here}
   // in the arr, the first is for mobile, second is for portrait tablet, third is for landscape tablet
 
