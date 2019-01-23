@@ -1,6 +1,5 @@
 const knex = require('knex')
 const knexConfig = require('../knexfile.js')
 
-const { DB_ENV } = process.env
-const env = DB_ENV === 'psql' ? 'dev_psql' : 'development'
-module.exports = knex(knexConfig[env])
+console.log(process.env.NODE_ENV)
+module.exports = knex(knexConfig[process.env.NODE_ENV])
