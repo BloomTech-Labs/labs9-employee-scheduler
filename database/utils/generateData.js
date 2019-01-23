@@ -89,7 +89,7 @@ const generateAvailabilities = userId => {
   // generate sorted array of 5 numbers between 0 and 6 with no duplicates
   const generateWeekdays = () => {
     const days = []
-    while (days.length < 5) {
+    while (days.length < 7) {
       const day = generateRandomBetween(0, 6)
       if (!days.includes(day)) {
         days.push(day)
@@ -101,7 +101,7 @@ const generateAvailabilities = userId => {
   // randomly give some days full availability and other days partial
   const generateTimes = () => {
     const times = []
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       if (Math.random() > 0.2) {
         times.push([
           generateRandomBetween(0, 12),
@@ -118,8 +118,8 @@ const generateAvailabilities = userId => {
   const times = generateTimes()
   const availabilities = []
 
-  // generates availabilities for 5 days
-  for (let i = 0; i < 5; i++) {
+  // generates availabilities for 7 days
+  for (let i = 0; i < 7; i++) {
     availabilities.push({
       id: uuid(),
       user_id: userId,

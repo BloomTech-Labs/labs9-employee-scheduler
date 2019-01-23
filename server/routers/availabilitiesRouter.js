@@ -5,7 +5,8 @@ const {
   addAvailability,
   updateAvailability,
   deleteAvailability,
-  getUser
+  getUser,
+  getAvailability
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
@@ -41,12 +42,22 @@ router.post('/:id', authorize(['all']), (req, res) => {
 })
 
 // updateAvailability, takes in availibility Id, and updates
-router.put('/:id', authorize(['all']), (req, res) => {
+
+router.put('/:id', authorize(['all']), async (req, res) => {
   const { id } = req.params
-  const { updates } = req.body
-  updateAvailability(id, updates)
-    .then(days => res.status(200).json(days))
-    .catch(err => res.status(404).json(err))
+  const updates = req.body
+  try {
+    const numberUpdated = await updateAvailability(id, req.body)
+    if (numberUpdated > 0) {
+      const updated = await getAvailability(id)
+      return res.status(200).send(updated)
+    } else {
+      return res.status(404).json({ message: 'id not found' })
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json(err)
+  }
 })
 
 // delete availability takes in availability id and deletes

@@ -9,6 +9,7 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
+import AvailabilityForm from './components/EmployeeCard/AvailabilityForm'
 import Join from './components/Join'
 import system from './design/theme'
 
@@ -190,6 +191,11 @@ class App extends Component {
                 access="all"
                 path="/settings"
                 component={Settings}
+              />
+              <PrivateRoute
+                access="all"
+                path="/update-availability"
+                component={AvailabilityForm}
               />
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
