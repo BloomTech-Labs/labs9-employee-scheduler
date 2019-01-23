@@ -25,11 +25,15 @@ const BreadCrumb = props => {
           <LinkItem to="/">
             <img src={logo2} alt="logo" />
           </LinkItem>
-          <p> {props.location}</p>
+          <p id="crumb"> {props.location}</p>
         </Container>
 
         <Container className="breadcrumbs">
-          {!props.auth ? <button onClick={props.logout}>Log out</button> : null}
+          {!props.auth ? (
+            <button id="logout" onClick={props.logout}>
+              Log out
+            </button>
+          ) : null}
         </Container>
       </Nav>
     )
@@ -96,6 +100,13 @@ const Container = styled('div')`
     color: ${system.color.white};
     margin: 5px 15px 0;
     word-spacing: 5px;
+  }
+
+  @media ${system.breakpoints[0]} {
+    #crumb,
+    #logout {
+      display: none;
+    }
   }
 `
 
