@@ -78,9 +78,7 @@ const Container = styled('div')`
 
   a,
   button {
-    font-size: ${props =>
-      props.logo ? system.fontSizing.l : system.fontSizing.sm};
-    font-weight: ${props => (props.logo ? 'bold' : null)};
+    font-size: ${system.fontSizing.sm};
     color: ${system.color.white};
     background: transparent;
     text-decoration: none;
@@ -107,6 +105,11 @@ const Container = styled('div')`
     #logout {
       display: none;
     }
+
+    img {
+      height: 2rem;
+      width: auto;
+    }
   }
 `
 
@@ -126,4 +129,8 @@ const Nav = styled.nav`
   padding: 2.5rem 10rem;
   height: 7.5rem;
   margin-bottom: ${({ fixed }) => (fixed ? '10rem' : '1rem')};
+
+  @media ${system.breakpoints[0]} {
+    justify-content: center;
+  }
 `
