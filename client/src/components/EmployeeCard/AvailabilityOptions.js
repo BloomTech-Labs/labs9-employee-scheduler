@@ -185,6 +185,10 @@ const options = [
   {
     label: '11:30 pm',
     value: 23.5
+  },
+  {
+    label: '11:59 pm',
+    value: 23.99
   }
 ]
 
