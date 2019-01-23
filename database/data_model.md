@@ -31,8 +31,8 @@
   id: uuid
   user_id: UUID foreign key in USERS table
   day: INTEGER [ 0- 6 ]
-  start_time: INTEGER [ 0 - 23]
-  end_time: INTEGER [ 0 - 23]
+  start_time: FLOAT [ 0 - 23]
+  end_time: FLOAT [ 0 - 23]
 }
 ```
 
@@ -93,6 +93,8 @@
 <br>
 
 `getAvailabilities(userId, constraint object)` --> default to showing next week
+
+`getAvailability(userId, day)` --> gets a singe availability
 
 `addAvailability(userId, day object)` --> adds new day
 

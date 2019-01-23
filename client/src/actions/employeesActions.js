@@ -78,7 +78,8 @@ export const dispoTimeOffRequests = (timeOffId, status, token) => dispatch => {
     )
     .catch(error =>
       dispatch({
-        type: UPDATE_TIME_OFF_REQUEST_FAIL
+        type: UPDATE_TIME_OFF_REQUEST_FAIL,
+        payload: error
       })
     )
 }
