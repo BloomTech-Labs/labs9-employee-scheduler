@@ -103,7 +103,7 @@ const Container = styled('div')`
 // for others, it is static and does not scroll with the page
 
 const Nav = styled.nav`
-  position: ${({ fixed }) => (fixed ? 'fixed' : 'static')};
+  position: ${({ fixed }) => (fixed ? 'fixed' : 'relative')};
   z-index: 100;
   top: 0;
   background: ${system.color.primary};
