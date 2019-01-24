@@ -4,19 +4,20 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 
 export default function(props) {
-  const { employees, updateDragState } = props
+  const { employees, updateDragState, width } = props
   return (
     <React.Fragment>
-      <Container>
+      <Spacer width={width} />
+      <Container width={width}>
         {employees.map(employee => (
           <EmployeeResource
             key={employee.id}
             employee={employee}
             updateDragState={updateDragState}
+            width={width}
           />
         ))}
       </Container>
-      <Spacer />
     </React.Fragment>
   )
 }
@@ -25,10 +26,11 @@ const Container = styled('div')`
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 344px;
-  flex-grow: 0;
+  width: ${props => (props.width === 'desktop' ? '344px' : '260px')};
+  flex: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
   background-color: ${system.color.neutralDark};
 
@@ -44,6 +46,6 @@ const Container = styled('div')`
 `
 
 const Spacer = styled.div`
-  width: 360px;
+  width: ${props => (props.width === 'desktop' ? '360px' : '280px')};
   height: 100%;
 `

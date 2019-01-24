@@ -13,23 +13,25 @@ class Card extends Component {
       first_name,
       last_name,
       availabilities,
-      time_off_requests
+      time_off_requests,
+      width
     } = this.props
     return (
-      <Container data-testid="employee-card">
+      <Container data-testid="employee-card" width={width}>
         <div className="x" />
         {/* Employee Name */}
-        <P main>{`${first_name} ${last_name}`}</P>
+        <P main width={width}>{`${first_name} ${last_name}`}</P>
         <div>
           {/* the below two things should conditionally render based on whether there is data or not */}
           {availabilities && availabilities.length ? (
-            <Availability availabilities={availabilities} />
+            <Availability availabilities={availabilities} width={width} />
           ) : null}
 
           {time_off_requests && time_off_requests.length ? (
             <TimeOff
               timeOffRequests={time_off_requests}
               view={this.props.view}
+              width={width}
             />
           ) : null}
         </div>
@@ -56,7 +58,7 @@ const Container = styled('div')`
   padding: ${system.spacing.standardPadding};
   margin: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
-  width: 300px;
+  width: ${props => (props.width === 'desktop' ? '300px' : '220px')};
   box-shadow: ${system.shadows.otherLight};
 `
 /* // this width is temp until we get a better system */
@@ -70,6 +72,7 @@ const P = styled.p`
   font-size: ${props =>
     props.main ? system.fontSizing.m : system.fontSizing.sm};
   line-height: ${system.spacing.lineHeight};
+  text-align: ${props => (props.width === 'desktop' ? 'start' : 'center')};
 
   span {
     font-size: ${system.fontSizing.s};

@@ -394,8 +394,9 @@ class Scheduler extends React.Component {
         <EmployeePool
           employees={employees}
           updateDragState={this.updateDragState}
+          width={width}
         />
-        <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
+        <div style={{ display: 'flex', flexFlow: 'column', flex: '1 1' }}>
           <div
             style={{
               paddingTop: '20px',
