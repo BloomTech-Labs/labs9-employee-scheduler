@@ -33,11 +33,13 @@ class CreateSchedule extends React.Component {
         <LeftSideBar />
         <BreadCrumb location="Schedule" />
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
-        <ButtonHolder>
-          <Button onClick={this.toggleModal}>Edit Hours of Operation</Button>
-        </ButtonHolder>
-        <HoursOfOperationModal hidden={!this.state.hoursModal} />
-        <Scheduler />
+        <div style={{ position: 'relative' }}>
+          <ButtonHolder>
+            <Button onClick={this.toggleModal}>Edit Hours of Operation</Button>
+          </ButtonHolder>
+          <HoursOfOperationModal hidden={!this.state.hoursModal} />
+          <Scheduler />
+        </div>
       </OuterContainer>
     )
   }
