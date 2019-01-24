@@ -100,7 +100,6 @@ class HoursOfOperation extends Component {
         isClose: !prevState.isClosed
       }
     })
-
     this.props.editOpenHours(dayId, time, this.props.token)
   }
 

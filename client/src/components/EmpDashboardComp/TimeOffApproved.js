@@ -1,58 +1,35 @@
-import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import system from '../../design/theme'
+import React from 'react'
+import moment from 'moment'
 
-const TimeOffApproved = ({ user }) => {
+const TimeOffApproved = ({
+  id,
+  status,
+  date,
+  reason,
+  deleteExpiredRequest
+}) => {
   return (
-    <TimeOffContainer>
-      {user.map(item => {
-        return (
-          <div key={item.id} className="title">
-            <h5>Time Off Approved</h5>
-            {item.timeOffApproved.map(tOA => {
-              return (
-                <div className="details" key={tOA.id}>
-                  <div>
-                    <p>{tOA.date}</p>
-                  </div>
-                </div>
-              )
-            })}
+    <div className="details" key={id}>
+      <div className="box">
+        <div className="date">
+          <h6>Date</h6>
+          <p data-testid="date">{moment(date).format('MMM Do')}</p>
+        </div>
+        <div className="reason">
+          <h6>Reason</h6>
+          <p data-testid="reason">{reason}</p>
+          {/* needs logic added to the button to remove the request */}
+        </div>
+        <div className="status">
+          <h6>Status</h6>
+          <div className="status-and-delete">
+            <p>{status}</p>
+            <i className="fas fa-backspace" onClick={deleteExpiredRequest} />
           </div>
-        )
-      })}
-    </TimeOffContainer>
+        </div>
+      </div>
+    </div>
   )
 }
 
 export default TimeOffApproved
-
-TimeOffApproved.propTypes = {
-  // adding propTypes here
-}
-
-const TimeOffContainer = styled('div')`
-  padding: ${system.spacing.bigPadding};
-  box-shadow: ${system.shadows.otherLight};
-  width: 100%;
-  max-width: 30 0px;
-  min-width: 200px;
-  border-radius: ${system.borders.radius};
-  .title {
-    width: 100%;
-    h5 {
-      font-size: ${system.fontSizing.ml};
-    }
-    .details {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: space-between;
-      margin: 33px auto;
-      p {
-        font-size: ${system.fontSizing.m};
-      }
-    }
-  }
-`

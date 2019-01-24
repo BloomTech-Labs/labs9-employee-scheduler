@@ -22,6 +22,18 @@ import WeekSummary from './WeekSummary'
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 
+// UTILS:
+// converts a moment into float
+const convertMomentToFloat = time =>
+  moment(time).hours() + moment(time).minutes() / 60
+
+// converts a float into an object with hours and minutes
+const convertFloatToTime = num => {
+  const [hours, fraction] = num.toString().split('.')
+  const minutes = parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
+  return [hours, minutes]
+}
+
 class Scheduler extends React.Component {
   state = {
     draggedEmployee: null,
@@ -156,18 +168,6 @@ class Scheduler extends React.Component {
         }
       }, [])
 
-      // converts a moment into float
-      const convertMomentToFloat = time =>
-        moment(time).hours() + moment(time).minutes() / 60
-
-      // converts a float into an object with hours and minutes
-      const convertFloatToTime = num => {
-        const [hours, fraction] = num.toString().split('.')
-        const minutes =
-          parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
-        return [hours, minutes]
-      }
-
       // truncate merged shifts to only open hours
       const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
         // if schedule end is before shift start, discard shift
@@ -237,9 +237,7 @@ class Scheduler extends React.Component {
   }
 
   validateEvent = ({ userId, eventTimes }) => {
-    // also block:
-    // 1. shift collisions
-    // 2. if store is closed
+    const { hours, employees } = this.props
     const employee = this.props.employees.filter(({ id }) => id === userId)[0]
 
     // step 1
@@ -284,6 +282,42 @@ class Scheduler extends React.Component {
     ) {
       window.alert(
         `Sorry, you can't schedule this employee outside their availability window.`
+      )
+      return false
+    }
+
+    // step 3
+    // check for event falling outside hours of operation
+    const day = moment(eventTimes.start).day()
+
+    if (
+      convertMomentToFloat(eventTimes.start) < hours[day].open_time ||
+      convertMomentToFloat(eventTimes.end) > hours[day].close_time
+    ) {
+      window.alert(
+        `Sorry, you can't schedule this employee outside the hours of operation.`
+      )
+      return false
+    }
+
+    // step 4
+    // check for scheduling the same employee twice during the same block of time
+    employee.events.forEach(({ start, end }) => {
+      // possible collisions: if event start or end exists between start/end of existsing event
+      if (
+        (moment(eventTimes.start).isAfter(start) &&
+          moment(eventTimes.start).isBefore(end)) ||
+        (moment(eventTimes.end).isAfter(start) &&
+          moment(eventTimes.end).isBefore(end))
+      ) {
+        conflicts = true
+      }
+    })
+
+    // need to keep this separate because returning from forEach doesn't escape the enclosing func
+    if (conflicts) {
+      window.alert(
+        `Sorry, you can't schedule this employee twice during the same block of time.`
       )
       return false
     }
