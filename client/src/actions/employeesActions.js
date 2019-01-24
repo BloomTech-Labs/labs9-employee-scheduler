@@ -6,6 +6,9 @@ export const FETCH_EMPLOYEE_FROM_DB_SUCCESS = 'FETCH_EMPLOYEE_FROM_DB_SUCCESS'
 export const FETCH_EMPLOYEE_FROM_DB_FAIL = 'FETCH_EMPLOYEE_FROM_DB_FAIL'
 export const UPDATE_TIME_OFF_REQUEST_SUCCESS = 'UPDATE_TIME_OFF_REQUEST_SUCCESS'
 export const UPDATE_TIME_OFF_REQUEST_FAIL = 'UPDATE_TIME_OFF_REQUEST_FAIL'
+export const DELETE_TIME_OFF_REQUEST_SUCCESS = 'DELETE_TIME_OFF_REQUEST_SUCCESS'
+export const ADD_TIME_OFF_REQUEST_SUCCESS = 'ADD_TIME_OFF_REQUEST_SUCCESS'
+export const ADD_TIME_OFF_REQUEST_FAIL = 'ADD_TIME_OFF_REQUEST_FAIL'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -82,4 +85,39 @@ export const dispoTimeOffRequests = (timeOffId, status, token) => dispatch => {
         payload: error
       })
     )
+}
+
+export const deleteTimeOffRequest = (torId, token) => async dispatch => {
+  try {
+    await axios
+      .delete(`${baseURL}/time-off-requests/${torId}`, {
+        headers: { authorization: token }
+      })
+      .then(res =>
+        dispatch({
+          type: DELETE_TIME_OFF_REQUEST_SUCCESS,
+          payload: torId
+        })
+      )
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const addTimeOffRequest = (userId, date, reason, token) => dispatch => {
+  axios
+    .post(
+      `${baseURL}/time-off-requests/${userId}`,
+      { date: date, reason: reason },
+      {
+        headers: { authorization: token }
+      }
+    )
+    .then(res =>
+      dispatch({
+        type: ADD_TIME_OFF_REQUEST_SUCCESS,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err))
 }

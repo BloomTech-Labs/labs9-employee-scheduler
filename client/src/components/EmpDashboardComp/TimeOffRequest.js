@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import Form from '../Form/index'
 import axios from 'axios'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import { connect } from 'react-redux'
+import { addTimeOffRequest } from '../../actions'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -29,29 +30,22 @@ class TimeOffRequest extends Component {
     })
   }
 
-  //converts date to 'YYYY-MM-DD' format
-  convertDateToMoment = e => {
-    let dateString = this.state.startDate
-    let dateObj = new Date(dateString)
-    let momentObj = moment(dateObj)
-    let momentString = momentObj.format('YYYY-MM-DD')
-    return momentString
-  }
-
   //sends the date and time off request to the server
   submitTimeOffRequest = ({ reason }) => {
-    const date = this.convertDateToMoment()
+    //converts date to 'YYYY-MM-DD' format
+    const convertDateToMoment = e => {
+      let dateString = this.state.startDate
+      let dateObj = new Date(dateString)
+      let momentObj = moment(dateObj)
+      let momentString = momentObj.format('YYYY-MM-DD')
+      return momentString
+    }
+
+    const { token, user } = this.props.auth
+    const date = convertDateToMoment()
     // const date = this.state.startDate
-    const requestObj = { date, reason }
-    console.log(requestObj)
-    axios
-      //TODO: user is in a variable at the top of this file
-      //will need to be refactored to be dynamic
-      .post(`${api}/time-off-requests/${user}`, requestObj, {
-        headers: { authorization: 'testing' }
-      })
-      .then(() => this.setState({ message: 'request received' }))
-      .catch(err => console.log(err))
+    this.props.addTimeOffRequest(user.id, date, reason, token)
+    this.setState({ message: 'request received' })
   }
 
   render() {
@@ -81,11 +75,20 @@ class TimeOffRequest extends Component {
   }
 }
 
-export default TimeOffRequest
-
-TimeOffRequest.propTypes = {
-  // adding propTypes here
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
 }
+
+export default connect(
+  mapStateToProps,
+  { addTimeOffRequest }
+)(TimeOffRequest)
+
+// TimeOffRequest.propTypes = {
+// adding propTypes here
+// }
 
 const Container = styled('div')`
   padding: ${system.spacing.bigPadding};
