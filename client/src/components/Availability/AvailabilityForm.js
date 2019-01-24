@@ -16,45 +16,46 @@ class AvailabilityForm extends Component {
       availability: [],
       loading: false,
       checked: new Map(),
+
       days: [
         {
-          name: 'sunday',
+          name: 'Sunday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'monday',
+          name: 'Monday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'tuesday',
+          name: 'Tuesday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'wednesday',
+          name: 'Wednesday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'thursday',
+          name: 'Thursday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'friday',
+          name: 'Friday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'saturday',
+          name: 'Saturday',
           startTime: undefined,
           endTime: undefined,
           off: false
@@ -114,43 +115,43 @@ class AvailabilityForm extends Component {
     })
   }
 
-  toggle = off => {
-    let { days } = this.state
-    this.setState({ 
+  toggle = targetDay => {
+    this.setState({
       days: this.state.days.map(day => {
-        
-      }) })
+        if (day.name) {
+          return { ...day, off: !day.off }
+        }
+      })
+    })
   }
 
   render() {
-    console.log()
+    console.log(this.props)
     return (
       <div>
         <h5>Edit Availability</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.map((a, i) => {
           return (
-            <div key={a.id}>
+            <Container key={a.id}>
               <Availability
                 // uses local state to display the names of the days because the db sends a number
-                // day={this.state.days[i].name}
+                day={this.state.days[i].name}
                 startTime={a.start_time}
                 endTime={a.end_time}
                 off={a.off}
-                // name={this.state.days[i]}
-                // startTimeValue={this.state.days[i].startTime}
-                // endTimeValue={this.state.days[i].endTime}
+                name={this.state.days[i]}
+                startTimeValue={this.state.days[i].startTime}
+                endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
                 submit={this.props.getAvailability}
                 availability={a}
               />
               <Checkbox
-                toggleAvailability={e => {
-                  this.toggleAvailability(e, a.id)
-                }}
-                // name={this.state.days[i].name}
+              // toggleAvailability={this.toggle(this.state.days[i].name)}
+              // name={this.state.days[i].name}
               />
-            </div>
+            </Container>
           )
         })}
         <button onClick={this.updateAvailability}>submit</button>
@@ -171,3 +172,10 @@ export default connect(
   mapStateToProps,
   { editAvailability, getAvailability }
 )(AvailabilityForm)
+
+const Container = styled('div')`
+  /* border: 1px solid gray; */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`

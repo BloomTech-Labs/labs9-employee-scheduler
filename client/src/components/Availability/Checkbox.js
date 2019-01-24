@@ -5,7 +5,7 @@ import system from '../../design/theme'
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 180px;
   justify-content: space-between;
   p {
     font-size: ${system.fontSizing.s};
@@ -42,7 +42,7 @@ const Switch = styled.div`
   transition: background-color 300ms;
   border-radius: 10px;
   &.toggled {
-    background-color: ${system.color.success};
+    background-color: ${system.color.danger};
   }
 `
 
@@ -83,7 +83,7 @@ class Checkbox extends React.Component {
             checked={toggled}
             onChange={handleUpdate}
             onClick={this.props.toggleAvailability}
-            name={this.props.name}
+            name={this.props}
           />
           <Switch className={toggled ? 'toggled' : undefined}>
             <Slider className={toggled ? 'toggled' : undefined} />
