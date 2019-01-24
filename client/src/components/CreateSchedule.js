@@ -9,6 +9,9 @@ import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import { connect } from 'react-redux'
+
+const mapStateToProps = ({ coverage }) => ({ coverage })
 
 // this component will house all of the main features for the create schedule page.
 class CreateSchedule extends React.Component {
@@ -43,7 +46,10 @@ class CreateSchedule extends React.Component {
   }
 }
 
-export default CreateSchedule
+export default connect(
+  mapStateToProps,
+  null
+)(CreateSchedule)
 
 CreateSchedule.propTypes = {
   // add propTypes here
