@@ -7,6 +7,7 @@ const system = {
     primary: '#535fd7', // vibrant purple for energy // alt is 26368b: calm & deep blue for main color fields in app. Can be used for headers as well.
     hoverPrimary: '#1462b0',
     neutral: '#f4f4f4', // for backgrounds & expanses of white space
+    neutralDark: '#DBDBDB', // for slight contrast on background
     bodytext: '#333333', // for large sections of copy
     captiontext: '#666', // for small size copy, lower-emphasis copy
     lightgrey: '#999',

@@ -30,6 +30,7 @@ const Container = styled('div')`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  background-color: ${system.color.neutralDark};
 
   ::-webkit-scrollbar {
     width: 8px;

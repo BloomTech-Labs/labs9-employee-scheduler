@@ -136,7 +136,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   padding: 2.5rem 10rem;
   height: 7.5rem;
-  margin-bottom: ${({ fixed }) => (fixed ? '10rem' : '1rem')};
+  margin-bottom: ${({ fixed }) => (fixed ? '10rem' : undefined)};
 
   @media ${system.breakpoints[0]} {
     justify-content: center;
