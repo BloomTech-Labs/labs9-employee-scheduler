@@ -104,11 +104,15 @@ class WeekSummary extends React.Component {
   render() {
     const { events, range } = this.props
     let summaries = this.filterAndSummarize(events, range)
+    console.log(summaries)
     return (
       <Div>
+        <LeftSpacer />
         {summaries
           ? summaries.map((summary, i) => (
-              <DailySummary key={summary.day} summary={summary} />
+              <Spacer>
+                <DailySummary key={summary.day} summary={summary} />
+              </Spacer>
             ))
           : null}
       </Div>
@@ -119,8 +123,20 @@ class WeekSummary extends React.Component {
 export default WeekSummary
 
 const Div = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  margin: 0 25px 25px 90px;
+  padding: 40px;
+  /* margin: 0 25px 25px 90px; */
+`
+
+const LeftSpacer = styled.div`
+  width: 56px;
+`
+const Spacer = styled.div`
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5%;
 `

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DragSource } from 'react-dnd'
-import EmployeeCard from '../EmployeeCard/Card'
+import EmployeeCard from './ResourceCard'
 import circle from '../../img/circle.svg'
 import styled from '@emotion/styled'
 import system from '../../design/theme'

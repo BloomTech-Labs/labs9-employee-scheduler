@@ -52,10 +52,15 @@ const DropCal = ({
   onSelectEvent,
   onRangeChange,
   min,
-  max
+  max,
+  views,
+  view,
+  defaultView,
+  date
 }) => {
+  console.log(defaultView)
   return connectDropTarget(
-    <div>
+    <div style={{ width: '100%' }}>
       <DnDCal
         popup
         selectable
@@ -74,6 +79,10 @@ const DropCal = ({
         onRangeChange={onRangeChange}
         min={min}
         max={max}
+        views={views}
+        view={view}
+        defaultView={defaultView}
+        date={date}
       />
     </div>
   )
