@@ -302,6 +302,25 @@ class Scheduler extends React.Component {
 
     // step 4
     // check for scheduling the same employee twice during the same block of time
+    employee.events.forEach(({ start, end }) => {
+      // possible collisions: if event start or end exists between start/end of existsing event
+      if (
+        (moment(eventTimes.start).isAfter(start) &&
+          moment(eventTimes.start).isBefore(end)) ||
+        (moment(eventTimes.end).isAfter(start) &&
+          moment(eventTimes.end).isBefore(end))
+      ) {
+        conflicts = true
+      }
+    })
+
+    // need to keep this separate because returning from forEach doesn't escape the enclosing func
+    if (conflicts) {
+      window.alert(
+        `Sorry, you can't schedule this employee twice during the same block of time.`
+      )
+      return false
+    }
 
     // if everything went okay
     return true
