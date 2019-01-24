@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
+import { formatHours } from '../../utils'
 
 const weekdays = [
   'Sunday',
@@ -29,7 +30,9 @@ class Availability extends Component {
             //temporarily adds ids tp the DOM for easy access for testing
             <Avails key={id}>
               <p>{weekdays[day]}</p>
-              <span>{`${start_time} - ${end_time - 12}`}</span>
+              <span>{`${formatHours(start_time)} - ${formatHours(
+                end_time
+              )}`}</span>
             </Avails>
           ))}
       </CardContainer>
