@@ -91,12 +91,11 @@ export const deleteTimeOffRequest = (torId, token) => async dispatch => {
       .delete(`${baseURL}/time-off-requests/${torId}`, {
         headers: { authorization: token }
       })
-      .then(
-        res => console.log(res)
-        // dispatch({
-        //   type: DELETE_TIME_OFF_REQUEST_SUCCESS,
-        //   payload: { id: torId }
-        // })
+      .then(res =>
+        dispatch({
+          type: DELETE_TIME_OFF_REQUEST_SUCCESS,
+          payload: { torId }
+        })
       )
   } catch (err) {
     console.log(err)
