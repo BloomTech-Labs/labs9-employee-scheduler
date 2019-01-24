@@ -43,7 +43,6 @@ class TimeOffRequest extends Component {
 
     const { token, user } = this.props.auth
     const date = convertDateToMoment()
-
     // const date = this.state.startDate
     this.props.addTimeOffRequest(user.id, date, reason, token)
     this.setState({ message: 'request received' })

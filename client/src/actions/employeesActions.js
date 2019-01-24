@@ -113,7 +113,7 @@ export const addTimeOffRequest = (userId, date, reason, token) => dispatch => {
   axios
     .post(
       `${baseURL}/time-off-requests/${userId}`,
-      { date, reason },
+      { date: date, reason: reason },
       {
         headers: { authorization: token }
       }

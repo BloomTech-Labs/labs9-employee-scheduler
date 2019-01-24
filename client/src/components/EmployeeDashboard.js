@@ -37,13 +37,6 @@ class EmployeeDashboard extends Component {
     if (prevProps.error !== this.props.error) {
       return this.setState({ error: this.props.error })
     }
-
-    if (prevProps.employee.time_off !== this.props.employee.time_off) {
-      return this.props.fetchSingleEmployeeFromDB(
-        this.props.auth.id,
-        this.props.auth.token
-      )
-    }
   }
 
   deleteExpiredRequest = (torId, token, userId) => {
@@ -61,7 +54,7 @@ class EmployeeDashboard extends Component {
     const { employee } = this.props.employee
     let assignedShift
     let approvedTimeOff
-    if (employee.shifts) {
+    if (employee && employee.shifts) {
       assignedShift = (
         <React.Fragment>
           {employee.shifts.map(item => {
@@ -77,9 +70,7 @@ class EmployeeDashboard extends Component {
       )
     }
 
-    if (!employee.time_off) {
-      approvedTimeOff = <p>No Request Status to display</p>
-    } else {
+    if (employee && employee.time_off.length) {
       approvedTimeOff = (
         <Message>
           <>
@@ -99,6 +90,8 @@ class EmployeeDashboard extends Component {
           </>
         </Message>
       )
+    } else {
+      approvedTimeOff = <p>No Request Status to display</p>
     }
 
     return (

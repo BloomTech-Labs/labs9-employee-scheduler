@@ -35,9 +35,19 @@ router.post('/:id', authorize(['all']), (req, res) => {
   }
 
   addTimeOffRequest({ user_id: id, date, reason, status: 'pending' })
-    .then(request => res.status(200).json({ request }))
+    .then(id => {
+      console.log(id)
+      return getTimeOffRequest(id)
+    })
+    .then(request => {
+      if (request.length) {
+        return res.status(200).json(request[0])
+      } else {
+        return res.status(500).json({ error: 'something went wrong' })
+      }
+    })
     .catch(err => {
-      return res.status(404).json({ error: 'Error with request', err })
+      return res.status(500).json({ error: 'Error with request', err })
     })
 })
 
