@@ -70,16 +70,20 @@ class DropCal extends Component {
       onRangeChange,
       min,
       max,
+      views,
+      view,
+      defaultView,
+      date,
       coverage
     } = this.props
 
-    return (
-      <div>
-        {/* <ButtonHolder>
+    return connectDropTarget(
+      <div style={{ width: '100%' }}>
+        <ButtonHolder>
           <Coverage>{`${coverage}% coverage`}</Coverage>
           <Button onClick={this.toggleModal}>Edit Hours of Operation</Button>
         </ButtonHolder>
-        <HoursOfOperationModal hidden={!this.state.hoursModal} /> */}
+        <HoursOfOperationModal hidden={!this.state.hoursModal} />
         <DnDCal
           popup
           selectable
@@ -98,21 +102,23 @@ class DropCal extends Component {
           onRangeChange={onRangeChange}
           min={min}
           max={max}
+          views={views}
+          view={view}
+          defaultView={defaultView}
+          date={date}
         />
       </div>
     )
   }
 }
 
-export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
-
-// export default compose(
-//   DropTarget('SHIFT', dropSpec, dropCollect),
-//   connect(
-//     mapStateToProps,
-//     null
-//   )
-// )(DropCal)
+export default compose(
+  DropTarget('SHIFT', dropSpec, dropCollect),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(DropCal)
 
 const ButtonHolder = styled.div`
   z-index: 7;
