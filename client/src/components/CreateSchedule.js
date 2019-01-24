@@ -39,14 +39,9 @@ class CreateSchedule extends React.Component {
             <MobileOnly>
               <Alert>Review only on mobile view</Alert>
             </MobileOnly>
-            <ButtonHolder style={{ padding: '10px 0 0 0' }}>
-              <Button onClick={this.toggleModal}>
-                Edit Hours of Operation
-              </Button>
-            </ButtonHolder>
             <div>
               <HoursOfOperationModal hidden={!this.state.hoursModal} />
-              <Scheduler />
+              <Scheduler toggleModal={this.toggleModal} />
             </div>
           </MainContentHolder>
         </div>
@@ -67,18 +62,6 @@ const MainContentHolder = styled.div`
 
   @media ${system.breakpoints[0]} {
     padding: 20px;
-  }
-`
-
-const ButtonHolder = styled.div`
-  z-index: 14;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-
-  @media ${system.breakpoints[0]} {
-    justify-content: center;
   }
 `
 

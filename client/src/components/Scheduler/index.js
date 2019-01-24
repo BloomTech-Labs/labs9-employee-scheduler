@@ -369,7 +369,7 @@ class Scheduler extends React.Component {
     this.setState({ draggedEmployee })
 
   render() {
-    const { employees, hours } = this.props
+    const { employees, hours, coverage } = this.props
     const { width, range, view, date } = this.state
 
     const names = []
@@ -401,6 +401,12 @@ class Scheduler extends React.Component {
           />
         ) : null}
         <div style={{ display: 'flex', flexFlow: 'column', flex: '1 1' }}>
+          <TopButtons style={{ padding: '10px 0 0 0' }}>
+            <Coverage>{`${coverage ? coverage : 0}% coverage`}</Coverage>
+            <ModalButton onClick={this.props.toggleModal}>
+              Edit Hours of Operation
+            </ModalButton>
+          </TopButtons>
           <CalendarButtons>
             <div>
               <Button
@@ -467,11 +473,12 @@ class Scheduler extends React.Component {
   }
 }
 
-const mapStateToProps = ({ employees, hours, auth }) => ({
+const mapStateToProps = ({ employees, hours, auth, coverage }) => ({
   employees: employees.employees,
   hours: hours.hours,
   user: auth.user,
-  token: auth.token
+  token: auth.token,
+  coverage: coverage
 })
 
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
@@ -503,4 +510,28 @@ const CalendarButtons = styled.div`
   @media ${system.breakpoints[1]} {
     justify-content: center;
   }
+`
+
+const Coverage = styled.div`
+  border: 1px solid grey;
+  display: flex;
+  align-items: center;
+  border-radius: ${system.borders.radius};
+  border: ${system.borders.transparent};
+  color: ${system.color.neutral};
+  background: ${system.color.primary};
+  box-shadow: ${system.shadows.button};
+  font-size: ${system.fontSizing.sm};
+  padding: ${system.spacing.standardPadding};
+  outline: none;
+`
+const TopButtons = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const ModalButton = styled(Button)`
+  position: relative;
+  z-index: 14;
 `

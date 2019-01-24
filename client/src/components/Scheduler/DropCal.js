@@ -3,14 +3,9 @@ import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../Calendar'
 import propTypes from 'prop-types'
-import HoursOfOperationModal from '../HoursOfOperationModal'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-
-const mapStateToProps = ({ coverage }) => ({ coverage })
 
 const DnDCal = withDragAndDrop(Calendar)
 
@@ -79,13 +74,6 @@ class DropCal extends Component {
 
     return connectDropTarget(
       <div style={{ width: '100%' }}>
-        <ButtonHolder>
-          <Coverage>{`${coverage ? coverage : 0}% coverage`}</Coverage>
-          <Button style={{ zIndex: 30 }} onClick={this.toggleModal}>
-            Edit Hours of Operation
-          </Button>
-        </ButtonHolder>
-        <HoursOfOperationModal hidden={!this.state.hoursModal} />
         <DnDCal
           popup
           selectable
@@ -108,40 +96,12 @@ class DropCal extends Component {
           view={view}
           defaultView={defaultView}
           date={date}
+          onView={() => {}}
+          onNavigate={() => {}}
         />
       </div>
     )
   }
 }
 
-export default compose(
-  DropTarget('SHIFT', dropSpec, dropCollect),
-  connect(
-    mapStateToProps,
-    null
-  )
-)(DropCal)
-
-const ButtonHolder = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  padding-right: 20px;
-`
-
-const Coverage = styled.div`
-  border: 1px solid grey;
-  margin-right: 30px;
-  display: flex;
-  align-items: center;
-  border-radius: ${system.borders.radius};
-  border: ${system.borders.transparent};
-  color: ${system.color.neutral};
-  background: ${system.color.primary};
-  box-shadow: ${system.shadows.button};
-  font-size: ${system.fontSizing.sm};
-  padding: ${system.spacing.standardPadding};
-  outline: none;
-  margin-left: 10px;
-`
+export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)

@@ -49,14 +49,13 @@ Card.propTypes = {
   email: propTypes.string,
   phone: propTypes.string,
   availabilities: propTypes.array,
-  time_off_requests: propTypes.array,
-  token: propTypes.string.isRequired
+  time_off_requests: propTypes.array
 }
 
 const Container = styled('div')`
   background: ${system.color.white};
   padding: ${system.spacing.standardPadding};
-  margin: ${system.spacing.bigPadding};
+  margin: ${system.spacing.bigPadding} 0;
   border-radius: ${system.borders.bigRadius};
   width: ${props => (props.width === 'desktop' ? '300px' : '220px')};
   box-shadow: ${system.shadows.otherLight};
