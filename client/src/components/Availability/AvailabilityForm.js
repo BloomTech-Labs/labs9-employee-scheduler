@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getAvailability, editAvailability } from '../../actions'
 import Button from '../common/Button'
 import Availability from './AvailabilitySelect'
+import Checkbox from './Checkbox'
 
 const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
 
@@ -84,7 +85,8 @@ class AvailabilityForm extends Component {
   updateAvailability = () => {
     this.state.days.map(day => {
       return day.availability
-        ? this.props.editAvailability({
+        ? //ternary operator
+          this.props.editAvailability({
             availability: day.availability,
             changes: {
               start_time: day.startTime,
@@ -95,6 +97,12 @@ class AvailabilityForm extends Component {
           })
         : null
     })
+  }
+
+  toggleAvailability = (e, idx) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { days } = this.state
   }
 
   render() {
@@ -118,6 +126,7 @@ class AvailabilityForm extends Component {
                 submit={this.props.getAvailability}
                 availability={a}
               />
+              <Checkbox />
             </div>
           )
         })}
