@@ -12,7 +12,7 @@ import {
   changeEvent,
   deleteEvent
 } from '../../actions'
-import { getHoursOfOperationRange } from '../../utlls'
+import { getHoursOfOperationRange } from '../../utils'
 
 import WeekSummary from './WeekSummary'
 
