@@ -80,8 +80,10 @@ class DropCal extends Component {
     return connectDropTarget(
       <div style={{ width: '100%' }}>
         <ButtonHolder>
-          <Coverage>{`${coverage}% coverage`}</Coverage>
-          <Button onClick={this.toggleModal}>Edit Hours of Operation</Button>
+          <Coverage>{`${coverage ? coverage : 0}% coverage`}</Coverage>
+          <Button style={{ zIndex: 30 }} onClick={this.toggleModal}>
+            Edit Hours of Operation
+          </Button>
         </ButtonHolder>
         <HoursOfOperationModal hidden={!this.state.hoursModal} />
         <DnDCal
@@ -121,7 +123,6 @@ export default compose(
 )(DropCal)
 
 const ButtonHolder = styled.div`
-  z-index: 7;
   width: 100%;
   display: flex;
   justify-content: space-between;
