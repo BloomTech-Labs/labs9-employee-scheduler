@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const {
   getTimeOffRequests,
+  getTimeOffRequest,
   addTimeOffRequest,
   updateTimeOffRequest,
   deleteTimeOffRequest,
-  getTimeOffRequestsForOrg,
-  getTimeOffRequest
+  getTimeOffRequestsForOrg
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
