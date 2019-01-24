@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import Button from '../common/Button'
+import styled from '@emotion/styled'
 import system from '../../design/theme'
 import {
   fetchEmployeesFromDB,
@@ -390,21 +391,16 @@ class Scheduler extends React.Component {
     let hourRange = getHoursOfOperationRange(hours)
     console.log(view)
     return (
-      <div style={{ display: 'flex' }}>
-        <EmployeePool
-          employees={employees}
-          updateDragState={this.updateDragState}
-          width={width}
-        />
+      <Container>
+        {width !== 'mobile' ? (
+          <EmployeePool
+            employees={employees}
+            updateDragState={this.updateDragState}
+            width={width}
+          />
+        ) : null}
         <div style={{ display: 'flex', flexFlow: 'column', flex: '1 1' }}>
-          <div
-            style={{
-              paddingTop: '20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%'
-            }}
-          >
+          <CalendarButtons>
             <div>
               <Button
                 onClick={() => this.changeDate('left')}
@@ -435,8 +431,7 @@ class Scheduler extends React.Component {
                 </Button>
               ) : null}
             </div>
-          </div>
-
+          </CalendarButtons>
           <DropCal
             popover
             events={events}
@@ -466,7 +461,7 @@ class Scheduler extends React.Component {
             events={events}
           />
         </div>
-      </div>
+      </Container>
     )
   }
 }
@@ -489,3 +484,21 @@ export default connect(
     deleteEvent
   }
 )(DragSched)
+
+const Container = styled.div`
+  display: flex;
+
+  @media ${system.breakpoints[0]} {
+    flex-direction: column;
+  }
+`
+const CalendarButtons = styled.div`
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media ${system.breakpoints[1]} {
+    justify-content: center;
+  }
+`

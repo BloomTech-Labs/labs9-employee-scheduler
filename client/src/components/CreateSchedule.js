@@ -8,6 +8,7 @@ import Button from './common/Button'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
+import Alert from './common/Alert'
 import system from '../design/theme'
 
 // this component will house all of the main features for the create schedule page.
@@ -35,6 +36,9 @@ class CreateSchedule extends React.Component {
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
         <div style={{ position: 'relative' }}>
           <MainContentHolder>
+            <MobileOnly>
+              <Alert>Review only on mobile view</Alert>
+            </MobileOnly>
             <ButtonHolder style={{ padding: '10px 0 0 0' }}>
               <Button onClick={this.toggleModal}>
                 Edit Hours of Operation
@@ -60,6 +64,10 @@ CreateSchedule.propTypes = {
 const MainContentHolder = styled.div`
   padding-top: 20px;
   padding-right: 20px;
+
+  @media ${system.breakpoints[0]} {
+    padding: 20px;
+  }
 `
 
 const ButtonHolder = styled.div`
@@ -68,4 +76,16 @@ const ButtonHolder = styled.div`
   display: flex;
   justify-content: flex-end;
   position: relative;
+
+  @media ${system.breakpoints[0]} {
+    justify-content: center;
+  }
+`
+
+const MobileOnly = styled.div`
+  display: none;
+
+  @media ${system.breakpoints[0]} {
+    display: block;
+  }
 `
