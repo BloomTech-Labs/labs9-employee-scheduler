@@ -13,10 +13,6 @@ class AvailabilityForm extends Component {
   constructor() {
     super()
     this.state = {
-      availability: [],
-      loading: false,
-      checked: new Map(),
-
       days: [
         {
           name: 'Sunday',
