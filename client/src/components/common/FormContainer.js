@@ -8,8 +8,16 @@ export const Container = styled('div')`
   justify-content: center;
   align-items: center;
 
+  @media ${system.breakpoints[1]} {
+    margin: 0 0 5rem;
+  }
+
   fieldset {
     width: 60%;
+
+    @media ${system.breakpoints[1]} {
+      width: 80%;
+    }
   }
 
   form {
@@ -21,12 +29,21 @@ export const Container = styled('div')`
     border-radius: ${system.borders.bigRadius};
     box-shadow: ${system.shadows.otherLight};
     width: ${props => (props.settings ? '100%' : '60%')};
-    margin-bottom: 20px;
+    margin: 20px 0;
+
+    @media ${system.breakpoints[1]} {
+      width: ${props => (props.settings ? '100%' : '80%')};
+    }
 
     #instructions {
       font-size: ${system.fontSizing.m};
-      margin-bottom: ${props => (props.billing ? '0px' : 'inherit')};
+      margin-bottom: 20px;
       color: ${system.color.bodytext};
+      width: 80%;
+
+      @media ${system.breakpoints[0]} {
+        font-size: ${system.fontSizing.sm};
+      }
     }
 
     .edit {
@@ -44,6 +61,10 @@ export const Container = styled('div')`
         color: ${system.color.white};
         background: ${system.color.primary};
       }
+
+      @media ${system.breakpoints[1]} {
+        font-size: 1.1rem;
+      }
     }
 
     label {
@@ -52,6 +73,10 @@ export const Container = styled('div')`
       text-transform: uppercase;
       margin-bottom: 0.5rem;
       color: ${system.color.captiontext};
+
+      @media ${system.breakpoints[0]} {
+        font-size: 1.1rem;
+      }
     }
 
     input:-webkit-autofill {
@@ -72,9 +97,16 @@ export const Container = styled('div')`
     ul {
       list-style-type: disc;
       margin: 2rem;
+      @media ${system.breakpoints[0]} {
+        margin: 1.5rem;
+      }
+
       li {
         font-size: ${system.fontSizing.sm};
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        @media ${system.breakpoints[0]} {
+          font-size: 1.5rem;
+        }
       }
     }
 
@@ -103,7 +135,7 @@ export const Container = styled('div')`
 
     button {
       width: 150px;
-      margin-top: ${props => (props.billing ? '40px' : 'inherit')};
+      margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
       background: ${props => (props.danger ? system.color.danger : null)};
     }
   }
@@ -124,5 +156,9 @@ export const Input = styled.input`
   }
   :focus {
     border-bottom: 2px solid ${system.color.primary};
+  }
+
+  @media ${system.breakpoints[0]} {
+    font-size: ${system.fontSizing.sm};
   }
 `

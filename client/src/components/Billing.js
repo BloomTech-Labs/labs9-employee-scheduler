@@ -236,7 +236,7 @@ class Billing extends Component {
               Here's what's included in the $20 / month SMB Plan:
             </h6>
             <ul>
-              <li>A simple calendar interface to manage shifts</li>
+              <li>A simple calendar interface to manage shifts.</li>
               <li>
                 An employee directory to add new users and adjust availability.
               </li>
