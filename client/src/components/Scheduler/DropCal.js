@@ -104,8 +104,6 @@ class DropCal extends Component {
   }
 }
 
-// export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
-
 export default compose(
   DropTarget('SHIFT', dropSpec, dropCollect),
   connect(
@@ -114,13 +112,8 @@ export default compose(
   )
 )(DropCal)
 
-// export default connect(
-//   mapStateToProps,
-//   null
-// )(CreateSchedule)
-
 const ButtonHolder = styled.div`
-  z-index: 14;
+  z-index: 7;
   width: 100%;
   display: flex;
   justify-content: space-between;
