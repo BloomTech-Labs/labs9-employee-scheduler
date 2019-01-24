@@ -103,33 +103,8 @@ class AvailabilityForm extends Component {
     })
   }
 
-  assignOffToCheckbox = (e, idx) => {
-    let off
-    this.state.days.map(day => {
-      console.log(day.off)
-      if (day.off === true) {
-        off = false
-      } else {
-        off = true
-      }
-      return this.toggle(off)
-    })
-  }
-
-  toggle = targetDay => {
-    this.setState({
-      days: this.state.days.map(day => {
-        if (day.name === targetDay) {
-          return { ...day, off: !day.off }
-        } else {
-          return day
-        }
-      })
-    })
-  }
-
   render() {
-    console.log(this.props)
+    console.log(this.props.availability)
     return (
       <div>
         <h5>Edit Availability</h5>
@@ -162,7 +137,6 @@ class AvailabilityForm extends Component {
           )
         })}
         <button onClick={this.updateAvailability}>submit</button>
-        <button onClick={this.toggle}>toggle test</button>
       </div>
     )
   }
