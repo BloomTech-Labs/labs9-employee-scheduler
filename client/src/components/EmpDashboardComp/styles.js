@@ -70,6 +70,19 @@ export const AssignedWrapper = styled('div')`
 `
 
 export const TofWrapper = styled('div')`
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(10px);
+    }
+    60% {
+      transform: translateX(5px);
+    }
+  }
+
   display: flex;
   flex-direction: row;
   background: ${system.color.white};
@@ -93,6 +106,25 @@ export const TofWrapper = styled('div')`
       }
       .reason {
         width: 300px;
+      }
+      .status {
+        .status-and-delete {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          i {
+            cursor: pointer;
+            color: ${system.color.danger};
+            font-size: ${system.fontSizing.ml};
+            transition: 0.5ms ease-in-out;
+            &:hover {
+              color: rgb(255, 100, 100);
+              animation: bounce 0.5s linear infinite;
+            }
+          }
+        }
       }
 
       p {

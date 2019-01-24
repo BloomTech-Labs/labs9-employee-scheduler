@@ -21,19 +21,29 @@ export const employeeReducer = (state = initialState, action) => {
     case FETCH_EMPLOYEE_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching failed' }
     case ADD_TIME_OFF_REQUEST_SUCCESS:
-      return {
-        employee: [...initialState, action.payload]
-      }
+      return { ...state, ...action.payload }
     case ADD_TIME_OFF_REQUEST_FAIL:
       return { ...initialState, error: 'request failed' }
-    case DELETE_TIME_OFF_REQUEST_SUCCESS:
-      const { userId, torId } = action.payload
-      console.log(torId)
+    case DELETE_TIME_OFF_REQUEST_SUCCESS: {
+      const {
+        payload: { user_id, event_id }
+      } = action
       return {
-        employee: state.employee.map(item => {
-          console.log(item.id)
+        ...state,
+        employees: state.employees.map(employee => {
+          if (employee.id === user_id) {
+            return {
+              ...employee,
+              events: employee.events.filter(candidate => {
+                return candidate.id !== event_id
+              })
+            }
+          } else {
+            return employee
+          }
         })
       }
+    }
     default:
       return state
   }

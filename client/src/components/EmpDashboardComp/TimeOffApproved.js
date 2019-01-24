@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import DeleteButton from '../common/DeleteButton'
 
 const TimeOffApproved = ({
   id,
@@ -23,10 +22,12 @@ const TimeOffApproved = ({
         </div>
         <div className="status">
           <h6>Status</h6>
-          <p>{status}</p>
+          <div className="status-and-delete">
+            <p>{status}</p>
+            <i className="fas fa-backspace" onClick={deleteExpiredRequest} />
+          </div>
         </div>
       </div>
-      <DeleteButton deleteExpiredRequest={deleteExpiredRequest} />
     </div>
   )
 }
