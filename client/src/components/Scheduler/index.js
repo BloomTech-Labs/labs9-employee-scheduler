@@ -105,7 +105,7 @@ class Scheduler extends React.Component {
         const [hours, fraction] = num.toString().split('.')
         const minutes =
           parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
-        return { hours, minutes }
+        return [hours, minutes]
       }
 
       // truncate merged shifts to only open hours
@@ -114,25 +114,49 @@ class Scheduler extends React.Component {
         // if schedule start is after shift end, discard shift
         // if shift start is before schedule start, truncate shift start
         // if shift end is after end, trucate shift end
+        // otherwise do nothing
 
-        // run discard options first, then mutation options to make sure discards happen
-
+        // convert times to floats
         const shiftStartFloat = convertMomentToFloat(start)
         const shiftEndFloat = convertMomentToFloat(end)
 
+        // run discard options first, then mutation options to make sure discards happen
         if (hours[key].close_time < shiftStartFloat) {
           // discard shift
+          return [...acc]
         } else if (hours[key].open_time > shiftEndFloat) {
           // discard shift
+          return [...acc]
         } else if (shiftStartFloat < hours[key].open_time) {
           // truncate start
+          const diff = hours[key].open_time - shiftStartFloat
+          const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
+
+          const newStart = moment(start)
+            .add(hoursDiff, 'hours')
+            .add(minutesDiff, 'minutes')
+            .toISOString()
+
+          return [...acc.slice(0, acc.length - 1), { start: newStart, end }]
         } else if (shiftEndFloat > hours[key].close_time) {
           // truncate end
+          const diff = shiftEndFloat - hours[key].close_time
+          const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
+
+          const newEnd = moment(end)
+            .subtract(hoursDiff, 'hours')
+            .subtract(minutesDiff, 'minutes')
+            .toISOString()
+
+          return [...acc.slice(0, acc.length - 1), { start, end: newEnd }]
+        } else {
+          // otherwise do nothing
+          return [...acc, { start, end }]
         }
       }, [])
 
       // calculate shift coverage in hours
-      const hoursCovered = mergedShifts.reduce((acc, { start, end }) => {
+      const hoursCovered = truncatedShifts.reduce((acc, { start, end }) => {
         return acc + moment.duration(moment(end).diff(start)).asHours()
       }, 0)
 
@@ -144,8 +168,12 @@ class Scheduler extends React.Component {
       totalHoursOpen += hoursOpen
     })
 
-    console.log(totalHoursCovered)
-    console.log(totalHoursOpen)
+    // calculate percentage
+    const percentCoverage = Math.floor(
+      (totalHoursCovered / totalHoursOpen) * 100
+    )
+
+    console.log(`${percentCoverage}% coverage`)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
