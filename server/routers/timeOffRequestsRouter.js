@@ -55,11 +55,13 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 })
 
 //delete time off request
-router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
+router.delete('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
     .then(res => res.status(200).json(res))
-    .catch(err => res.status(404).json({ error: 'Error deleting request', err }))
+    .catch(err =>
+      res.status(404).json({ error: 'Error deleting request', err })
+    )
 })
 
 router.get('/', authorize(['owner', 'supervisor']), (req, res) => {

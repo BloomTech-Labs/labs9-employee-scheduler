@@ -80,8 +80,8 @@ class EmployeeDashboard extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.auth
-    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
+    const { id } = this.props.auth.user
+    this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -89,14 +89,14 @@ class EmployeeDashboard extends Component {
       this.setState({ error: this.props.error })
     }
 
-    if (prevProps.auth.id !== this.props.auth.id) {
+    if (prevProps.auth.user.id !== this.props.auth.user.id) {
       this.props.fetchSingleEmployeeFromDB(this.props.auth.id, this.props.token)
     }
   }
 
-  deleteExpiredRequest = e => {
+  deleteExpiredRequest = id => {
     const { token } = this.props.auth
-    this.props.deleteTimeOffRequest(token)
+    this.props.deleteTimeOffRequest(id, token)
   }
 
   // for when we adding loading state to redux
@@ -107,11 +107,10 @@ class EmployeeDashboard extends Component {
   // }
 
   render() {
-    console.log(this.props.employee.employee)
     const { employee } = this.props.employee
     let assignedShift
     let approvedTimeOff
-
+    console.log(this.props.auth.token)
     if (employee.shifts) {
       assignedShift = (
         <React.Fragment>
@@ -169,7 +168,9 @@ class EmployeeDashboard extends Component {
                   </div>
                 </div>
                 <DeleteButton
-                  deleteExpiredRequest={this.deleteExpiredRequest}
+                  deleteExpiredRequest={() =>
+                    this.deleteExpiredRequest(item.id)
+                  }
                 />
               </div>
             )
@@ -221,8 +222,7 @@ const mapStateToProps = state => {
   return {
     employee: state.employee,
     error: state.error,
-    auth: state.auth.user,
-    token: state.auth.token
+    auth: state.auth
   }
 }
 
