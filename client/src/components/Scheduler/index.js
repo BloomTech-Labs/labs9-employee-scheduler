@@ -5,6 +5,8 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
+import Button from '../common/Button'
+import system from '../../design/theme'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
@@ -16,14 +18,21 @@ import { getHoursOfOperationRange } from '../../utlls'
 
 import WeekSummary from './WeekSummary'
 
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
+
 class Scheduler extends React.Component {
   state = {
     draggedEmployee: null,
-    range: null
+    range: null,
+    width: 'desktop',
+    view: 'week'
   }
 
   componentDidMount() {
     this.fetchData()
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
   }
 
   componentDidUpdate() {
@@ -32,10 +41,37 @@ class Scheduler extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWidth)
+  }
+
   fetchData() {
     const { organization_id } = this.props.user
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
     this.props.fetchHoursFromDB(organization_id, this.props.token)
+  }
+
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({ width: 'mobile', view: 'day' })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({ width: 'tablet', view: 'day' })
+    } else {
+      return this.setState({ width: 'desktop', view: 'week' })
+    }
+  }
+
+  toggleView = () => {
+    if (this.state.view === 'week') {
+      return this.setState({ view: 'day' })
+    } else {
+      return this.setState({ view: 'week' })
+    }
   }
 
   getScheduleCoverage = () => {
@@ -188,6 +224,7 @@ class Scheduler extends React.Component {
 
   render() {
     const { employees, hours } = this.props
+    const { width, range, view } = this.state
 
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
@@ -207,7 +244,7 @@ class Scheduler extends React.Component {
     }, [])
 
     let hourRange = getHoursOfOperationRange(hours)
-
+    console.log(view)
     return (
       <div style={{ display: 'flex' }}>
         <EmployeePool
@@ -215,6 +252,11 @@ class Scheduler extends React.Component {
           updateDragState={this.updateDragState}
         />
         <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
+          {width === 'desktop' ? (
+            <Button onClick={this.toggleView} style={{ alignSelf: 'flex-end' }}>
+              View Update
+            </Button>
+          ) : null}
           <DropCal
             popover
             events={events}
@@ -230,11 +272,12 @@ class Scheduler extends React.Component {
             onRangeChange={this.updateRange}
             min={hourRange.min}
             max={hourRange.max}
+            view={view}
           />
           <WeekSummary
             range={
-              this.state.range
-                ? this.state.range
+              range
+                ? range
                 : {
                     start: moment().startOf('week')._d,
                     end: moment().endOf('week')._d

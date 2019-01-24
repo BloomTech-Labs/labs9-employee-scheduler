@@ -20,9 +20,8 @@ export default function(props) {
 
 const Container = styled('div')`
   max-height: 150vh;
-  flex-basis: 344px;
+  width: 344px;
   flex-grow: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 

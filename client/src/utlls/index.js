@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export function getHoursOfOperationRange(hours) {
   let firstDay = hours.find(day => !day.closed)
   let numRange =
@@ -46,3 +48,8 @@ export function getHoursOfOperationRange(hours) {
     )
   }
 }
+
+export const formatHours = hours =>
+  moment({ hours })
+    .format('h:mm a')
+    .replace(/$0:/, '12:')

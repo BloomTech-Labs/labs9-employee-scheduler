@@ -40,11 +40,11 @@ export default function Calendar(props) {
 
   return (
     <StyledCalendar
-      {...props}
       colors={style.join(' ')}
       localizer={localizer}
       views={['week', 'day']}
       step={30}
+      {...props}
     />
   )
 }
@@ -67,6 +67,10 @@ const StyledCalendar = styled(BigCalendar)`
 
   .rbc-header {
     padding-top: 5px;
+  }
+
+  .rbc-btn-group {
+    visibility: hidden;
   }
 
   /* the below makes the Agenda view normally colored instead of the same color as events */
