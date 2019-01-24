@@ -60,11 +60,23 @@ class Scheduler extends React.Component {
     )
 
     if (Number.parseInt(width) < SMALL_BP) {
-      return this.setState({ width: 'mobile', view: 'day' })
+      return this.setState({
+        width: 'mobile',
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
     } else if (Number.parseInt(width) < MEDIUM_BP) {
-      return this.setState({ width: 'tablet', view: 'day' })
+      return this.setState({
+        width: 'tablet',
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
     } else {
-      return this.setState({ width: 'desktop', view: 'week' })
+      return this.setState({
+        width: 'desktop',
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
     }
   }
 
