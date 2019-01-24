@@ -55,22 +55,22 @@ class Card extends Component {
             </p>
           )}
         </div>
-        {/* Employee Name */}
-        <P main>{`${first_name} ${last_name}`}</P>
-
-        {/* Employee Email */}
-        <P>
-          {email}
-          {Boolean(emailpref) ? <span> (pref)</span> : null}
-        </P>
-
-        {/* Employee Phone */}
-        <P>
-          {phone}
-          {Boolean(phonepref) ? <span> (pref)</span> : null}
-        </P>
-
         <div>
+          {/* Employee Name */}
+          <P main>{`${first_name} ${last_name}`}</P>
+          {/* Employee Email */}
+          <P>
+            {email}
+            {Boolean(emailpref) ? <span> (pref)</span> : null}
+          </P>
+          {/* Employee Phone */}
+          <P>
+            {phone}
+            {Boolean(phonepref) ? <span> (pref)</span> : null}
+          </P>
+        </div>
+
+        <div id="row">
           {/* the below two things should conditionally render based on whether there is data or not */}
           {availabilities && availabilities.length ? (
             <Availability availabilities={availabilities} />
@@ -115,9 +115,16 @@ const Container = styled('div')`
   padding: ${system.spacing.standardPadding};
   margin: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
-  width: 300px;
   box-shadow: ${system.shadows.otherLight};
-  /* // this width is temp until we get a better system */
+  display: flex;
+  flex-flow: column nowrap;
+  min-width: 300px;
+  width: 25%;
+
+  /* the below can be used to make the card orientation horizontal */
+  /* #row {
+    display: flex;
+  } */
 
   .x {
     width: 100%;
@@ -144,8 +151,7 @@ const P = styled.p`
   font-weight: ${props => (props.main ? 'bold' : null)};
   color: ${props =>
     props.main ? system.color.primary : system.color.captiontext};
-  font-size: ${props =>
-    props.main ? system.fontSizing.m : system.fontSizing.sm};
+  font-size: ${props => (props.main ? '1.8rem' : '1.5rem')};
   line-height: ${system.spacing.lineHeight};
 
   span {

@@ -75,7 +75,8 @@ export default connect(
 )(LeftSideBar)
 
 LeftSideBar.propTypes = {
-  logout: propTypes.is
+  logout: propTypes.func,
+  auth: propTypes.object
 }
 
 const Container = styled.nav`

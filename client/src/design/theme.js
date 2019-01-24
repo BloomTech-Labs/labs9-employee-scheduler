@@ -33,7 +33,7 @@ const system = {
   },
 
   breakpoints: [
-    '(max-width: 500px)',
+    '(max-width: 600px)',
     '(max-width: 900px)',
     '(max-width: 1200px)'
   ],
