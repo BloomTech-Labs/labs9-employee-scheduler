@@ -5,7 +5,8 @@ import system from '../../design/theme'
 const OuterContainer = styled('div')`
   position: relative;
   background: ${system.color.neutral};
-  height: ${props => (props.height ? '100vh' : null)};
+  height: 100%;
+  min-height: 100vh;
 
   h1 {
     padding: ${system.spacing.standardPadding} 0;
