@@ -254,33 +254,44 @@ class Scheduler extends React.Component {
           updateDragState={this.updateDragState}
         />
         <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
-          {width === 'desktop' ? (
-            <Button
-              onClick={this.toggleView}
-              style={{ alignSelf: 'flex-end', marginRight: '20px' }}
-            >
-              View Update
-            </Button>
-          ) : null}
-          <div style={{ display: 'flex', alignItems: 'space-between' }}>
-            <Button
-              onClick={() => this.changeDate('left')}
-              style={{ alignSelf: 'flex-end' }}
-            >
-              Back
-            </Button>
-            <Button
-              onClick={() => this.changeDate('today')}
-              style={{ alignSelf: 'flex-end' }}
-            >
-              Today
-            </Button>
-            <Button
-              onClick={() => this.changeDate('right')}
-              style={{ alignSelf: 'flex-end' }}
-            >
-              Next
-            </Button>
+          <div
+            style={{
+              paddingTop: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%'
+            }}
+          >
+            <div>
+              <Button
+                onClick={() => this.changeDate('left')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={() => this.changeDate('today')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Today
+              </Button>
+              <Button
+                onClick={() => this.changeDate('right')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Next
+              </Button>
+            </div>
+            <div>
+              {width === 'desktop' ? (
+                <Button
+                  onClick={this.toggleView}
+                  style={{ alignSelf: 'flex-end', marginRight: '20px' }}
+                >
+                  Toggle View
+                </Button>
+              ) : null}
+            </div>
           </div>
 
           <DropCal
