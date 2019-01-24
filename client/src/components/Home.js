@@ -34,7 +34,7 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-
+          {/* nudge this over to the right a bit */}
           <div id="video">Video Placeholder</div>
         </section>
 
@@ -187,21 +187,29 @@ const Container = styled('div')`
     h1 {
       padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
-      width: 60%;
+      width: 45%;
     }
 
     p {
       padding: ${system.spacing.bigPadding};
       color: ${system.color.bodytext};
       font-size: ${system.fontSizing.ml};
-      width: 50%;
+      width: 45%;
       margin-bottom: 30px;
       line-height: ${system.spacing.lineHeight};
     }
 
-    @media ${system.breakpoints[1]} {
+    @media ${system.breakpoints[2]} {
       h1 {
-        width: 80%;
+        width: 65%;
+      }
+      p {
+        width: 65%;
+      }
+    }
+
+    @media ${system.breakpoints[0]} {
+      h1 {
         font-size: ${system.fontSizing.ml};
       }
       p {
@@ -255,7 +263,7 @@ const Container = styled('div')`
       color: white;
       text-align: center;
       top: 21rem;
-      right: 10rem;
+      right: 6%;
       width: 480px;
       height: 270px;
       z-index: 50;
