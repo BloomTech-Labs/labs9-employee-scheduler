@@ -107,7 +107,7 @@ class AvailabilityForm extends Component {
         <h5>Edit Availability</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.map((a, i) => {
-          //this function passes the params the toggle
+          //this function passes the the params the toggle to handleChange and is called in Checkbox
           const toggle = () => {
             const { name, off } = this.state.days[i]
             this.handleChange(name, 'off', !off, a)
