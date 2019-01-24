@@ -26,7 +26,8 @@ class Scheduler extends React.Component {
     draggedEmployee: null,
     range: null,
     width: 'desktop',
-    view: 'week'
+    view: 'week',
+    date: new Date()
   }
 
   componentDidMount() {
