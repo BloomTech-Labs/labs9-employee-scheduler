@@ -25,7 +25,7 @@ const Container = styled.div`
   width: 60%;
   background: ${props =>
     props.success ? system.color.success : system.color.danger};
-  padding: ${system.spacing.standardPadding};
+  padding: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
   margin: 20px 0;
@@ -46,7 +46,9 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     min-width: 290px;
+    width: 80%;
     text-align: center;
+    padding: ${system.spacing.standardPadding};
 
     p {
       margin: 1rem 0;
