@@ -6,6 +6,7 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import { connect } from 'react-redux'
+import { addTimeOffRequest } from '../../actions'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -42,17 +43,10 @@ class TimeOffRequest extends Component {
 
     const { token, user } = this.props.auth
     const date = convertDateToMoment()
+
     // const date = this.state.startDate
-    axios
-      .post(
-        `${api}/time-off-requests/${user.id}`,
-        { date, reason },
-        {
-          headers: { authorization: token }
-        }
-      )
-      .then(() => this.setState({ message: 'request received' }))
-      .catch(err => console.log(err))
+    this.props.addTimeOffRequest(user.id, date, reason, token)
+    this.setState({ message: 'request received' })
   }
 
   render() {
@@ -82,18 +76,20 @@ class TimeOffRequest extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
 
 export default connect(
   mapStateToProps,
-  {}
+  { addTimeOffRequest }
 )(TimeOffRequest)
 
-TimeOffRequest.propTypes = {
-  // adding propTypes here
-}
+// TimeOffRequest.propTypes = {
+// adding propTypes here
+// }
 
 const Container = styled('div')`
   padding: ${system.spacing.bigPadding};

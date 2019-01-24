@@ -38,17 +38,16 @@ class EmployeeDashboard extends Component {
       return this.setState({ error: this.props.error })
     }
 
-    if (prevProps.auth.user.id !== this.props.auth.user.id) {
+    if (prevProps.employee.time_off !== this.props.employee.time_off) {
       return this.props.fetchSingleEmployeeFromDB(
         this.props.auth.id,
-        this.props.token
+        this.props.auth.token
       )
     }
   }
 
-  deleteExpiredRequest = id => {
-    const { token } = this.props.auth
-    this.props.deleteTimeOffRequest(id, token)
+  deleteExpiredRequest = (torId, token, userId) => {
+    this.props.deleteTimeOffRequest(torId, token, userId)
   }
 
   // for when we adding loading state to redux
@@ -85,7 +84,17 @@ class EmployeeDashboard extends Component {
         <Message>
           <>
             {employee.time_off.map(item => (
-              <TimeOffApproved {...item} />
+              <TimeOffApproved
+                key={item.id}
+                {...item}
+                deleteExpiredRequest={() =>
+                  this.deleteExpiredRequest(
+                    item.id,
+                    this.props.auth.token,
+                    this.props.auth.user.id
+                  )
+                }
+              />
             ))}
           </>
         </Message>
@@ -98,7 +107,7 @@ class EmployeeDashboard extends Component {
         <BreadCrumb location="Employee Dashboard" />
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {this.props.auth.first_name}</h1>
+            <h1>Welcome {this.props.auth.user.first_name}</h1>
           </div>
           <div className="wrapper">
             <AssignedWrapper>

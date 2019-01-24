@@ -41,7 +41,7 @@ export const AssignedWrapper = styled('div')`
   margin: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
   width: 300px;
-  box-shadow: ${system.shadows.other};
+
   text-align: center;
   .details {
     display: flex;
@@ -76,8 +76,7 @@ export const TofWrapper = styled('div')`
   padding: ${system.spacing.standardPadding};
   margin: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
-  width: 500px;
-  box-shadow: ${system.shadows.other};
+  width: 530px;
   text-align: center;
 
   .details {

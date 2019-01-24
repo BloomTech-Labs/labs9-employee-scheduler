@@ -1,7 +1,9 @@
 import {
   FETCH_EMPLOYEE_FROM_DB_SUCCESS,
   FETCH_EMPLOYEE_FROM_DB_FAIL,
-  DELETE_TIME_OFF_REQUEST_SUCCESS
+  DELETE_TIME_OFF_REQUEST_SUCCESS,
+  ADD_TIME_OFF_REQUEST_SUCCESS,
+  ADD_TIME_OFF_REQUEST_FAIL
 } from '../actions'
 
 const initialState = {
@@ -18,20 +20,20 @@ export const employeeReducer = (state = initialState, action) => {
       }
     case FETCH_EMPLOYEE_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching failed' }
-    case DELETE_TIME_OFF_REQUEST_SUCCESS: {
-      const { torId } = action.payload
+    case ADD_TIME_OFF_REQUEST_SUCCESS:
       return {
-        employee: state.employee.map(request => {
-          if (request.id !== torId) {
-            return {
-              request
-            }
-          } else {
-            return { ...request }
-          }
+        employee: [...initialState, action.payload]
+      }
+    case ADD_TIME_OFF_REQUEST_FAIL:
+      return { ...initialState, error: 'request failed' }
+    case DELETE_TIME_OFF_REQUEST_SUCCESS:
+      const { userId, torId } = action.payload
+      console.log(torId)
+      return {
+        employee: state.employee.map(item => {
+          console.log(item.id)
         })
       }
-    }
     default:
       return state
   }
