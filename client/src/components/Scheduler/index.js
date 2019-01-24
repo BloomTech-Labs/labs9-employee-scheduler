@@ -255,28 +255,34 @@ class Scheduler extends React.Component {
         />
         <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
           {width === 'desktop' ? (
-            <Button onClick={this.toggleView} style={{ alignSelf: 'flex-end' }}>
+            <Button
+              onClick={this.toggleView}
+              style={{ alignSelf: 'flex-end', marginRight: '20px' }}
+            >
               View Update
             </Button>
           ) : null}
-          <Button
-            onClick={() => this.changeDate('left')}
-            style={{ alignSelf: 'flex-end' }}
-          >
-            Back
-          </Button>
-          <Button
-            onClick={() => this.changeDate('today')}
-            style={{ alignSelf: 'flex-end' }}
-          >
-            Today
-          </Button>
-          <Button
-            onClick={() => this.changeDate('right')}
-            style={{ alignSelf: 'flex-end' }}
-          >
-            Next
-          </Button>
+          <div style={{ display: 'flex', alignItems: 'space-between' }}>
+            <Button
+              onClick={() => this.changeDate('left')}
+              style={{ alignSelf: 'flex-end' }}
+            >
+              Back
+            </Button>
+            <Button
+              onClick={() => this.changeDate('today')}
+              style={{ alignSelf: 'flex-end' }}
+            >
+              Today
+            </Button>
+            <Button
+              onClick={() => this.changeDate('right')}
+              style={{ alignSelf: 'flex-end' }}
+            >
+              Next
+            </Button>
+          </div>
+
           <DropCal
             popover
             events={events}
