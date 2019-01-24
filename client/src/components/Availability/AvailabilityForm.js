@@ -15,6 +15,7 @@ class AvailabilityForm extends Component {
     this.state = {
       availability: [],
       loading: false,
+      checked: new Map(),
       days: [
         {
           name: 'sunday',
@@ -84,6 +85,7 @@ class AvailabilityForm extends Component {
   //checks to see which availabilities have been updated and sends the changes to the server
   updateAvailability = () => {
     this.state.days.map(day => {
+      console.log(day.availability)
       return day.availability
         ? //ternary operator
           this.props.editAvailability({
@@ -99,13 +101,29 @@ class AvailabilityForm extends Component {
     })
   }
 
-  toggleAvailability = (e, idx) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { days } = this.state
+  assignOffToCheckbox = (e, idx) => {
+    let off
+    this.state.days.map(day => {
+      console.log(day.off)
+      if (day.off === true) {
+        off = false
+      } else {
+        off = true
+      }
+      return this.toggle(off)
+    })
+  }
+
+  toggle = off => {
+    let { days } = this.state
+    this.setState({ 
+      days: this.state.days.map(day => {
+        
+      }) })
   }
 
   render() {
+    console.log()
     return (
       <div>
         <h5>Edit Availability</h5>
@@ -115,22 +133,28 @@ class AvailabilityForm extends Component {
             <div key={a.id}>
               <Availability
                 // uses local state to display the names of the days because the db sends a number
-                day={this.state.days[i].name}
+                // day={this.state.days[i].name}
                 startTime={a.start_time}
                 endTime={a.end_time}
                 off={a.off}
-                name={this.state.days[i]}
-                startTimeValue={this.state.days[i].startTime}
-                endTimeValue={this.state.days[i].endTime}
+                // name={this.state.days[i]}
+                // startTimeValue={this.state.days[i].startTime}
+                // endTimeValue={this.state.days[i].endTime}
                 handleChange={this.handleChange}
                 submit={this.props.getAvailability}
                 availability={a}
               />
-              <Checkbox />
+              <Checkbox
+                toggleAvailability={e => {
+                  this.toggleAvailability(e, a.id)
+                }}
+                // name={this.state.days[i].name}
+              />
             </div>
           )
         })}
         <button onClick={this.updateAvailability}>submit</button>
+        <button onClick={this.toggle}>toggle test</button>
       </div>
     )
   }

@@ -62,6 +62,7 @@ const Slider = styled.div`
 
 class Checkbox extends React.Component {
   state = { toggled: false }
+
   handleUpdate = event => {
     this.setState(prevState => {
       return { toggled: !prevState.toggled }
@@ -81,7 +82,8 @@ class Checkbox extends React.Component {
             type="checkbox"
             checked={toggled}
             onChange={handleUpdate}
-            onClick={this.props.closedAllDay}
+            onClick={this.props.toggleAvailability}
+            name={this.props.name}
           />
           <Switch className={toggled ? 'toggled' : undefined}>
             <Slider className={toggled ? 'toggled' : undefined} />
