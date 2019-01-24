@@ -56,9 +56,8 @@ const MidContainer = styled('div')`
 
 const InnerContainer = styled('div')`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-flow: row wrap;
+  justify-content: space-between;
   align-items: baseline;
   margin: ${system.spacing.standardPadding};
 `
