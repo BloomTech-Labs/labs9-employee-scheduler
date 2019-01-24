@@ -39,7 +39,7 @@ const Availability = props => {
       <label htmlFor="">{props.day}</label>
       <SelectContainer>
         <TimeContainer>
-          <P>Start Time: {formatHours(props.startTime)} </P>
+          <P>Start: {formatHours(props.startTime)} </P>
         </TimeContainer>
         <SelectList
           // label="start time"
@@ -53,7 +53,7 @@ const Availability = props => {
       </SelectContainer>
       <SelectContainer>
         <TimeContainer>
-          <P>End Time: {formatHours(props.endTime)}</P>
+          <P>End: {formatHours(props.endTime)}</P>
         </TimeContainer>
         <SelectList
           // label="end time"
