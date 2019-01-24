@@ -19,7 +19,7 @@ const getTimeOffRequest = id => {
 
 // request is object
 const addTimeOffRequest = request => {
-  return db('time_off_requests as t').insert({ ...request, id: uuid() })
+  return db('time_off_requests').insert({ id: uuid(), ...request })
 }
 
 const updateTimeOffRequest = (timeOffRequestId, status) => {

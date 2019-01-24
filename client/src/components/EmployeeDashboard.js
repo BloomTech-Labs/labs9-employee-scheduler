@@ -4,8 +4,6 @@ import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 // import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
-import styled from '@emotion/styled'
-import system from '../design/theme'
 import AssignedShifts from './EmpDashboardComp/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
@@ -37,11 +35,14 @@ class EmployeeDashboard extends Component {
 
   componentDidUpdate(prevProps, nextProps) {
     if (prevProps.error !== this.props.error) {
-      this.setState({ error: this.props.error })
+      return this.setState({ error: this.props.error })
     }
 
     if (prevProps.auth.user.id !== this.props.auth.user.id) {
-      this.props.fetchSingleEmployeeFromDB(this.props.auth.id, this.props.token)
+      return this.props.fetchSingleEmployeeFromDB(
+        this.props.auth.id,
+        this.props.token
+      )
     }
   }
 
@@ -77,23 +78,16 @@ class EmployeeDashboard extends Component {
       )
     }
 
-    if (Object.keys(employee).length === 0) {
-      assignedShift = <p>{this.state.error}</p>
-      approvedTimeOff = <p>{this.state.error}</p>
-    }
-
-    if (employee.time_off) {
-      approvedTimeOff = (
-        <>
-          {employee.time_off.map(item => (
-            <TimeOffApproved {...item} />
-          ))}
-        </>
-      )
+    if (!employee.time_off) {
+      approvedTimeOff = <p>No Request Status to display</p>
     } else {
       approvedTimeOff = (
         <Message>
-          <p>No Request Status to display</p>
+          <>
+            {employee.time_off.map(item => (
+              <TimeOffApproved {...item} />
+            ))}
+          </>
         </Message>
       )
     }

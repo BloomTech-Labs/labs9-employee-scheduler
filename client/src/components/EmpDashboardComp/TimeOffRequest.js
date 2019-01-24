@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import Form from '../Form/index'
@@ -44,12 +43,14 @@ class TimeOffRequest extends Component {
     const { token, user } = this.props.auth
     const date = convertDateToMoment()
     // const date = this.state.startDate
-    const requestObj = { date, reason }
-    console.log(requestObj)
     axios
-      .post(`${api}/time-off-requests/${user.id}`, requestObj, {
-        headers: { authorization: token }
-      })
+      .post(
+        `${api}/time-off-requests/${user.id}`,
+        { date, reason },
+        {
+          headers: { authorization: token }
+        }
+      )
       .then(() => this.setState({ message: 'request received' }))
       .catch(err => console.log(err))
   }

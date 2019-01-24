@@ -28,7 +28,3 @@ const TimeOffApproved = ({ id, status, date, reason }) => {
 }
 
 export default TimeOffApproved
-
-TimeOffApproved.propTypes = {
-  // adding propTypes here
-}
