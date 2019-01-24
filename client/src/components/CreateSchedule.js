@@ -37,6 +37,7 @@ class CreateSchedule extends React.Component {
         <BreadCrumb location="Schedule" />
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
         <ButtonHolder>
+          <Coverage>{`${this.props.coverage}% coverage`}</Coverage>
           <Button onClick={this.toggleModal}>Edit Hours of Operation</Button>
         </ButtonHolder>
         <HoursOfOperationModal hidden={!this.state.hoursModal} />
@@ -62,4 +63,19 @@ const ButtonHolder = styled.div`
   justify-content: flex-end;
   position: relative;
   padding-right: 20px;
+`
+
+const Coverage = styled.div`
+  border: 1px solid grey;
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  border-radius: ${system.borders.radius};
+  border: ${system.borders.transparent};
+  color: ${system.color.neutral};
+  background: ${system.color.primary};
+  box-shadow: ${system.shadows.button};
+  font-size: ${system.fontSizing.sm};
+  padding: ${system.spacing.standardPadding};
+  outline: none;
 `
