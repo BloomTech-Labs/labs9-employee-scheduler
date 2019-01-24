@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../../design/theme'
 
-import { formatHours } from '../../../utlls'
+import { formatHours } from '../../../utils'
 import CardContainer from '../../common/CardContainer'
 
 const weekdays = [
