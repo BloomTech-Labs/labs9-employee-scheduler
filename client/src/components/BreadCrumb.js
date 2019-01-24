@@ -48,8 +48,12 @@ const BreadCrumb = props => {
         </Container>
 
         <Container className="breadcrumbs" extra>
-          <LinkItem to="/register">Sign Up</LinkItem>
-          <LinkItem to="/login">Log In</LinkItem>
+          <LinkItem to="/register" className="entry">
+            Sign Up
+          </LinkItem>
+          <LinkItem to="/login" className="entry">
+            Log In
+          </LinkItem>
         </Container>
       </Nav>
     )
@@ -70,6 +74,10 @@ const Container = styled('div')`
   align-items: center;
   justify-content: space-between;
   width: ${props => (props.extra ? '225px' : null)};
+
+  @media ${system.breakpoints[1]} {
+    display: ${props => (props.extra ? 'none' : 'flex')};
+  }
 
   img {
     height: 2.75rem;
