@@ -402,40 +402,22 @@ class Scheduler extends React.Component {
         ) : null}
         <div style={{ display: 'flex', flexFlow: 'column', flex: '1 1' }}>
           <TopButtons style={{ padding: '10px 0 0 0' }}>
-            <Coverage>{`${coverage ? coverage : 0}% coverage`}</Coverage>
+            <Coverage isGood={Boolean(coverage)}>{`${
+              coverage ? coverage : 0
+            }% coverage`}</Coverage>
             <ModalButton onClick={this.props.toggleModal}>
               Edit Hours of Operation
             </ModalButton>
           </TopButtons>
           <CalendarButtons>
-            <div>
-              <Button
-                onClick={() => this.changeDate('left')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Back
-              </Button>
-              <Button
-                onClick={() => this.changeDate('today')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Today
-              </Button>
-              <Button
-                onClick={() => this.changeDate('right')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Next
-              </Button>
-            </div>
+            <NavButtons>
+              <Button onClick={() => this.changeDate('left')}>Back</Button>
+              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <Button onClick={() => this.changeDate('right')}>Next</Button>
+            </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button
-                  onClick={this.toggleView}
-                  style={{ alignSelf: 'flex-end', marginRight: '20px' }}
-                >
-                  Toggle View
-                </Button>
+                <Button onClick={this.toggleView}>Toggle View</Button>
               ) : null}
             </div>
           </CalendarButtons>
@@ -513,13 +495,13 @@ const CalendarButtons = styled.div`
 `
 
 const Coverage = styled.div`
-  border: 1px solid grey;
   display: flex;
   align-items: center;
   border-radius: ${system.borders.radius};
   border: ${system.borders.transparent};
   color: ${system.color.neutral};
-  background: ${system.color.primary};
+  background: ${props =>
+    props.isGood ? system.color.success : system.color.danger};
   box-shadow: ${system.shadows.button};
   font-size: ${system.fontSizing.sm};
   padding: ${system.spacing.standardPadding};
@@ -534,4 +516,10 @@ const TopButtons = styled.div`
 const ModalButton = styled(Button)`
   position: relative;
   z-index: 14;
+`
+
+const NavButtons = styled.div`
+  & > * + * {
+    margin-left: 10px;
+  }
 `
