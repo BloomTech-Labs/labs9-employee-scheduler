@@ -4,6 +4,7 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
+import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -199,7 +200,7 @@ class Billing extends Component {
         <LeftSideBar />
         <BreadCrumb location="Billing" />
 
-        <Container>
+        <Container billing>
           <h1>Billing</h1>
 
           {this.state.loading ? <Loader /> : null}
@@ -276,66 +277,3 @@ Billing.propTypes = {
   token: propTypes.string.isRequired,
   error: propTypes.string
 }
-
-const Container = styled('div')`
-  margin: 0 7.5rem;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-
-  form {
-    display: flex;
-    position: relative;
-    flex-flow: column nowrap;
-    width: 60%;
-    background: ${system.color.white};
-    padding: ${system.spacing.bigPadding};
-    border-radius: ${system.borders.bigRadius};
-    box-shadow: ${system.shadows.otherLight};
-    margin-bottom: 20px;
-
-    #instructions {
-      font-size: ${system.fontSizing.m};
-      color: ${system.color.bodytext};
-    }
-
-    ul {
-      list-style-type: disc;
-      margin: 2rem;
-      li {
-        font-size: ${system.fontSizing.sm};
-        margin-bottom: 1rem;
-      }
-    }
-
-    .StripeElement {
-      padding: 10px;
-      border-bottom: 2px solid #d2d2d2;
-      transition: ${system.transition};
-      font-size: 20px !important;
-
-      input {
-        font-family: 'Nunito' !important;
-      }
-    }
-
-    .StripeElement--focus {
-      border-bottom: 2px solid ${system.color.primary};
-    }
-
-    .StripeElement--invalid {
-      border-bottom: 2px solid crimson !important;
-
-      input {
-        color: ${system.color.danger};
-      }
-    }
-
-    button {
-      width: 150px;
-      margin-top: 40px;
-      background: ${props => (props.danger ? system.color.danger : null)};
-    }
-  }
-`
