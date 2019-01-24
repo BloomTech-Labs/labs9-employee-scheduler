@@ -14,7 +14,7 @@ import {
   changeEvent,
   deleteEvent
 } from '../../actions'
-import { getHoursOfOperationRange } from '../../utlls'
+import { getHoursOfOperationRange, getRange } from '../../utlls'
 
 import WeekSummary from './WeekSummary'
 
@@ -27,7 +27,8 @@ class Scheduler extends React.Component {
     range: null,
     width: 'desktop',
     view: 'week',
-    date: new Date()
+    date: new Date(),
+    range: getRange({ view: 'week', date: new Date() })
   }
 
   componentDidMount() {
@@ -69,10 +70,32 @@ class Scheduler extends React.Component {
 
   toggleView = () => {
     if (this.state.view === 'week') {
-      return this.setState({ view: 'day' })
+      return this.setState({
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
     } else {
-      return this.setState({ view: 'week' })
+      return this.setState({
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
     }
+  }
+
+  changeDate = direction => {
+    this.setState(({ date, view }) => {
+      let returnVal = new Date()
+      let day = 1000 * 60 * 60 * 24
+      const inc = view === 'week' ? 7 * day : day
+      if (direction === 'left') {
+        returnVal = new Date(date.getTime() - inc)
+      } else if (direction === 'right') {
+        returnVal = new Date(date.getTime() + inc)
+      }
+      const range = getRange({ view, date: returnVal })
+      console.log(range)
+      return { date: returnVal, range }
+    })
   }
 
   getScheduleCoverage = () => {
@@ -198,34 +221,12 @@ class Scheduler extends React.Component {
     }
   }
 
-  updateRange = range => {
-    if (Array.isArray(range) && range.length === 1) {
-      this.setState({
-        range: {
-          start: moment(range[0]).startOf('day')._d,
-          end: moment(range[0]).endOf('day')._d
-        }
-      })
-    } else if (Array.isArray(range)) {
-      this.setState({
-        range: range
-      })
-    } else {
-      this.setState({
-        range: {
-          start: moment(range.start).startOf('day')._d,
-          end: moment(range.end).endOf('day')._d
-        }
-      })
-    }
-  }
-
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
 
   render() {
     const { employees, hours } = this.props
-    const { width, range, view } = this.state
+    const { width, range, view, date } = this.state
 
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
@@ -258,6 +259,24 @@ class Scheduler extends React.Component {
               View Update
             </Button>
           ) : null}
+          <Button
+            onClick={() => this.changeDate('left')}
+            style={{ alignSelf: 'flex-end' }}
+          >
+            Back
+          </Button>
+          <Button
+            onClick={() => this.changeDate('today')}
+            style={{ alignSelf: 'flex-end' }}
+          >
+            Today
+          </Button>
+          <Button
+            onClick={() => this.changeDate('right')}
+            style={{ alignSelf: 'flex-end' }}
+          >
+            Next
+          </Button>
           <DropCal
             popover
             events={events}
@@ -270,10 +289,10 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
-            onRangeChange={this.updateRange}
             min={hourRange.min}
             max={hourRange.max}
             view={view}
+            date={date}
           />
           <WeekSummary
             range={

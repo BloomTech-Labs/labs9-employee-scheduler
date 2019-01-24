@@ -55,7 +55,8 @@ const DropCal = ({
   max,
   views,
   view,
-  defaultView
+  defaultView,
+  date
 }) => {
   console.log(defaultView)
   return connectDropTarget(
@@ -81,6 +82,7 @@ const DropCal = ({
         views={views}
         view={view}
         defaultView={defaultView}
+        date={date}
       />
     </div>
   )

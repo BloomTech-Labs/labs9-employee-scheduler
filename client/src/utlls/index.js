@@ -53,3 +53,18 @@ export const formatHours = hours =>
   moment({ hours })
     .format('h:mm a')
     .replace(/$0:/, '12:')
+
+export const getRange = ({ date, view }) => {
+  let range = []
+  let inc = 1000 * 60 * 60 * 24
+  let amount = 7
+  if (view === 'day') {
+    amount = 1
+  }
+  let weekStart = moment(date).startOf('week')
+  console.log(weekStart)
+  for (let i = 0; i < amount; i++) {
+    range.push(new Date(weekStart + i * inc))
+  }
+  return range
+}

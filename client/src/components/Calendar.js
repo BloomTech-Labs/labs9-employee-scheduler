@@ -69,9 +69,9 @@ const StyledCalendar = styled(BigCalendar)`
     padding-top: 5px;
   }
 
-  /* .rbc-btn-group {
-    visibility: hidden;
-  } */
+  .rbc-btn-group {
+    display: none;
+  }
 
   /* the below makes the Agenda view normally colored instead of the same color as events */
   table,
