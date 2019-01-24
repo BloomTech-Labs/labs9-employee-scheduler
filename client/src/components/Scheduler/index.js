@@ -289,11 +289,10 @@ class Scheduler extends React.Component {
     // step 3
     // check for event falling outside hours of operation
     const day = moment(eventTimes.start).day()
+
     if (
-      convertMomentToFloat(moment(eventTimes.start).hour()) <
-        hours[day].open_time ||
-      convertMomentToFloat(moment(eventTimes.end).hour()) >
-        hours[day].close_time
+      convertMomentToFloat(eventTimes.start) < hours[day].open_time ||
+      convertMomentToFloat(eventTimes.end) > hours[day].close_time
     ) {
       window.alert(
         `Sorry, you can't schedule this employee outside the hours of operation.`
