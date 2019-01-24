@@ -73,7 +73,7 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 router.delete('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
-    .then(res => res.status(200).json(res))
+    .then(result => res.status(200).json(result))
     .catch(err =>
       res.status(404).json({ error: 'Error deleting request', err })
     )

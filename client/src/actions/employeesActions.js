@@ -87,11 +87,7 @@ export const dispoTimeOffRequests = (timeOffId, status, token) => dispatch => {
     )
 }
 
-export const deleteTimeOffRequest = (
-  torId,
-  token,
-  userId
-) => async dispatch => {
+export const deleteTimeOffRequest = (torId, token) => async dispatch => {
   try {
     await axios
       .delete(`${baseURL}/time-off-requests/${torId}`, {
@@ -100,8 +96,7 @@ export const deleteTimeOffRequest = (
       .then(res =>
         dispatch({
           type: DELETE_TIME_OFF_REQUEST_SUCCESS,
-          payload: userId,
-          torId
+          payload: torId
         })
       )
   } catch (err) {

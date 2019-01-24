@@ -39,8 +39,8 @@ class EmployeeDashboard extends Component {
     }
   }
 
-  deleteExpiredRequest = (torId, token, userId) => {
-    this.props.deleteTimeOffRequest(torId, token, userId)
+  deleteExpiredRequest = (torId, token) => {
+    this.props.deleteTimeOffRequest(torId, token)
   }
 
   // for when we adding loading state to redux
@@ -77,13 +77,11 @@ class EmployeeDashboard extends Component {
             {employee.time_off.map(item => (
               <TimeOffApproved
                 key={item.id}
-                {...item}
+                status={item.status}
+                date={item.date}
+                reason={item.reason}
                 deleteExpiredRequest={() =>
-                  this.deleteExpiredRequest(
-                    item.id,
-                    this.props.auth.token,
-                    this.props.auth.user.id
-                  )
+                  this.deleteExpiredRequest(item.id, this.props.auth.token)
                 }
               />
             ))}

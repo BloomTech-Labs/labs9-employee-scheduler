@@ -15,11 +15,12 @@ export const employeeReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_EMPLOYEE_FROM_DB_SUCCESS:
       return {
-        employee: action.payload,
+        ...state,
+        employee: { ...action.payload },
         error: ''
       }
     case FETCH_EMPLOYEE_FROM_DB_FAIL:
-      return { ...initialState, error: 'fetching failed' }
+      return { ...state, error: 'fetching failed' }
     case ADD_TIME_OFF_REQUEST_SUCCESS:
       return {
         ...state,
@@ -30,9 +31,18 @@ export const employeeReducer = (state = initialState, action) => {
       }
     case ADD_TIME_OFF_REQUEST_FAIL:
       return { ...state, error: 'request failed' }
-    case DELETE_TIME_OFF_REQUEST_SUCCESS: {
-      return {}
-    }
+    case DELETE_TIME_OFF_REQUEST_SUCCESS:
+      return {
+        ...state,
+        employee: {
+          ...state.employee,
+          time_off: state.employee.time_off.filter(time => {
+            if (time.id !== action.payload) {
+              return time
+            }
+          })
+        }
+      }
     default:
       return state
   }

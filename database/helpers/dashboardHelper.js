@@ -22,11 +22,12 @@ const getDashboard = async userId => {
     .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
     .reduce((acc, { id, date, status, reason }) => {
       // return only confirmed time off
+      // TODO: this logic needs to be reworked to see denied requests for only 2 days.
 
-      let twoDays = moment(date).diff(Date.now(), 'day')
+      // let twoDays = moment(date).diff(Date.now(), 'day')
       // this will check if the denied request is older than two days
       // and hide it from employee view so that it doesn't build up
-      return twoDays ? [...acc, { id, date, status, reason }] : acc
+      return date ? [...acc, { id, date, status, reason }] : acc
     }, [])
 
   return {
