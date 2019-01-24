@@ -6,6 +6,7 @@ import Form from '../Form/index'
 import axios from 'axios'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import { connect } from 'react-redux'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -29,26 +30,25 @@ class TimeOffRequest extends Component {
     })
   }
 
-  //converts date to 'YYYY-MM-DD' format
-  convertDateToMoment = e => {
-    let dateString = this.state.startDate
-    let dateObj = new Date(dateString)
-    let momentObj = moment(dateObj)
-    let momentString = momentObj.format('YYYY-MM-DD')
-    return momentString
-  }
-
   //sends the date and time off request to the server
   submitTimeOffRequest = ({ reason }) => {
-    const date = this.convertDateToMoment()
+    //converts date to 'YYYY-MM-DD' format
+    const convertDateToMoment = e => {
+      let dateString = this.state.startDate
+      let dateObj = new Date(dateString)
+      let momentObj = moment(dateObj)
+      let momentString = momentObj.format('YYYY-MM-DD')
+      return momentString
+    }
+
+    const { token, user } = this.props.auth
+    const date = convertDateToMoment()
     // const date = this.state.startDate
     const requestObj = { date, reason }
     console.log(requestObj)
     axios
-      //TODO: user is in a variable at the top of this file
-      //will need to be refactored to be dynamic
-      .post(`${api}/time-off-requests/${user}`, requestObj, {
-        headers: { authorization: 'testing' }
+      .post(`${api}/time-off-requests/${user.id}`, requestObj, {
+        headers: { authorization: token }
       })
       .then(() => this.setState({ message: 'request received' }))
       .catch(err => console.log(err))
@@ -81,7 +81,14 @@ class TimeOffRequest extends Component {
   }
 }
 
-export default TimeOffRequest
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(
+  mapStateToProps,
+  {}
+)(TimeOffRequest)
 
 TimeOffRequest.propTypes = {
   // adding propTypes here

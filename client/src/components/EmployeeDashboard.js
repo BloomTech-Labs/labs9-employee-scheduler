@@ -13,6 +13,12 @@ import {
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
 import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
+import {
+  Message,
+  Container,
+  AssignedWrapper,
+  TofWrapper
+} from './EmpDashboardComp/styles'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -76,7 +82,7 @@ class EmployeeDashboard extends Component {
       approvedTimeOff = <p>{this.state.error}</p>
     }
 
-    if (employee.time_off > 0) {
+    if (employee.time_off) {
       approvedTimeOff = (
         <>
           {employee.time_off.map(item => (
@@ -142,114 +148,3 @@ EmployeeDashboard.propTypes = {
   fetchSingleEmployeeFromDB: propTypes.func.isRequired,
   error: propTypes.string
 }
-
-const Message = styled('div')`
-  margin-top: 30px;
-  font-size: ${system.fontSizing.sm};
-`
-
-const Container = styled('div')`
-  width: 100%;
-  padding: ${system.spacing.container};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  h6 {
-    font-size: ${system.fontSizing.m};
-    margin: 10px 0;
-  }
-  .employee-welcome {
-    font-size: ${system.fontSizing.l};
-    margin: 15px 0 58px 0;
-  }
-  .wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-    .title {
-      width: 100%;
-      min-width: 268px;
-      max-width: 500px;
-      h5 {
-        font-size: ${system.fontSizing.ml};
-      }
-    }
-  }
-`
-const AssignedWrapper = styled('div')`
-  background: ${system.color.white};
-  padding: ${system.spacing.standardPadding};
-  margin: ${system.spacing.bigPadding};
-  border-radius: ${system.borders.bigRadius};
-  width: 300px;
-  box-shadow: ${system.shadows.other};
-  text-align: center;
-  .details {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    margin: 33px auto;
-    .date {
-      min-width: 128px;
-    }
-    .reason {
-      width: 300px;
-    }
-    p {
-      text-align: center;
-      width: 100%;
-      padding: 2.5px 7.5px;
-      font-family: ${props => (props.main ? "'Lato', sans-serif" : 'inherit')};
-      font-weight: ${props => (props.main ? 'bold' : null)};
-      color: ${props =>
-        props.main ? system.color.primary : system.color.captiontext};
-      font-size: ${system.fontSizing.sm};
-      line-height: ${system.spacing.lineHeight};
-    }
-  }
-`
-
-const TofWrapper = styled('div')`
-  display: flex;
-  flex-direction: row;
-  background: ${system.color.white};
-  padding: ${system.spacing.standardPadding};
-  margin: ${system.spacing.bigPadding};
-  border-radius: ${system.borders.bigRadius};
-  width: 500px;
-  box-shadow: ${system.shadows.other};
-  text-align: center;
-
-  .details {
-    display: flex;
-    flex-direction: row;
-    margin: 33px auto;
-
-    .box {
-      display: flex;
-      flex-direction: row;
-      width: 90%;
-      .date {
-        min-width: 128px;
-      }
-      .reason {
-        width: 300px;
-      }
-
-      p {
-        text-align: center;
-        width: 100%;
-        padding: 2.5px 7.5px;
-        font-family: ${props =>
-          props.main ? "'Lato', sans-serif" : 'inherit'};
-        font-weight: ${props => (props.main ? 'bold' : null)};
-        color: ${props =>
-          props.main ? system.color.primary : system.color.captiontext};
-        font-size: ${system.fontSizing.sm};
-        line-height: ${system.spacing.lineHeight};
-      }
-    }
-  }
-`
