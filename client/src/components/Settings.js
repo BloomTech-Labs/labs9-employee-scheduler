@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
+import { Container, Input } from './common/FormContainer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Button from './common/Button'
@@ -121,7 +122,7 @@ class Settings extends Component {
         <LeftSideBar />
         <BreadCrumb location="Settings" />
 
-        <Container>
+        <Container settings>
           <h1 data-testid="settings">Settings</h1>
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
@@ -226,92 +227,3 @@ Settings.propTypes = {
   user: propTypes.object,
   token: propTypes.string.isRequired
 }
-
-const Container = styled('div')`
-  margin: 0 7.5rem;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-
-  fieldset {
-    width: 60%;
-  }
-
-  form {
-    display: flex;
-    position: relative;
-    flex-flow: column nowrap;
-    background: ${system.color.white};
-    padding: ${system.spacing.bigPadding};
-    border-radius: ${system.borders.bigRadius};
-    box-shadow: ${system.shadows.otherLight};
-
-    #instructions {
-      font-size: ${system.fontSizing.m};
-      margin-bottom: 50px;
-      color: ${system.color.bodytext};
-    }
-
-    .edit {
-      position: absolute;
-      top: 25px;
-      right: 25px;
-      font-size: ${system.fontSizing.s};
-      color: ${system.color.primary};
-      padding: 5px;
-      border-radius: ${system.borders.radius};
-      border: 1px solid ${system.color.primary};
-      cursor: pointer;
-      transition: ${system.transition};
-      :hover {
-        color: ${system.color.white};
-        background: ${system.color.primary};
-      }
-    }
-
-    label {
-      font-size: ${system.fontSizing.s};
-      padding: 0 5px;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      color: ${system.color.captiontext};
-    }
-
-    input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px white inset;
-      box-shadow: 0 0 0px 1000px white inset;
-    }
-
-    input[type='checkbox'] {
-      margin-top: 10px;
-      :first-of-type {
-        margin-left: 5px;
-      }
-      :nth-of-type(2) {
-        margin-left: 40px;
-      }
-    }
-
-    button {
-      width: 150px;
-    }
-  }
-`
-const Input = styled.input`
-  font-size: ${system.fontSizing.m};
-  color: ${system.color.bodytext};
-  padding: 2.5px 5px;
-  margin: 0.5rem 0 ${system.spacing.hugePadding};
-  border: none;
-  border-bottom: 2px solid
-    ${props => (props.disabled ? 'none !important' : '#d2d2d2')};
-  transition: ${system.transition};
-  :disabled {
-    background: ${system.color.white};
-    color: ${system.color.bodytext};
-  }
-  :focus {
-    border-bottom: 2px solid ${system.color.primary};
-  }
-`

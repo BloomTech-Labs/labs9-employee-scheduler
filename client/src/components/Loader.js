@@ -27,7 +27,7 @@ const Container = styled.div`
   align-items: center;
   width: 60%;
   background: ${system.color.bodytext};
-  padding: ${system.spacing.standardPadding};
+  padding: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
   margin-bottom: 20px;
@@ -48,8 +48,10 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    width: 80%;
     min-width: 290px;
     text-align: center;
+    padding: ${system.spacing.standardPadding};
 
     p {
       margin: 1rem 0;

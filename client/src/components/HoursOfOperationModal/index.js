@@ -3,7 +3,7 @@ import Timekeeper from './TimeKeeper'
 import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Zoom from 'react-reveal'
+import Fade from 'react-reveal'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -142,23 +142,6 @@ class HoursOfOperation extends Component {
         <Modal>
           {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
 
-          {this.state.isOpen === true ? (
-            <Zoom right>
-              <Timekeeper
-                name="open"
-                saveAndClose={this.saveOpenTime}
-                day={`Open time`}
-              />
-            </Zoom>
-          ) : this.state.isClose === true ? (
-            <Zoom right>
-              <Timekeeper
-                name="close"
-                saveAndClose={this.saveCloseTime}
-                day={`Close time`}
-              />
-            </Zoom>
-          ) : null}
           <div className="days-container">
             <h3>Hours of Operation</h3>
             {/* maps over the days and places a pair of edit buttons for each one */}
@@ -178,6 +161,23 @@ class HoursOfOperation extends Component {
               )
             })}
           </div>
+          {this.state.isOpen === true ? (
+            <Fade top>
+              <Timekeeper
+                name="open"
+                saveAndClose={this.saveOpenTime}
+                day={`Open time`}
+              />
+            </Fade>
+          ) : this.state.isClose === true ? (
+            <Fade top>
+              <Timekeeper
+                name="close"
+                saveAndClose={this.saveCloseTime}
+                day={`Close time`}
+              />
+            </Fade>
+          ) : null}
         </Modal>
       </Container>
     )

@@ -1,14 +1,17 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import moment from 'moment'
 
 export default function DailySummary(props) {
   const { hours, day, employees } = props.summary
   return (
     <Div>
-      <h6>{day}</h6>
-      <p>{`Employees: ${employees}`}</p>
-      <p>{`Total Hours: ${Math.round(hours)}`}</p>
+      <h6>{moment(day).format('M/D')}</h6>
+      <p>Total People:</p>
+      <p>{employees}</p>
+      <p>Total Hours:</p>
+      <p>{Math.round(hours)}</p>
     </Div>
   )
 }
@@ -17,12 +20,12 @@ const Div = styled.div`
   display: flex;
   position: relative;
   flex-flow: column nowrap;
+  align-items: center;
   background: ${system.color.white};
-  padding: ${system.spacing.bigPadding};
+  width: 100%;
+  padding: 20px 0px;
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
-  width: 150px;
-
   h6 {
     font-size: ${system.fontSizing.sm};
     text-transform: uppercase;
@@ -33,5 +36,7 @@ const Div = styled.div`
   p {
     font-size: ${system.fontSizing.s};
     margin-bottom: 0.5rem;
+    text-align: center;
+    padding-bottom: 10px;
   }
 `

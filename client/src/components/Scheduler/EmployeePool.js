@@ -20,8 +20,10 @@ export default function(props) {
 
 const Container = styled('div')`
   max-height: 150vh;
-  min-width: 344px;
-  overflow-y: auto;
+  width: 344px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
 
   ::-webkit-scrollbar {
     width: 8px;

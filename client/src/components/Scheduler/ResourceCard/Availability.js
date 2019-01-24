@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
-import CardContainer from '../common/CardContainer'
-import { formatHours } from '../../utils'
+import system from '../../../design/theme'
+
+import { formatHours } from '../../../utils'
+import CardContainer from '../../common/CardContainer'
 
 const weekdays = [
   'Sunday',

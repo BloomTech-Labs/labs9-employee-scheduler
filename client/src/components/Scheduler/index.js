@@ -5,25 +5,37 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
+import Button from '../common/Button'
+import system from '../../design/theme'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
   createEvent,
   changeEvent,
-  deleteEvent
+  deleteEvent,
+  displayCoverage
 } from '../../actions'
-import { getHoursOfOperationRange } from '../../utlls'
+import { getHoursOfOperationRange, getRange } from '../../utils'
 
 import WeekSummary from './WeekSummary'
+
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 
 class Scheduler extends React.Component {
   state = {
     draggedEmployee: null,
-    range: null
+    range: null,
+    width: 'desktop',
+    view: 'week',
+    date: new Date(),
+    range: getRange({ view: 'week', date: new Date() })
   }
 
   componentDidMount() {
     this.fetchData()
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
   }
 
   componentDidUpdate() {
@@ -32,23 +44,202 @@ class Scheduler extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWidth)
+  }
+
   fetchData() {
     const { organization_id } = this.props.user
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
     this.props.fetchHoursFromDB(organization_id, this.props.token)
   }
 
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({ width: 'mobile', view: 'day' })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({ width: 'tablet', view: 'day' })
+    } else {
+      return this.setState({ width: 'desktop', view: 'week' })
+    }
+  }
+
+  toggleView = () => {
+    if (this.state.view === 'week') {
+      return this.setState({
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
+    } else {
+      return this.setState({
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
+    }
+  }
+
+  changeDate = direction => {
+    this.setState(({ date, view }) => {
+      let returnVal = new Date()
+      let day = 1000 * 60 * 60 * 24
+      const inc = view === 'week' ? 7 * day : day
+      if (direction === 'left') {
+        returnVal = new Date(date.getTime() - inc)
+      } else if (direction === 'right') {
+        returnVal = new Date(date.getTime() + inc)
+      }
+      const range = getRange({ view, date: returnVal })
+      console.log(range)
+      return { date: returnVal, range }
+    })
+  }
+
   getScheduleCoverage = () => {
     const { hours, employees } = this.props
 
+    // combine all shifts into a single array
     const shifts = employees.reduce(
       (acc, { events }) => [...acc, ...events],
       []
     )
-    console.log(shifts)
+
+    // initialize an object keyed by all open days on the schedule
+    const days = hours.reduce(
+      (acc, { day, closed }) => (!closed ? { ...acc, [day]: [] } : { ...acc }),
+      {}
+    )
+
+    // populate days object with all corresponding shifts
+    shifts.forEach(shift => {
+      const shiftDay = moment(shift.start).day()
+      if (days[shiftDay]) {
+        days[shiftDay].push(shift)
+      }
+    })
+
+    // initialize covered and open hours variables
+    let totalHoursCovered = 0
+    let totalHoursOpen = 0
+
+    // for each day add number of covered and open hours
+    Object.keys(days).forEach(key => {
+      // sort shifts by start time
+      const sortedShifts = days[key].sort((a, b) =>
+        moment(a.start).isAfter(b.start)
+      )
+
+      // merge shifts
+      // take shifts and combine them into blocks of time
+      const mergedShifts = sortedShifts.reduce((acc, { start, end }) => {
+        if (!acc.length) {
+          // start by initializing with first shift
+          return [{ start, end }]
+        } else {
+          if (moment(start).isAfter(acc[acc.length - 1].end)) {
+            // if shifts are not overlapping
+            return [...acc, { start, end }]
+          } else if (moment(end).isBefore(acc[acc.length - 1].end)) {
+            // if new shift exists within previous block
+            return [...acc]
+          } else {
+            // if we need to replace last block with a combined block
+            return [
+              ...acc.slice(0, acc.length - 1),
+              { start: acc[acc.length - 1].start, end }
+            ]
+          }
+        }
+      }, [])
+
+      // converts a moment into float
+      const convertMomentToFloat = time =>
+        moment(time).hours() + moment(time).minutes() / 60
+
+      // converts a float into an object with hours and minutes
+      const convertFloatToTime = num => {
+        const [hours, fraction] = num.toString().split('.')
+        const minutes =
+          parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
+        return [hours, minutes]
+      }
+
+      // truncate merged shifts to only open hours
+      const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
+        // if schedule end is before shift start, discard shift
+        // if schedule start is after shift end, discard shift
+        // if shift start is before schedule start, truncate shift start
+        // if shift end is after end, trucate shift end
+        // otherwise do nothing
+
+        // convert times to floats
+        const shiftStartFloat = convertMomentToFloat(start)
+        const shiftEndFloat = convertMomentToFloat(end)
+
+        // run discard options first, then mutation options to make sure discards happen
+        if (hours[key].close_time < shiftStartFloat) {
+          // discard shift
+          return [...acc]
+        } else if (hours[key].open_time > shiftEndFloat) {
+          // discard shift
+          return [...acc]
+        } else if (shiftStartFloat < hours[key].open_time) {
+          // truncate start
+          const diff = hours[key].open_time - shiftStartFloat
+          const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
+
+          const newStart = moment(start)
+            .add(hoursDiff, 'hours')
+            .add(minutesDiff, 'minutes')
+            .toISOString()
+
+          return [...acc.slice(0, acc.length - 1), { start: newStart, end }]
+        } else if (shiftEndFloat > hours[key].close_time) {
+          // truncate end
+          const diff = shiftEndFloat - hours[key].close_time
+          const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
+
+          const newEnd = moment(end)
+            .subtract(hoursDiff, 'hours')
+            .subtract(minutesDiff, 'minutes')
+            .toISOString()
+
+          return [...acc.slice(0, acc.length - 1), { start, end: newEnd }]
+        } else {
+          // otherwise do nothing
+          return [...acc, { start, end }]
+        }
+      }, [])
+
+      // calculate shift coverage in hours
+      const hoursCovered = truncatedShifts.reduce((acc, { start, end }) => {
+        return acc + moment.duration(moment(end).diff(start)).asHours()
+      }, 0)
+
+      // calculate hours open
+      const hoursOpen = hours[key].close_time - hours[key].open_time
+
+      // increment the weekly totals accordingly
+      totalHoursCovered += hoursCovered
+      totalHoursOpen += hoursOpen
+    })
+
+    // calculate percentage
+    const percentCoverage = Math.floor(
+      (totalHoursCovered / totalHoursOpen) * 100
+    )
+
+    this.props.displayCoverage(percentCoverage)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
+    // also block:
+    // 1. shift collisions
+    // 2. if store is closed
     const employee = this.props.employees.filter(({ id }) => id === userId)[0]
 
     // step 1
@@ -110,7 +301,10 @@ class Scheduler extends React.Component {
         eventTimes: { start, end }
       })
     ) {
-      this.props.changeEvent({ event: employee, changes: { start, end } })
+      this.props.changeEvent(
+        { event: employee, changes: { start, end } },
+        this.props.token
+      )
     }
   }
 
@@ -158,33 +352,12 @@ class Scheduler extends React.Component {
     }
   }
 
-  updateRange = range => {
-    if (Array.isArray(range) && range.length === 1) {
-      this.setState({
-        range: {
-          start: moment(range[0]).startOf('day')._d,
-          end: moment(range[0]).endOf('day')._d
-        }
-      })
-    } else if (Array.isArray(range)) {
-      this.setState({
-        range: range
-      })
-    } else {
-      this.setState({
-        range: {
-          start: moment(range.start).startOf('day')._d,
-          end: moment(range.end).endOf('day')._d
-        }
-      })
-    }
-  }
-
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
 
   render() {
     const { employees, hours } = this.props
+    const { width, range, view, date } = this.state
 
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
@@ -211,7 +384,47 @@ class Scheduler extends React.Component {
           employees={employees}
           updateDragState={this.updateDragState}
         />
-        <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+        <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
+          <div
+            style={{
+              paddingTop: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%'
+            }}
+          >
+            <div>
+              <Button
+                onClick={() => this.changeDate('left')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={() => this.changeDate('today')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Today
+              </Button>
+              <Button
+                onClick={() => this.changeDate('right')}
+                style={{ alignSelf: 'flex-end' }}
+              >
+                Next
+              </Button>
+            </div>
+            <div>
+              {width === 'desktop' ? (
+                <Button
+                  onClick={this.toggleView}
+                  style={{ alignSelf: 'flex-end', marginRight: '20px' }}
+                >
+                  Toggle View
+                </Button>
+              ) : null}
+            </div>
+          </div>
+
           <DropCal
             popover
             events={events}
@@ -224,14 +437,15 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
-            onRangeChange={this.updateRange}
             min={hourRange.min}
             max={hourRange.max}
+            view={view}
+            date={date}
           />
           <WeekSummary
             range={
-              this.state.range
-                ? this.state.range
+              range
+                ? range
                 : {
                     start: moment().startOf('week')._d,
                     end: moment().endOf('week')._d
@@ -260,6 +474,7 @@ export default connect(
     fetchHoursFromDB,
     createEvent,
     changeEvent,
-    deleteEvent
+    deleteEvent,
+    displayCoverage
   }
 )(DragSched)
