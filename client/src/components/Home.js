@@ -17,18 +17,25 @@ const Home = () => {
       <Container>
         <section id="hero">
           <img id="header-img" alt="header" src={headerImg} />
-          <div id="video">Video Placeholder</div>
           <img id="hero-img" alt="hero" src={heroImg} />
+
           <Fade top>
-            <h1>Scheduling your employees is hard.</h1>
-            <p>
-              Cadence is an easy-to-use shift scheduling tool. You'll never have
-              to waste time worrying about wasting time ever again.
-            </p>
-            <Button type="text">
-              <LinkItem to="/employees">Schedule Now</LinkItem>
-            </Button>
+            <div id="wrapper">
+              <h1>Scheduling your employees is hard.</h1>
+              <p>
+                Cadence is an easy-to-use shift scheduling tool. You'll never
+                have to waste time worrying about wasting time ever again.
+              </p>
+              <Button type="text" id="schedule">
+                <LinkItem to="/employees">Schedule Now</LinkItem>
+              </Button>
+              <Button type="text" id="login">
+                <LinkItem to="/login">Log In</LinkItem>
+              </Button>
+            </div>
           </Fade>
+
+          <div id="video">Video Placeholder</div>
         </section>
 
         <section id="features">
@@ -128,7 +135,9 @@ const Home = () => {
                   <li>Easy-to-use graphical interface</li>
                   <li>Owner, Supervisor, & Employee Views</li>
                 </ul>
-                <Button>Sign Up Now</Button>
+                <Button>
+                  <LinkItem to="/register">Sign Up Now</LinkItem>
+                </Button>
               </div>
               <div className="card">
                 <h2>Enterprise Plan</h2>
@@ -158,39 +167,87 @@ const Container = styled('div')`
   box-shadow: ${system.shadows.otherLight};
   position: relative;
 
+  @media ${system.breakpoints[2]} {
+    margin: 5rem 2rem 0;
+    padding: 0 2rem;
+
+    section {
+      padding-bottom: 5rem;
+
+      h1,
+      p {
+        padding-left: 0;
+      }
+    }
+  }
+
   section {
     padding-bottom: 15rem;
 
     h1 {
       padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
-      width: 65rem;
+      width: 60%;
     }
 
     p {
       padding: ${system.spacing.bigPadding};
       color: ${system.color.bodytext};
       font-size: ${system.fontSizing.ml};
-      width: 60rem;
+      width: 50%;
       margin-bottom: 30px;
       line-height: ${system.spacing.lineHeight};
+    }
+
+    @media ${system.breakpoints[1]} {
+      h1 {
+        width: 80%;
+        font-size: ${system.fontSizing.ml};
+      }
+      p {
+        width: 100%;
+        font-size: ${system.fontSizing.m};
+        padding: 1rem ${system.spacing.bigPadding};
+      }
     }
   }
 
   #hero {
-    h1 {
-      padding: 200px 0 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 18rem 0 10rem;
+
+    /* @media ${system.breakpoints[2]} {
+      padding-top: 5rem;
+    } */
+
+    #wrapper {
+      h1 {
+        padding: 0;
+      }
     }
+
     #header-img {
       position: absolute;
       top: 2rem;
       right: 0rem;
+      width: 100%;
+
+      @media ${system.breakpoints[0]} {
+        width: 125%;
+      }
     }
 
     #hero-img {
       position: absolute;
       top: 15rem;
       right: 0rem;
+      width: 53%;
+
+      @media ${system.breakpoints[0]} {
+        display: none;
+      }
     }
 
     #video {
@@ -198,20 +255,38 @@ const Container = styled('div')`
       color: white;
       text-align: center;
       top: 21rem;
-      right: 15rem;
+      right: 10rem;
       width: 480px;
       height: 270px;
       z-index: 50;
       background: black;
       box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
+
+      @media ${system.breakpoints[2]} {
+        display: none;
+      }
     }
 
-    button {
+    #login, #schedule {
       margin-left: 2.5rem;
 
       a {
         color: ${system.color.neutral};
+      }
+    }
+
+    #login {
+      display: none;
+
+      @media ${system.breakpoints[1]} {
+        display: block;
+      }
+    }
+
+    #schedule {
+      @media ${system.breakpoints[1]} {
+        display: none;
       }
     }
   }
@@ -248,6 +323,26 @@ const Container = styled('div')`
         line-height: ${system.spacing.lineHeight};
       }
     }
+    @media ${system.breakpoints[2]} {
+      flex-flow: column nowrap;
+      justify-content: center;
+
+      .card {
+        width: 80%;
+        margin-bottom: 3rem;
+        padding: 2rem 1rem;
+      }
+    }
+  }
+
+  #features, #social-proof, #pricing {
+    @media ${system.breakpoints[2]} {
+        padding-bottom: 5rem;
+      }
+
+      @media ${system.breakpoints[0]} {
+        padding-bottom: 2rem;
+      }
   }
 
   #features {
@@ -281,6 +376,16 @@ const Container = styled('div')`
   #pricing {
     .card {
       background: ${system.color.neutral};
+
+      @media ${system.breakpoints[2]} {
+        background: #dedcee;
+        width: 60%;
+      }
+
+      @media ${system.breakpoints[0]} {
+        background: #dedcee;
+        width: 90%;
+      }
     }
 
     h2 {
@@ -300,8 +405,15 @@ const Container = styled('div')`
       margin-bottom: 1.5rem;
     }
 
-    button {
+    button, a {
       margin: 25px 0;
+      color: ${system.color.white};
+    }
+
+    @media ${system.breakpoints[0]} {
+      ul {
+        text-align: center;
+      }
     }
   }
 `
