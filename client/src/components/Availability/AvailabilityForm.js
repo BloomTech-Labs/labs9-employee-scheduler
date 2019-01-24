@@ -71,6 +71,7 @@ class AvailabilityForm extends Component {
   handleChange = (targetDay, property, value, availability) => {
     this.setState({
       days: this.state.days.map(day => {
+        console.log(value)
         if (day.name === targetDay) {
           // "processed' sets the property to a boolean or a number because it defaulted
           // to a string on the server without this
@@ -85,7 +86,7 @@ class AvailabilityForm extends Component {
 
   //checks to see which availabilities have been updated and sends the changes to the server
   updateAvailability = () => {
-    this.state.days.map(day => {
+    this.state.days.forEach(day => {
       console.log(day.availability)
       return day.availability
         ? //ternary operator
@@ -118,8 +119,10 @@ class AvailabilityForm extends Component {
   toggle = targetDay => {
     this.setState({
       days: this.state.days.map(day => {
-        if (day.name) {
+        if (day.name === targetDay) {
           return { ...day, off: !day.off }
+        } else {
+          return day
         }
       })
     })
@@ -132,6 +135,10 @@ class AvailabilityForm extends Component {
         <h5>Edit Availability</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.map((a, i) => {
+          const toggle = () => {
+            const { name, off } = this.state.days[i]
+            this.handleChange(name, 'off', !off, a)
+          }
           return (
             <Container key={a.id}>
               <Availability
@@ -148,8 +155,8 @@ class AvailabilityForm extends Component {
                 availability={a}
               />
               <Checkbox
-              // toggleAvailability={this.toggle(this.state.days[i].name)}
-              // name={this.state.days[i].name}
+                toggleAvailability={toggle}
+                name={this.state.days[i].name}
               />
             </Container>
           )

@@ -5,6 +5,7 @@ import options from './AvailabilityOptions'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import Checkbox from './Checkbox'
+import { formatHours } from '../../utils/index'
 
 const SelectContainer = styled('div')`
   display: flex;
@@ -38,7 +39,7 @@ const Availability = props => {
       <label htmlFor="">{props.day}</label>
       <SelectContainer>
         <TimeContainer>
-          <P>Start Time: {props.startTime} </P>
+          <P>Start Time: {formatHours(props.startTime)} </P>
         </TimeContainer>
         <SelectList
           // label="start time"
@@ -52,7 +53,7 @@ const Availability = props => {
       </SelectContainer>
       <SelectContainer>
         <TimeContainer>
-          <P>End Time: {props.endTime}</P>
+          <P>End Time: {formatHours(props.endTime)}</P>
         </TimeContainer>
         <SelectList
           // label="end time"
