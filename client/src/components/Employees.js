@@ -10,11 +10,13 @@ import { connect } from 'react-redux'
 import Card from './EmployeeCard/Card'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
+import AddEmployee from './AddEmployee'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
   componentDidMount() {
-    this.props.fetchEmployeesFromDB()
+    const { org_id, token, fetchEmployeesFromDB } = this.props
+    fetchEmployeesFromDB(org_id, token)
   }
 
   render() {
@@ -25,7 +27,8 @@ class Employees extends Component {
         <BreadCrumb location="Employees" />
         <LeftSideBar />
         <MidContainer>
-          <h1>Employees</h1>
+          <h1>Employee Directory</h1>
+          <AddEmployee />
           <InnerContainer>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
@@ -48,6 +51,7 @@ const MidContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   margin: ${system.spacing.container};
+  position: relative;
 `
 
 const InnerContainer = styled('div')`
@@ -61,7 +65,9 @@ const InnerContainer = styled('div')`
 
 const mapStateToProps = state => {
   return {
-    employees: state.employees.employees
+    org_id: state.auth.user.organization_id,
+    employees: state.employees.employees,
+    token: state.auth.token
   }
 }
 

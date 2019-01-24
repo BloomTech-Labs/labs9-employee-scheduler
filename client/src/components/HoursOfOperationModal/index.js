@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Timekeeper from './HoursOfOperationModal/TimeKeeper'
-import Button from './HoursOfOperationModal/Button'
+import Timekeeper from './TimeKeeper'
+import Button from './Button'
 import styled from '@emotion/styled'
-import system from '../design/theme'
+import system from '../../design/theme'
 import Zoom from 'react-reveal'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -11,11 +11,11 @@ import {
   editCloseHours,
   fetchHoursFromDB,
   closeAndOpenHours
-} from '../actions/'
+} from '../../actions/'
 
 class HoursOfOperation extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isOpen: false, // open time clock show/hide
       isClose: false, // close time clock show/hide
@@ -136,46 +136,49 @@ class HoursOfOperation extends Component {
   }
 
   render() {
+    console.log(this.props.hidden)
     return (
-      <Container>
-        {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
+      <Container className={this.props.hidden ? 'hidden' : undefined}>
+        <Modal>
+          {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
 
-        {this.state.isOpen === true ? (
-          <Zoom right>
-            <Timekeeper
-              name="open"
-              saveAndClose={this.saveOpenTime}
-              day={`Open time`}
-            />
-          </Zoom>
-        ) : this.state.isClose === true ? (
-          <Zoom right>
-            <Timekeeper
-              name="close"
-              saveAndClose={this.saveCloseTime}
-              day={`Close time`}
-            />
-          </Zoom>
-        ) : null}
-        <div className="days-container">
-          <h3>Hours of Operation</h3>
-          {/* maps over the days and places a pair of edit buttons for each one */}
-          {Object.keys(this.state.days).map((day, i) => {
-            return (
-              <Button
-                id={i}
-                key={i}
-                handleHours={this.handleHours}
-                day={this.state.days[day]}
-                name={day}
-                showHandleHours={e => this.showHandleHours(e, i)}
-                closedAllDay={e => this.closedAllDay(e, i)}
-              >
-                {this.props.children}
-              </Button>
-            )
-          })}
-        </div>
+          {this.state.isOpen === true ? (
+            <Zoom right>
+              <Timekeeper
+                name="open"
+                saveAndClose={this.saveOpenTime}
+                day={`Open time`}
+              />
+            </Zoom>
+          ) : this.state.isClose === true ? (
+            <Zoom right>
+              <Timekeeper
+                name="close"
+                saveAndClose={this.saveCloseTime}
+                day={`Close time`}
+              />
+            </Zoom>
+          ) : null}
+          <div className="days-container">
+            <h3>Hours of Operation</h3>
+            {/* maps over the days and places a pair of edit buttons for each one */}
+            {Object.keys(this.state.days).map((day, i) => {
+              return (
+                <Button
+                  id={i}
+                  key={i}
+                  handleHours={this.handleHours}
+                  day={this.state.days[day]}
+                  name={day}
+                  showHandleHours={e => this.showHandleHours(e, i)}
+                  closedAllDay={e => this.closedAllDay(e, i)}
+                >
+                  {this.props.children}
+                </Button>
+              )
+            })}
+          </div>
+        </Modal>
       </Container>
     )
   }
@@ -204,14 +207,17 @@ HoursOfOperation.propTypes = {
   saveOpenTime: propTypes.func
 }
 
-const Container = styled.div`
-  position: absolute;
+const Modal = styled.div`
+  /* position: absolute;
   right: 10px;
-  top: 40px;
+  bottom: 40px; */
+  z-index: 11;
+  background-color: ${system.color.neutral};
   display: flex;
   flex-direction: row;
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};
+  opacity: 1;
   .days-container {
     display: flex;
     flex-direction: column;
@@ -219,6 +225,36 @@ const Container = styled.div`
     h3 {
       font-size: 1.6rem;
       margin-bottom: 10px;
+    }
+  }
+`
+
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  opacity: 1;
+  background: hsla(0, 1%, 36%, 0.72);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0s, z-index 0s, opacity 0.5s linear;
+
+  & > div {
+    transition: transform 0.5s linear;
+  }
+
+  &.hidden {
+    z-index: -1;
+    opacity: 0;
+    transition: z-index 0.9s, opacity 0.5s linear;
+
+    & > div {
+      transform: scaleY(0);
+      transition: transform 0.5 linear;
     }
   }
 `

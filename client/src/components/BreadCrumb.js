@@ -25,11 +25,15 @@ const BreadCrumb = props => {
           <LinkItem to="/">
             <img src={logo2} alt="logo" />
           </LinkItem>
-          <p> {props.location}</p>
+          <p id="crumb"> {props.location}</p>
         </Container>
 
         <Container className="breadcrumbs">
-          {!props.auth ? <button onClick={props.logout}>Log out</button> : null}
+          {!props.auth ? (
+            <button id="logout" onClick={props.logout}>
+              Log out
+            </button>
+          ) : null}
         </Container>
       </Nav>
     )
@@ -74,9 +78,7 @@ const Container = styled('div')`
 
   a,
   button {
-    font-size: ${props =>
-      props.logo ? system.fontSizing.l : system.fontSizing.sm};
-    font-weight: ${props => (props.logo ? 'bold' : null)};
+    font-size: ${system.fontSizing.sm};
     color: ${system.color.white};
     background: transparent;
     text-decoration: none;
@@ -97,13 +99,25 @@ const Container = styled('div')`
     margin: 5px 15px 0;
     word-spacing: 5px;
   }
+
+  @media ${system.breakpoints[0]} {
+    #crumb,
+    #logout {
+      display: none;
+    }
+
+    img {
+      height: 2rem;
+      width: auto;
+    }
+  }
 `
 
 // for some pages (currently just home) nav is fixed
 // for others, it is static and does not scroll with the page
 
 const Nav = styled.nav`
-  position: ${({ fixed }) => (fixed ? 'fixed' : 'static')};
+  position: ${({ fixed }) => (fixed ? 'fixed' : 'relative')};
   z-index: 100;
   top: 0;
   background: ${system.color.primary};
@@ -115,4 +129,8 @@ const Nav = styled.nav`
   padding: 2.5rem 10rem;
   height: 7.5rem;
   margin-bottom: ${({ fixed }) => (fixed ? '10rem' : '1rem')};
+
+  @media ${system.breakpoints[0]} {
+    justify-content: center;
+  }
 `

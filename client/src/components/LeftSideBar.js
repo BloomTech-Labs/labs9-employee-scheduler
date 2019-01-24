@@ -5,6 +5,7 @@ import system from '../design/theme'
 import NavItem from './common/NavItem'
 import Fade from 'react-reveal/Fade'
 import { connect } from 'react-redux'
+import { logout } from '../actions'
 
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
@@ -54,6 +55,9 @@ class LeftSideBar extends Component {
             {role === 'owner' ? <NavItem to="/billing">Billing</NavItem> : null}
             {/* render settings page for all */}
             <NavItem to="/settings">Settings</NavItem>
+            <a id="logout" onClick={this.props.logout}>
+              Log Out
+            </a>
           </Nav>
         </Fade>
       </Container>
@@ -67,15 +71,16 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
+  { logout }
 )(LeftSideBar)
 
 LeftSideBar.propTypes = {
-  // add propTypes here
+  logout: propTypes.is
 }
 
 const Container = styled.nav`
   position: absolute;
+  z-index: 101;
   top: 0;
 `
 
@@ -100,6 +105,7 @@ const Nav = styled.nav`
   visibility: ${props => (props.show ? null : 'hidden')};
 
   a {
+    cursor: pointer;
     text-decoration: none;
     padding: ${system.spacing.standardPadding};
     border-bottom: 1px solid ${system.color.neutral};
@@ -116,6 +122,13 @@ const Nav = styled.nav`
     :last-child {
       border: ${system.borders.transparent};
       border-radius: 0 0 ${system.borders.radius} 0;
+    }
+  }
+
+  #logout {
+    display: none;
+    @media ${system.breakpoints[0]} {
+      display: block;
     }
   }
 `

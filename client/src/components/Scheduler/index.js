@@ -33,10 +33,9 @@ class Scheduler extends React.Component {
   }
 
   fetchData() {
-    this.props.fetchEmployeesFromDB()
     const { organization_id } = this.props.user
+    this.props.fetchEmployeesFromDB(organization_id, this.props.token)
     this.props.fetchHoursFromDB(organization_id, this.props.token)
-    this.props.fetchHoursFromDB(this.props.token)
   }
 
   getScheduleCoverage = () => {
@@ -197,7 +196,7 @@ class Scheduler extends React.Component {
 
     if (conflicts) {
       window.alert(
-        'Cannot schedule an employee during an approved time off request'
+        `Sorry, you can't schedule this employee during their approved time off.`
       )
       return false
     }
@@ -211,7 +210,7 @@ class Scheduler extends React.Component {
 
     if (!availabilityForDay) {
       window.alert(
-        'Cannot schedule an employee on a day they are not available'
+        `Sorry, the employee you're trying to schedule isn't available on this day.`
       )
       return false
     }
@@ -223,7 +222,7 @@ class Scheduler extends React.Component {
       !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
     ) {
       window.alert(
-        'Cannot schedule an employee outside their availability window'
+        `Sorry, you can't schedule this employee outside their availability window.`
       )
       return false
     }
@@ -249,7 +248,10 @@ class Scheduler extends React.Component {
     if (
       this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
     ) {
-      this.props.changeEvent({ event, changes: { start, end } })
+      this.props.changeEvent(
+        { event, changes: { start, end } },
+        this.props.token
+      )
     }
   }
 
@@ -262,7 +264,10 @@ class Scheduler extends React.Component {
           eventTimes: { start, end }
         })
       ) {
-        this.props.createEvent({ employee: draggedEmployee, start })
+        this.props.createEvent(
+          { employee: draggedEmployee, start },
+          this.props.token
+        )
         this.setState({ draggedEmployee: null })
       }
     }
@@ -279,7 +284,7 @@ class Scheduler extends React.Component {
     )
 
     if (r) {
-      return this.props.deleteEvent(event)
+      return this.props.deleteEvent(event, this.props.token)
     }
   }
 
