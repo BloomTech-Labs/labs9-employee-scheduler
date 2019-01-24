@@ -13,11 +13,11 @@ class EmployeeEvent extends React.Component {
     img.onload = () => connectDragPreview(img)
   }
   render() {
-    const { connectDragSource, isDragging, employee } = this.props
+    const { connectDragSource, isDragging, employee, width } = this.props
 
     return connectDragSource(
       <div style={{ opacity: isDragging ? '.7' : undefined }}>
-        <EmployeeCard {...employee} view="pool" />
+        <EmployeeCard {...employee} width={width} view="pool" />
         {/* set view to pool to enable conditional render */}
       </div>
     )

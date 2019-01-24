@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
 import Button from '../common/Button'
+import styled from '@emotion/styled'
 import system from '../../design/theme'
 import {
   fetchEmployeesFromDB,
@@ -73,11 +74,23 @@ class Scheduler extends React.Component {
     )
 
     if (Number.parseInt(width) < SMALL_BP) {
-      return this.setState({ width: 'mobile', view: 'day' })
+      return this.setState({
+        width: 'mobile',
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
     } else if (Number.parseInt(width) < MEDIUM_BP) {
-      return this.setState({ width: 'tablet', view: 'day' })
+      return this.setState({
+        width: 'tablet',
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
     } else {
-      return this.setState({ width: 'desktop', view: 'week' })
+      return this.setState({
+        width: 'desktop',
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
     }
   }
 
@@ -390,7 +403,7 @@ class Scheduler extends React.Component {
     this.setState({ draggedEmployee })
 
   render() {
-    const { employees, hours } = this.props
+    const { employees, hours, coverage } = this.props
     const { width, range, view, date } = this.state
 
     const names = []
@@ -413,52 +426,35 @@ class Scheduler extends React.Component {
     let hourRange = getHoursOfOperationRange(hours)
 
     return (
-      <div style={{ display: 'flex' }}>
-        <EmployeePool
-          employees={employees}
-          updateDragState={this.updateDragState}
-        />
-        <div style={{ display: 'flex', flexFlow: 'column', flexGrow: '1' }}>
-          <div
-            style={{
-              paddingTop: '20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%'
-            }}
-          >
-            <div>
-              <Button
-                onClick={() => this.changeDate('left')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Back
-              </Button>
-              <Button
-                onClick={() => this.changeDate('today')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Today
-              </Button>
-              <Button
-                onClick={() => this.changeDate('right')}
-                style={{ alignSelf: 'flex-end' }}
-              >
-                Next
-              </Button>
-            </div>
+      <Container>
+        {width !== 'mobile' ? (
+          <EmployeePool
+            employees={employees}
+            updateDragState={this.updateDragState}
+            width={width}
+          />
+        ) : null}
+        <div style={{ display: 'flex', flexFlow: 'column', flex: '1 1' }}>
+          <TopButtons style={{ padding: '10px 0 0 0' }}>
+            <Coverage isGood={Boolean(coverage)}>{`${
+              coverage ? coverage : 0
+            }% coverage`}</Coverage>
+            <ModalButton onClick={this.props.toggleModal}>
+              Edit Hours of Operation
+            </ModalButton>
+          </TopButtons>
+          <CalendarButtons>
+            <NavButtons>
+              <Button onClick={() => this.changeDate('left')}>Back</Button>
+              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <Button onClick={() => this.changeDate('right')}>Next</Button>
+            </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button
-                  onClick={this.toggleView}
-                  style={{ alignSelf: 'flex-end', marginRight: '20px' }}
-                >
-                  Toggle View
-                </Button>
+                <Button onClick={this.toggleView}>Toggle View</Button>
               ) : null}
             </div>
-          </div>
-
+          </CalendarButtons>
           <DropCal
             popover
             events={events}
@@ -488,16 +484,17 @@ class Scheduler extends React.Component {
             events={events}
           />
         </div>
-      </div>
+      </Container>
     )
   }
 }
 
-const mapStateToProps = ({ employees, hours, auth }) => ({
+const mapStateToProps = ({ employees, hours, auth, coverage }) => ({
   employees: employees.employees,
   hours: hours.hours,
   user: auth.user,
-  token: auth.token
+  token: auth.token,
+  coverage: coverage
 })
 
 const DragSched = DragDropContext(HTML5Backend)(Scheduler)
@@ -512,3 +509,51 @@ export default connect(
     displayCoverage
   }
 )(DragSched)
+
+const Container = styled.div`
+  display: flex;
+
+  @media ${system.breakpoints[0]} {
+    flex-direction: column;
+  }
+`
+const CalendarButtons = styled.div`
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media ${system.breakpoints[1]} {
+    justify-content: center;
+  }
+`
+
+const Coverage = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: ${system.borders.radius};
+  border: ${system.borders.transparent};
+  color: ${system.color.neutral};
+  background: ${props =>
+    props.isGood ? system.color.success : system.color.danger};
+  box-shadow: ${system.shadows.button};
+  font-size: ${system.fontSizing.sm};
+  padding: ${system.spacing.standardPadding};
+  outline: none;
+`
+const TopButtons = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const ModalButton = styled(Button)`
+  position: relative;
+  z-index: 14;
+`
+
+const NavButtons = styled.div`
+  & > * + * {
+    margin-left: 10px;
+  }
+`

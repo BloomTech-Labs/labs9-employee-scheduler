@@ -41,20 +41,20 @@ export const StatusContent = ({ id, status, handleTimeOff }) => {
 
 class TimeOff extends Component {
   render() {
-    const { timeOffRequests } = this.props
+    const { timeOffRequests, width } = this.props
     return (
       <CardContainer exists={timeOffRequests}>
         {/* Employee's Time Off */}
         {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
           When it's on the employees directory page, it should show pending PTO */}
-        <h6>Requested Time Off</h6>
+        <Heading width={width}>Requested Time Off</Heading>
         {/* below, we want to check if the view is pool. If so, don't show denied requests. And get rid of the approve / deny buttons. There are props passed on PTO to enable styling */}
         {timeOffRequests &&
           timeOffRequests.map(({ id, date, status }) =>
             status === 'denied' ? null : (
               <PTO key={id} status={status}>
                 <div className="text">
-                  <p>{moment(date).format('MM / DD')}</p>
+                  <p className="date">{moment(date).format('MM / DD')}</p>
                   <p className="status" status={status}>
                     {status}
                   </p>
@@ -72,6 +72,10 @@ export default TimeOff
 TimeOff.propTypes = {
   timeOffRequests: propTypes.array
 }
+
+const Heading = styled.h6`
+  text-align: ${props => (props.width === 'desktop' ? 'start' : 'center')};
+`
 
 const Div = styled.div`
   .buttons {
@@ -97,15 +101,19 @@ const PTO = styled.div`
 
   .text {
     display: flex;
-    flex-flow: 'row nowrap';
-    align-items: 'center';
-    justify-content: 'space-between';
-    width: '100%';
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 
     p {
       font-weight: bold;
       font-size: ${system.fontSizing.sm};
-      color: system.color.bodytextl;
+      color: ${system.color.bodytextl};
+
+      &.date {
+        white-space: nowrap;
+      }
     }
 
     .status {

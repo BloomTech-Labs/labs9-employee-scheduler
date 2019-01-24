@@ -14,6 +14,7 @@ export default function({ children, auth }) {
 }
 
 const Container = styled('div')`
+  padding-top: 20px;
   margin: 0 7.5rem;
   display: flex;
   flex-flow: column nowrap;

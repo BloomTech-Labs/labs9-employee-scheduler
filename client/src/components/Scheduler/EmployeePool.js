@@ -4,26 +4,36 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 
 export default function(props) {
-  const { employees, updateDragState } = props
+  const { employees, updateDragState, width } = props
   return (
-    <Container>
-      {employees.map(employee => (
-        <EmployeeResource
-          key={employee.id}
-          employee={employee}
-          updateDragState={updateDragState}
-        />
-      ))}
-    </Container>
+    <React.Fragment>
+      {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
+      <Spacer width={width} />
+      <Container width={width}>
+        {employees.map(employee => (
+          <EmployeeResource
+            key={employee.id}
+            employee={employee}
+            updateDragState={updateDragState}
+            width={width}
+          />
+        ))}
+      </Container>
+    </React.Fragment>
   )
 }
 
 const Container = styled('div')`
-  max-height: 150vh;
-  width: 344px;
-  flex-grow: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: ${props => (props.width === 'desktop' ? '344px' : '260px')};
+  flex: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  background-color: ${system.color.neutralDark};
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -34,4 +44,9 @@ const Container = styled('div')`
     width: 8px;
     border-radius: 50px;
   }
+`
+
+const Spacer = styled.div`
+  width: ${props => (props.width === 'desktop' ? '360px' : '280px')};
+  height: 100%;
 `

@@ -19,23 +19,26 @@ const weekdays = [
 // this component should render the employee's weekly availability. It, in the future, will also have the ability to turn into a form to update such info.
 class Availability extends Component {
   render() {
-    const { availabilities } = this.props
+    const { availabilities, width } = this.props
+
     // the below should not render if there is no data being pass to it. This is not working though...
     return availabilities === [] ? null : (
       <CardContainer avail>
         {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
-        <h6>Employee Availability</h6>
+        <Heading width={width}>Employee Availability</Heading>
         {availabilities &&
-          availabilities.map(({ id, day, start_time, end_time }) => (
-            //temporarily adds ids tp the DOM for easy access for testing
-            <Avails key={id}>
-              <p>{weekdays[day]}</p>
-              <span>{`${formatHours(start_time)} - ${formatHours(
-                end_time
-              )}`}</span>
-            </Avails>
-          ))}
+          availabilities.map(({ id, day, start_time, end_time }) => {
+            const times = `${formatHours(start_time)} - ${formatHours(
+              end_time
+            )}`
+            return (
+              <Avails key={id} width={width}>
+                <p className="emphasis">{weekdays[day]}</p>
+                {width === 'desktop' ? <span>{times}</span> : <p>{times}</p>}
+              </Avails>
+            )
+          })}
       </CardContainer>
     )
   }
@@ -48,14 +51,18 @@ Availability.propTypes = {
   availabilities: propTypes.array
 }
 
+const Heading = styled.h6`
+  text-align: ${props => (props.width === 'desktop' ? 'start' : 'center')};
+`
+
 const Avails = styled.div`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: ${props => (props.width === 'desktop' ? 'row nowrap' : 'column')};
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 5px;
-  padding-bottom: 5px;
+  padding-bottom: ${props => (props.width === 'desktop' ? '5px' : '15px')};
   border-bottom: 1px solid ${system.color.neutral};
 
   :last-child {
@@ -63,13 +70,14 @@ const Avails = styled.div`
     padding-bottom: 0;
   }
 
-  p {
+  p.emphasis {
     font-weight: bold;
     font-size: ${system.fontSizing.sm};
     color: ${system.color.lightgrey};
   }
 
   /* We should be able to change this span color based on the status being passed to it */
+  p,
   span {
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.s};

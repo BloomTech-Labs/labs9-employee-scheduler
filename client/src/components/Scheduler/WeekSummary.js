@@ -110,8 +110,8 @@ class WeekSummary extends React.Component {
         <LeftSpacer />
         {summaries
           ? summaries.map((summary, i) => (
-              <Spacer>
-                <DailySummary key={summary.day} summary={summary} />
+              <Spacer key={summary.day}>
+                <DailySummary summary={summary} />
               </Spacer>
             ))
           : null}
