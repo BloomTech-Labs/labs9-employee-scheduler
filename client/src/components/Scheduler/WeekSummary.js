@@ -104,7 +104,7 @@ class WeekSummary extends React.Component {
   render() {
     const { events, range } = this.props
     let summaries = this.filterAndSummarize(events, range)
-    console.log(summaries)
+
     return (
       <Div>
         <LeftSpacer />

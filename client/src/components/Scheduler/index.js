@@ -12,7 +12,8 @@ import {
   fetchHoursFromDB,
   createEvent,
   changeEvent,
-  deleteEvent
+  deleteEvent,
+  displayCoverage
 } from '../../actions'
 import { getHoursOfOperationRange, getRange } from '../../utils'
 
@@ -232,7 +233,7 @@ class Scheduler extends React.Component {
       (totalHoursCovered / totalHoursOpen) * 100
     )
 
-    console.log(`${percentCoverage}% coverage`)
+    this.props.displayCoverage(percentCoverage)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
@@ -376,7 +377,7 @@ class Scheduler extends React.Component {
     }, [])
 
     let hourRange = getHoursOfOperationRange(hours)
-    console.log(view)
+
     return (
       <div style={{ display: 'flex' }}>
         <EmployeePool
@@ -473,6 +474,7 @@ export default connect(
     fetchHoursFromDB,
     createEvent,
     changeEvent,
-    deleteEvent
+    deleteEvent,
+    displayCoverage
   }
 )(DragSched)

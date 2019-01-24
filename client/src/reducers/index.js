@@ -6,6 +6,7 @@ import { registerReducer } from './registerReducer'
 import { paymentReducer } from './paymentReducer'
 import { hoursReducer } from './hoursReducer'
 import { availabilityReducer } from './availabilityReducer'
+import { coverageReducer } from './coverageReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   registration: registerReducer,
   hours: hoursReducer,
   organization: paymentReducer,
-  availability: availabilityReducer
+  availability: availabilityReducer,
+  coverage: coverageReducer
 })
