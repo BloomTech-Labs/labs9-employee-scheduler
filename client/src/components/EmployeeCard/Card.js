@@ -118,7 +118,8 @@ const Container = styled('div')`
   box-shadow: ${system.shadows.otherLight};
   display: flex;
   flex-flow: column nowrap;
-  width: 20%;
+  min-width: 300px;
+  width: 25%;
 
   /* the below can be used to make the card orientation horizontal */
   /* #row {

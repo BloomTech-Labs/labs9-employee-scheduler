@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Zoom from 'react-reveal'
+import Fade from 'react-reveal'
 import Checkbox from './Checkbox'
 
 const Button = ({
@@ -18,7 +18,7 @@ const Button = ({
         {name}
       </button>
       {day === true ? (
-        <Zoom down>
+        <Fade top>
           <div className="buttons">
             <button id={id} onClick={handleHours} name="open">
               open
@@ -30,7 +30,7 @@ const Button = ({
           <div className="container">
             <Checkbox closedAllDay={closedAllDay} />
           </div>
-        </Zoom>
+        </Fade>
       ) : null}
     </Container>
   )

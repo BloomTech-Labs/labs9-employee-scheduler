@@ -125,9 +125,9 @@ class AddEmployee extends Component {
               checked={this.props.checked}
               aria-label="email"
             />
-            <label htmlFor="role">Employee Role</label>
             {role === 'owner' ? (
               <>
+                <label htmlFor="role">Employee Role</label>
                 <div className="radio">
                   <input
                     type="radio"
