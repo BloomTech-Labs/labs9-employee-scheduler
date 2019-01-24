@@ -7,6 +7,7 @@ export default function(props) {
   const { employees, updateDragState, width } = props
   return (
     <React.Fragment>
+      {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
       <Spacer width={width} />
       <Container width={width}>
         {employees.map(employee => (
