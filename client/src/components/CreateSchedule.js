@@ -21,31 +21,22 @@ class CreateSchedule extends React.Component {
 
   render() {
     return (
-      <OuterContainer
-        style={
-          this.state.hoursModal
-            ? {
-                height: '100vh',
-                overflowY: 'hidden'
-              }
-            : undefined
-        }
+      <ModalFriendlyContainer
+        className={this.state.hoursModal ? 'behindModal' : undefined}
       >
         <LeftSideBar />
         <BreadCrumb location="Schedule" />
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
-        <div style={{ position: 'relative' }}>
-          <MainContentHolder>
-            <MobileOnly>
-              <Alert>Review only on mobile view</Alert>
-            </MobileOnly>
-            <div>
-              <HoursOfOperationModal hidden={!this.state.hoursModal} />
-              <Scheduler toggleModal={this.toggleModal} />
-            </div>
-          </MainContentHolder>
-        </div>
-      </OuterContainer>
+        <MainContentHolder>
+          <MobileOnly>
+            <Alert>Review only on mobile view</Alert>
+          </MobileOnly>
+          <div>
+            <HoursOfOperationModal hidden={!this.state.hoursModal} />
+            <Scheduler toggleModal={this.toggleModal} />
+          </div>
+        </MainContentHolder>
+      </ModalFriendlyContainer>
     )
   }
 }
@@ -56,9 +47,17 @@ CreateSchedule.propTypes = {
   // add propTypes here
 }
 
+const ModalFriendlyContainer = styled(OuterContainer)`
+  .behindModal {
+    height: '100vh',
+              overflowY: 'hidden'
+  }
+`
+
 const MainContentHolder = styled.div`
   padding-top: 20px;
   padding-right: 20px;
+  position: relative;
 
   @media ${system.breakpoints[0]} {
     padding: 20px;
