@@ -62,7 +62,11 @@ class Scheduler extends React.Component {
       }
     })
 
-    // for each day
+    // initialize covered and open hours variables
+    let totalHoursCovered = 0
+    let totalHoursOpen = 0
+
+    // for each day add number of covered and open hours
     Object.keys(days).forEach(key => {
       // sort shifts by start time
       const sortedShifts = days[key].sort((a, b) =>
@@ -92,23 +96,56 @@ class Scheduler extends React.Component {
         }
       }, [])
 
-      console.log('MERGED SHIFTS')
-      console.log(mergedShifts)
+      // converts a moment into float
+      const convertMomentToFloat = time =>
+        moment(time).hours() + moment(time).minutes() / 60
 
-      // calculate total shift coverage in hours
-      const totalHoursCovered = mergedShifts.reduce((acc, { start, end }) => {
+      // converts a float into an object with hours and minutes
+      const convertFloatToTime = num => {
+        const [hours, fraction] = num.toString().split('.')
+        const minutes =
+          parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
+        return { hours, minutes }
+      }
+
+      // truncate merged shifts to only open hours
+      const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
+        // if schedule end is before shift start, discard shift
+        // if schedule start is after shift end, discard shift
+        // if shift start is before schedule start, truncate shift start
+        // if shift end is after end, trucate shift end
+
+        // run discard options first, then mutation options to make sure discards happen
+
+        const shiftStartFloat = convertMomentToFloat(start)
+        const shiftEndFloat = convertMomentToFloat(end)
+
+        if (hours[key].close_time < shiftStartFloat) {
+          // discard shift
+        } else if (hours[key].open_time > shiftEndFloat) {
+          // discard shift
+        } else if (shiftStartFloat < hours[key].open_time) {
+          // truncate start
+        } else if (shiftEndFloat > hours[key].close_time) {
+          // truncate end
+        }
+      }, [])
+
+      // calculate shift coverage in hours
+      const hoursCovered = mergedShifts.reduce((acc, { start, end }) => {
         return acc + moment.duration(moment(end).diff(start)).asHours()
       }, 0)
 
-      console.log(totalHoursCovered)
+      // calculate hours open
+      const hoursOpen = hours[key].close_time - hours[key].open_time
 
-      //   const totalHoursCovered = 0
-
-      //   mergedShifts.forEach(({ start, end }) => {
-      //     const blockDuration = moment.duration(moment(end).diff(start)).asHours()
-      //     console.log(blockDuration)
-      //   })
+      // increment the weekly totals accordingly
+      totalHoursCovered += hoursCovered
+      totalHoursOpen += hoursOpen
     })
+
+    console.log(totalHoursCovered)
+    console.log(totalHoursOpen)
   }
 
   validateEvent = ({ userId, eventTimes }) => {
