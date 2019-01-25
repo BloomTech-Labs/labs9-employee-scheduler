@@ -105,12 +105,15 @@ class AvailabilityForm extends Component {
           })
         : null
     })
+    this.props.toggleShow()
   }
 
   render() {
+    const { Close } = this.props
     return (
-      <div>
-        <h5>Edit Availability</h5>
+      <OuterContainer>
+        <Close />
+        <h5>{`Edit Availability for ${this.props.first_name}`}</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.slice(0, 7).map((a, i) => {
           //this function passes the the params the toggle to handleChange and is called in Checkbox
@@ -147,7 +150,7 @@ class AvailabilityForm extends Component {
           )
         })}
         <Button onClick={this.updateAvailability}>submit</Button>
-      </div>
+      </OuterContainer>
     )
   }
 }
@@ -169,4 +172,8 @@ const Container = styled('div')`
   display: flex;
   justify-content: center;
   flex-direction: column;
+`
+const OuterContainer = styled('div')`
+  background-color: ${system.color.neutral};
+  padding: ${system.spacing.bigPadding};
 `

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Scheduler from './Scheduler'
-import HoursOfOperationModal from './HoursOfOperationModal'
+import Modal from './Modal'
+import HoursOfOperation from './HoursOfOperation'
 import Fade from 'react-reveal/Fade'
 import BreadCrumb from './BreadCrumb'
 import Button from './common/Button'
@@ -21,9 +22,7 @@ class CreateSchedule extends React.Component {
 
   render() {
     return (
-      <ModalFriendlyContainer
-        className={this.state.hoursModal ? 'behindModal' : undefined}
-      >
+      <OuterContainer>
         <LeftSideBar />
         <BreadCrumb location="Schedule" />
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
@@ -32,11 +31,13 @@ class CreateSchedule extends React.Component {
             <Alert>Review only on mobile view</Alert>
           </MobileOnly>
           <div>
-            <HoursOfOperationModal hidden={!this.state.hoursModal} />
+            <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
+              <HoursOfOperation />
+            </Modal>
             <Scheduler toggleModal={this.toggleModal} />
           </div>
         </MainContentHolder>
-      </ModalFriendlyContainer>
+      </OuterContainer>
     )
   }
 }
@@ -46,13 +47,6 @@ export default CreateSchedule
 CreateSchedule.propTypes = {
   // add propTypes here
 }
-
-const ModalFriendlyContainer = styled(OuterContainer)`
-  .behindModal {
-    height: '100vh',
-              overflowY: 'hidden'
-  }
-`
 
 const MainContentHolder = styled.div`
   padding-top: 20px;

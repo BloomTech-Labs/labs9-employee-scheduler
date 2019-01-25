@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import { connect } from 'react-redux'
+import styled from '@emotion/styled'
 import axios from 'axios'
 
 // this component will represent a button that will control the left side bar.
@@ -83,18 +84,14 @@ class AddEmployee extends Component {
   }
 
   render() {
-    const { role } = this.props
+    const { role, Close, toggleShow } = this.props
     return (
       <Container>
-        <h1 />
-        <h1 />
         <form onSubmit={this.submitHandler}>
           <h6 id="instructions">
             Fill this out and we'll send your employee a sign-up email!
           </h6>
-          <p className="delete" onClick={this.props.toggleShow}>
-            ✕
-          </p>
+          <Close style={{ position: 'absolute', top: '25px', right: '25px' }} />
           <label htmlFor="name">Employee Name</label>
           <Input
             type="name"
