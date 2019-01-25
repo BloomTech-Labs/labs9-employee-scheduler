@@ -28,6 +28,10 @@ class Employees extends Component {
     this.setState({ availTarget: user })
   }
 
+  turnOffEditAvailability = () => {
+    this.setState({ availTarget: null })
+  }
+
   toggleShow = () => {
     this.setState({
       show: !this.state.show
@@ -48,13 +52,22 @@ class Employees extends Component {
             <AddEmployee />
           </Modal>
           <InnerContainer>
-            {availTarget ? (
-              <div>
-                <p>{availTarget.first_name}</p>
-                <AvailabilityForm id={availTarget.id} />
-              </div>
-            ) : null}
-
+            <Modal
+              show={Boolean(availTarget)}
+              toggleShow={this.turnOffEditAvailability}
+              availTarget={availTarget}
+            >
+              {({ toggleShow, Close, availTarget }) =>
+                availTarget ? (
+                  <AvailabilityForm
+                    id={availTarget.id}
+                    Close={Close}
+                    first_name={availTarget.first_name}
+                    toggleShow={toggleShow}
+                  />
+                ) : null
+              }
+            </Modal>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
               employees
