@@ -16,7 +16,7 @@ class EmployeeEvent extends React.Component {
     const { connectDragSource, isDragging, employee } = this.props
 
     return connectDragSource(
-      <div style={{ opacity: isDragging ? '.7' : undefined }}>
+      <div style={{ opacity: isDragging ? '.7' : undefined, cursor: 'grab' }}>
         <EmployeeCard {...employee} view="pool" />
         {/* set view to pool to enable conditional render */}
       </div>

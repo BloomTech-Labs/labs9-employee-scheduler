@@ -43,5 +43,6 @@ const Div = styled.div`
       position: relative;
       border-bottom: ${system.borders.grey};
       margin-bottom: 10px;
+    }
   }
 `

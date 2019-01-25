@@ -27,7 +27,7 @@ const Home = () => {
                 have to waste time worrying about wasting time ever again.
               </p>
               <Button type="text" id="schedule">
-                <LinkItem to="/employees">Schedule Now</LinkItem>
+                <LinkItem to="/login">Schedule Now</LinkItem>
               </Button>
               <Button type="text" id="login">
                 <LinkItem to="/login">Log In</LinkItem>
@@ -147,7 +147,9 @@ const Home = () => {
                   <li>Data Exports & API Access</li>
                   <li>Audit Trails & Reporting</li>
                 </ul>
-                <Button disabled>Coming Soon</Button>
+                <Button id="coming-soon" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </Fade>
           </div>
@@ -416,6 +418,15 @@ const Container = styled('div')`
     button, a {
       margin: 25px 0;
       color: ${system.color.white};
+    }
+
+    #coming-soon {
+      background: ${system.color.captiontext};
+      box-shadow: none;
+      cursor: initial;
+      :hover {
+        box-shadow: none;
+      }
     }
 
     @media ${system.breakpoints[0]} {
