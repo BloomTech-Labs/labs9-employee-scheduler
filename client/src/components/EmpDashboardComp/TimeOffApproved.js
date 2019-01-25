@@ -1,5 +1,7 @@
 import React from 'react'
 import moment from 'moment'
+import system from '../../design/theme'
+import styled from '@emotion/styled'
 
 const TimeOffApproved = ({
   id,
@@ -9,27 +11,88 @@ const TimeOffApproved = ({
   deleteExpiredRequest
 }) => {
   return (
-    <div className="details" key={id}>
-      <div className="box">
-        <div className="date">
-          <h6>Date</h6>
-          <p data-testid="date">{moment(date).format('MMM Do')}</p>
-        </div>
-        <div className="reason">
-          <h6>Reason</h6>
-          <p data-testid="reason">{reason}</p>
-          {/* needs logic added to the button to remove the request */}
-        </div>
-        <div className="status">
-          <h6>Status</h6>
-          <div className="status-and-delete">
-            <p>{status}</p>
-            <i className="fas fa-backspace" onClick={deleteExpiredRequest} />
-          </div>
-        </div>
+    <PTO key={id} status={status}>
+      <div className="text">
+        <p>{moment(date).format('MM / DD')}</p>
+        <p className="status" status={status}>
+          {status}
+        </p>
       </div>
-    </div>
+      <p className="reason">{reason}</p>
+      <i className="fas fa-backspace" onClick={deleteExpiredRequest} />
+    </PTO>
   )
 }
 
 export default TimeOffApproved
+
+const PTO = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${system.color.neutral};
+
+  :last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(10px);
+    }
+    60% {
+      transform: translateX(5px);
+    }
+  }
+
+  .reason {
+    width: 60%;
+  }
+
+  i {
+    cursor: pointer;
+    color: ${system.color.danger};
+    font-size: ${system.fontSizing.m};
+    transition: 0.5ms ease-in-out;
+    &:hover {
+      color: rgb(255, 100, 100);
+      animation: bounce 0.5s linear infinite;
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-flow: ${props => (props.pool ? 'row nowrap' : 'column nowrap')};
+    align-items: ${props => (props.pool ? 'center' : null)};
+    justify-content: ${props => (props.pool ? 'space-between' : null)};
+    width: ${props => (props.pool ? '100%' : null)};
+
+    p {
+      font-weight: bold;
+      font-size: ${system.fontSizing.sm};
+      color: ${props =>
+        props.pool ? system.color.bodytext : system.color.lightgrey};
+    }
+
+    .status {
+      color: ${props =>
+        props.status === 'approved'
+          ? system.color.success
+          : props.status === 'denied'
+          ? system.color.danger
+          : system.color.bodytext};
+      font-size: ${props =>
+        props.pool ? system.fontSizing.sm : system.fontSizing.s};
+      font-weight: ${props => (props.pool ? 'bold' : 'normal')};
+    }
+  }
+`

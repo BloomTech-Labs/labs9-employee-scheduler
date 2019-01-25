@@ -68,7 +68,6 @@ const Avails = styled.div`
     color: ${system.color.lightgrey};
   }
 
-  /* We should be able to change this span color based on the status being passed to it */
   span {
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.s};

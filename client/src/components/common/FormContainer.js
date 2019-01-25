@@ -162,3 +162,44 @@ export const Input = styled.input`
     font-size: ${system.fontSizing.sm};
   }
 `
+
+export const Form = styled.form`
+    display: flex;
+    position: relative;
+    flex-flow: column nowrap;
+    
+    #instructions {
+      font-size: ${system.fontSizing.m};
+      margin-bottom: 20px;
+      color: ${system.color.bodytext};
+      width: 80%;
+
+      @media ${system.breakpoints[0]} {
+        font-size: ${system.fontSizing.sm};
+      }
+    }
+
+    label {
+      font-size: ${system.fontSizing.s};
+      padding: 0 5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: ${system.color.captiontext};
+
+      @media ${system.breakpoints[0]} {
+        font-size: 1.1rem;
+      }
+    }
+
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+      box-shadow: 0 0 0px 1000px white inset;
+    }
+
+    button {
+      width: 150px;
+      margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
+      background: ${props => (props.danger ? system.color.danger : null)};
+    }
+  }
+`

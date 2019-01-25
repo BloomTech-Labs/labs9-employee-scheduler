@@ -1,76 +1,90 @@
 import React, { Component } from 'react'
-import DatePicker from 'react-datepicker'
+// import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import Form from '../Form/index'
 import axios from 'axios'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import { connect } from 'react-redux'
 import { addTimeOffRequest } from '../../actions'
 
-import 'react-datepicker/dist/react-datepicker.css'
+import { Form, Input } from '../common/FormContainer'
+import Button from '../common/Button'
+
+// import 'react-datepicker/dist/react-datepicker.css'
 
 const api = process.env.REACT_APP_SERVER_URL
 
-const user = '77b6afd5-38cb-4304-9c0f-bb55ac496342'
+// const user = '77b6afd5-38cb-4304-9c0f-bb55ac496342'
 class TimeOffRequest extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: new Date(),
       requestDate: '',
-      reason: '',
-      message: ''
+      reason: ''
     }
   }
-  //this comes directly from the datePicker docs, I think 'date' is happening under the hood.
-  handleChange = date => {
+  // //this comes directly from the datePicker docs, I think 'date' is happening under the hood.
+  // handleChange = date => {
+  //   this.setState({
+  //     startDate: date
+  //   })
+  // }
+
+  changeHandler = event => {
+    event.preventDefault()
     this.setState({
-      startDate: date
+      ...this.state,
+      [event.target.name]: event.target.value
     })
   }
 
   //sends the date and time off request to the server
-  submitTimeOffRequest = ({ reason }) => {
+  submitTimeOffRequest = event => {
     //converts date to 'YYYY-MM-DD' format
-    const convertDateToMoment = e => {
-      let dateString = this.state.startDate
-      let dateObj = new Date(dateString)
-      let momentObj = moment(dateObj)
-      let momentString = momentObj.format('YYYY-MM-DD')
-      return momentString
-    }
+    event.preventDefault()
 
-    const { token, user } = this.props.auth
-    const date = convertDateToMoment()
-    // const date = this.state.startDate
-    this.props.addTimeOffRequest(user.id, date, reason, token)
-    this.setState({ message: 'request received' })
+    const { requestDate, reason } = this.state
+
+    const date = moment(requestDate)
+    const now = moment()
+
+    if (date._d < now._d) {
+      alert(`You can't go on vacation in the past, silly!`)
+    } else {
+      const { token, user } = this.props.auth
+      const formattedDate = date.format('YYYY-MM-DD')
+      this.props.addTimeOffRequest(user.id, formattedDate, reason, token)
+      alert(
+        `We put in your PTO request for ${formattedDate}. We hope you get it!`
+      )
+      event.target.reset()
+    }
   }
 
   render() {
     return (
-      <Container>
-        <h5>Request time off</h5>
-        <Form
-          initialValues={{
-            reason: ''
-          }}
-          onSubmit={this.submitTimeOffRequest}
-        >
-          <Form.Label>Date</Form.Label>
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-          />
-          <Form.Group property="reason" type="text">
-            <Form.Label>Reason</Form.Label>
-            <Form.TextInput className="reason" />
-            <Form.SubmitButton type="submit">Submit</Form.SubmitButton>
-          </Form.Group>
-        </Form>
-        <p>{this.state.message}</p>
-      </Container>
+      <Form onSubmit={this.submitTimeOffRequest}>
+        <label>PTO Date</label>
+        <Input
+          type="date"
+          name="requestDate"
+          value={this.props.value}
+          onChange={this.changeHandler}
+        />
+
+        <label htmlFor="reason">Reason</label>
+        <Input
+          type="text"
+          name="reason"
+          placeholder="ex. Doctor's Appt."
+          onChange={this.changeHandler}
+          value={this.props.value}
+          aria-label="text"
+        />
+        <Button type="submit" data-test="submit">
+          Submit
+        </Button>
+      </Form>
     )
   }
 }
@@ -89,20 +103,3 @@ export default connect(
 // TimeOffRequest.propTypes = {
 // adding propTypes here
 // }
-
-const Container = styled('div')`
-  padding: ${system.spacing.bigPadding};
-  box-shadow: ${system.shadows.otherLight};
-  width: 100%;
-  max-width: 30 0px;
-  min-width: 200px;
-  border-radius: ${system.borders.radius};
-
-  width: 100%;
-  h5 {
-    font-size: ${system.fontSizing.ml};
-  }
-  p {
-    font-size: ${system.fontSizing.m};
-  }
-`
