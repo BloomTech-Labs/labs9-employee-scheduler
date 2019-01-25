@@ -2,6 +2,8 @@ import React from 'react'
 import EmployeeResource from './EmployeeResource'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import Zoom from 'react-reveal'
+import { Input } from '../common/FormContainer'
 
 class EmployeePool extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class EmployeePool extends React.Component {
         {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
         <Spacer />
         <Container>
-          <input
+          <Input
             type="text"
             name="searchTerm"
             placeholder="Search..."
@@ -40,11 +42,13 @@ class EmployeePool extends React.Component {
             value={this.state.searchTerm}
           />
           {filteredEmployees.map(employee => (
-            <EmployeeResource
-              key={employee.id}
-              employee={employee}
-              updateDragState={updateDragState}
-            />
+            <Zoom left duration={100}>
+              <EmployeeResource
+                key={employee.id}
+                employee={employee}
+                updateDragState={updateDragState}
+              />
+            </Zoom>
           ))}
         </Container>
       </React.Fragment>
@@ -77,6 +81,12 @@ const Container = styled('div')`
     background: ${system.color.lightgrey};
     width: 8px;
     border-radius: 50px;
+  }
+
+  input {
+    margin: 0;
+    margin-top: 30px;
+    width: 85%;
   }
 `
 
