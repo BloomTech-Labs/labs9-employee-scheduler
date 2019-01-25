@@ -3,12 +3,6 @@ import DailySummary from './DailySummary'
 import styled from '@emotion/styled'
 import moment from 'moment'
 
-Array.prototype.unique = function() {
-  return this.filter(function(value, index, self) {
-    return self.indexOf(value) === index
-  })
-}
-
 class WeekSummary extends React.Component {
   filterAndSummarize = (events, range) => {
     // filter only events within the range
@@ -42,7 +36,7 @@ class WeekSummary extends React.Component {
         if (acc[day]) {
           acc[day] = {
             hours: acc[day].hours + newItem.hours,
-            employees: new Set([...acc[day].employees, newItem.employees])
+            employees: new Set([...acc[day].employees, employee])
           }
         } else {
           acc[day] = newItem
@@ -61,6 +55,7 @@ class WeekSummary extends React.Component {
       if (dayStats) {
         return {
           ...dayStats,
+          day: dayName,
           employees: dayStats.employees.size
         }
       } else {
@@ -72,6 +67,7 @@ class WeekSummary extends React.Component {
       }
     })
 
+    console.log(rangeStats)
     return rangeStats
   }
 

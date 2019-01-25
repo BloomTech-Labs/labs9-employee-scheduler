@@ -55,18 +55,18 @@ export const formatHours = hours =>
     .replace(/$0:/, '12:')
 
 export const getRange = ({ date, view }) => {
-  let range = []
-  let inc = 1000 * 60 * 60 * 24
-  let amount = 7
   if (view === 'day') {
-    amount = 1
+    return [date]
+  } else {
+    let range = []
+    let inc = 1000 * 60 * 60 * 24
+    let amount = 7
+    let weekStart = moment(date).startOf('week')
+    for (let i = 0; i < amount; i++) {
+      range.push(new Date(weekStart + i * inc))
+    }
+    return range
   }
-  let weekStart = moment(date).startOf('week')
-  console.log(weekStart)
-  for (let i = 0; i < amount; i++) {
-    range.push(new Date(weekStart + i * inc))
-  }
-  return range
 }
 
 // helpers for calculateCoverage

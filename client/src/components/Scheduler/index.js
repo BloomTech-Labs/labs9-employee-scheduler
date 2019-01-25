@@ -113,6 +113,7 @@ class Scheduler extends React.Component {
         returnVal = new Date(date.getTime() + inc)
       }
       const range = getRange({ view, date: returnVal })
+      console.log(returnVal)
       console.log(range)
       return { date: returnVal, range }
     })
