@@ -56,6 +56,10 @@ const PTO = styled.div`
 
   .reason {
     width: 60%;
+    @media ${system.breakpoints[0]} {
+      width: 50%;
+      font-size: ${system.fontSizing.s};
+    }
   }
 
   i {

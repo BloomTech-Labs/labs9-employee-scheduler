@@ -14,8 +14,12 @@ export const Card = styled.div`
   box-shadow: ${system.shadows.otherLight};
   display: flex;
   flex-flow: column nowrap;
-  min-width: 300px;
+  min-width: 30rem;
   width: 28%;
+
+  @media ${system.breakpoints[2]} {
+    width: 80%;
+  }
 `
 
 export const Container = styled('div')`
@@ -27,7 +31,7 @@ export const Container = styled('div')`
 
   h6 {
     font-size: ${system.fontSizing.m};
-    margin: 10px 0;
+    margin: 1rem 0;
   }
 
   .employee-welcome {
@@ -42,11 +46,17 @@ export const Container = styled('div')`
     justify-content: space-around;
     width: 100%;
 
+    @media ${system.breakpoints[2]} {
+      flex-flow: column nowrap;
+      align-items: center;
+    }
+
     .title {
       width: 100%;
       min-width: 26.8rem;
       max-width: 50rem;
       margin-bottom: 3rem;
+
       h5 {
         font-size: ${system.fontSizing.ml};
         text-align: center;
