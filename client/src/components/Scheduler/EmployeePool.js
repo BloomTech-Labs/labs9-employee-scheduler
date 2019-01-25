@@ -2,7 +2,6 @@ import React from 'react'
 import EmployeeResource from './EmployeeResource'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import SearchBar from './SearchBar'
 
 export default function(props) {
   const { employees, updateDragState, width } = props
@@ -11,7 +10,13 @@ export default function(props) {
       {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
       <Spacer />
       <Container>
-        <SearchBar />
+        <input
+          type="text"
+          placeholder="Search for employee.."
+          name="searchTerm"
+          onChange={this.props.changeHandler}
+          value={this.props.searchTerm}
+        />
         {employees.map(employee => (
           <EmployeeResource
             key={employee.id}
