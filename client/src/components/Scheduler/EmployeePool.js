@@ -8,14 +8,13 @@ export default function(props) {
   return (
     <React.Fragment>
       {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
-      <Spacer width={width} />
-      <Container width={width}>
+      <Spacer />
+      <Container>
         {employees.map(employee => (
           <EmployeeResource
             key={employee.id}
             employee={employee}
             updateDragState={updateDragState}
-            width={width}
           />
         ))}
       </Container>
@@ -27,7 +26,10 @@ const Container = styled('div')`
   position: absolute;
   top: 0;
   bottom: 0;
-  width: ${props => (props.width === 'desktop' ? '344px' : '260px')};
+  width: 344px;
+  @media ${system.breakpoints[1]} {
+    width: 260px;
+  }
   flex: none;
   display: flex;
   flex-direction: column;
@@ -47,6 +49,9 @@ const Container = styled('div')`
 `
 
 const Spacer = styled.div`
-  width: ${props => (props.width === 'desktop' ? '360px' : '280px')};
+  width: 360px;
+  @media ${system.breakpoints[1]} {
+    width: 280px;
+  }
   height: 100%;
 `

@@ -225,7 +225,6 @@ class Scheduler extends React.Component {
           <EmployeePool
             employees={employees}
             updateDragState={this.updateDragState}
-            width={width}
           />
         ) : null}
         <CalendarContainer>
