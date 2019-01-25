@@ -11,6 +11,8 @@ import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
 
 const Home = () => {
+  const width = window.innerWidth
+  console.log(width)
   return (
     <OuterContainer>
       <BreadCrumb location="Home" />
@@ -19,7 +21,7 @@ const Home = () => {
           <img id="header-img" alt="header" src={headerImg} />
           <img id="hero-img" alt="hero" src={heroImg} />
 
-          <Fade top>
+          <Fade top duration={width < 600 ? 0 : 750}>
             <div id="wrapper">
               <h1>Scheduling your employees is hard.</h1>
               <p>
@@ -45,7 +47,7 @@ const Home = () => {
             and painless. Here are some of the key features:
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <h2>Schedule Shifts Visually</h2>
                 <p>
@@ -90,7 +92,7 @@ const Home = () => {
             tests. We hope you'll love Cadence as much as they do.
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <div className="stripe" />
                 <p>
@@ -126,7 +128,7 @@ const Home = () => {
             accommodate your needs.
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <h2>SMB Plan</h2>
                 <h3>$20 / month</h3>
