@@ -204,6 +204,7 @@ const Container = styled('div')`
     @media ${system.breakpoints[2]} {
       h1 {
         width: 65%;
+        margin-left: ${system.spacing.bigPadding};
       }
       p {
         width: 65%;
