@@ -18,7 +18,7 @@ router.get('/', authorize(['owner']), (req, res) => {
 
 router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
-  getOrgs(id)
+  getOrg(id)
     .then(org => {
       if (!org) {
         return res.status(404).json({ message: 'Nonexistent organization' })

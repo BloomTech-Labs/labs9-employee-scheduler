@@ -93,7 +93,11 @@
 
 ## actions
 
+`insertHoursForNewOrg()` -> used for seed generation
+
 `getOrgs()`
+
+`getOrg(orgId)`
 
 `addOrg(org)` -> Returns the created org
 
@@ -105,7 +109,9 @@
 
 `getUsers(orgId)` --> if no param all users
 
-`addUser(orgId, user object)`
+`getUser(userId)`
+
+`addUser(user object)`
 
 `updateUser(userId, changes object)`
 
@@ -113,9 +119,9 @@
 
 <br>
 
-`getAvailabilities(userId, constraint object)` --> default to showing next week
+`getAvailabilities(userId)` --> gets all availabilties for a user
 
-`getAvailability(userId, day)` --> gets a singe availability
+`getAvailability(availabilityId)` --> gets a singe availability
 
 `addAvailability(userId, day object)` --> adds new day
 
@@ -127,7 +133,9 @@
 
 `getTimeOffRequests(userId)`
 
-`addTimeOffRequest(userId, request object)`
+`getTimeOffRequest(requestId)`
+
+`addTimeOffRequest(request object)`
 
 `updateTimeOffRequest(timeOffRequestId, changes object)`
 
@@ -141,7 +149,9 @@
 
 `getEvents(userId)`
 
-`addEvent(userId, event object)` --> returns created event object
+`getEvent(eventId)`
+
+`addEvent(event object)` --> returns created event object
 
 `updateEvent(eventId, changes object)` --> returns the updated event object
 
@@ -150,3 +160,21 @@
 <br>
 
 `getEventsForOrg(orgId)` --> returns list of all events for all users for an org
+
+<br>
+
+`getHoursOfOperation(orgId)`
+
+`updateHoursOfOperation(hourId, updates)`
+
+`addHour(hour)`
+
+<br>
+
+`getInvite(inviteId)`
+
+`addInvite(invite object)`
+
+`updateInvite(inviteId, updates object)`
+
+`deleteInvite(inviteId)`
