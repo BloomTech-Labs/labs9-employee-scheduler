@@ -38,10 +38,7 @@ export const availabilityReducer = (state = initialState, action) => {
     case GET_AVAILABILITY_FAIL:
       return { error: action.payload }
     case LOGOUT:
-      return {
-        availability: [],
-        error: ''
-      }
+      return initialState
     default:
       return state
   }

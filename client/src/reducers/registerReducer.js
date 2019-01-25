@@ -26,11 +26,7 @@ export const registerReducer = (state = initialState, action) => {
     case SET_REDIRECT_FLAG_TO_FALSE:
       return { ...state, redirect: false }
     case LOGOUT:
-      return {
-        outcome: '',
-        error: '',
-        redirect: ''
-      }
+      return initialState
     default:
       return state
   }

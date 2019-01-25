@@ -7,7 +7,7 @@ export const coverageReducer = (state = initialState, action) => {
     case DISPLAY_COVERAGE:
       return action.payload
     case LOGOUT:
-      return 0
+      return initialState
     default:
       return state
   }

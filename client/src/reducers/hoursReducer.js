@@ -89,11 +89,7 @@ export const hoursReducer = (state = initialState, action) => {
         error: 'fetching failed'
       }
     case LOGOUT:
-      return {
-        loading: false,
-        hours: [],
-        error: ''
-      }
+      return initialState
     default:
       return state
   }

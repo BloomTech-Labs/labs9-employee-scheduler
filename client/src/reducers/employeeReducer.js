@@ -45,10 +45,7 @@ export const employeeReducer = (state = initialState, action) => {
         }
       }
     case LOGOUT:
-      return {
-        employee: null,
-        error: ''
-      }
+      return initialState
     default:
       return state
   }

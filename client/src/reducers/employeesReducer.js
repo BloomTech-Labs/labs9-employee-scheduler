@@ -103,10 +103,7 @@ export const employeesReducer = (state = initialState, action) => {
       }
     }
     case LOGOUT:
-      return {
-        employees: [],
-        error: ''
-      }
+      return initialState
     default:
       return state
   }
