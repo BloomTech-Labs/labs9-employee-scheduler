@@ -125,7 +125,8 @@ const generateAvailabilities = userId => {
       user_id: userId,
       day: days[i],
       start_time: times[i][0],
-      end_time: times[i][1]
+      end_time: times[i][1],
+      off: Boolean(Math.random() < 0.2)
     })
   }
   return availabilities
