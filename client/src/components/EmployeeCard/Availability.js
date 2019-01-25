@@ -28,14 +28,15 @@ class Availability extends Component {
         {availabilities &&
           availabilities
             // only displays the days the employee is available
-            .filter(({ off }) => !off)
-            .map(({ id, day, start_time, end_time }) => (
+            .map(({ id, day, start_time, end_time, off }) => (
               //temporarily adds ids tp the DOM for easy access for testing
               <Avails key={id}>
                 <p>{weekdays[day]}</p>
-                <span>{`${formatHours(start_time)} - ${formatHours(
-                  end_time
-                )}`}</span>
+                <span>
+                  {off
+                    ? 'unavailable'
+                    : `${formatHours(start_time)} - ${formatHours(end_time)}`}
+                </span>
               </Avails>
             ))}
       </CardContainer>
