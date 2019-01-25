@@ -5,7 +5,8 @@ import {
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT,
   UPDATE_EVENT,
-  DELETE_EVENT
+  DELETE_EVENT,
+  UPDATE_AVAILABILITY
 } from '../actions'
 
 const initialState = {
@@ -101,6 +102,28 @@ export const employeesReducer = (state = initialState, action) => {
         })
       }
     }
+    case UPDATE_AVAILABILITY:
+      const { payload: target } = action
+      return {
+        ...state,
+        //map makes it so only the times that are updated are sent to the server
+        employees: state.employees.map(e => {
+          if (e.id === target.user_id) {
+            return {
+              ...e,
+              availabilities: e.availabilities.map(a => {
+                if (a.id === action.payload.id) {
+                  return action.payload
+                } else {
+                  return a
+                }
+              })
+            }
+          } else {
+            return e
+          }
+        })
+      }
 
     default:
       return state

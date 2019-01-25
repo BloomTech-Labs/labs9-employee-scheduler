@@ -44,6 +44,7 @@ export const StatusContent = ({ id, status, handleTimeOff }) => {
 class TimeOff extends Component {
   //sets the correct button on the DOM depending on the status of the request
   handleTimeOff = e => {
+    console.log('clicked')
     e.preventDefault()
     const id = e.target.id
     let response = ''
