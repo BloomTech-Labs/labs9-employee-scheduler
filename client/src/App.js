@@ -9,7 +9,7 @@ import Home from './components/Home'
 import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import AvailabilityForm from './components/EmployeeCard/AvailabilityForm'
+import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
 import system from './design/theme'
 

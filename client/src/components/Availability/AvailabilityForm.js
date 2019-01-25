@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getAvailability, editAvailability } from '../../actions'
 import Button from '../common/Button'
 import Availability from './AvailabilitySelect'
+import Checkbox from './Checkbox'
 
 const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
 
@@ -12,47 +13,45 @@ class AvailabilityForm extends Component {
   constructor() {
     super()
     this.state = {
-      availability: [],
-      loading: false,
       days: [
         {
-          name: 'sunday',
+          name: 'Sunday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'monday',
+          name: 'Monday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'tuesday',
+          name: 'Tuesday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'wednesday',
+          name: 'Wednesday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'thursday',
+          name: 'Thursday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'friday',
+          name: 'Friday',
           startTime: undefined,
           endTime: undefined,
           off: false
         },
         {
-          name: 'saturday',
+          name: 'Saturday',
           startTime: undefined,
           endTime: undefined,
           off: false
@@ -82,9 +81,10 @@ class AvailabilityForm extends Component {
 
   //checks to see which availabilities have been updated and sends the changes to the server
   updateAvailability = () => {
-    this.state.days.map(day => {
+    this.state.days.forEach(day => {
       return day.availability
-        ? this.props.editAvailability({
+        ? //ternary operator
+          this.props.editAvailability({
             availability: day.availability,
             changes: {
               start_time: day.startTime,
@@ -103,8 +103,13 @@ class AvailabilityForm extends Component {
         <h5>Edit Availability</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.map((a, i) => {
+          //this function passes the the params the toggle to handleChange and is called in Checkbox
+          const toggle = () => {
+            const { name, off } = this.state.days[i]
+            this.handleChange(name, 'off', !off, a)
+          }
           return (
-            <div key={a.id}>
+            <Container key={a.id}>
               <Availability
                 // uses local state to display the names of the days because the db sends a number
                 day={this.state.days[i].name}
@@ -118,7 +123,12 @@ class AvailabilityForm extends Component {
                 submit={this.props.getAvailability}
                 availability={a}
               />
-            </div>
+              {/* this is the toggle to change day from "available" to "unavailable" */}
+              <Checkbox
+                toggleAvailability={toggle}
+                name={this.state.days[i].name}
+              />
+            </Container>
           )
         })}
         <button onClick={this.updateAvailability}>submit</button>
@@ -138,3 +148,10 @@ export default connect(
   mapStateToProps,
   { editAvailability, getAvailability }
 )(AvailabilityForm)
+
+const Container = styled('div')`
+  /* border: 1px solid gray; */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`
