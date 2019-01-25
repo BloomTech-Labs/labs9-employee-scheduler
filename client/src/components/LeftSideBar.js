@@ -52,6 +52,7 @@ class LeftSideBar extends Component {
               <>
                 <NavItem to="/employees">Employees</NavItem>
                 <NavItem to="/shift-calendar">Create Schedule</NavItem>
+                <NavItem to="/dashboard">Dashboard</NavItem>
               </>
             ) : null}
             {/* Billing page viable only to owner */}
