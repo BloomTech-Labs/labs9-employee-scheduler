@@ -42,7 +42,6 @@ const Availability = props => {
           <P>Start: {formatHours(props.startTime)} </P>
         </TimeContainer>
         <SelectList
-          // label="start time"
           name={props.startTimeValue}
           value={props.startTimeValue}
           //see function above
@@ -56,7 +55,6 @@ const Availability = props => {
           <P>End: {formatHours(props.endTime)}</P>
         </TimeContainer>
         <SelectList
-          // label="end time"
           name={props.day}
           value={props.endTimeValue}
           //see function above

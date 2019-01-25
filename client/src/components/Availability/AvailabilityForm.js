@@ -61,15 +61,16 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    // const employee = this.props.id
-    console.log(this.props.id)
-    this.props.getAvailability(this.props.id, this.props.token)
+    const { id, token } = this.props
+    if (id) {
+      this.props.getAvailability(id, token)
+    }
   }
 
   componentDidUpdate(prevProps) {
+    const { id, token } = this.props
     if (prevProps.id !== this.props.id) {
-      console.log(this.props.id)
-      this.props.getAvailability(this.props.id, this.props.token)
+      this.props.getAvailability(id, token)
     }
   }
 
@@ -117,6 +118,10 @@ class AvailabilityForm extends Component {
             const { name, off } = this.state.days[i]
             this.handleChange(name, 'off', !off, a)
           }
+
+          const setToggle = () => {
+            return a.off
+          }
           return (
             <Container key={a.id}>
               <Availability
@@ -136,6 +141,7 @@ class AvailabilityForm extends Component {
               <Checkbox
                 toggleAvailability={toggle}
                 name={this.state.days[i].name}
+                off={setToggle()}
               />
             </Container>
           )
