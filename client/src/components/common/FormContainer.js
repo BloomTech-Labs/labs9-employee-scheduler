@@ -37,7 +37,7 @@ export const Container = styled('div')`
 
     #instructions {
       font-size: ${system.fontSizing.ml};
-      margin-bottom: 20px;
+      margin-bottom: 40px;
       color: ${system.color.bodytext};
       width: 80%;
 

@@ -28,17 +28,19 @@ class Availability extends Component {
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
         <Heading>Employee Availability</Heading>
         {availabilities &&
-          availabilities.map(({ id, day, start_time, end_time }) => {
-            const times = `${formatHours(start_time)} - ${formatHours(
-              end_time
-            )}`
-            return (
+          availabilities
+            // only displays the days the employee is available
+            .map(({ id, day, start_time, end_time, off }) => (
+              //temporarily adds ids tp the DOM for easy access for testing
               <Avails key={id}>
-                <p className="emphasis">{weekdays[day]}</p>
-                <p>{times}</p>
+                <p>{weekdays[day]}</p>
+                <span>
+                  {off
+                    ? 'unavailable'
+                    : `${formatHours(start_time)} - ${formatHours(end_time)}`}
+                </span>
               </Avails>
-            )
-          })}
+            ))}
       </CardContainer>
     )
   }

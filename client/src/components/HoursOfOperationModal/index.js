@@ -161,7 +161,7 @@ class HoursOfOperation extends Component {
             })}
           </div>
           {this.state.isOpen === true ? (
-            <Fade top>
+            <Fade top duration={100}>
               <Timekeeper
                 name="open"
                 saveAndClose={this.saveOpenTime}
@@ -243,7 +243,7 @@ const Container = styled.div`
   transition: opacity 0s, z-index 0s, opacity 0.5s linear;
 
   & > div {
-    transition: transform 0.5s linear;
+    transition: transform 0.3s linear;
   }
 
   &.hidden {

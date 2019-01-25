@@ -20,7 +20,7 @@ const BreadCrumb = props => {
 
   if (props.location !== 'Home') {
     breadContent = (
-      <Nav fixed={false}>
+      <Nav fixed={props.location === 'Employees' ? true : false}>
         <Container logo>
           <LinkItem to="/">
             <img src={logo2} alt="logo" />
@@ -106,7 +106,6 @@ const Container = styled('div')`
     font-size: ${system.fontSizing.s};
     color: ${system.color.white};
     margin: 5px 15px 0;
-    word-spacing: 5px;
   }
 
   @media ${system.breakpoints[0]} {

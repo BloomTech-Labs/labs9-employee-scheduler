@@ -109,12 +109,12 @@ class App extends Component {
               font-size: 62.5%;
               font-family: 'Nunito', sans-serif;
               ::-webkit-scrollbar {
-                width: 8px;
+                width: 4px;
                 background-color: rgba(0, 0, 0, 0.041);
               }
               ::-webkit-scrollbar-thumb {
                 background: ${system.color.lightgrey};
-                width: 8px;
+                width: 4px;
                 border-radius: 50px;
               }
             }

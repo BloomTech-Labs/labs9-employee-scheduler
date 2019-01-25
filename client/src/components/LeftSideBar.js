@@ -34,11 +34,11 @@ class LeftSideBar extends Component {
     const { toggleShow } = this
     const { role } = this.props.auth.user
     return (
-      <Container>
+      <Container fixed={this.props.fixed ? true : false}>
         <Hamburger classname="hamburger" onClick={() => toggleShow()}>
           &#9776;
         </Hamburger>
-        <Fade left when={this.state.show}>
+        <Fade left when={this.state.show} duration={350}>
           <Nav show={this.state.show}>
             {/* render the uneditable calendar page for employees */}
             {role === 'employee' ? (
@@ -50,8 +50,9 @@ class LeftSideBar extends Component {
             {/* render employees and shift-calender for supervisors and above */}
             {role === 'supervisor' || role === 'owner' ? (
               <>
-                <NavItem to="/employees">Employees</NavItem>
+                <NavItem to="/employees">Employee List</NavItem>
                 <NavItem to="/shift-calendar">Create Schedule</NavItem>
+                <NavItem to="/dashboard">Dashboard</NavItem>
               </>
             ) : null}
             {/* Billing page viable only to owner */}
@@ -83,7 +84,7 @@ LeftSideBar.propTypes = {
 }
 
 const Container = styled.nav`
-  position: absolute;
+  position: ${props => (props.fixed ? 'fixed' : 'absolute')};
   z-index: 101;
   top: 0;
 `

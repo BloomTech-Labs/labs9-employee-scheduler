@@ -33,6 +33,7 @@
   day: INTEGER [ 0- 6 ]
   start_time: FLOAT [ 0 - 23]
   end_time: FLOAT [ 0 - 23]
+  off: boolean
 }
 ```
 
