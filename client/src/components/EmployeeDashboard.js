@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-// import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
+import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
 import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
 import AssignedShifts from './EmpDashboardComp/AssignedShifts'
 import {
@@ -10,13 +10,8 @@ import {
   deleteTimeOffRequest
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
-import {
-  Message,
-  Container,
-  AssignedWrapper,
-  TofWrapper
-} from './EmpDashboardComp/styles'
+import { Message, Container, TofWrapper, Card } from './EmpDashboardComp/styles'
+import OuterContainer from './common/OuterContainer'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -40,7 +35,12 @@ class EmployeeDashboard extends Component {
   }
 
   deleteExpiredRequest = (torId, token) => {
-    this.props.deleteTimeOffRequest(torId, token)
+    const r = window.confirm(
+      `This will delete your PTO request. Are you sure you want to do that?`
+    )
+    if (r) {
+      this.props.deleteTimeOffRequest(torId, token)
+    }
   }
 
   // for when we adding loading state to redux
@@ -52,74 +52,76 @@ class EmployeeDashboard extends Component {
 
   render() {
     const { employee } = this.props.employee
-    let assignedShift
-    let approvedTimeOff
-    if (employee && employee.shifts) {
-      assignedShift = (
-        <React.Fragment>
-          {employee.shifts.map(item => {
-            return <AssignedShifts key={item.id} {...item} />
-          })}
-        </React.Fragment>
-      )
-    } else {
-      assignedShift = (
-        <Message>
-          <p>You haven't been Assigned yet</p>
-        </Message>
-      )
-    }
-
-    if (employee && employee.time_off.length) {
-      approvedTimeOff = (
-        <Message>
-          <>
-            {employee.time_off.map(item => (
-              <TimeOffApproved
-                key={item.id}
-                status={item.status}
-                date={item.date}
-                reason={item.reason}
-                deleteExpiredRequest={() =>
-                  this.deleteExpiredRequest(item.id, this.props.auth.token)
-                }
-              />
-            ))}
-          </>
-        </Message>
-      )
-    } else {
-      approvedTimeOff = <p>No Request Status to display</p>
-    }
 
     return (
-      <React.Fragment>
+      <OuterContainer>
         <LeftSideBar />
         <BreadCrumb location="Employee Dashboard" />
+
         <Container>
           <div className="employee-welcome">
-            <h1>Welcome {this.props.auth.user.first_name}</h1>
+            <h1>
+              Hi there, {this.props.auth.user.first_name}. Hope you're having a
+              lovely day!
+            </h1>
           </div>
+
           <div className="wrapper">
-            <AssignedWrapper>
+            <Card>
               <div className="title">
-                <h5>Assigned Shifts</h5>
-                {/* returns all assigned shift dates and times for the user */}
-                {assignedShift}
+                <h5>Your Shifts</h5>
               </div>
-            </AssignedWrapper>
-            <TofWrapper className="tof-wrapper">
+              {/* returns all assigned shift dates and times for the user */}
+              {employee && employee.shifts ? (
+                <>
+                  {employee.shifts.map(item => {
+                    return <AssignedShifts key={item.id} {...item} />
+                  })}
+                </>
+              ) : (
+                <Message>
+                  <p>You haven't been assigned a shift yet.</p>
+                </Message>
+              )}
+            </Card>
+
+            <Card className="tof-wrapper">
               <div className="title">
                 <h5>Approved Time Off</h5>
-                {approvedTimeOff}
+                {employee && employee.time_off.length ? (
+                  <Message>
+                    <>
+                      {employee.time_off.map(item => (
+                        <TimeOffApproved
+                          key={item.id}
+                          status={item.status}
+                          date={item.date}
+                          reason={item.reason}
+                          deleteExpiredRequest={() =>
+                            this.deleteExpiredRequest(
+                              item.id,
+                              this.props.auth.token
+                            )
+                          }
+                        />
+                      ))}
+                    </>
+                  </Message>
+                ) : (
+                  <p>No requests to display.</p>
+                )}
               </div>
-            </TofWrapper>
-            <div className="title">
+            </Card>
+
+            <Card>
+              <div className="title">
+                <h5>Request Time Off</h5>
+              </div>
               <TimeOffRequest />
-            </div>
+            </Card>
           </div>
         </Container>
-      </React.Fragment>
+      </OuterContainer>
     )
   }
 }

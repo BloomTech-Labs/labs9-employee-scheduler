@@ -69,11 +69,12 @@ class DropCal extends Component {
       view,
       defaultView,
       date,
-      coverage
+      coverage,
+      slotPropGetter
     } = this.props
 
     return connectDropTarget(
-      <div style={{ width: '100%' }}>
+      <div>
         <DnDCal
           popup
           selectable
@@ -98,6 +99,7 @@ class DropCal extends Component {
           date={date}
           onView={() => {}}
           onNavigate={() => {}}
+          slotPropGetter={slotPropGetter}
         />
       </div>
     )

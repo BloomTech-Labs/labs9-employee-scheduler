@@ -12,8 +12,6 @@ import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
-import styled from '@emotion/styled'
-import system from '../design/theme'
 
 class Join extends Component {
   state = {
