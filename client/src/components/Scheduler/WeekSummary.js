@@ -49,9 +49,6 @@ class WeekSummary extends React.Component {
     let rangeStats = range.map(day => {
       const dayName = day.toLocaleDateString('en-US', 'numeric')
       const dayStats = dayValues[dayName]
-      console.log(dayValues)
-      console.log(dayName)
-      console.log(dayStats)
       if (dayStats) {
         return {
           ...dayStats,
@@ -66,15 +63,12 @@ class WeekSummary extends React.Component {
         }
       }
     })
-
-    console.log(rangeStats)
     return rangeStats
   }
 
   render() {
     const { events, range } = this.props
     let summaries = this.filterAndSummarize(events, range)
-    console.log(summaries)
 
     return (
       <Div>
