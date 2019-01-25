@@ -23,15 +23,24 @@ const getEmployees = async orgId => {
       'a.id as availability_id',
       'a.day',
       'a.start_time',
-      'a.end_time'
+      'a.end_time',
+      'a.off'
     )
     .reduce((acc, current) => {
-      const { user_id, availability_id, day, start_time, end_time } = current
+      const {
+        user_id,
+        availability_id,
+        day,
+        start_time,
+        end_time,
+        off
+      } = current
       const newItem = {
         id: availability_id,
         day,
         start_time,
-        end_time
+        end_time,
+        off
       }
 
       if (acc[user_id]) {

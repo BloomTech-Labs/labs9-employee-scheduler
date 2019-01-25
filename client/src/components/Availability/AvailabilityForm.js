@@ -7,7 +7,7 @@ import Button from '../common/Button'
 import Availability from './AvailabilitySelect'
 import Checkbox from './Checkbox'
 
-const user = '9474b689-ef77-47a1-ba20-b1bac12beeee'
+const employee = '9474b689-ef77-47a1-ba20-b1bac12beeee'
 
 class AvailabilityForm extends Component {
   constructor() {
@@ -61,7 +61,16 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    this.props.getAvailability(user, this.props.token)
+    // const employee = this.props.id
+    console.log(this.props.id)
+    this.props.getAvailability(this.props.id, this.props.token)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      console.log(this.props.id)
+      this.props.getAvailability(this.props.id, this.props.token)
+    }
   }
 
   handleChange = (targetDay, property, value, availability) => {
@@ -102,7 +111,7 @@ class AvailabilityForm extends Component {
       <div>
         <h5>Edit Availability</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
-        {this.props.availability.map((a, i) => {
+        {this.props.availability.slice(0, 7).map((a, i) => {
           //this function passes the the params the toggle to handleChange and is called in Checkbox
           const toggle = () => {
             const { name, off } = this.state.days[i]
@@ -131,7 +140,7 @@ class AvailabilityForm extends Component {
             </Container>
           )
         })}
-        <button onClick={this.updateAvailability}>submit</button>
+        <Button onClick={this.updateAvailability}>submit</Button>
       </div>
     )
   }

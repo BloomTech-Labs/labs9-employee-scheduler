@@ -7,6 +7,8 @@ import Availability from './Availability'
 import TimeOff from './TimeOff'
 import { connect } from 'react-redux'
 import { fetchEmployeesFromDB } from '../../actions'
+import { Link } from 'react-router-dom'
+import AvailabilityForm from '../Availability/AvailabilityForm'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -44,10 +46,14 @@ class Card extends Component {
       availabilities,
       time_off_requests,
       role,
-      view
+      view,
+      id
     } = this.props
     return (
       <Container data-testid="employee-card">
+        <button onClick={() => this.props.updateAvail({ id, first_name })}>
+          edit availability
+        </button>
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
             <p className="delete" onClick={this.openModal}>
@@ -69,7 +75,6 @@ class Card extends Component {
             {Boolean(phonepref) ? <span> (pref)</span> : null}
           </P>
         </div>
-
         <div id="row">
           {/* the below two things should conditionally render based on whether there is data or not */}
           {availabilities && availabilities.length ? (
@@ -90,7 +95,8 @@ class Card extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    employee: state.employees
   }
 }
 
