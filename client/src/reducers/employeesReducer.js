@@ -7,7 +7,8 @@ import {
   UPDATE_EVENT,
   DELETE_EVENT,
   UPDATE_AVAILABILITY,
-  LOGOUT
+  LOGOUT,
+  SET_VISIBILITY_FILTER
 } from '../actions'
 
 const initialState = {
@@ -126,6 +127,7 @@ export const employeesReducer = (state = initialState, action) => {
           }
         })
       }
+    // case SET_VISIBILITY_FILTER:
 
     case LOGOUT:
       return initialState

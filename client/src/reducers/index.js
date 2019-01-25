@@ -7,8 +7,10 @@ import { paymentReducer } from './paymentReducer'
 import { hoursReducer } from './hoursReducer'
 import { availabilityReducer } from './availabilityReducer'
 import { coverageReducer } from './coverageReducer'
+import { reducer as SearchReducer } from 'redux-search'
 
 export default combineReducers({
+  search: SearchReducer,
   auth: authReducer,
   employees: employeesReducer,
   employee: employeeReducer,
