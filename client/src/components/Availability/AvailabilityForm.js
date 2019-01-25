@@ -61,14 +61,11 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    // const employee = this.props.id
-    console.log(this.props.id)
     this.props.getAvailability(this.props.id, this.props.token)
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.id !== this.props.id) {
-      console.log(this.props.id)
       this.props.getAvailability(this.props.id, this.props.token)
     }
   }
