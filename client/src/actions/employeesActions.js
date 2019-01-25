@@ -9,6 +9,7 @@ export const UPDATE_TIME_OFF_REQUEST_FAIL = 'UPDATE_TIME_OFF_REQUEST_FAIL'
 export const DELETE_TIME_OFF_REQUEST_SUCCESS = 'DELETE_TIME_OFF_REQUEST_SUCCESS'
 export const ADD_TIME_OFF_REQUEST_SUCCESS = 'ADD_TIME_OFF_REQUEST_SUCCESS'
 export const ADD_TIME_OFF_REQUEST_FAIL = 'ADD_TIME_OFF_REQUEST_FAIL'
+export const SEARCH = 'SEARCH'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -120,4 +121,8 @@ export const addTimeOffRequest = (userId, date, reason, token) => dispatch => {
       })
     )
     .catch(err => console.log(err))
+}
+
+export const searchEmployees = value => {
+  return { type: SEARCH, value }
 }
