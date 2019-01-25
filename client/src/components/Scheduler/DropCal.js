@@ -73,7 +73,7 @@ class DropCal extends Component {
     } = this.props
 
     return connectDropTarget(
-      <div style={{ width: '100%' }}>
+      <div>
         <DnDCal
           popup
           selectable

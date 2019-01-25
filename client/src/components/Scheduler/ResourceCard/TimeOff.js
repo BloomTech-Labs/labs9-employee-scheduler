@@ -41,13 +41,13 @@ export const StatusContent = ({ id, status, handleTimeOff }) => {
 
 class TimeOff extends Component {
   render() {
-    const { timeOffRequests, width } = this.props
+    const { timeOffRequests } = this.props
     return (
       <CardContainer exists={timeOffRequests}>
         {/* Employee's Time Off */}
         {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
           When it's on the employees directory page, it should show pending PTO */}
-        <Heading width={width}>Requested Time Off</Heading>
+        <Heading>Requested Time Off</Heading>
         {/* below, we want to check if the view is pool. If so, don't show denied requests. And get rid of the approve / deny buttons. There are props passed on PTO to enable styling */}
         {timeOffRequests &&
           timeOffRequests.map(({ id, date, status }) =>
@@ -74,7 +74,10 @@ TimeOff.propTypes = {
 }
 
 const Heading = styled.h6`
-  text-align: ${props => (props.width === 'desktop' ? 'start' : 'center')};
+  text-align: start;
+  @media ${system.breakpoints[1]} {
+    text-align: center;
+  }
 `
 
 const Div = styled.div`
