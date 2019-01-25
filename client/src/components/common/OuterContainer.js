@@ -9,10 +9,16 @@ const OuterContainer = styled('div')`
   min-height: 100vh;
 
   h1 {
-    padding: ${system.spacing.standardPadding} 0;
+    padding: ${system.spacing.standardPadding};
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.l};
     margin: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[1]} {
+      margin: ${system.spacing.bigPadding} 0;
+      padding: 0;
+      font-size: ${system.fontSizing.ml};
+    }
   }
 `
 
