@@ -69,7 +69,8 @@ class DropCal extends Component {
       view,
       defaultView,
       date,
-      coverage
+      coverage,
+      slotPropGetter
     } = this.props
 
     return connectDropTarget(
@@ -98,6 +99,7 @@ class DropCal extends Component {
           date={date}
           onView={() => {}}
           onNavigate={() => {}}
+          slotPropGetter={slotPropGetter}
         />
       </div>
     )

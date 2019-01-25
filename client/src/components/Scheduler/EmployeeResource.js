@@ -31,9 +31,7 @@ const eventSource = {
     return {}
   },
   endDrag(props, monitor) {
-    if (monitor.didDrop()) {
-      props.updateDragState(null)
-    }
+    props.updateDragState(null)
   }
 }
 
