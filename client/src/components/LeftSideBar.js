@@ -101,20 +101,18 @@ const Nav = styled.nav`
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  border: 1px solid ${system.color.primary};
-  border-left: none;
   border-radius: ${system.borders.radius};
-  width: 150px;
+  width: 200px;
   position: absolute;
   visibility: ${props => (props.show ? null : 'hidden')};
 
   a {
     cursor: pointer;
     text-decoration: none;
-    padding: ${system.spacing.standardPadding};
-    border-bottom: 1px solid ${system.color.neutral};
+    padding: ${system.spacing.bigPadding};
+    border-top: 2px solid ${system.color.neutral};
     color: ${system.color.captiontext};
-    font-size: ${system.fontSizing.sm};
+    font-size: ${system.fontSizing.m};
     transition: ${system.transition};
     :hover {
       color: ${system.color.neutral};
@@ -122,9 +120,9 @@ const Nav = styled.nav`
     }
     :first-of-type {
       border-radius: 0 ${system.borders.radius} 0 0;
+      border-top: 0px solid transparent;
     }
     :last-child {
-      border: ${system.borders.transparent};
       border-radius: 0 0 ${system.borders.radius} 0;
     }
   }

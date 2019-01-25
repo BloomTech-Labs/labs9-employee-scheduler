@@ -235,9 +235,9 @@ class Scheduler extends React.Component {
           </TopButtons>
           <CalendarButtons>
             <NavButtons>
-              <Button onClick={() => this.changeDate('left')}>Back</Button>
+              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
               <Button onClick={() => this.changeDate('today')}>Today</Button>
-              <Button onClick={() => this.changeDate('right')}>Next</Button>
+              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
             </NavButtons>
             <div>
               {width === 'desktop' ? (

@@ -87,6 +87,7 @@ const Container = styled('div')`
   a,
   button {
     font-size: ${system.fontSizing.sm};
+    cursor: pointer;
     color: ${system.color.white};
     background: transparent;
     text-decoration: none;

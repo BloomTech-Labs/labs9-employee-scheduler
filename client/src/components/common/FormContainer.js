@@ -50,16 +50,17 @@ export const Container = styled('div')`
       position: absolute;
       top: 25px;
       right: 25px;
-      font-size: ${system.fontSizing.s};
-      color: ${system.color.primary};
-      padding: 5px;
+      font-size: ${system.fontSizing.sm};
+      color: ${system.color.white};
+      background: ${system.color.primary};
+      padding: 7.5px 10px;
       border-radius: ${system.borders.radius};
       border: 1px solid ${system.color.primary};
       cursor: pointer;
       transition: ${system.transition};
       :hover {
-        color: ${system.color.white};
-        background: ${system.color.primary};
+        color: ${system.color.primary};
+        background: ${system.color.white};
       }
 
       @media ${system.breakpoints[1]} {
@@ -164,42 +165,41 @@ export const Input = styled.input`
 `
 
 export const Form = styled.form`
-    display: flex;
-    position: relative;
-    flex-flow: column nowrap;
-    
-    #instructions {
-      font-size: ${system.fontSizing.m};
-      margin-bottom: 20px;
-      color: ${system.color.bodytext};
-      width: 80%;
+  display: flex;
+  position: relative;
+  flex-flow: column nowrap;
 
-      @media ${system.breakpoints[0]} {
-        font-size: ${system.fontSizing.sm};
-      }
+  #instructions {
+    font-size: ${system.fontSizing.m};
+    margin-bottom: 20px;
+    color: ${system.color.bodytext};
+    width: 80%;
+
+    @media ${system.breakpoints[0]} {
+      font-size: ${system.fontSizing.sm};
     }
+  }
 
-    label {
-      font-size: ${system.fontSizing.s};
-      padding: 0 5px;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      color: ${system.color.captiontext};
+  label {
+    font-size: ${system.fontSizing.s};
+    padding: 0 5px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: ${system.color.captiontext};
 
-      @media ${system.breakpoints[0]} {
-        font-size: 1.1rem;
-      }
+    @media ${system.breakpoints[0]} {
+      font-size: 1.1rem;
     }
+  }
 
-    input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px white inset;
-      box-shadow: 0 0 0px 1000px white inset;
-    }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    box-shadow: 0 0 0px 1000px white inset;
+  }
 
-    button {
-      width: 150px;
-      margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
-      background: ${props => (props.danger ? system.color.danger : null)};
-    }
+  button {
+    width: 150px;
+    margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
+    background: ${props => (props.danger ? system.color.danger : null)};
   }
 `

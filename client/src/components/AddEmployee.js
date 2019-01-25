@@ -156,7 +156,7 @@ class AddEmployee extends Component {
               data-test="submit"
               onClick={() => this.setState({ submit: true })}
             >
-              Invite Employee
+              Send Invite
             </Button>
             {/* tried to add a cancel button, but it wouldn't work */}
           </Form>
