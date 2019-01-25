@@ -11,6 +11,7 @@ import OuterContainer from './common/OuterContainer'
 import AddEmployee from './AddEmployee'
 import AvailabilityForm from './Availability/AvailabilityForm'
 import Button from './common/Button'
+import Modal from './Modal'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
@@ -27,8 +28,7 @@ class Employees extends Component {
     this.setState({ availTarget: user })
   }
 
-  show = event => {
-    event.preventDefault()
+  toggleShow = () => {
     this.setState({
       show: !this.state.show
     })
@@ -43,8 +43,10 @@ class Employees extends Component {
         <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
-          <Button onClick={this.show}>Add Employee</Button>
-          <AddEmployee show={this.state.show} />
+          <Button onClick={this.toggleShow}>Add Employee</Button>
+          <Modal show={this.state.show} toggleShow={this.toggleShow}>
+            <AddEmployee />
+          </Modal>
           <InnerContainer>
             {availTarget ? (
               <div>
