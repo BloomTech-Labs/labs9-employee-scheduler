@@ -135,44 +135,50 @@ class Scheduler extends React.Component {
   moveEvent = drop => {
     const { event, start, end } = drop
     const { type, ...employee } = event
-    if (
-      this.validateEvent({
-        userId: employee.user_id,
-        eventTimes: { start, end }
-      })
-    ) {
+    const { verdict, message } = this.validateEvent({
+      userId: employee.user_id,
+      eventTimes: { start, end }
+    })
+    if (verdict) {
       this.props.changeEvent(
         { event: employee, changes: { start, end } },
         this.props.token
       )
+    } else {
+      window.alert(message)
     }
   }
 
   resizeEvent = ({ end, start, event }) => {
-    if (
-      this.validateEvent({ userId: event.user_id, eventTimes: { start, end } })
-    ) {
+    const { verdict, message } = this.validateEvent({
+      userId: event.user_id,
+      eventTimes: { start, end }
+    })
+    if (verdict) {
       this.props.changeEvent(
         { event, changes: { start, end } },
         this.props.token
       )
+    } else {
+      window.alert(message)
     }
   }
 
   createEvent = ({ start, end }) => {
     const { draggedEmployee } = this.state
     if (draggedEmployee) {
-      if (
-        this.validateEvent({
-          userId: draggedEmployee.id,
-          eventTimes: { start, end }
-        })
-      ) {
+      const { verdict, message } = this.validateEvent({
+        userId: draggedEmployee.id,
+        eventTimes: { start, end }
+      })
+      if (verdict) {
         this.props.createEvent(
           { employee: draggedEmployee, start },
           this.props.token
         )
         this.setState({ draggedEmployee: null })
+      } else {
+        window.alert(message)
       }
     }
   }
@@ -189,6 +195,23 @@ class Scheduler extends React.Component {
 
     if (r) {
       return this.props.deleteEvent(event, this.props.token)
+    }
+  }
+
+  validateDrop = (date, more) => {
+    const { draggedEmployee: employee } = this.state
+    if (employee) {
+      const { hours } = this.props
+      const eventTimes = {
+        start: date,
+        end: new Date(date.getTime() + 60 * 1000 * 60)
+      }
+      const { verdict } = validateShift({ eventTimes, hours, employee })
+      if (verdict === false) {
+        return {
+          style: { boxShadow: `inset 0 0 15px ${system.color.hoverDanger}` }
+        }
+      }
     }
   }
 
@@ -261,6 +284,7 @@ class Scheduler extends React.Component {
             max={hourRange.max}
             view={view}
             date={date}
+            slotPropGetter={this.validateDrop}
           />
           <WeekSummary range={range} events={events} />
         </CalendarContainer>

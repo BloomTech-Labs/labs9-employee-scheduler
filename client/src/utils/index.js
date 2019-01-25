@@ -213,10 +213,10 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
   })
 
   if (conflicts) {
-    window.alert(
-      `Sorry, you can't schedule this employee during their approved time off.`
-    )
-    return false
+    return {
+      verdict: false,
+      message: `Sorry, you can't schedule this employee during their approved time off.`
+    }
   }
 
   // step 2
@@ -227,10 +227,10 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     )[0] || null
 
   if (!availabilityForDay) {
-    window.alert(
-      `Sorry, the employee you're trying to schedule isn't available on this day.`
-    )
-    return false
+    return {
+      verdict: false,
+      message: `Sorry, the employee you're trying to schedule isn't available on this day.`
+    }
   }
 
   // start time must be earlier than or the same as eventTimes.start
@@ -239,10 +239,10 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
     !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
   ) {
-    window.alert(
-      `Sorry, you can't schedule this employee outside their availability window.`
-    )
-    return false
+    return {
+      verdict: false,
+      message: `Sorry, you can't schedule this employee outside their availability window.`
+    }
   }
 
   // step 3
@@ -253,10 +253,10 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     convertMomentToFloat(eventTimes.start) < hours[day].open_time ||
     convertMomentToFloat(eventTimes.end) > hours[day].close_time
   ) {
-    window.alert(
-      `Sorry, you can't schedule this employee outside the hours of operation.`
-    )
-    return false
+    return {
+      verdict: false,
+      message: `Sorry, you can't schedule this employee outside the hours of operation.`
+    }
   }
 
   // step 4
@@ -275,12 +275,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // need to keep this separate because returning from forEach doesn't escape the enclosing func
   if (conflicts) {
-    window.alert(
-      `Sorry, you can't schedule this employee twice during the same block of time.`
-    )
-    return false
+    return {
+      verdict: false,
+      message: `Sorry, you can't schedule this employee twice during the same block of time.`
+    }
   }
 
   // if everything went okay
-  return true
+  return { verdict: true }
 }
