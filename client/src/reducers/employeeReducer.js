@@ -3,7 +3,8 @@ import {
   FETCH_EMPLOYEE_FROM_DB_FAIL,
   DELETE_TIME_OFF_REQUEST_SUCCESS,
   ADD_TIME_OFF_REQUEST_SUCCESS,
-  ADD_TIME_OFF_REQUEST_FAIL
+  ADD_TIME_OFF_REQUEST_FAIL,
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -42,6 +43,11 @@ export const employeeReducer = (state = initialState, action) => {
             }
           })
         }
+      }
+    case LOGOUT:
+      return {
+        employee: null,
+        error: ''
       }
     default:
       return state

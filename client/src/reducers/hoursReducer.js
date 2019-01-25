@@ -5,7 +5,8 @@ import {
   HOURS_FETCHED,
   HOURS_FETCHING_FAILED,
   HOURS_UPDATED,
-  HOURS_LOADING
+  HOURS_LOADING,
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -86,6 +87,12 @@ export const hoursReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: 'fetching failed'
+      }
+    case LOGOUT:
+      return {
+        loading: false,
+        hours: [],
+        error: ''
       }
     default:
       return state

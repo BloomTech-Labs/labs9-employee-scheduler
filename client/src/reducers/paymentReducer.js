@@ -1,6 +1,10 @@
-import { FETCH_ORG_FROM_DB_SUCCESS, FETCH_ORG_FROM_DB_FAIL } from '../actions'
+import {
+  FETCH_ORG_FROM_DB_SUCCESS,
+  FETCH_ORG_FROM_DB_FAIL,
+  LOGOUT
+} from '../actions'
 
-const initialState = { details: {} }
+const initialState = { details: {}, error: '' }
 
 export const paymentReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -11,7 +15,11 @@ export const paymentReducer = (state = initialState, action) => {
       }
     case FETCH_ORG_FROM_DB_FAIL:
       return { ...initialState, error: 'fetching org failed' }
-
+    case LOGOUT:
+      return {
+        details: {},
+        error: ''
+      }
     default:
       return state
   }

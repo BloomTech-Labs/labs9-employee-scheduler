@@ -5,7 +5,8 @@ import {
   UPDATE_TIME_OFF_REQUEST_FAIL,
   CREATE_EVENT,
   UPDATE_EVENT,
-  DELETE_EVENT
+  DELETE_EVENT,
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -101,7 +102,11 @@ export const employeesReducer = (state = initialState, action) => {
         })
       }
     }
-
+    case LOGOUT:
+      return {
+        employees: [],
+        error: ''
+      }
     default:
       return state
   }
