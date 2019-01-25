@@ -1,4 +1,3 @@
-const data = require('../static_seed.json')
 const {
   generateHoursOfOperation,
   generateUsersForOrg,
@@ -127,19 +126,6 @@ const populateStaticOrg = (size = 10) => {
     }
   ]
 
-  employeeSeeds.forEach(seed => {
-    users = users.map(user => {
-      if (user.role !== 'owner') {
-        return {
-          ...user,
-          ...seed
-        }
-      } else {
-        return user
-      }
-    })
-  })
-
   // add non-owner static data into generated data
   employeeSeeds.forEach((seed, i) => {
     users[i + 1] = {
@@ -158,7 +144,14 @@ const populateStaticOrg = (size = 10) => {
     timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
   })
 
-  return { organization, users, availabilities, events, timeOffRequests }
+  return {
+    organization,
+    users,
+    availabilities,
+    events,
+    timeOffRequests,
+    hoursOfOperation: generateHoursOfOperation(organization.id)
+  }
 }
 
 fs.writeFile(
