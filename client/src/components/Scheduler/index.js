@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import DropCal from './DropCal'
 import EmployeePool from './EmployeePool'
+import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
@@ -228,10 +229,8 @@ class Scheduler extends React.Component {
           />
         ) : null}
         <CalendarContainer>
-          <TopButtons style={{ padding: '10px 0 0 0' }}>
-            <Coverage isGood={Boolean(coverage)}>{`${
-              coverage ? coverage : 0
-            }% coverage`}</Coverage>
+          <TopButtons>
+            <CoverageBadge coverage={coverage} />
             <ModalButton onClick={this.props.toggleModal}>
               Edit Hours of Operation
             </ModalButton>
@@ -265,17 +264,7 @@ class Scheduler extends React.Component {
             view={view}
             date={date}
           />
-          <WeekSummary
-            range={
-              range
-                ? range
-                : {
-                    start: moment().startOf('week')._d,
-                    end: moment().endOf('week')._d
-                  }
-            }
-            events={events}
-          />
+          <WeekSummary range={range} events={events} />
         </CalendarContainer>
       </Container>
     )
@@ -328,23 +317,11 @@ const CalendarButtons = styled.div`
   }
 `
 
-const Coverage = styled.div`
-  display: flex;
-  align-items: center;
-  border-radius: ${system.borders.radius};
-  border: ${system.borders.transparent};
-  color: ${system.color.neutral};
-  background: ${props =>
-    props.isGood ? system.color.success : system.color.danger};
-  box-shadow: ${system.shadows.button};
-  font-size: ${system.fontSizing.sm};
-  padding: ${system.spacing.standardPadding};
-  outline: none;
-`
 const TopButtons = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 10px 0 0 0;
 `
 
 const ModalButton = styled(Button)`
@@ -353,6 +330,7 @@ const ModalButton = styled(Button)`
 `
 
 const NavButtons = styled.div`
+  /* this creates internal margins between immediate children */
   & > * + * {
     margin-left: 10px;
   }
