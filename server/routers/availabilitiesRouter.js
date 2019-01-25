@@ -45,7 +45,7 @@ router.post('/:id', authorize(['all']), (req, res) => {
 
 router.put('/:id', authorize(['all']), async (req, res) => {
   const { id } = req.params
-  const updates = req.body
+
   try {
     const numberUpdated = await updateAvailability(id, req.body)
     if (numberUpdated > 0) {

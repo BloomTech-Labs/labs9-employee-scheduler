@@ -45,12 +45,29 @@ Access control: owners.
 
 #### User Routes
 
-GET `/users/` --> DEPRECATE?
+POST `/current`
 
-Get all users.
+Returns info for the logged in user.
 
-Access control
+Access control: all users.
 
+GET `/org/:id`
+
+Returns all users for an organization.
+
+Access control: owners and supervisors.
+
+GET `/:id`
+
+Returns info for a single user.
+
+Access control: owners and supervisors.
+
+POST `/register/owner`
+
+Creates a new user as owner of a new organization.
+
+No access control.
 
 
 #### Availability Routes
