@@ -19,23 +19,23 @@ const weekdays = [
 // this component should render the employee's weekly availability. It, in the future, will also have the ability to turn into a form to update such info.
 class Availability extends Component {
   render() {
-    const { availabilities, width } = this.props
+    const { availabilities } = this.props
 
     // the below should not render if there is no data being pass to it. This is not working though...
     return availabilities === [] ? null : (
       <CardContainer avail>
         {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
-        <Heading width={width}>Employee Availability</Heading>
+        <Heading>Employee Availability</Heading>
         {availabilities &&
           availabilities.map(({ id, day, start_time, end_time }) => {
             const times = `${formatHours(start_time)} - ${formatHours(
               end_time
             )}`
             return (
-              <Avails key={id} width={width}>
+              <Avails key={id}>
                 <p className="emphasis">{weekdays[day]}</p>
-                {width === 'desktop' ? <span>{times}</span> : <p>{times}</p>}
+                <p>{times}</p>
               </Avails>
             )
           })}
@@ -52,17 +52,26 @@ Availability.propTypes = {
 }
 
 const Heading = styled.h6`
-  text-align: ${props => (props.width === 'desktop' ? 'start' : 'center')};
+  text-align: start;
+  @media ${system.breakpoints[1]} {
+    text-align: center;
+  }
 `
 
 const Avails = styled.div`
   display: flex;
-  flex-flow: ${props => (props.width === 'desktop' ? 'row nowrap' : 'column')};
+  flex-flow: row nowrap;
+  @media ${system.breakpoints[1]} {
+    flex-flow: column;
+  }
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 5px;
-  padding-bottom: ${props => (props.width === 'desktop' ? '5px' : '15px')};
+  padding-bottom: 5px;
+  @media ${system.breakpoints[1]} {
+    padding-bottom: 15px;
+  }
   border-bottom: 1px solid ${system.color.neutral};
 
   :last-child {
@@ -77,9 +86,12 @@ const Avails = styled.div`
   }
 
   /* We should be able to change this span color based on the status being passed to it */
-  p,
-  span {
+  p {
     color: ${system.color.bodytext};
     font-size: ${system.fontSizing.s};
+    display: inline;
+    @media ${system.breakpoints[1]} {
+      display: block;
+    }
   }
 `

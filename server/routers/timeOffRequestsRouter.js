@@ -40,8 +40,8 @@ router.post('/:id', authorize(['all']), (req, res) => {
       return getTimeOffRequest(id)
     })
     .then(request => {
-      if (request.length) {
-        return res.status(200).json(request[0])
+      if (request) {
+        return res.status(200).json(request)
       } else {
         return res.status(500).json({ error: 'something went wrong' })
       }

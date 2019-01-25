@@ -3,7 +3,8 @@ import {
   UPDATE_AVAILABILITY_FAIL,
   GET_AVAILABILITY,
   GET_AVAILABILITY_FAIL,
-  AVAILABILITY_LOADING
+  AVAILABILITY_LOADING,
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -36,6 +37,8 @@ export const availabilityReducer = (state = initialState, action) => {
       return { ...state, availability: action.payload }
     case GET_AVAILABILITY_FAIL:
       return { error: action.payload }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

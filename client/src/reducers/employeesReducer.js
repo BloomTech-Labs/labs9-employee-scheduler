@@ -7,6 +7,7 @@ import {
   UPDATE_EVENT,
   DELETE_EVENT,
   UPDATE_AVAILABILITY
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -102,6 +103,7 @@ export const employeesReducer = (state = initialState, action) => {
         })
       }
     }
+
     case UPDATE_AVAILABILITY:
       const { payload: target } = action
       return {
@@ -124,6 +126,9 @@ export const employeesReducer = (state = initialState, action) => {
           }
         })
       }
+
+    case LOGOUT:
+      return initialState
 
     default:
       return state

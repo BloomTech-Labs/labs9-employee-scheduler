@@ -13,11 +13,11 @@ class EmployeeEvent extends React.Component {
     img.onload = () => connectDragPreview(img)
   }
   render() {
-    const { connectDragSource, isDragging, employee, width } = this.props
+    const { connectDragSource, isDragging, employee } = this.props
 
     return connectDragSource(
-      <div style={{ opacity: isDragging ? '.7' : undefined }}>
-        <EmployeeCard {...employee} width={width} view="pool" />
+      <div style={{ opacity: isDragging ? '.7' : undefined, cursor: 'grab' }}>
+        <EmployeeCard {...employee} view="pool" />
         {/* set view to pool to enable conditional render */}
       </div>
     )
@@ -31,9 +31,7 @@ const eventSource = {
     return {}
   },
   endDrag(props, monitor) {
-    if (monitor.didDrop()) {
-      props.updateDragState(null)
-    }
+    props.updateDragState(null)
   }
 }
 
@@ -44,10 +42,5 @@ const collectSource = (connect, monitor) => {
     connectDragPreview: connect.dragPreview()
   }
 }
-
-const DragNameCard = styled.h2`
-  padding: ${system.spacing.bigPadding};
-  font-size: ${system.fontSizing.ml};
-`
 
 export default DragSource('SHIFT', eventSource, collectSource)(EmployeeEvent)
