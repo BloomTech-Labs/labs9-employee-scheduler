@@ -3,31 +3,56 @@ import EmployeeResource from './EmployeeResource'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 
-export default function(props) {
-  const { employees, updateDragState, width } = props
-  return (
-    <React.Fragment>
-      {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
-      <Spacer />
-      <Container>
-        <input
-          type="text"
-          placeholder="Search for employee.."
-          name="searchTerm"
-          onChange={this.props.changeHandler}
-          value={this.props.searchTerm}
-        />
-        {employees.map(employee => (
-          <EmployeeResource
-            key={employee.id}
-            employee={employee}
-            updateDragState={updateDragState}
+class EmployeePool extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchTerm: '',
+      employees: props.employees
+    }
+  }
+
+  updateSearch = e => {
+    this.setState({ [e.target.name]: e.target.value.substr(0, 20) })
+  }
+
+  render() {
+    const { employees, updateDragState, width } = this.props
+    let filteredEmployees = employees.filter(person => {
+      if (
+        person.first_name
+          .toLowerCase()
+          .indexOf(this.state.searchTerm.toLowerCase()) > -1
+      ) {
+        return person
+      }
+    })
+    return (
+      <React.Fragment>
+        {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
+        <Spacer />
+        <Container>
+          <input
+            type="text"
+            name="searchTerm"
+            placeholder="Search..."
+            onChange={this.updateSearch}
+            value={this.state.searchTerm}
           />
-        ))}
-      </Container>
-    </React.Fragment>
-  )
+          {filteredEmployees.map(employee => (
+            <EmployeeResource
+              key={employee.id}
+              employee={employee}
+              updateDragState={updateDragState}
+            />
+          ))}
+        </Container>
+      </React.Fragment>
+    )
+  }
 }
+
+export default EmployeePool
 
 const Container = styled('div')`
   position: absolute;

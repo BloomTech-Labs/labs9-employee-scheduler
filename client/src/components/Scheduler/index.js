@@ -186,8 +186,8 @@ class Scheduler extends React.Component {
   deleteEvent = event => {
     const { title, start, end } = event
     const eventText = `${title}
-    Begin: ${moment(start).format('ddd, MMMM Do, h:mm a')} 
-    End: ${moment(end).format('ddd, MMMM Do, h:mm a')} 
+    Begin: ${moment(start).format('ddd, MMMM Do, h:mm a')}
+    End: ${moment(end).format('ddd, MMMM Do, h:mm a')}
     `
     const r = window.confirm(
       'Would you like to cancel this shift?\n\n' + eventText
