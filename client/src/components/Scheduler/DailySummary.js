@@ -8,9 +8,9 @@ export default function DailySummary(props) {
   return (
     <Div>
       <h6>{moment(day).format('M/D')}</h6>
-      <p>Total People:</p>
-      <p>{employees}</p>
-      <p>Total Hours:</p>
+      <p>People</p>
+      <p className="line">{employees}</p>
+      <p>Hours</p>
       <p>{Math.round(hours)}</p>
     </Div>
   )
@@ -38,5 +38,10 @@ const Div = styled.div`
     margin-bottom: 0.5rem;
     text-align: center;
     padding-bottom: 10px;
+
+    &.line {
+      position: relative;
+      border-bottom: ${system.borders.grey};
+      margin-bottom: 10px;
   }
 `
