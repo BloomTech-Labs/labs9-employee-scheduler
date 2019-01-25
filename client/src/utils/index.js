@@ -233,10 +233,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     }
   }
 
-  // start time must be earlier than or the same as eventTimes.start
-  // end_time must be later than or the same as eventTimes.end
   if (
+    // day cannot have an off property of true
+    availabilityForDay.off ||
+    // start time must be earlier than or the same as eventTimes.start
     !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
+    // end_time must be later than or the same as eventTimes.end
     !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
   ) {
     return {
