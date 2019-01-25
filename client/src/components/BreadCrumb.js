@@ -106,7 +106,6 @@ const Container = styled('div')`
     font-size: ${system.fontSizing.s};
     color: ${system.color.white};
     margin: 5px 15px 0;
-    word-spacing: 5px;
   }
 
   @media ${system.breakpoints[0]} {

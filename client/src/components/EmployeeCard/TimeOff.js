@@ -60,7 +60,7 @@ class TimeOff extends Component {
   render() {
     const { timeOffRequests } = this.props
     return (
-      <CardContainer exists={timeOffRequests}>
+      <CardContainer PTO>
         {/* Employee's Time Off */}
         {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
           When it's on the employees directory page, it should show pending PTO */}
