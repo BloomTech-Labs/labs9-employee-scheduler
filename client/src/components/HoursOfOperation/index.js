@@ -135,50 +135,49 @@ class HoursOfOperation extends Component {
   }
 
   render() {
-    console.log(this.props.hidden)
+    const { Close } = this.props
     return (
-      <Container className={this.props.hidden ? 'hidden' : undefined}>
-        <Modal>
-          {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
+      <Modal>
+        {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
 
-          <div className="days-container">
-            <h3>Hours of Operation</h3>
-            {/* maps over the days and places a pair of edit buttons for each one */}
-            {Object.keys(this.state.days).map((day, i) => {
-              return (
-                <Button
-                  id={i}
-                  key={i}
-                  handleHours={this.handleHours}
-                  day={this.state.days[day]}
-                  name={day}
-                  showHandleHours={e => this.showHandleHours(e, i)}
-                  closedAllDay={e => this.closedAllDay(e, i)}
-                >
-                  {this.props.children}
-                </Button>
-              )
-            })}
-          </div>
-          {this.state.isOpen === true ? (
-            <Fade top duration={100}>
-              <Timekeeper
-                name="open"
-                saveAndClose={this.saveOpenTime}
-                day={`Open time`}
-              />
-            </Fade>
-          ) : this.state.isClose === true ? (
-            <Fade top>
-              <Timekeeper
-                name="close"
-                saveAndClose={this.saveCloseTime}
-                day={`Close time`}
-              />
-            </Fade>
-          ) : null}
-        </Modal>
-      </Container>
+        <div className="days-container">
+          <Close />
+          <h3>Hours of Operation</h3>
+          {/* maps over the days and places a pair of edit buttons for each one */}
+          {Object.keys(this.state.days).map((day, i) => {
+            return (
+              <Button
+                id={i}
+                key={i}
+                handleHours={this.handleHours}
+                day={this.state.days[day]}
+                name={day}
+                showHandleHours={e => this.showHandleHours(e, i)}
+                closedAllDay={e => this.closedAllDay(e, i)}
+              >
+                {this.props.children}
+              </Button>
+            )
+          })}
+        </div>
+        {this.state.isOpen === true ? (
+          <Fade top duration={100}>
+            <Timekeeper
+              name="open"
+              saveAndClose={this.saveOpenTime}
+              day={`Open time`}
+            />
+          </Fade>
+        ) : this.state.isClose === true ? (
+          <Fade top>
+            <Timekeeper
+              name="close"
+              saveAndClose={this.saveCloseTime}
+              day={`Close time`}
+            />
+          </Fade>
+        ) : null}
+      </Modal>
     )
   }
 }
@@ -210,6 +209,7 @@ const Modal = styled.div`
   /* position: absolute;
   right: 10px;
   bottom: 40px; */
+  width: min-content;
   z-index: 11;
   background-color: ${system.color.neutral};
   display: flex;
@@ -224,36 +224,6 @@ const Modal = styled.div`
     h3 {
       font-size: 1.6rem;
       margin-bottom: 10px;
-    }
-  }
-`
-
-const Container = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  opacity: 1;
-  background: hsla(0, 1%, 36%, 0.72);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0s, z-index 0s, opacity 0.5s linear;
-
-  & > div {
-    transition: transform 0.3s linear;
-  }
-
-  &.hidden {
-    z-index: -1;
-    opacity: 0;
-    transition: z-index 0.9s, opacity 0.5s linear;
-
-    & > div {
-      transform: scaleY(0);
-      transition: transform 0.5 linear;
     }
   }
 `
