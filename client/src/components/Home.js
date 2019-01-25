@@ -12,7 +12,6 @@ import Footer from './Footer'
 
 const Home = () => {
   const width = window.innerWidth
-  console.log(width)
   return (
     <OuterContainer>
       <BreadCrumb location="Home" />
