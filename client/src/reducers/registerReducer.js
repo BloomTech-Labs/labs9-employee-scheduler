@@ -3,7 +3,8 @@ import {
   REGISTER_AS_OWNER_FAIL,
   REGISTER_RESET,
   SET_REDIRECT_FLAG_TO_TRUE,
-  SET_REDIRECT_FLAG_TO_FALSE
+  SET_REDIRECT_FLAG_TO_FALSE,
+  LOGOUT
 } from '../actions'
 
 const initialState = {
@@ -24,6 +25,8 @@ export const registerReducer = (state = initialState, action) => {
       return { ...state, redirect: true }
     case SET_REDIRECT_FLAG_TO_FALSE:
       return { ...state, redirect: false }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }
