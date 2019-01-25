@@ -69,6 +69,23 @@ class Checkbox extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (this.props.off) {
+      this.setState({ toggled: true })
+    } else {
+      this.setState({ toggled: false })
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.off !== this.props.off) {
+      if (this.props.off) {
+        this.setState({ toggled: true })
+      } else {
+        this.setState({ toggled: false })
+      }
+    }
+  }
+
   render() {
     const {
       state: { toggled },
