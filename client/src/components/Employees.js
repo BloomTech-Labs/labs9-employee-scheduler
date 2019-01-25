@@ -3,20 +3,20 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-
 import { fetchEmployeesFromDB } from '../actions'
 import { connect } from 'react-redux'
-
 import Card from './EmployeeCard/Card'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
 import AddEmployee from './AddEmployee'
 import AvailabilityForm from './Availability/AvailabilityForm'
+import Button from './common/Button'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
   state = {
-    availTarget: null
+    availTarget: null,
+    show: false
   }
   componentDidMount() {
     const { org_id, token, fetchEmployeesFromDB } = this.props
@@ -27,16 +27,24 @@ class Employees extends Component {
     this.setState({ availTarget: user })
   }
 
+  show = event => {
+    event.preventDefault()
+    this.setState({
+      show: !this.state.show
+    })
+  }
+
   render() {
     const { employees } = this.props
     const { availTarget } = this.state
     return (
-      <OuterContainer>
+      <OuterContainer location="Employees ">
         <BreadCrumb location="Employees" />
-        <LeftSideBar />
+        <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
-          <AddEmployee />
+          <Button onClick={this.show}>Add Employee</Button>
+          <AddEmployee show={this.state.show} />
           <InnerContainer>
             {availTarget ? (
               <div>
@@ -68,6 +76,7 @@ const MidContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   margin: ${system.spacing.container};
+  margin-top: 75px;
   position: relative;
 `
 

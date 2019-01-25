@@ -34,7 +34,7 @@ class LeftSideBar extends Component {
     const { toggleShow } = this
     const { role } = this.props.auth.user
     return (
-      <Container>
+      <Container fixed={this.props.fixed ? true : false}>
         <Hamburger classname="hamburger" onClick={() => toggleShow()}>
           &#9776;
         </Hamburger>
@@ -83,7 +83,7 @@ LeftSideBar.propTypes = {
 }
 
 const Container = styled.nav`
-  position: absolute;
+  position: ${props => (props.fixed ? 'fixed' : 'absolute')};
   z-index: 101;
   top: 0;
 `

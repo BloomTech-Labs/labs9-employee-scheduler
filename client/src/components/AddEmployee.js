@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import Fade from 'react-reveal/Fade'
 import { connect } from 'react-redux'
@@ -14,12 +15,39 @@ class AddEmployee extends Component {
     super(props)
     this.state = {
       show: false,
+      updateFlag: false,
       newUser: {
         email: '',
         name: '',
         role: ''
       }
     }
+  }
+
+  componentWillUpdate() {
+    if (!this.state.updateFlag) {
+      this.setState({
+        show: this.props.show,
+        updateFlag: true
+      })
+    }
+  }
+
+  toggleShow = () => {
+    if (this.state.show) {
+      this.setState({
+        newUser: {
+          email: '',
+          name: '',
+          role: ''
+        }
+      })
+      document.querySelector('form').reset()
+    }
+    this.setState({
+      show: !this.state.show,
+      updateFlag: !this.state.updateFlag
+    })
   }
 
   changeHandler = event => {
@@ -40,72 +68,64 @@ class AddEmployee extends Component {
       name: name
     }
 
-    if (role === 'supervisor') {
-      axios
-        .post(
-          `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
-          newUser,
-          {
-            headers: { authorization: token }
-          }
-        )
-        .then(res => {
-          alert(`We've sent an invite to employee: ${name}.`)
-          this.toggleShow()
-        })
-        .catch(err => alert(`Something has gone wrong. Try again!`))
+    if (!email || !name) {
+      alert('Please fill out all fields!')
     } else {
-      const intendedRole = this.state.newUser.role
-      axios
-        .post(
-          `${process.env.REACT_APP_SERVER_URL}/invites/invite-${intendedRole}`,
-          newUser,
-          {
-            headers: { authorization: token }
-          }
-        )
-        .then(res => {
-          alert(`We've sent an invite to ${intendedRole}: ${name}.`)
-          this.toggleShow()
-        })
-        .catch(err => alert(`Something has gone wrong. Try again!`))
-    }
-  }
-
-  componentWillUnmount() {
-    // cleans up the event listener for handling clicks outside the nav
-    if (this.state.show) {
-      document.removeEventListener('click', this.toggleShow)
-    }
-  }
-
-  toggleShow = () => {
-    this.setState({ show: !this.state.show })
-    if (this.state.show) {
-      this.setState({
-        newUser: {
-          email: '',
-          name: '',
-          role: ''
+      if (role === 'supervisor') {
+        axios
+          .post(
+            `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
+            newUser,
+            {
+              headers: { authorization: token }
+            }
+          )
+          .then(res => {
+            alert(`We've sent an invite to employee: ${name}.`)
+            this.toggleShow()
+          })
+          .catch(err => alert(`Something has gone wrong. Try again!`))
+      } else {
+        if (!this.state.newUser.role) {
+          alert(`Please indicate the new user's role.`)
+        } else {
+          const intendedRole = this.state.newUser.role
+          axios
+            .post(
+              `${
+                process.env.REACT_APP_SERVER_URL
+              }/invites/invite-${intendedRole}`,
+              newUser,
+              {
+                headers: { authorization: token }
+              }
+            )
+            .then(res => {
+              alert(`We've sent an invite to ${intendedRole}: ${name}.`)
+              this.toggleShow()
+            })
+            .catch(err => alert(`Something has gone wrong. Try again!`))
         }
-      })
-      document.querySelector('form').reset()
+      }
     }
   }
 
   render() {
-    const { toggleShow } = this
     const { role } = this.props
     return (
-      <Container>
-        <button id="add-employee" onClick={() => toggleShow()}>
-          +
-        </button>
-
-        <Fade right when={this.state.show}>
-          <Form show={this.state.show} onSubmit={this.submitHandler}>
+      <Modal show={this.state.show}>
+        <Container>
+          <h1 />
+          <h1 />
+          <form onSubmit={this.submitHandler}>
+            <h6 id="instructions">
+              Fill this out and we'll send your employee a sign-up email!
+            </h6>
+            <p className="delete" onClick={this.toggleShow}>
+              ✕
+            </p>
             <label htmlFor="name">Employee Name</label>
-            <input
+            <Input
               type="name"
               id="name"
               name="name"
@@ -113,9 +133,10 @@ class AddEmployee extends Component {
               onChange={this.changeHandler}
               value={this.props.value}
               aria-label="name"
+              required
             />
             <label htmlFor="email">Employee Email</label>
-            <input
+            <Input
               type="email"
               id="email"
               name="email"
@@ -124,12 +145,13 @@ class AddEmployee extends Component {
               value={this.props.value}
               checked={this.props.checked}
               aria-label="email"
+              required
             />
             {role === 'owner' ? (
               <>
                 <label htmlFor="role">Employee Role</label>
                 <div className="radio">
-                  <input
+                  <Input
                     type="radio"
                     id="emp"
                     name="role"
@@ -140,7 +162,7 @@ class AddEmployee extends Component {
                   <label htmlFor="emp"> Employee</label>
                 </div>
                 <div className="radio">
-                  <input
+                  <Input
                     type="radio"
                     id="sup"
                     name="role"
@@ -151,17 +173,12 @@ class AddEmployee extends Component {
                 </div>
               </>
             ) : null}
-            <Button
-              type="submit"
-              data-test="submit"
-              onClick={() => this.setState({ submit: true })}
-            >
+            <Button type="submit" data-test="submit">
               Send Invite
             </Button>
-            {/* tried to add a cancel button, but it wouldn't work */}
-          </Form>
-        </Fade>
-      </Container>
+          </form>
+        </Container>
+      </Modal>
     )
   }
 }
@@ -177,89 +194,26 @@ AddEmployee.propTypes = {
   // add propTypes here
 }
 
-const Container = styled.div`
-  position: absolute;
-  margin: auto -7.5rem;
-  top: 2.5rem;
-  right: 0;
-  width: 20%;
-  z-index: 100;
-
-  #add-employee {
-    height: 50px;
-    width: 50px;
-    border-radius: 50px;
-    border: ${system.borders.transparent};
-    outline: none;
-    font-size: ${system.fontSizing.ml};
-    box-shadow: ${system.shadows.button};
-    color: ${system.color.white};
-    background: ${system.color.primary};
-    transition: ${system.transition};
-    position: absolute;
-    top: 0;
-    right: 10rem;
-    cursor: pointer;
-    :hover {
-      border: 1px solid ${system.color.primary};
-      box-shadow: ${system.shadows.buttonHoverLight};
-      color: ${system.color.primary};
-      background: ${system.color.white};
-    }
-  }
-`
-
-const Form = styled.form`
-  visibility: ${props => (props.show ? null : 'hidden')};
-  display: flex;
-  flex-flow: column nowrap;
-  background: ${system.color.white};
-  padding: ${system.spacing.bigPadding};
-  box-shadow: ${system.shadows.other};
-  width: 100%;
-  border: 1px solid ${system.color.primary};
-  border-right: none;
-  border-radius: ${system.borders.radius};
-  right: 0;
-  top: 7rem;
+const Modal = styled.div`
+  display: ${props => (props.show ? null : 'none')};
+  position: fixed;
+  top: 75px;
+  width: 100vw;
+  height: 100vh;
   z-index: 200;
-  position: absolute;
+  background: ${system.color.bodytext};
+  opacity: 0.98;
 
-  label {
-    font-size: ${system.fontSizing.s};
-    padding: 0 5px;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    color: ${system.color.captiontext};
-  }
+  .delete {
+    position: absolute;
+    font-size: ${system.fontSizing.m};
+    top: 2.5rem;
+    right: 2.5rem;
+    color: ${system.color.lightgrey};
+    cursor: pointer;
 
-  input {
-    font-size: ${system.fontSizing.sm};
-    color: ${system.color.bodytext};
-    padding: 2.5px 5px;
-    margin: 0.5rem 0 ${system.spacing.hugePadding};
-    border: none;
-    border-bottom: 2px solid #d2d2d2;
-    transition: ${system.transition};
-    width: 100%;
-    :focus {
-      border-bottom: 2px solid ${system.color.primary};
+    :hover {
+      color: ${system.color.danger};
     }
-  }
-  input[type='radio'] {
-    width: auto;
-    margin: 10px 10px 40px;
-    :first-of-type {
-      margin-bottom: 10px;
-    }
-  }
-
-  input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
-    box-shadow: 0 0 0px 1000px white inset;
-  }
-
-  button {
-    margin-top: 1rem;
   }
 `

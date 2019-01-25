@@ -38,12 +38,12 @@ const Container = styled('div')`
   background-color: ${system.color.neutralDark};
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
     background: ${system.color.lightgrey};
-    width: 8px;
+    width: 4px;
     border-radius: 50px;
   }
 `

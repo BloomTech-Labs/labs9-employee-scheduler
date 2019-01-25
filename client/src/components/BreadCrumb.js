@@ -20,7 +20,7 @@ const BreadCrumb = props => {
 
   if (props.location !== 'Home') {
     breadContent = (
-      <Nav fixed={false}>
+      <Nav fixed={props.location === 'Employees' ? true : false}>
         <Container logo>
           <LinkItem to="/">
             <img src={logo2} alt="logo" />
