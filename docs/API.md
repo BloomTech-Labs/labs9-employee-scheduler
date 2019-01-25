@@ -1,5 +1,8 @@
 ### API Documentation
 
+
+#### Organization Routes
+
 GET `/organizations/:id`
 
 Returns the information for an organization. 
@@ -39,9 +42,16 @@ Delete an organization.
 
 Access control: owners.
 
-#### Organization Routes
 
 #### User Routes
+
+GET `/users/` --> DEPRECATE?
+
+Get all users.
+
+Access control
+
+
 
 #### Availability Routes
 

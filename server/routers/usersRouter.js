@@ -13,11 +13,11 @@ const uuid = require('uuid/v4') // need here for optimizing creation of org with
 const authorize = require('../config/customMiddleware/authorize')
 
 // this should only be accessable by db admins, not even owners
-router.get('/', authorize(['all']), (req, res) => {
-  getUsers()
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(404).json(err))
-})
+// router.get('/', authorize(['all']), (req, res) => {
+//   getUsers()
+//     .then(users => res.status(200).json(users))
+//     .catch(err => res.status(404).json(err))
+// })
 
 // return info for the authenticated user
 router.post('/current', authorize(['all']), async (req, res) => {
