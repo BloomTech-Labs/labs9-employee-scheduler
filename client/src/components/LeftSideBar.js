@@ -50,7 +50,7 @@ class LeftSideBar extends Component {
             {/* render employees and shift-calender for supervisors and above */}
             {role === 'supervisor' || role === 'owner' ? (
               <>
-                <NavItem to="/employees">Employees</NavItem>
+                <NavItem to="/employees">Employee List</NavItem>
                 <NavItem to="/shift-calendar">Create Schedule</NavItem>
               </>
             ) : null}
