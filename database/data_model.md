@@ -7,6 +7,9 @@
   id: UUID
   name: STRING
   description: STRING
+  paid: BOOLEAN
+  customer_id: STRING
+  subscription_id: STRING
 }
 ```
 
@@ -21,6 +24,8 @@
   role: STRING [ 'owner', 'supervisor', 'employee' ]
   email: STRING
   phone: STRING
+  emailpref: BOOLEAN
+  phonepref: BOOLEAN
 }
 ```
 
@@ -28,12 +33,12 @@
 ---
 ```
 {
-  id: uuid
+  id: UUID
   user_id: UUID foreign key in USERS table
   day: INTEGER [ 0- 6 ]
-  start_time: FLOAT [ 0 - 23]
-  end_time: FLOAT [ 0 - 23]
-  off: boolean
+  start_time: FLOAT [ 0 - 23 ]
+  end_time: FLOAT [ 0 - 23 ]
+  off: BOOLEAN
 }
 ```
 
@@ -64,10 +69,25 @@
 ---
 ```
 {
-  id: uuid of organization
-  day: STRING
-  open: INTEGER [ 0 - 23]
-  close: INTEGER [ 0 - 23] 
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  day: INTEGER [ 0 -6 ]
+  open: FLOAT [ 0 - 23]
+  close: FLOAT [ 0 - 23] 
+  closed: BOOLEAN
+}
+```
+
+#### INVITES
+---
+```
+{
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  inviter_id: UUID foreign key in USERS table
+  name: STRING
+  email: STRING
+  role: STRING [ 'supervisor', 'employee' ]
 }
 ```
 
