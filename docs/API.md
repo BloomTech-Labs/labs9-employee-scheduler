@@ -2,7 +2,7 @@
 
 #### Organization Routes
 
-GET `/organizations/:id`
+GET `/organizations/:orgId`
 
 Returns the information for an organization. 
 
@@ -17,13 +17,13 @@ Access control: owners.
 
 Status: to be deprecated?
 
-PUT `/organizatoins/:id`
+PUT `/organizatoins/:orgId`
 
 Modify an existing organization.
 
 Access control: owners.
 
-DELETE `/organizations/:id` --> DEPRECATE?
+DELETE `/organizations/:orgId` --> DEPRECATE?
 
 Delete an organization. 
 
@@ -38,13 +38,13 @@ Returns info for the logged in user.
 
 Access control: all users.
 
-GET `/org/:id`
+GET `/org/:userId`
 
 Returns all users for an organization.
 
 Access control: owners and supervisors.
 
-GET `/:id`
+GET `/:userId`
 
 Returns info for a single user.
 
@@ -71,13 +71,13 @@ Adds a new availability for a user
 
 Access control: all
 
-PUT `/availabilities/:id`
+PUT `/availabilities/:availId`
 
 Modifies an availability.
 
 Access control: all
 
-DELETE `/availabilities/:id` --> DEPRECATE? (because we can just set to no avail for a given day)
+DELETE `/availabilities/:availId` --> DEPRECATE? (because we can just set to no avail for a given day)
 
 Access control: all
 
@@ -93,36 +93,82 @@ POST `/time-off-requests/:userId`
 
 Access control: all
 
-PUT `/time-off-requests/:id`
+PUT `/time-off-requests/:requestId`
 
 Access control: all
 
-DELETE `/time-off-requests/:id`
+DELETE `/time-off-requests/:requestId`
 
 Access control: owners and supervisors
 
 
 #### Events Routes
 
-server.use('/events', eventsRouter)
+GET `/events/:userId` 
+
+Access control: all
+
+GET `/events/organization/:orgId`
+
+Access control: owner, supervisor
+
+POST `/events/`
+
+Access control: owner, supervisor
+
+PUT `/events/:eventId`
+
+Access control: owner, supervisor
+
+DELETE `/events/:eventId`
+
+Access control: owner, supervisor
 
 
 #### Dashboard Routes
 
-server.use('/dashboard', dashboardRouter)
+GET `/dashboard/:userId` 
+
+Returns all information for the dashboard
+
+Access control: all
 
 
 #### Stripe Routes
 
-server.use('/stripe', paymentRouter)
+POST `/stripe`
+
+Access control: owner
+
+PUT `/stripe`
+
+Access control: owner
 
 
 #### Hours of Operation Routes
 
-server.use('/hours-of-operation', hoursOfOperationRouter)
+GET `/hours-of-operation/:orgId`
+
+Access control: all
+
+PUT `/hours-of-operation/:hourId`
+
+Access control: owner, supervisor
 
 
 #### Invites routes
 
-server.use('/invites', invitesRouter)
+POST `/invites/invite-supervisor` 
+
+Access control: owner
+
+POST `/invites/invite-employee` 
+
+Access control: owner, supervisor
+
+POST `/invites/register/:inviteId` 
+
+Register in response to an invite.
+
+No access control
 
