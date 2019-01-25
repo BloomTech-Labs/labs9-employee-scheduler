@@ -38,7 +38,7 @@ class LeftSideBar extends Component {
         <Hamburger classname="hamburger" onClick={() => toggleShow()}>
           &#9776;
         </Hamburger>
-        <Fade left when={this.state.show}>
+        <Fade left when={this.state.show} duration={500}>
           <Nav show={this.state.show}>
             {/* render the uneditable calendar page for employees */}
             {role === 'employee' ? (
