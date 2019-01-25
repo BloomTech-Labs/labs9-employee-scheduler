@@ -3,14 +3,14 @@ const uuid = require('uuid/v4')
 
 // for time_off_requests by user
 const getTimeOffRequests = userId => {
-  return db('time_off_requests as t')
-    .where({ 't.user_id': userId })
-    .first()
+  return db('time_off_requests as t').where({ 't.user_id': userId })
 }
 
 // gets time off request by id
 const getTimeOffRequest = id => {
-  return db('time_off_requests as t').where({ 't.id': id })
+  return db('time_off_requests as t')
+    .where({ 't.id': id })
+    .first()
 }
 
 // request is object returns new id
