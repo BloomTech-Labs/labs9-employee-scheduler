@@ -58,9 +58,9 @@ class LeftSideBar extends Component {
             {role === 'owner' ? <NavItem to="/billing">Billing</NavItem> : null}
             {/* render settings page for all */}
             <NavItem to="/settings">Settings</NavItem>
-            <button id="logout" onClick={this.props.logout}>
+            <a id="logout" onClick={this.props.logout}>
               Log Out
-            </button>
+            </a>
           </Nav>
         </Fade>
       </Container>
@@ -108,8 +108,7 @@ const Nav = styled.nav`
   position: absolute;
   visibility: ${props => (props.show ? null : 'hidden')};
 
-  a,
-  button {
+  a {
     cursor: pointer;
     text-decoration: none;
     padding: ${system.spacing.standardPadding};
