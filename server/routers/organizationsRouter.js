@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getOrgs,
   getOrg,
   addOrg,
   updateOrg,
@@ -9,12 +8,6 @@ const {
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
-
-router.get('/', authorize(['owner']), (req, res) => {
-  getOrgs()
-    .then(orgs => res.status(200).json(orgs))
-    .catch(err => res.status(500).json(err))
-})
 
 router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
