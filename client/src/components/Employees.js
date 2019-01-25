@@ -3,20 +3,21 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-
 import { fetchEmployeesFromDB } from '../actions'
 import { connect } from 'react-redux'
-
 import Card from './EmployeeCard/Card'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
 import AddEmployee from './AddEmployee'
 import AvailabilityForm from './Availability/AvailabilityForm'
+import Button from './common/Button'
+import Modal from './Modal'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
   state = {
-    availTarget: null
+    availTarget: null,
+    show: false
   }
   componentDidMount() {
     const { org_id, token, fetchEmployeesFromDB } = this.props
@@ -27,24 +28,46 @@ class Employees extends Component {
     this.setState({ availTarget: user })
   }
 
+  turnOffEditAvailability = () => {
+    this.setState({ availTarget: null })
+  }
+
+  toggleShow = () => {
+    this.setState({
+      show: !this.state.show
+    })
+  }
+
   render() {
     const { employees } = this.props
     const { availTarget } = this.state
     return (
-      <OuterContainer>
+      <OuterContainer location="Employees ">
         <BreadCrumb location="Employees" />
-        <LeftSideBar />
+        <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
-          <AddEmployee />
+          <Button onClick={this.toggleShow}>Add Employee</Button>
+          <Modal show={this.state.show} toggleShow={this.toggleShow}>
+            <AddEmployee />
+          </Modal>
           <InnerContainer>
-            {availTarget ? (
-              <div>
-                <p>{availTarget.first_name}</p>
-                <AvailabilityForm id={availTarget.id} />
-              </div>
-            ) : null}
-
+            <Modal
+              show={Boolean(availTarget)}
+              toggleShow={this.turnOffEditAvailability}
+              availTarget={availTarget}
+            >
+              {({ toggleShow, Close, availTarget }) =>
+                availTarget ? (
+                  <AvailabilityForm
+                    id={availTarget.id}
+                    Close={Close}
+                    first_name={availTarget.first_name}
+                    toggleShow={toggleShow}
+                  />
+                ) : null
+              }
+            </Modal>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
               employees
@@ -68,6 +91,7 @@ const MidContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   margin: ${system.spacing.container};
+  margin-top: 75px;
   position: relative;
 `
 
