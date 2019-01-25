@@ -66,21 +66,21 @@ router.get('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
 // i'll leave the generic post here for now
 
 // generic post leaving for now
-router.post('/', authorize(['owner', 'supervisor']), async (req, res) => {
-  const { organization_id, first_name, last_name, role } = req.body
+// router.post('/', authorize(['owner', 'supervisor']), async (req, res) => {
+//   const { organization_id, first_name, last_name, role } = req.body
 
-  if (!organization_id || !first_name || !last_name || !role) {
-    res.status(400).json({ error: 'Missing required field(s)' })
-  }
+//   if (!organization_id || !first_name || !last_name || !role) {
+//     res.status(400).json({ error: 'Missing required field(s)' })
+//   }
 
-  try {
-    const success = await addUser(req.body)
-    res.status(201).json(success)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error' })
-  }
-})
+//   try {
+//     const success = await addUser(req.body)
+//     res.status(201).json(success)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ error: 'Server error' })
+//   }
+// })
 
 // post owner and org
 // no authorization required to create new account
