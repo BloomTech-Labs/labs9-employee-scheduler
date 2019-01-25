@@ -11,7 +11,7 @@ const {
 
 const authorize = require('../config/customMiddleware/authorize')
 
-// getAvailability, takes in user id and constraints object (start, end itmes)
+// getAvailability, takes in user id
 router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { constraints } = req.body

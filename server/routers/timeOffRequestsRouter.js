@@ -2,19 +2,19 @@ const express = require('express')
 const router = express.Router()
 const {
   getTimeOffRequests,
-  getTimeOffRequest,
   addTimeOffRequest,
   updateTimeOffRequest,
   deleteTimeOffRequest,
-  getTimeOffRequestsForOrg
+  getTimeOffRequestsForOrg,
+  getTimeOffRequest
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
 
-//get time off request
-router.get('/:id', authorize(['all']), (req, res) => {
-  const { id } = req.params
-  getTimeOffRequests(id)
+// get time off requests for user
+router.get('/:userId', authorize(['all']), (req, res) => {
+  const { userId } = req.params
+  getTimeOffRequests(userId)
     .then(request => res.status(200).json(request))
     .catch(err =>
       res.status(404).json({ message: 'Error getting time off requests', err })
@@ -22,32 +22,18 @@ router.get('/:id', authorize(['all']), (req, res) => {
 })
 
 //add time off request
-router.post('/:id', authorize(['all']), (req, res) => {
-  // get user id from params
-  const { id } = req.params
-
-  // date of request and reason
+router.post('/:userId', authorize(['all']), (req, res) => {
+  const { userId } = req.params
   const { date, reason } = req.body
-
-  // validate both
-  if (!date || !reason) {
+  console.log(req.body)
+  if (!date || !reason)
     return res.status(400).json({ error: 'Missing required field(s)' })
-  }
 
-  addTimeOffRequest({ user_id: id, date, reason, status: 'pending' })
-    .then(id => {
-      console.log(id)
-      return getTimeOffRequest(id)
-    })
-    .then(request => {
-      if (request) {
-        return res.status(200).json(request)
-      } else {
-        return res.status(500).json({ error: 'something went wrong' })
-      }
-    })
+  addTimeOffRequest({ user_id: userId, date, reason, status: 'pending' })
+    .then(request => res.status(200).json(request))
     .catch(err => {
-      return res.status(500).json({ error: 'Error with request', err })
+      console.log(err)
+      res.status(404).json({ error: 'Error with request', err })
     })
 })
 
@@ -55,9 +41,11 @@ router.post('/:id', authorize(['all']), (req, res) => {
 router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   // const { status } = req.body
+  console.log(req.body)
 
   updateTimeOffRequest(id, req.body)
     .then(result => {
+      console.log(result)
       return getTimeOffRequest(id)
     })
     .then(result => res.status(200).json(result))
@@ -70,10 +58,10 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 })
 
 //delete time off request
-router.delete('/:id', authorize(['all']), (req, res) => {
+router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
-    .then(result => res.status(200).json(result))
+    .then(res => res.status(200).json(res))
     .catch(err =>
       res.status(404).json({ error: 'Error deleting request', err })
     )

@@ -1,6 +1,5 @@
 ### API Documentation
 
-
 #### Organization Routes
 
 GET `/organizations/:id`
@@ -9,18 +8,6 @@ Returns the information for an organization.
 
 Access control: all users.
 
-Response: 
-
-```
-{
-  "id": "9126df31-2607-4166-9c0c-d0a300c59c62",
-  "name": "Cadence",
-  "description": "Adipisci beatae amet qui sed porro totam voluptates voluptatem.",
-  "paid": null,
-  "customer_id": null,
-  "subscription_id": null
-}
-```
 
 POST `/organizations/` --> DEPRECATE?
 
@@ -72,15 +59,70 @@ No access control.
 
 #### Availability Routes
 
+GET `/availabilities/:userId` 
+
+Returns all availabilities for a given user.
+
+Access control: all
+
+POST `/availabilities/:userId` --> DEPRECATE? (because already 7 per user?)
+
+Adds a new availability for a user
+
+Access control: all
+
+PUT `/availabilities/:id`
+
+Modifies an availability.
+
+Access control: all
+
+DELETE `/availabilities/:id` --> DEPRECATE? (because we can just set to no avail for a given day)
+
+Access control: all
+
 #### Time Off Request Routes
+
+GET `/time-off-requests/:userId`
+
+Returns all time off requests for a given user.
+
+Access control: all
+
+POST `/time-off-requests/:userId`
+
+Access control: all
+
+PUT `/time-off-requests/:id`
+
+Access control: all
+
+DELETE `/time-off-requests/:id`
+
+Access control: owners and supervisors
+
 
 #### Events Routes
 
+server.use('/events', eventsRouter)
+
+
 #### Dashboard Routes
+
+server.use('/dashboard', dashboardRouter)
+
 
 #### Stripe Routes
 
+server.use('/stripe', paymentRouter)
+
+
 #### Hours of Operation Routes
 
+server.use('/hours-of-operation', hoursOfOperationRouter)
+
+
 #### Invites routes
+
+server.use('/invites', invitesRouter)
 
