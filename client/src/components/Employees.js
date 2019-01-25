@@ -28,7 +28,6 @@ class Employees extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { employees } = this.props
     const { availTarget } = this.state
     return (
