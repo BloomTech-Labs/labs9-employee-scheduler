@@ -5,12 +5,16 @@ import system from '../../design/theme'
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  position: absolute;
+  right: 134px;
+  border-radius: 25px 0 0 25px;
+  bottom: 20px;
+  width: 83px;
+  padding: 7px;
+  padding-left: 20px;
+  background: white;
   justify-content: space-between;
-  p {
-    font-size: ${system.fontSizing.s};
-    margin-bottom: 10px;
-  }
+  z-index: -1;
 `
 
 const Container = styled.div`
@@ -75,7 +79,6 @@ class Checkbox extends React.Component {
     } = this
     return (
       <Wrapper>
-        <p>{toggled ? 'Closed' : 'Open'}</p>
         <Container>
           <input
             type="checkbox"

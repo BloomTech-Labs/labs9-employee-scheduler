@@ -44,8 +44,7 @@ const authenticate = (req, res, next) => {
         return next()
       })
       .catch(function(error) {
-        console.log('auth error', error)
-        return res.status(403).json({ error: 'Did not authenticate' })
+        return res.status(403).json({ error: 'Did not authenticate' }, error)
       })
   } else {
     return res.status(403).json({ error: 'Did not authenticate' })

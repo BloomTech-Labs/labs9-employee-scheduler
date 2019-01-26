@@ -160,23 +160,6 @@ class HoursOfOperation extends Component {
             )
           })}
         </div>
-        {this.state.isOpen === true ? (
-          <Fade top duration={100}>
-            <Timekeeper
-              name="open"
-              saveAndClose={this.saveOpenTime}
-              day={`Open time`}
-            />
-          </Fade>
-        ) : this.state.isClose === true ? (
-          <Fade top>
-            <Timekeeper
-              name="close"
-              saveAndClose={this.saveCloseTime}
-              day={`Close time`}
-            />
-          </Fade>
-        ) : null}
       </Modal>
     )
   }
@@ -209,7 +192,7 @@ const Modal = styled.div`
   /* position: absolute;
   right: 10px;
   bottom: 40px; */
-  width: min-content;
+  width: 173px;
   z-index: 11;
   background-color: ${system.color.neutral};
   display: flex;

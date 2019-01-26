@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Fade from 'react-reveal'
+import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
+import TimeSlider from './TimeSlider'
 
 const Button = ({
   handleHours,
@@ -18,19 +19,18 @@ const Button = ({
         {name}
       </button>
       {day === true ? (
-        <Fade top>
-          <div className="buttons">
-            <button id={id} onClick={handleHours} name="open">
-              open
-            </button>
-            <button id={id} onClick={handleHours} name="close">
-              close
-            </button>
-          </div>
-          <div className="container">
-            <Checkbox closedAllDay={closedAllDay} />
-          </div>
-        </Fade>
+        <>
+          <Zoom left>
+            <div className="buttons">
+              <TimeSlider />
+            </div>
+          </Zoom>
+          <Zoom right>
+            <div className="container">
+              <Checkbox closedAllDay={closedAllDay} />
+            </div>
+          </Zoom>
+        </>
       ) : null}
     </Container>
   )
@@ -51,6 +51,7 @@ const Container = styled('div')`
     box-shadow: ${system.shadows.button};
     padding: ${system.spacing.standardPadding};
     margin-bottom: 10px;
+    width: 100px;
     cursor: pointer;
     &:hover {
       background: ${system.color.button};
@@ -58,10 +59,15 @@ const Container = styled('div')`
     }
   }
   .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    position: absolute;
+    margin-top: -2px;
+    margin-left: 139px;
+    width: 177px;
+    background: white;
+    padding: 12px;
+    padding-right: 25px;
+    border-radius: 0 25px 25px 0;
+    z-index: -1;
     button {
       cursor: pointer;
       margin: 5px;

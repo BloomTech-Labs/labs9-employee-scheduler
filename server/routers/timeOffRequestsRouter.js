@@ -36,7 +36,6 @@ router.post('/:id', authorize(['all']), (req, res) => {
 
   addTimeOffRequest({ user_id: id, date, reason, status: 'pending' })
     .then(id => {
-      console.log(id)
       return getTimeOffRequest(id)
     })
     .then(request => {
