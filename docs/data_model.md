@@ -111,7 +111,7 @@
 
 `getUser(userId)`
 
-`addUser(user object)`
+`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
 
 `updateUser(userId, changes object)`
 
