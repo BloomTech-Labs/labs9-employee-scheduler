@@ -74,8 +74,6 @@ class HoursOfOperation extends Component {
         },
         dayId: hours[idx].id //keep the data for this day on state
       })
-    } else {
-      console.log('No hours in database')
     }
   }
 
@@ -127,11 +125,6 @@ class HoursOfOperation extends Component {
         checked: !prevState.checked.set(item, isChecked)
       }
     })
-  }
-
-  handleCheck = e => {
-    e.persist()
-    console.log(e.target)
   }
 
   render() {
