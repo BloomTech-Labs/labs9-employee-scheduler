@@ -25,7 +25,7 @@ const Button = ({
         <>
           <Zoom left>
             <div className="buttons">
-              <TimeSlider disabled={disabled} />
+              <TimeSlider disabled={disabled} name={name} />
             </div>
           </Zoom>
           <Zoom right>
