@@ -7,6 +7,9 @@
   id: UUID
   name: STRING
   description: STRING
+  paid: BOOLEAN
+  customer_id: STRING
+  subscription_id: STRING
 }
 ```
 
@@ -21,6 +24,8 @@
   role: STRING [ 'owner', 'supervisor', 'employee' ]
   email: STRING
   phone: STRING
+  emailpref: BOOLEAN
+  phonepref: BOOLEAN
 }
 ```
 
@@ -28,12 +33,12 @@
 ---
 ```
 {
-  id: uuid
+  id: UUID
   user_id: UUID foreign key in USERS table
   day: INTEGER [ 0- 6 ]
-  start_time: FLOAT [ 0 - 23]
-  end_time: FLOAT [ 0 - 23]
-  off: boolean
+  start_time: FLOAT [ 0 - 23 ]
+  end_time: FLOAT [ 0 - 23 ]
+  off: BOOLEAN
 }
 ```
 
@@ -64,16 +69,35 @@
 ---
 ```
 {
-  id: uuid of organization
-  day: STRING
-  open: INTEGER [ 0 - 23]
-  close: INTEGER [ 0 - 23] 
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  day: INTEGER [ 0 -6 ]
+  open: FLOAT [ 0 - 23]
+  close: FLOAT [ 0 - 23] 
+  closed: BOOLEAN
+}
+```
+
+#### INVITES
+---
+```
+{
+  id: UUID
+  organization_id: UUID foreign key in ORGANIZATIONS table
+  inviter_id: UUID foreign key in USERS table
+  name: STRING
+  email: STRING
+  role: STRING [ 'supervisor', 'employee' ]
 }
 ```
 
 ## actions
 
+`insertHoursForNewOrg()` -> used for seed generation
+
 `getOrgs()`
+
+`getOrg(orgId)`
 
 `addOrg(org)` -> Returns the created org
 
@@ -85,7 +109,9 @@
 
 `getUsers(orgId)` --> if no param all users
 
-`addUser(orgId, user object)`
+`getUser(userId)`
+
+`addUser(user object)`
 
 `updateUser(userId, changes object)`
 
@@ -93,9 +119,9 @@
 
 <br>
 
-`getAvailabilities(userId, constraint object)` --> default to showing next week
+`getAvailabilities(userId)` --> gets all availabilties for a user
 
-`getAvailability(userId, day)` --> gets a singe availability
+`getAvailability(availabilityId)` --> gets a singe availability
 
 `addAvailability(userId, day object)` --> adds new day
 
@@ -107,7 +133,9 @@
 
 `getTimeOffRequests(userId)`
 
-`addTimeOffRequest(userId, request object)`
+`getTimeOffRequest(requestId)`
+
+`addTimeOffRequest(request object)`
 
 `updateTimeOffRequest(timeOffRequestId, changes object)`
 
@@ -121,7 +149,9 @@
 
 `getEvents(userId)`
 
-`addEvent(userId, event object)` --> returns created event object
+`getEvent(eventId)`
+
+`addEvent(event object)` --> returns created event object
 
 `updateEvent(eventId, changes object)` --> returns the updated event object
 
@@ -130,3 +160,21 @@
 <br>
 
 `getEventsForOrg(orgId)` --> returns list of all events for all users for an org
+
+<br>
+
+`getHoursOfOperation(orgId)`
+
+`updateHoursOfOperation(hourId, updates)`
+
+`addHour(hour)`
+
+<br>
+
+`getInvite(inviteId)`
+
+`addInvite(invite object)`
+
+`updateInvite(inviteId, updates object)`
+
+`deleteInvite(inviteId)`
