@@ -6,36 +6,24 @@ import Checkbox from './Checkbox'
 import TimeSlider from './TimeSlider'
 import Status from './Status'
 
-const Button = ({
-  showHandleHours,
-  id,
-  day,
-  name,
-  closedAllDay,
-  status,
-  toggled,
-  disabled
-}) => {
+const Button = ({ id, name, closedAllDay, status, toggled, disabled }) => {
   return (
     <Container>
-      <button name={name} onClick={showHandleHours} className="days" id={id}>
+      <p className="days" id={id}>
         {name}
-      </button>
-      {day === true ? (
-        <>
-          <Zoom left>
-            <div className="buttons">
-              <TimeSlider disabled={disabled} name={name} />
-            </div>
-          </Zoom>
-          <Zoom right>
-            <div className="container">
-              <Checkbox closedAllDay={closedAllDay} toggled={toggled} />
-              <Status status={status} />
-            </div>
-          </Zoom>
-        </>
-      ) : null}
+      </p>
+
+      <Zoom left>
+        <div className="buttons">
+          <TimeSlider disabled={disabled} name={name} />
+        </div>
+      </Zoom>
+      <Zoom right>
+        <div className="container">
+          <Checkbox closedAllDay={closedAllDay} toggled={toggled} name={name} />
+          <Status status={status} />
+        </div>
+      </Zoom>
     </Container>
   )
 }

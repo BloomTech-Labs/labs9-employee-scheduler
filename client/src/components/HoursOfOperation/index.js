@@ -17,10 +17,7 @@ class HoursOfOperation extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpen: false, // open time clock show/hide
-      isClose: false, // close time clock show/hide
       time: '',
-      show: false, // show or hide the open/close buttons
       days: {
         // which day clock is open
         sunday: false,
@@ -49,35 +46,6 @@ class HoursOfOperation extends Component {
 
   // //opens the correct version of the timekeeper so it sends back
   //either open time or close time
-  handleHours = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (e.target.name === 'open') {
-      this.setState({ isOpen: true, isClose: false })
-    } else {
-      this.setState({ isOpen: false, isClose: true })
-    }
-  }
-
-  // slides out clock
-  showHandleHours = (e, idx) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    const { hours } = this.props.hours
-    if (Object.keys(hours).length > 0) {
-      const { days } = this.state
-      this.setState({
-        days: {
-          ...days,
-          [e.target.name]: !days[e.target.name] //change individual day
-        },
-        dayId: hours[idx].id //keep the data for this day on state
-      })
-    } else {
-      console.log('No hours in database')
-    }
-  }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
@@ -106,18 +74,17 @@ class HoursOfOperation extends Component {
   closedAllDay = (e, idx) => {
     e.preventDefault()
     e.stopPropagation()
-    const { dayId } = this.state
+    const { hours } = this.props.hours
+    //gets the id for the affected close/open day
+    const id = hours[idx].id
+    //checks if this day is open or closed and saves the boolean
     let closed
-    this.props.hours.hours[idx].closed === true
-      ? (closed = false)
-      : (closed = true)
+    hours[idx].closed === true ? (closed = false) : (closed = true)
     this.setState({
-      isOpen: false,
-      isClose: false,
       checked: !this.state.checked
     })
 
-    this.props.closeAndOpenHours(dayId, closed, this.props.token)
+    this.props.closeAndOpenHours(id, closed, this.props.token)
   }
 
   checkBox = e => {
@@ -138,6 +105,7 @@ class HoursOfOperation extends Component {
 
   render() {
     const { Close } = this.props
+    console.log(this.state.dayId)
     return (
       <Modal>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
@@ -155,7 +123,6 @@ class HoursOfOperation extends Component {
                 handleHours={this.handleHours}
                 day={this.state.days[day]}
                 name={day}
-                showHandleHours={e => this.showHandleHours(e, i)}
                 closedAllDay={e => this.closedAllDay(e, i)}
                 toggled={hours[i].closed}
                 status={hours[i].closed ? 'Open' : 'Closed'}
@@ -199,6 +166,7 @@ const Modal = styled.div`
   /* position: absolute;
   right: 10px;
   bottom: 40px; */
+  border-radius: 5px;
   width: 173px;
   z-index: 11;
   background-color: ${system.color.neutral};

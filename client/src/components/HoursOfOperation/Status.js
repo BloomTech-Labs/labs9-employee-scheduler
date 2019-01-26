@@ -2,10 +2,10 @@ import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 
-const Status = props => {
+const Status = ({ status }) => {
   return (
     <Container>
-      <p>{props.status}</p>
+      <p>{status}</p>
     </Container>
   )
 }
