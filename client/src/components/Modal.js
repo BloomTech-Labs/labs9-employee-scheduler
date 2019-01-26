@@ -18,7 +18,6 @@ class Modal extends React.Component {
     this.handleUpdate()
   }
   componentDidUpdate(prevProps) {
-    console.log(prevProps.show, this.props.show)
     if (prevProps.show !== this.props.show) {
       this.handleUpdate()
     }
