@@ -117,11 +117,20 @@ describe('/users route', () => {
         .where('id', response.body.id)
         .first()
       expect(dbUser).toMatchObject(newUser)
-      const dates = await knex('availabilities').where(
-        'user_id',
-        response.body.id
-      )
+      const dates = await knex('availabilities')
+        .where('user_id', response.body.id)
+        .orderBy('day')
       expect(dates.length).toEqual(7)
+      const hours = await knex('hours_of_operation')
+        .where('organization_id', organization.id)
+        .orderBy('day')
+      expect(hours.length).toEqual(7)
+      hours.map(({ day, close_time, open_time, closed }, i) => {
+        expect(day).toEqual(dates[i].day)
+        expect(open_time).toEqual(dates[i].start_time)
+        expect(close_time).toEqual(dates[i].end_time)
+        expect(closed).toEqual(dates[i].off)
+      })
 
       // cleans up unneeded team data after tests
       await knex('users')
