@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import { connect } from 'react-redux'
-import { getAvailability, editAvailability } from '../../actions'
+import { editAvailability } from '../../actions'
 import Button from '../common/Button'
 import AvailabilitySelect from './AvailabilitySelect'
 import Checkbox from './Checkbox'
@@ -93,12 +93,11 @@ class AvailabilityForm extends Component {
           }
           return (
             <Container key={availability.id}>
-              {/* <AvailabilitySelect />
-              handleChange={this.handleChange}
-              submit={this.props.getAvailability}
-              availability={availability}
-              /> */}
-              {/* this is the toggle to change day from "available" to "unavailable" */}
+              <AvailabilitySelect
+                handleChange={this.handleChange}
+                submit={this.props.getAvailability}
+                availability={availability}
+              />
               <Checkbox onToggle={toggle} name={name} toggled={off} />
             </Container>
           )
@@ -111,14 +110,13 @@ class AvailabilityForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    availability: state.availability.availability,
     token: state.auth.token
   }
 }
 
 export default connect(
   mapStateToProps,
-  { editAvailability, getAvailability }
+  { editAvailability }
 )(AvailabilityForm)
 
 const Container = styled('div')`

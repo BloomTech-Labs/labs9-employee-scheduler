@@ -1,10 +1,8 @@
 import React from 'react'
-import Form from '../Form/index'
 import SelectList from '../common/SelectList'
 import options from './AvailabilityOptions'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Checkbox from './Checkbox'
 import { formatHours } from '../../utils/index'
 
 const SelectContainer = styled('div')`
@@ -13,7 +11,7 @@ const SelectContainer = styled('div')`
   margin-bottom: 10px;
 `
 
-const Label = styled.label`
+const Label = styled('label')`
   padding-right: 20px;
   margin-top: 5px;
 `
@@ -22,34 +20,34 @@ const TimeContainer = styled('div')`
 `
 
 const Availability = ({ availability, handleChange, submit }) => {
-  const { day, id, start_time, end_time } = availability
+  const { day, start_time, end_time, name } = availability
   //both functions pass in the correct params depending on if it's for start or end time.
   const handleUpdateStart = e => {
     handleChange({
       availability,
       value: e.target.value,
-      property: 'startTime'
+      property: 'start_time'
     })
   }
   const handleUpdateEnd = e => {
     handleChange({
       availability,
       value: e.target.value,
-      property: 'startTime'
+      property: 'end_time'
     })
   }
   return (
-    <fieldset key={id}>
-      <legend>{day}</legend>
+    <fieldset>
+      <legend>{name}</legend>
       <SelectContainer>
         <TimeContainer>
-          <Label htmlFor={`${day}-start`}>
+          <Label htmlFor={`${name}-start`}>
             Start: {formatHours(start_time)}
           </Label>
         </TimeContainer>
         <SelectList
-          name={`${day}-start`}
-          id={`${day}-start`}
+          name={`${name}-start`}
+          id={`${name}-start`}
           value={start_time}
           //see function above
           changeHandler={handleUpdateStart}
