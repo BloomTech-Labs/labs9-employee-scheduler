@@ -28,6 +28,12 @@ class HoursOfOperation extends Component {
         friday: false,
         saturday: false
       },
+      value: {
+        start: '00:00',
+        end: '23:59'
+      },
+      openTime: null,
+      closeTime: null,
       dayId: '', // selected day id
       checked: new Map()
     }
@@ -105,7 +111,6 @@ class HoursOfOperation extends Component {
 
   render() {
     const { Close } = this.props
-    console.log(this.state.dayId)
     return (
       <Modal>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
@@ -133,6 +138,7 @@ class HoursOfOperation extends Component {
               </Button>
             )
           })}
+          <button>Submit</button>
         </div>
       </Modal>
     )

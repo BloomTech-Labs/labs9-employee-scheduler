@@ -1,7 +1,6 @@
 import React from 'react'
 import TimeRangeSlider from 'react-time-range-slider'
 import styled from '@emotion/styled'
-import moment from 'moment'
 import system from '../../design/theme'
 
 class TimeSlider extends React.Component {
@@ -10,8 +9,8 @@ class TimeSlider extends React.Component {
     this.featureRef = React.createRef()
     this.state = {
       value: {
-        start: '00:00',
-        end: '23:59'
+        start: '01:00',
+        end: '24:00'
       },
       openTime: null,
       closeTime: null
@@ -29,6 +28,7 @@ class TimeSlider extends React.Component {
   }
 
   changeCompleteHandler = newTime => {
+    // breaks object up and sets minutes to proper interval for server
     let start = newTime.start.hours + newTime.start.minutes / 60
     let newStart = start.toFixed(2)
     let end = newTime.end.hours + newTime.end.minutes / 60
@@ -46,8 +46,8 @@ class TimeSlider extends React.Component {
           disabled={this.props.disabled}
           dragableTrack={true}
           format={24}
-          minValue={'00:00'}
-          maxValue={'23:59'}
+          minValue={'01:00'}
+          maxValue={'24:00'}
           name={this.props.name}
           onChangeStart={this.changeStartHandler}
           onChangeComplete={this.changeCompleteHandler}
