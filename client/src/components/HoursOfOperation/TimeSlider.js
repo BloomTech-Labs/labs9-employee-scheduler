@@ -32,7 +32,7 @@ class TimeSlider extends React.Component {
     return (
       <Slider>
         <TimeRangeSlider
-          disabled={false}
+          disabled={this.props.disabled}
           format={24}
           maxValue={'23:59'}
           minValue={'00:00'}

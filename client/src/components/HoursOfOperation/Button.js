@@ -13,7 +13,8 @@ const Button = ({
   name,
   closedAllDay,
   status,
-  toggled
+  toggled,
+  disabled
 }) => {
   return (
     <Container>
@@ -24,7 +25,7 @@ const Button = ({
         <>
           <Zoom left>
             <div className="buttons">
-              <TimeSlider />
+              <TimeSlider disabled={disabled} />
             </div>
           </Zoom>
           <Zoom right>

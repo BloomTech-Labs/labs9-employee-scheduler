@@ -108,7 +108,9 @@ class HoursOfOperation extends Component {
     e.stopPropagation()
     const { dayId } = this.state
     let closed
-    this.props.hours.hours[idx].closed === 1 ? (closed = 0) : (closed = 1)
+    this.props.hours.hours[idx].closed === true
+      ? (closed = false)
+      : (closed = true)
     this.setState({
       isOpen: false,
       isClose: false,
@@ -145,6 +147,7 @@ class HoursOfOperation extends Component {
           <h3>Hours of Operation</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
           {Object.keys(this.state.days).map((day, i) => {
+            const { hours } = this.props.hours
             return (
               <Button
                 id={i}
@@ -154,10 +157,10 @@ class HoursOfOperation extends Component {
                 name={day}
                 showHandleHours={e => this.showHandleHours(e, i)}
                 closedAllDay={e => this.closedAllDay(e, i)}
-                toggled={this.props.hours.hours[i].closed}
-                status={
-                  this.props.hours.hours[i].closed === 0 ? 'Open' : 'Closed'
-                }
+                toggled={hours[i].closed}
+                status={hours[i].closed ? 'Open' : 'Closed'}
+                // slider props
+                disabled={!hours[i].closed}
               >
                 {this.props.children}
               </Button>
