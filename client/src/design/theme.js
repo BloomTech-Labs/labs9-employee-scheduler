@@ -57,7 +57,8 @@ const system = {
     hugePadding: '40px',
     container: '0 75px',
     mobile: '0 25px',
-    lineHeight: 1.25
+    lineHeight: 1.25,
+    breadCrumb: '7.5rem'
   }
 }
 

@@ -167,7 +167,7 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 2.5rem 10rem;
-  height: 7.5rem;
+  height: ${system.spacing.breadCrumb};
   margin-bottom: ${({ fixed }) => (fixed ? '10rem' : undefined)};
 
   @media ${system.breakpoints[0]} {
