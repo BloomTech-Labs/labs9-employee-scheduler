@@ -242,6 +242,8 @@ const generateDayOffRequests = (userId = uuid()) => {
 const populateOrg = ({ orgId = uuid(), size }) => {
   const organization = generateOrg(orgId)
 
+  const hoursOfOperation = generateHoursOfOperation(organization.id)
+
   const users = generateUsersForOrg({ org_id: organization.id, quantity: size })
 
   let availabilities = []
@@ -254,12 +256,26 @@ const populateOrg = ({ orgId = uuid(), size }) => {
     timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
   })
 
-  return { organization, users, availabilities, events, timeOffRequests }
+  return {
+    organization,
+    users,
+    availabilities,
+    events,
+    timeOffRequests,
+    hoursOfOperation
+  }
 }
 
 // Takes an object with properties for each table for a single organization and inserts into a database
 const insertOrg = (
-  { organization, users, availabilities, events, timeOffRequests },
+  {
+    organization,
+    users,
+    availabilities,
+    events,
+    timeOffRequests,
+    hoursOfOperation
+  },
   knex
 ) => {
   return knex.transaction(async function(trx) {
@@ -284,7 +300,16 @@ const insertOrg = (
         .insert(timeOffRequests)
         .transacting(trx)
 
-      await Promise.all([availPromise, eventsPromise, timeOffPromise])
+      const hoursOfOperationPromise = knex('hours_of_operation')
+        .insert(hoursOfOperation)
+        .transacting(trx)
+
+      await Promise.all([
+        availPromise,
+        eventsPromise,
+        timeOffPromise,
+        hoursOfOperationPromise
+      ])
       return trx.commit()
     } catch (err) {
       console.log(err.message)

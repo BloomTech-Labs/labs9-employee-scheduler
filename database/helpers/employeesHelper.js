@@ -26,6 +26,7 @@ const getEmployees = async orgId => {
       'a.end_time',
       'a.off'
     )
+    .orderBy('a.day')
     .reduce((acc, current) => {
       const {
         user_id,
