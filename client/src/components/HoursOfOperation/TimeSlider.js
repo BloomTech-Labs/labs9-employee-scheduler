@@ -1,5 +1,6 @@
 import React from 'react'
 import TimeRangeSlider from 'react-time-range-slider'
+import styled from '@emotion/styled'
 
 class TimeSlider extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class TimeSlider extends React.Component {
 
   render() {
     return (
-      <div>
+      <Slider>
         <TimeRangeSlider
           disabled={false}
           format={24}
@@ -42,9 +43,13 @@ class TimeSlider extends React.Component {
           step={15}
           value={this.state.value}
         />
-      </div>
+      </Slider>
     )
   }
 }
 
 export default TimeSlider
+
+const Slider = styled.div`
+  z-index: -1;
+`

@@ -4,14 +4,16 @@ import system from '../../design/theme'
 import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
 import TimeSlider from './TimeSlider'
+import Status from './Status'
 
 const Button = ({
-  handleHours,
   showHandleHours,
   id,
   day,
   name,
-  closedAllDay
+  closedAllDay,
+  status,
+  toggled
 }) => {
   return (
     <Container>
@@ -27,7 +29,8 @@ const Button = ({
           </Zoom>
           <Zoom right>
             <div className="container">
-              <Checkbox closedAllDay={closedAllDay} />
+              <Checkbox closedAllDay={closedAllDay} toggled={toggled} />
+              <Status status={status} />
             </div>
           </Zoom>
         </>

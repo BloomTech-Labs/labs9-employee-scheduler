@@ -34,6 +34,7 @@ const Container = styled.div`
 `
 
 const Switch = styled.div`
+  z-index: -2;
   margin-bottom: 10px;
   position: absolute;
   top: 0;
@@ -82,7 +83,7 @@ class Checkbox extends React.Component {
         <Container>
           <input
             type="checkbox"
-            checked={toggled}
+            checked={this.props.toggled}
             onChange={handleUpdate}
             onClick={this.props.closedAllDay}
           />

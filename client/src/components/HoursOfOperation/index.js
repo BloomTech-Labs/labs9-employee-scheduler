@@ -154,6 +154,10 @@ class HoursOfOperation extends Component {
                 name={day}
                 showHandleHours={e => this.showHandleHours(e, i)}
                 closedAllDay={e => this.closedAllDay(e, i)}
+                toggled={this.props.hours.hours[i].closed}
+                status={
+                  this.props.hours.hours[i].closed === 0 ? 'Open' : 'Closed'
+                }
               >
                 {this.props.children}
               </Button>
