@@ -87,9 +87,16 @@ const StyledModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+      @media ${system.breakpoints[0]} {
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-top: ${system.spacing.breadCrumb}
+      }
 
   & > div {
     transition: transform 0.3s linear;
+
+    }
   }
 
   &.hidden {
