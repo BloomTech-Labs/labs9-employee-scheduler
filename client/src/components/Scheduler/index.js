@@ -329,13 +329,14 @@ const CalendarContainer = styled.div`
 `
 
 const CalendarButtons = styled.div`
-  padding-top: 20px;
+  padding: 20px 40px 0;
   display: flex;
   justify-content: space-between;
   width: 100%;
 
   @media ${system.breakpoints[1]} {
     justify-content: center;
+    padding: 20px 0 0;
   }
 `
 
@@ -343,7 +344,10 @@ const TopButtons = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 10px 0 0 0;
+  padding: 10px 40px 0;
+  @media ${system.breakpoints[1]} {
+    padding: 10px 0 0;
+  }
 `
 
 const ModalButton = styled(Button)`
