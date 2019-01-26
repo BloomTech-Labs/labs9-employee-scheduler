@@ -61,12 +61,16 @@ class AvailabilityForm extends Component {
   }
 
   componentDidMount() {
-    this.props.getAvailability(this.props.id, this.props.token)
+    const { id, token } = this.props
+    if (id) {
+      this.props.getAvailability(id, token)
+    }
   }
 
   componentDidUpdate(prevProps) {
+    const { id, token } = this.props
     if (prevProps.id !== this.props.id) {
-      this.props.getAvailability(this.props.id, this.props.token)
+      this.props.getAvailability(id, token)
     }
   }
 
@@ -101,18 +105,25 @@ class AvailabilityForm extends Component {
           })
         : null
     })
+    this.props.toggleShow()
   }
 
   render() {
+    const { Close } = this.props
     return (
-      <div>
-        <h5>Edit Availability</h5>
+      <OuterContainer>
+        <Close />
+        <h5>{`Edit Availability for ${this.props.first_name}`}</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
         {this.props.availability.slice(0, 7).map((a, i) => {
           //this function passes the the params the toggle to handleChange and is called in Checkbox
           const toggle = () => {
             const { name, off } = this.state.days[i]
             this.handleChange(name, 'off', !off, a)
+          }
+
+          const setToggle = () => {
+            return a.off
           }
           return (
             <Container key={a.id}>
@@ -133,12 +144,13 @@ class AvailabilityForm extends Component {
               <Checkbox
                 toggleAvailability={toggle}
                 name={this.state.days[i].name}
+                off={setToggle()}
               />
             </Container>
           )
         })}
         <Button onClick={this.updateAvailability}>submit</Button>
-      </div>
+      </OuterContainer>
     )
   }
 }
@@ -160,4 +172,8 @@ const Container = styled('div')`
   display: flex;
   justify-content: center;
   flex-direction: column;
+`
+const OuterContainer = styled('div')`
+  background-color: ${system.color.neutral};
+  padding: ${system.spacing.bigPadding};
 `

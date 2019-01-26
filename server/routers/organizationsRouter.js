@@ -1,24 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getOrgs,
   getOrg,
-  addOrg,
+  // addOrg,
   updateOrg,
   deleteOrg
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
 
-router.get('/', authorize(['owner']), (req, res) => {
-  getOrgs()
-    .then(orgs => res.status(200).json(orgs))
-    .catch(err => res.status(500).json(err))
-})
-
 router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
-  getOrgs(id)
+  getOrg(id)
     .then(org => {
       if (!org) {
         return res.status(404).json({ message: 'Nonexistent organization' })
@@ -32,22 +25,22 @@ router.get('/:id', authorize(['all']), (req, res) => {
     })
 })
 
-router.post('/', authorize(['owner']), async (req, res) => {
-  const { name } = req.body
+// router.post('/', authorize(['owner']), async (req, res) => {
+//   const { name } = req.body
 
-  if (!name) {
-    return res.status(400).json({ error: 'Missing required field "name"' })
-  }
+//   if (!name) {
+//     return res.status(400).json({ error: 'Missing required field "name"' })
+//   }
 
-  try {
-    const id = await addOrg(req.body)
-    const newOrg = await getOrg(id)
-    res.status(201).json(newOrg)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error' })
-  }
-})
+//   try {
+//     const id = await addOrg(req.body)
+//     const newOrg = await getOrg(id)
+//     res.status(201).json(newOrg)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ error: 'Server error' })
+//   }
+// })
 
 router.put('/:id', authorize(['owner']), async (req, res) => {
   const { id } = req.params

@@ -17,9 +17,9 @@ const updateInvite = (inviteId, updates) => {
     .update(updates)
 }
 
-const deleteInvite = userId => {
-  return db('invites as i')
-    .where({ 'i.id': userId })
+const deleteInvite = id => {
+  return db('invites')
+    .where({ id })
     .del()
 }
 

@@ -12,40 +12,59 @@ function makeCloseButton(close) {
 }
 
 class Modal extends React.Component {
+  ref = React.createRef()
+
   componentDidMount() {
-    this.handleRoot()
+    this.handleUpdate()
   }
   componentDidUpdate(prevProps) {
     if (prevProps.show !== this.props.show) {
-      this.handleRoot()
+      this.handleUpdate()
     }
   }
+
   componentWillUnmount() {
     document.body.classList.remove('no-scroll')
+    document.removeEventListener('click', this.handlePageClick)
   }
 
-  handleRoot = () => {
+  handlePageClick = e => {
+    const display = this.ref.current
+    if (!display.contains(e.target)) {
+      this.props.toggleShow()
+    }
+  }
+
+  handleUpdate = () => {
     if (this.props.show) {
       document.body.classList.add('no-scroll')
+      document.addEventListener('click', this.handlePageClick)
     } else {
       document.body.classList.remove('no-scroll')
+      document.removeEventListener('click', this.handlePageClick)
     }
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, {
-        toggleShow: this.props.toggleShow,
-        Close: makeCloseButton(this.props.toggleShow)
-      })
-    )
+    const Close = makeCloseButton(this.props.toggleShow)
+    const { children, toggleShow, ...rest } = this.props
+
+    const childrenWithProps =
+      typeof children === 'function'
+        ? children({ toggleShow, Close, ...rest })
+        : React.Children.map(children, child =>
+            React.cloneElement(child, {
+              toggleShow,
+              Close
+            })
+          )
 
     return (
       <StyledModal
         className={!this.props.show ? 'hidden' : undefined}
         show={this.props.show}
       >
-        <div>{this.props.show ? childrenWithProps : null}</div>
+        <div ref={this.ref}>{this.props.show ? childrenWithProps : null}</div>
       </StyledModal>
     )
   }
