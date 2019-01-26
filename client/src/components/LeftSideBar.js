@@ -59,7 +59,7 @@ class LeftSideBar extends Component {
             {role === 'owner' ? <NavItem to="/billing">Billing</NavItem> : null}
             {/* render settings page for all */}
             <NavItem to="/settings">Settings</NavItem>
-            <a id="logout" onClick={this.props.logout}>
+            <a href="#" id="logout" onClick={this.props.logout}>
               Log Out
             </a>
           </Nav>
@@ -125,13 +125,6 @@ const Nav = styled.nav`
     }
     :last-child {
       border-radius: 0 0 ${system.borders.radius} 0;
-    }
-  }
-
-  #logout {
-    display: none;
-    @media ${system.breakpoints[0]} {
-      display: block;
     }
   }
 `

@@ -37,12 +37,12 @@ class EmployeePool extends React.Component {
           <Input
             type="text"
             name="searchTerm"
-            placeholder="&#x2315; Search..."
+            placeholder="Search..."
             onChange={this.updateSearch}
             value={this.state.searchTerm}
           />
           {filteredEmployees.map(employee => (
-            <Zoom left duration={100} key={employee.id}>
+            <Zoom bottom duration={100} key={employee.id}>
               <EmployeeResource
                 employee={employee}
                 updateDragState={updateDragState}
