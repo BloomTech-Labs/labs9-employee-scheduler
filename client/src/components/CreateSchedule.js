@@ -28,7 +28,11 @@ class CreateSchedule extends React.Component {
         {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
         <MainContentHolder>
           <MobileOnly>
-            <Alert>Review only on mobile view</Alert>
+            <Alert>
+              This calendar is read-only on mobile for now.
+              <br />
+              We're working hard to release mobile editing soon.
+            </Alert>
           </MobileOnly>
           <div>
             <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
