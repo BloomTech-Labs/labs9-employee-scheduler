@@ -13,7 +13,7 @@ const SelectContainer = styled('div')`
   margin-bottom: 10px;
 `
 
-const P = styled('p')`
+const Label = styled.label`
   padding-right: 20px;
   margin-top: 5px;
 `
@@ -21,49 +21,56 @@ const TimeContainer = styled('div')`
   width: 100px;
 `
 
-const Availability = props => {
+const Availability = ({ availability, handleChange, submit }) => {
+  const { day, id, start_time, end_time } = availability
   //both functions pass in the correct params depending on if it's for start or end time.
   const handleUpdateStart = e => {
-    props.handleChange(
-      props.day,
-      'startTime',
-      e.target.value,
-      props.availability
-    )
+    handleChange({
+      availability,
+      value: e.target.value,
+      property: 'startTime'
+    })
   }
   const handleUpdateEnd = e => {
-    props.handleChange(props.day, 'endTime', e.target.value, props.availability)
+    handleChange({
+      availability,
+      value: e.target.value,
+      property: 'startTime'
+    })
   }
   return (
-    <div key={props.id}>
-      <label htmlFor="">{props.day}</label>
+    <fieldset key={id}>
+      <legend>{day}</legend>
       <SelectContainer>
         <TimeContainer>
-          <P>Start: {formatHours(props.startTime)} </P>
+          <Label htmlFor={`${day}-start`}>
+            Start: {formatHours(start_time)}
+          </Label>
         </TimeContainer>
         <SelectList
-          name={props.startTimeValue}
-          value={props.startTimeValue}
+          name={`${day}-start`}
+          id={`${day}-start`}
+          value={start_time}
           //see function above
           changeHandler={handleUpdateStart}
           options={options}
-          ariaLabel="start time"
         />
       </SelectContainer>
       <SelectContainer>
         <TimeContainer>
-          <P>End: {formatHours(props.endTime)}</P>
+          <Label htmlFor={`${day}-end`}>End: {formatHours(end_time)}</Label>
         </TimeContainer>
         <SelectList
-          name={props.day}
-          value={props.endTimeValue}
+          name={`${day}-end`}
+          id={`${day}-end`}
+          value={end_time}
           //see function above
           changeHandler={handleUpdateEnd}
           options={options}
           ariaLabel="end time"
         />
       </SelectContainer>
-    </div>
+    </fieldset>
   )
 }
 

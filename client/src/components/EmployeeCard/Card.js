@@ -51,9 +51,7 @@ class Card extends Component {
     } = this.props
     return (
       <Container data-testid="employee-card">
-        <button onClick={() => this.props.updateAvail({ id, first_name })}>
-          edit availability
-        </button>
+        <button onClick={this.props.updateAvail}>edit availability</button>
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
             <p className="delete" onClick={this.openModal}>

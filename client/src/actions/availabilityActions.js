@@ -32,6 +32,7 @@ export const editAvailability = ({
   availability,
   token
 }) => async dispatch => {
+  console.log(changes)
   const { id: availabilityId, user_id: employeeId } = availability
 
   try {
