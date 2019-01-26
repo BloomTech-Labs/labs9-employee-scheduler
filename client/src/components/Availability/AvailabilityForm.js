@@ -123,7 +123,7 @@ const Container = styled('div')`
   /* border: 1px solid gray; */
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  padding: ${system.spacing.standardPadding};
 `
 const OuterContainer = styled('div')`
   background-color: ${system.color.neutral};

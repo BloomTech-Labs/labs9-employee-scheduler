@@ -19,8 +19,13 @@ const TimeContainer = styled('div')`
   width: 100px;
 `
 
+const roundTo30 = time => {
+  return Math.round(time / 0.5) * 0.5
+}
+
 const Availability = ({ availability, handleChange, submit }) => {
   const { day, start_time, end_time, name } = availability
+  console.log(start_time, end_time)
   //both functions pass in the correct params depending on if it's for start or end time.
   const handleUpdateStart = e => {
     handleChange({
@@ -48,7 +53,7 @@ const Availability = ({ availability, handleChange, submit }) => {
         <SelectList
           name={`${name}-start`}
           id={`${name}-start`}
-          value={start_time}
+          value={roundTo30(start_time)}
           //see function above
           changeHandler={handleUpdateStart}
           options={options}
@@ -61,7 +66,7 @@ const Availability = ({ availability, handleChange, submit }) => {
         <SelectList
           name={`${day}-end`}
           id={`${day}-end`}
-          value={end_time}
+          value={roundTo30(end_time)}
           //see function above
           changeHandler={handleUpdateEnd}
           options={options}
