@@ -97,7 +97,7 @@ class AddEmployee extends Component {
             type="name"
             id="name"
             name="name"
-            placeholder="ex. Bruce Wayne"
+            placeholder="ex. Adam Hinckley"
             onChange={this.changeHandler}
             value={this.props.value}
             aria-label="name"
@@ -108,7 +108,7 @@ class AddEmployee extends Component {
             type="email"
             id="email"
             name="email"
-            placeholder="ex. bruce@waynecorp.com"
+            placeholder="ex. adam@getcadence.co"
             onChange={this.changeHandler}
             value={this.props.value}
             checked={this.props.checked}

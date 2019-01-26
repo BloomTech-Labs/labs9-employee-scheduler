@@ -144,7 +144,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={firstName}
                 onChange={handleChange}
-                placeholder="ex. Clark"
+                placeholder="ex. Samuel"
                 ariaLabel="first-name"
                 required
               />
@@ -155,7 +155,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={lastName}
                 onChange={handleChange}
-                placeholder="ex. Kent"
+                placeholder="ex. Machat"
                 ariaLabel="last-name"
                 required
               />
@@ -166,7 +166,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={email}
                 onChange={handleChange}
-                placeholder="ex. ckent@dailyplanet.com"
+                placeholder="ex. samuel@getcadence.co"
                 ariaLabel="email"
                 required
               />
@@ -188,7 +188,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={orgName}
                 onChange={handleChange}
-                placeholder="ex. The Daily Planet"
+                placeholder="ex. Cadence"
                 ariaLabel="org-name"
                 required
               />
@@ -199,7 +199,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={orgDescription}
                 onChange={handleChange}
-                placeholder="ex. Metropolis' newspaper of record"
+                placeholder="ex. A phenomenal shift scheduling Saas"
                 ariaLabel="org-description"
                 required
               />
