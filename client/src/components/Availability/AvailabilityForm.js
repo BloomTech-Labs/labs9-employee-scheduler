@@ -81,27 +81,29 @@ class AvailabilityForm extends Component {
         <Close />
         <h5>{`Edit Availability for ${this.props.first_name}`}</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
-        {this.state.days.map((availability, i) => {
-          const { off, name } = availability
-          //this function passes the the params the toggle to handleChange and is called in Checkbox
-          const toggle = () => {
-            this.handleChange({
-              availability: availability,
-              property: 'off',
-              value: !off
-            })
-          }
-          return (
-            <Container key={availability.id}>
-              <AvailabilitySelect
-                handleChange={this.handleChange}
-                submit={this.props.getAvailability}
-                availability={availability}
-              />
-              <Checkbox onToggle={toggle} name={name} toggled={off} />
-            </Container>
-          )
-        })}
+        <DayGrid>
+          {this.state.days.map((availability, i) => {
+            const { off, name } = availability
+            //this function passes the the params the toggle to handleChange and is called in Checkbox
+            const toggle = () => {
+              this.handleChange({
+                availability: availability,
+                property: 'off',
+                value: !off
+              })
+            }
+            return (
+              <Container key={availability.id}>
+                <AvailabilitySelect
+                  handleChange={this.handleChange}
+                  submit={this.props.getAvailability}
+                  availability={availability}
+                />
+                <Checkbox onToggle={toggle} name={name} toggled={off} />
+              </Container>
+            )
+          })}
+        </DayGrid>
         <Button onClick={this.updateAvailability}>submit</Button>
       </OuterContainer>
     )
@@ -120,11 +122,20 @@ export default connect(
 )(AvailabilityForm)
 
 const Container = styled('div')`
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: ${system.spacing.standardPadding};
+`
+const DayGrid = styled('div')`
   /* border: 1px solid gray; */
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   padding: ${system.spacing.standardPadding};
 `
+
 const OuterContainer = styled('div')`
   background-color: ${system.color.neutral};
   padding: ${system.spacing.bigPadding};
