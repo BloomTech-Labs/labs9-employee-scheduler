@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
-import TimeSlider from './TimeSlider'
+import TimeRangeSlider from '../TimeRangerSlider/'
 import Status from './Status'
 
 const Button = ({
@@ -14,18 +14,33 @@ const Button = ({
   toggled,
   disabled,
   open_time,
-  close_time
+  close_time,
+  draggableTrack,
+  value,
+  onChangeComplete,
+  onChangeStart,
+  onChange,
+  start,
+  end
 }) => {
   return (
     <Container>
       <Zoom right>
         <div className="buttons">
-          <TimeSlider
+          <TimeRangeSlider
+            onChangeStart={onChangeStart}
+            draggableTrack={draggableTrack}
+            onChange={onChange}
+            onChangeComplete={onChangeComplete}
             disabled={disabled}
             name={name}
             open_time={open_time}
             close_time={close_time}
+            value={value}
           />
+          <p>
+            {start} to {end}
+          </p>
         </div>
       </Zoom>
       <div>

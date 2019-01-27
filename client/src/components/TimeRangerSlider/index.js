@@ -3,6 +3,11 @@ import InputRange from 'react-input-range'
 import './styles.css'
 
 class TimeRangeSlider extends Component {
+  state: {
+    start: start,
+    end: start
+  }
+
   minuteToTime = value => {
     value = value > 1439 ? 1439 : value
     let hours = Math.floor(value / 60),
@@ -77,7 +82,7 @@ class TimeRangeSlider extends Component {
       nStart += ' ' + start.am_pm
       nEnd += ' ' + end.am_pm
     }
-    this.props.onChange({
+    this.props.onChangeStart({
       start: nStart,
       end: nEnd
     })
@@ -86,7 +91,7 @@ class TimeRangeSlider extends Component {
   onChangeComplete = value => {
     let start = this.minuteToTime(value.min),
       end = this.minuteToTime(value.max)
-    this.props.onChangeComplete({
+    this.props.onChangeStart({
       start: start,
       end: end
     })
@@ -109,8 +114,8 @@ class TimeRangeSlider extends Component {
       <InputRange
         disabled={this.props.disabled}
         draggableTrack={this.props.draggableTrack}
-        maxValue={this.timeToMinute(this.props.maxValue)}
         minValue={this.timeToMinute(this.props.minValue)}
+        maxValue={this.timeToMinute(this.props.maxValue)}
         onChangeStart={this.onChangeStart}
         onChange={this.onChange}
         onChangeComplete={this.onChangeComplete}

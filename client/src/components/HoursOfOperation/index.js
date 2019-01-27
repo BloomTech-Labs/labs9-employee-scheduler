@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import TimeSlider from './TimeSlider'
+// import TimeRangeSlider from './TimeSlider'
 import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
@@ -18,18 +18,17 @@ class HoursOfOperation extends Component {
   constructor(props) {
     super(props)
     this.featureRef = React.createRef()
-
     this.state = {
       time: '',
       days: {
         // which day clock is open
-        sunday: false,
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false
+        sunday: { start: '00:00', end: '23:59' },
+        monday: { start: '00:00', end: '23:59' },
+        tuesday: { start: '00:00', end: '23:59' },
+        wednesday: { start: '00:00', end: '23:59' },
+        thursday: { start: '00:00', end: '23:59' },
+        friday: { start: '00:00', end: '23:59' },
+        saturday: { start: '00:00', end: '23:59' }
       },
       value: {
         start: '00:00',
@@ -109,19 +108,21 @@ class HoursOfOperation extends Component {
     console.log(e.target)
   }
 
-  changeStartHandler = time => {
-    return time
-  }
-
-  changeCompleteHandler = newTime => {
+  changeCompleteHandler = (newTime, i) => {
+    console.log(newTime)
+    console.log(i)
     // breaks object up and sets minutes to proper interval for server
-    let start = newTime.start.hours + newTime.start.minutes / 60
-    let newStart = start.toFixed(2)
-    let end = newTime.end.hours + newTime.end.minutes / 60
-    let newEnd = end.toFixed(2)
+    // let start = newTime.start.hours + newTime.start.minutes / 60
+    // let newStart = start.toFixed(2)
+    // let end = newTime.end.hours + newTime.end.minutes / 60
+    // let newEnd = end.toFixed(2)
 
-    // console.log()
-    this.setState({ openTime: newStart, closeTime: newEnd })
+    // // console.log()
+    // this.setState({ openTime: newStart, closeTime: newEnd })
+  }
+  onChangeStart = (currentTime, idx) => {
+    console.log(currentTime)
+    console.log(idx)
   }
 
   render() {
@@ -135,6 +136,7 @@ class HoursOfOperation extends Component {
           <h3>Hours of Operation</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
           {Object.keys(this.state.days).map((day, i) => {
+            const { days } = this.state
             const { hours } = this.props.hours
             return (
               <>
@@ -142,15 +144,22 @@ class HoursOfOperation extends Component {
                   id={i}
                   key={i}
                   handleHours={this.handleHours}
-                  day={this.state.days[day]}
+                  day={days[day]}
                   name={day}
                   closedAllDay={e => this.closedAllDay(e, i)}
                   toggled={hours[i].closed}
                   status={hours[i].closed ? 'Open' : 'Closed'}
                   // slider props
                   disabled={!hours[i].closed}
+                  draggableTrack={true}
                   open_time={hours[i].open_time}
                   close_time={hours[i].close_time}
+                  onChangeComplete={this.changeCompleteHandler}
+                  onChange={this.onChange}
+                  onChangeStart={() => this.onChangeStart(days[day], i)}
+                  value={days[day]}
+                  start={days[day].start}
+                  end={days[day].end}
                 >
                   {this.props.children}
                 </Button>
