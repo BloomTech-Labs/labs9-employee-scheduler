@@ -63,14 +63,10 @@ const Container = styled('div')`
     font-size: ${system.fontSizing.sm};
   }
   .buttons {
-    /* position: absolute; */
-    /* margin-top: -12px;
-    margin-left: 120px; */
     width: 177px;
     background: white;
     padding: 12px;
     margin-right: 15px;
-    /* padding-right: 25px; */
     border-radius: 0 25px 25px 0;
     button {
       cursor: pointer;
@@ -82,7 +78,6 @@ const Container = styled('div')`
   .closeToggle {
     display: flex;
     flex-direction: column;
-    /* justify-items: center; */
     justify-content: space-evenly;
     height: 6px;
     position: relative;

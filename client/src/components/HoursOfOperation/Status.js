@@ -13,9 +13,6 @@ const Status = ({ status }) => {
 export default Status
 
 const Container = styled.div`
-  /* position: absolute;
-  right: 116px;
-  bottom: -5px; */
   background: white;
   z-index: -2;
   border-radius: 0 0 0px 12px;

@@ -70,6 +70,5 @@ const Slider = styled.div`
   p {
     font-size: ${system.fontSizing.sm};
     margin-top: 5px;
-    /* margin-left: 25px; */
   }
 `
