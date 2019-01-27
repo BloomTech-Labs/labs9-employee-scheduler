@@ -1,5 +1,6 @@
 import React from 'react'
-import TimeRangeSlider from 'react-time-range-slider'
+// import TimeRangeSlider from 'react-time-range-slider'
+import TimeRangeSlider from '../TimeRangeSlider'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 
