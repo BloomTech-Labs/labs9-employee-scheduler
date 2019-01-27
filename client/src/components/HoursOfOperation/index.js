@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import Timekeeper from './TimeKeeper'
+import TimeSlider from './TimeSlider'
 import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Fade from 'react-reveal'
+import Fade from 'react-reveal/Fade'
+import Zoom from 'react-reveal/Zoom'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -16,6 +17,8 @@ import {
 class HoursOfOperation extends Component {
   constructor(props) {
     super(props)
+    this.featureRef = React.createRef()
+
     this.state = {
       time: '',
       days: {
@@ -49,9 +52,6 @@ class HoursOfOperation extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     return nextProps.errors ? { errors: nextProps.errors } : null
   }
-
-  // //opens the correct version of the timekeeper so it sends back
-  //either open time or close time
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
   saveOpenTime = time => {
@@ -109,6 +109,21 @@ class HoursOfOperation extends Component {
     console.log(e.target)
   }
 
+  changeStartHandler = time => {
+    return time
+  }
+
+  changeCompleteHandler = newTime => {
+    // breaks object up and sets minutes to proper interval for server
+    let start = newTime.start.hours + newTime.start.minutes / 60
+    let newStart = start.toFixed(2)
+    let end = newTime.end.hours + newTime.end.minutes / 60
+    let newEnd = end.toFixed(2)
+
+    // console.log()
+    this.setState({ openTime: newStart, closeTime: newEnd })
+  }
+
   render() {
     const { Close } = this.props
     return (
@@ -122,23 +137,31 @@ class HoursOfOperation extends Component {
           {Object.keys(this.state.days).map((day, i) => {
             const { hours } = this.props.hours
             return (
-              <Button
-                id={i}
-                key={i}
-                handleHours={this.handleHours}
-                day={this.state.days[day]}
-                name={day}
-                closedAllDay={e => this.closedAllDay(e, i)}
-                toggled={hours[i].closed}
-                status={hours[i].closed ? 'Open' : 'Closed'}
-                // slider props
-                disabled={!hours[i].closed}
-              >
-                {this.props.children}
-              </Button>
+              <>
+                <Button
+                  id={i}
+                  key={i}
+                  handleHours={this.handleHours}
+                  day={this.state.days[day]}
+                  name={day}
+                  closedAllDay={e => this.closedAllDay(e, i)}
+                  toggled={hours[i].closed}
+                  status={hours[i].closed ? 'Open' : 'Closed'}
+                  // slider props
+                  disabled={!hours[i].closed}
+                  open_time={hours[i].open_time}
+                  close_time={hours[i].close_time}
+                >
+                  {this.props.children}
+                </Button>
+                {/* <Zoom left>
+                  <div className="buttons">
+                    <TimeSlider disabled={!hours[i].closed} name={day} />
+                  </div>
+                </Zoom> */}
+              </>
             )
           })}
-          <button>Submit</button>
         </div>
       </Modal>
     )

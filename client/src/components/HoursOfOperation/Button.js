@@ -6,7 +6,16 @@ import Checkbox from './Checkbox'
 import TimeSlider from './TimeSlider'
 import Status from './Status'
 
-const Button = ({ id, name, closedAllDay, status, toggled, disabled }) => {
+const Button = ({
+  id,
+  name,
+  closedAllDay,
+  status,
+  toggled,
+  disabled,
+  open_time,
+  close_time
+}) => {
   return (
     <Container>
       <p className="days" id={id}>
@@ -15,7 +24,12 @@ const Button = ({ id, name, closedAllDay, status, toggled, disabled }) => {
 
       <Zoom left>
         <div className="buttons">
-          <TimeSlider disabled={disabled} name={name} />
+          <TimeSlider
+            disabled={disabled}
+            name={name}
+            open_time={open_time}
+            close_time={close_time}
+          />
         </div>
       </Zoom>
       <Zoom right>
@@ -52,7 +66,7 @@ const Container = styled('div')`
   }
   .buttons {
     position: absolute;
-    margin-top: -2px;
+    margin-top: -12px;
     margin-left: 139px;
     width: 177px;
     background: white;

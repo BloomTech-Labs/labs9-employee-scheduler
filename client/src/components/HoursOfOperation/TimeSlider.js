@@ -9,8 +9,8 @@ class TimeSlider extends React.Component {
     this.featureRef = React.createRef()
     this.state = {
       value: {
-        start: '01:00',
-        end: '24:00'
+        start: '12:00AM',
+        end: '11:59PM'
       },
       openTime: null,
       closeTime: null
@@ -40,19 +40,20 @@ class TimeSlider extends React.Component {
 
   render() {
     const { start, end } = this.state.value
+    const { openTime, closeTime } = this.state
     return (
       <Slider>
         <TimeRangeSlider
           disabled={this.props.disabled}
           dragableTrack={true}
-          format={24}
-          minValue={'01:00'}
-          maxValue={'24:00'}
           name={this.props.name}
+          format={12}
+          minValue={'12:00AM'}
+          maxValue={'11:59PM'}
           onChangeStart={this.changeStartHandler}
           onChangeComplete={this.changeCompleteHandler}
           onChange={this.timeChangeHandler}
-          step={15}
+          step={30}
           value={this.state.value}
         />
         <div>
