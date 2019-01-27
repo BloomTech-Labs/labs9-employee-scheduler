@@ -88,17 +88,18 @@ const StyledModal = styled.div`
   align-items: center;
   overflow-y: auto;
   padding-top: ${system.spacing.breadCrumb};
-      @media ${system.breakpoints[0]} {
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding-top: ${system.spacing.breadCrumb}
-      }
+  @media ${system.breakpoints[0]} {
+    justify-content: start;
+    align-items: flex-start;
+  }
 
   & > div {
     transition: transform 0.3s linear;
     padding: ${system.spacing.bigPadding};
-    }
 
+    @media ${system.breakpoints[0]} {
+      padding: 0;
+    }
   }
 
   &.hidden {

@@ -70,15 +70,14 @@ class Employees extends Component {
             </Modal>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
-              employees
-                .slice(0, 12)
-                .map((employee, i) => (
+              employees.slice(0, 12).map((employee, i) => (
+                <FlexSpacer key={i}>
                   <Card
-                    key={i}
                     {...employee}
                     updateAvail={() => this.updateAvail(employee)}
                   />
-                ))}
+                </FlexSpacer>
+              ))}
           </InnerContainer>
         </MidContainer>
       </OuterContainer>
@@ -97,6 +96,9 @@ const MidContainer = styled('div')`
   margin: ${system.spacing.container};
   margin-top: 75px;
   position: relative;
+`
+const FlexSpacer = styled('div')`
+  margin: auto;
 `
 
 const InnerContainer = styled('div')`

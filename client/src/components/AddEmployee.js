@@ -4,6 +4,7 @@ import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import { connect } from 'react-redux'
 import styled from '@emotion/styled'
+import system from '../design/theme'
 import axios from 'axios'
 
 // this component will represent a button that will control the left side bar.
@@ -86,7 +87,7 @@ class AddEmployee extends Component {
   render() {
     const { role, Close, toggleShow } = this.props
     return (
-      <Container>
+      <ModalContainer>
         <form onSubmit={this.submitHandler}>
           <h6 id="instructions">
             Fill this out and we'll send your employee a sign-up email!
@@ -145,7 +146,7 @@ class AddEmployee extends Component {
             Send Invite
           </Button>
         </form>
-      </Container>
+      </ModalContainer>
     )
   }
 }
@@ -160,3 +161,17 @@ export default connect(mapStateToProps)(AddEmployee)
 AddEmployee.propTypes = {
   // add propTypes here
 }
+
+const ModalContainer = styled(Container)`
+  margin: 0;
+  @media ${system.breakpoints[1]} {
+    margin: 0;
+
+    form {
+      margin: 0;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+    }
+  }
+`
