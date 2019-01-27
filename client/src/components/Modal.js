@@ -78,7 +78,7 @@ const StyledModal = styled.div`
   left: 0;
   right: 0;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 99;
   background: ${system.color.bodytext};
   opacity: 0.98;
@@ -88,12 +88,19 @@ const StyledModal = styled.div`
   align-items: center;
   overflow-y: auto;
   padding-top: ${system.spacing.breadCrumb};
+  @media ${system.breakpoints[0]} {
+    align-items: stretch;
+  }
 
   & > div {
     transition: transform 0.3s linear;
-    /* position: relative;
-    top: ${system.spacing.breadCrumb}; */
     padding: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[0]} {
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
   }
 
   &.hidden {
