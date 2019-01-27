@@ -147,9 +147,15 @@ export const Input = styled.input`
   color: ${system.color.bodytext};
   padding: 2.5px 5px;
   margin: 0.5rem 0 ${system.spacing.hugePadding};
+  background: transparent;
   border: none;
   border-bottom: 2px solid
-    ${props => (props.disabled ? 'none !important' : '#d2d2d2')};
+    ${props =>
+      props.disabled
+        ? 'none !important'
+        : props.search
+        ? system.color.lightgrey
+        : '#d2d2d2'};
   transition: ${system.transition};
   :disabled {
     background: ${system.color.white};
