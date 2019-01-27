@@ -13,6 +13,7 @@ import EmptyScreen from './EmptyScreen'
 import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
+import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 
 class RegisterOwner extends Component {
@@ -108,9 +109,10 @@ class RegisterOwner extends Component {
       return (
         <EmptyScreen>
           <Status>
-            You are already logged in as a registered user. Please log out to
+            There is already an account for this email. Please log out to
             register a new account.
           </Status>
+          <Redirect to="/" />
         </EmptyScreen>
       )
     } else if (!oauthSuccess) {

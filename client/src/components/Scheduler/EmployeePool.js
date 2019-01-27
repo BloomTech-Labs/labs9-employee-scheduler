@@ -84,8 +84,7 @@ const Container = styled('div')`
   }
 
   input {
-    margin: 0;
-    margin-top: 30px;
+    margin: 30px 0;
     width: 85%;
   }
 `
