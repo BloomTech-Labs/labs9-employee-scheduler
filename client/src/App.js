@@ -123,9 +123,6 @@ class App extends Component {
               height: 100vh;
               width: 100vw;
               overflow: hidden;
-              @media ${system.breakpoints[0]} {
-                overflow: auto;
-              }
             }
 
             * {

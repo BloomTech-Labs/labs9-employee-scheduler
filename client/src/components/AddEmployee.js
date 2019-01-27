@@ -163,14 +163,15 @@ AddEmployee.propTypes = {
 }
 
 const ModalContainer = styled(Container)`
-  margin: 0;
-  @media ${system.breakpoints[1]} {
+  @media ${system.breakpoints[0]} {
     margin: 0;
+    width: 100%;
+    height: 100%;
 
     form {
       margin: 0;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       border-radius: 0;
     }
   }
