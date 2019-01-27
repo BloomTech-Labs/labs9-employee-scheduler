@@ -154,11 +154,6 @@ class HoursOfOperation extends Component {
                 >
                   {this.props.children}
                 </Button>
-                {/* <Zoom left>
-                  <div className="buttons">
-                    <TimeSlider disabled={!hours[i].closed} name={day} />
-                  </div>
-                </Zoom> */}
               </>
             )
           })}
@@ -196,10 +191,11 @@ const Modal = styled.div`
   right: 10px;
   bottom: 40px; */
   border-radius: 5px;
-  width: 173px;
+  width: 500px;
   z-index: 11;
   background-color: ${system.color.neutral};
   display: flex;
+  justify-content: center;
   flex-direction: row;
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};

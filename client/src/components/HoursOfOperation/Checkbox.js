@@ -4,17 +4,19 @@ import system from '../../design/theme'
 
 const Wrapper = styled('div')`
   display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
   position: absolute;
-  right: 134px;
+  /* right: 134px; */
   border-radius: 25px 0 0 25px;
-  bottom: 20px;
+  top: 14px;
   width: 83px;
   padding: 7px;
-  padding-left: 20px;
+  padding-left: 8px;
   background: white;
   justify-content: space-between;
-  z-index: -1;
+  z-index: 15;
 `
 
 const Container = styled.div`

@@ -33,8 +33,6 @@ class TimeSlider extends React.Component {
     let newStart = start.toFixed(2)
     let end = newTime.end.hours + newTime.end.minutes / 60
     let newEnd = end.toFixed(2)
-
-    // console.log()
     this.setState({ openTime: newStart, closeTime: newEnd })
   }
 
@@ -69,10 +67,9 @@ class TimeSlider extends React.Component {
 export default TimeSlider
 
 const Slider = styled.div`
-  z-index: -1;
   p {
     font-size: ${system.fontSizing.sm};
     margin-top: 5px;
-    margin-left: 25px;
+    /* margin-left: 25px; */
   }
 `

@@ -18,11 +18,7 @@ const Button = ({
 }) => {
   return (
     <Container>
-      <p className="days" id={id}>
-        {name}
-      </p>
-
-      <Zoom left>
+      <Zoom right>
         <div className="buttons">
           <TimeSlider
             disabled={disabled}
@@ -32,8 +28,13 @@ const Button = ({
           />
         </div>
       </Zoom>
-      <Zoom right>
-        <div className="container">
+      <div>
+        <p className="days" id={id}>
+          {name}
+        </p>
+      </div>
+      <Zoom left>
+        <div className="closeToggle">
           <Checkbox closedAllDay={closedAllDay} toggled={toggled} name={name} />
           <Status status={status} />
         </div>
@@ -46,8 +47,8 @@ export default Button
 
 const Container = styled('div')`
   display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
+  flex-direction: row;
+  justify-content: center;
   margin: 0 auto;
   margin-bottom: 15px;
   .days {
@@ -56,24 +57,21 @@ const Container = styled('div')`
     border: 0;
     box-shadow: ${system.shadows.button};
     padding: ${system.spacing.standardPadding};
-    margin-bottom: 10px;
-    width: 100px;
-    cursor: pointer;
-    &:hover {
-      background: ${system.color.button};
-      box-shadow: ${system.shadows.buttonHoverLight};
-    }
+    width: 116px;
+    text-align: center;
+    margin: 0 10px 10px 11px;
+    font-size: ${system.fontSizing.sm};
   }
   .buttons {
-    position: absolute;
-    margin-top: -12px;
-    margin-left: 139px;
+    /* position: absolute; */
+    /* margin-top: -12px;
+    margin-left: 120px; */
     width: 177px;
     background: white;
     padding: 12px;
-    padding-right: 25px;
+    margin-right: 15px;
+    /* padding-right: 25px; */
     border-radius: 0 25px 25px 0;
-    z-index: -1;
     button {
       cursor: pointer;
       margin: 5px;
@@ -81,10 +79,11 @@ const Container = styled('div')`
       border: transparent;
     }
   }
-  .container {
+  .closeToggle {
     display: flex;
-    flex-direction: row;
-    justify-items: center;
+    flex-direction: column;
+    /* justify-items: center; */
+    justify-content: space-evenly;
     height: 6px;
     position: relative;
     margin-bottom: 12px;
