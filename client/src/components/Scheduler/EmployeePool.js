@@ -35,9 +35,10 @@ class EmployeePool extends React.Component {
         <Spacer />
         <Container>
           <Input
+            search
             type="text"
             name="searchTerm"
-            placeholder="Search..."
+            placeholder="Search employees..."
             onChange={this.updateSearch}
             value={this.state.searchTerm}
           />

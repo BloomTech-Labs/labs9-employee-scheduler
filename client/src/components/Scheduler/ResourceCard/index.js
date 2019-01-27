@@ -54,13 +54,14 @@ Card.propTypes = {
 const Container = styled('div')`
   background: ${system.color.white};
   padding: ${system.spacing.standardPadding};
-  margin: ${system.spacing.bigPadding} 0;
+  margin: 12.5px 0;
   border-radius: ${system.borders.bigRadius};
   width: 300px;
+  box-shadow: ${system.shadows.otherLight};
+
   @media ${system.breakpoints[1]} {
     width: 220px;
   }
-  box-shadow: ${system.shadows.otherLight};
 `
 /* // this width is temp until we get a better system */
 
