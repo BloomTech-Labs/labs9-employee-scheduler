@@ -157,7 +157,7 @@ class AddEmployee extends Component {
             {this.props.role === 'owner' ? (
               <>
                 <h6 id="instructions">
-                  You have reached the limit for the number of employees.
+                  You have reached the limit for the number of employees on a free account.
                 </h6>
                 <Link to="/billing">
                   <Button>Upgrade</Button>
@@ -165,7 +165,7 @@ class AddEmployee extends Component {
               </>
             ) : (
               <h6 id="instructions">
-                You have reached the limit for the number of employees. Contact
+                You have reached the limit for the number of employees on a free account. Contact
                 the owner about upgrading.
               </h6>
             )}
