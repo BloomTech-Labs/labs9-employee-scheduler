@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
@@ -88,64 +89,88 @@ class AddEmployee extends Component {
     const { role, Close, toggleShow } = this.props
     return (
       <ModalContainer>
-        <form onSubmit={this.submitHandler}>
-          <h6 id="instructions">
-            Fill this out and we'll send your employee a sign-up email!
-          </h6>
-          <Close style={{ position: 'absolute', top: '25px', right: '25px' }} />
-          <label htmlFor="name">Employee Name</label>
-          <Input
-            type="name"
-            id="name"
-            name="name"
-            placeholder="ex. Adam Hinckley"
-            onChange={this.changeHandler}
-            value={this.props.value}
-            aria-label="name"
-            required
-          />
-          <label htmlFor="email">Employee Email</label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="ex. adam@getcadence.co"
-            onChange={this.changeHandler}
-            value={this.props.value}
-            checked={this.props.checked}
-            aria-label="email"
-            required
-          />
-          {role === 'owner' ? (
-            <>
-              <label htmlFor="role">Employee Role</label>
-              <div className="radio">
-                <Input
-                  type="radio"
-                  id="emp"
-                  name="role"
-                  value="employee"
-                  checked={this.props.checked}
-                  onChange={this.changeHandler}
-                />
-                <label htmlFor="emp"> Employee</label>
-              </div>
-              <div className="radio">
-                <Input
-                  type="radio"
-                  id="sup"
-                  name="role"
-                  value="supervisor"
-                  onChange={this.changeHandler}
-                />
-                <label htmlFor="sup"> Supervisor</label>
-              </div>
-            </>
-          ) : null}
-          <Button type="submit" data-test="submit">
-            Send Invite
-          </Button>
-        </form>
+        {/* ternary checks to see if they have a paid account or less than three employees  */}
+        {this.props.paid || this.props.employees.length < 3 ? (
+          <form onSubmit={this.submitHandler}>
+            <h6 id="instructions">
+              Fill this out and we'll send your employee a sign-up email!
+            </h6>
+            <Close
+              style={{ position: 'absolute', top: '25px', right: '25px' }}
+            />
+            <label htmlFor="name">Employee Name</label>
+            <Input
+              type="name"
+              id="name"
+              name="name"
+              placeholder="ex. Adam Hinckley"
+              onChange={this.changeHandler}
+              value={this.props.value}
+              aria-label="name"
+              required
+            />
+            <label htmlFor="email">Employee Email</label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="ex. adam@getcadence.co"
+              onChange={this.changeHandler}
+              value={this.props.value}
+              checked={this.props.checked}
+              aria-label="email"
+              required
+            />
+            {role === 'owner' ? (
+              <>
+                <label htmlFor="role">Employee Role</label>
+                <div className="radio">
+                  <Input
+                    type="radio"
+                    id="emp"
+                    name="role"
+                    value="employee"
+                    checked={this.props.checked}
+                    onChange={this.changeHandler}
+                  />
+                  <label htmlFor="emp"> Employee</label>
+                </div>
+                <div className="radio">
+                  <Input
+                    type="radio"
+                    id="sup"
+                    name="role"
+                    value="supervisor"
+                    onChange={this.changeHandler}
+                  />
+                  <label htmlFor="sup"> Supervisor</label>
+                </div>
+              </>
+            ) : null}
+            <Button type="submit" data-test="submit">
+              Send Invite
+            </Button>
+          </form>
+        ) : (
+          <form>
+            {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
+            {this.props.role === 'owner' ? (
+              <>
+                <h6 id="instructions">
+                  You have reached the limit for the number of employees on a free account.
+                </h6>
+                <Link to="/billing">
+                  <Button>Upgrade</Button>
+                </Link>
+              </>
+            ) : (
+              <h6 id="instructions">
+                You have reached the limit for the number of employees on a free account. Contact
+                the owner about upgrading.
+              </h6>
+            )}
+          </form>
+        )}
       </ModalContainer>
     )
   }
@@ -153,7 +178,9 @@ class AddEmployee extends Component {
 
 const mapStateToProps = state => ({
   role: state.auth.user.role,
-  token: state.auth.token
+  token: state.auth.token,
+  paid: state.organization.details.paid,
+  employees: state.employees.employees
 })
 
 export default connect(mapStateToProps)(AddEmployee)
