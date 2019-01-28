@@ -3,35 +3,36 @@ import InputRange from 'react-input-range'
 import './styles.css'
 
 class TimeRangeSlider extends Component {
-  state: {
-    start: start,
-    end: start
+  constructor(props) {
+    super(props)
+    this.state = {}
   }
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
 
   minuteToTime = value => {
     value = value > 1439 ? 1439 : value
     let hours = Math.floor(value / 60),
       minutes = value - hours * 60,
-      ampm = null
+      ampm
 
-    if (hours.length == 1) hours = '0' + hours
-    if (minutes.length == 1) minutes = '0' + minutes
-    if (minutes == 0) minutes = '00'
-    if (this.props.format == 12) {
+    if (hours.length === 1) hours = '0' + hours
+    if (minutes.length === 1) minutes = '0' + minutes
+    if (minutes === 0) minutes = '00'
+    if (this.props.format === 12) {
       ampm = 'AM'
       if (hours >= 12) {
-        if (hours == 12) {
-          hours = hours
-          minutes = minutes
+        if (hours === 12) {
+          return hours && minutes
         } else {
-          hours = hours - 12
-          minutes = minutes
+          hours = hours - 12 && minutes
         }
         ampm = 'PM'
       }
-      if (hours == 0) {
-        hours = 12
-        minutes = minutes
+      if (hours === 0) {
+        hours = 12 && minutes
       }
     }
 
@@ -40,7 +41,7 @@ class TimeRangeSlider extends Component {
 
   timeToMinute = time => {
     let rMinutes = 1439
-    if (this.props.format == 24) {
+    if (this.props.format === 24) {
       time = time.split(':')
       if (time.length < 2) {
         throw new Error('Invalid time')
@@ -52,7 +53,7 @@ class TimeRangeSlider extends Component {
     } else {
       time = time.toUpperCase()
       time = time.replace(' ', '')
-      let ampm = time.indexOf('AM') != -1 ? 'AM' : 'PM'
+      let ampm = time.indexOf('AM') !== -1 ? 'AM' : 'PM'
       time = time.replace(ampm, '')
       time = time.split(':')
       if (time.length < 2) {
@@ -61,7 +62,7 @@ class TimeRangeSlider extends Component {
       let hours = parseInt(time[0]),
         minutes = parseInt(time[1])
       if (ampm === 'PM') {
-        if (hours != 12) {
+        if (hours !== 12) {
           hours = hours + 12
         }
       } else {
@@ -78,7 +79,7 @@ class TimeRangeSlider extends Component {
     let end = this.minuteToTime(value.max)
     let nStart = start.hours + ':' + start.minutes
     let nEnd = end.hours + ':' + end.minutes
-    if (this.props.format == 12) {
+    if (this.props.format === 12) {
       nStart += ' ' + start.am_pm
       nEnd += ' ' + end.am_pm
     }
@@ -87,8 +88,6 @@ class TimeRangeSlider extends Component {
       start: nStart,
       end: nEnd
     })
-
-    // return this.onChangeComplete({ start: nStart, end: nEnd })
   }
 
   onChangeComplete = value => {
@@ -133,16 +132,16 @@ class TimeRangeSlider extends Component {
 TimeRangeSlider.defaultProps = {
   disabled: false,
   draggableTrack: true,
-  // format: 12,
+  format: 12,
   maxValue: '11:59pm',
   minValue: '12:00am',
-  // onChange: () => {},
-  // onChangeComplete: () => {},
-  // onChangeStart: () => {},
-  // step: 15,
+  onChange: () => {},
+  onChangeComplete: () => {},
+  onChangeStart: () => {},
+  step: 15,
   value: {
-    start: '12:00am',
-    end: '11:59pm'
+    end: '11:59pm',
+    start: '12:00am'
   }
 }
 

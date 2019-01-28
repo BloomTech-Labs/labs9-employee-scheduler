@@ -73,7 +73,7 @@ export const getRange = ({ date, view }) => {
 
 // UTILS:
 // converts a moment into float
-const convertMomentToFloat = time =>
+export const convertMomentToFloat = time =>
   moment(time).hours() + moment(time).minutes() / 60
 
 // converts a float into an object with hours and minutes
@@ -285,70 +285,4 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // if everything went okay
   return { verdict: true }
-}
-
-// slider helper functions
-const minuteToTime = value => {
-  value = value > 1439 ? 1439 : value
-  let hours = Math.floor(value / 60),
-    minutes = value - hours * 60,
-    ampm = null
-
-  if (hours.length == 1) hours = '0' + hours
-  if (minutes.length == 1) minutes = '0' + minutes
-  if (minutes == 0) minutes = '00'
-  if (this.props.format == 12) {
-    ampm = 'AM'
-    if (hours >= 12) {
-      if (hours == 12) {
-        hours = hours
-        minutes = minutes
-      } else {
-        hours = hours - 12
-        minutes = minutes
-      }
-      ampm = 'PM'
-    }
-    if (hours === 0) {
-      hours = 12
-      minutes = minutes
-    }
-  }
-
-  return { hours: hours, minutes: minutes, am_pm: ampm }
-}
-
-const timeToMinute = time => {
-  let rMinutes = 1439
-  if (this.props.format == 24) {
-    time = time.split(':')
-    if (time.length < 2) {
-      throw new Error('Invalid time')
-    }
-    let hours = time[0],
-      minutes = parseInt(time[1])
-    hours = parseInt(hours * 60)
-    rMinutes = hours + minutes
-  } else {
-    time = time.toUpperCase()
-    time = time.replace(' ', '')
-    let ampm = time.indexOf('AM') != -1 ? 'AM' : 'PM'
-    time = time.replace(ampm, '')
-    time = time.split(':')
-    if (time.length < 2) {
-      throw new Error('Invalid time')
-    }
-    let hours = parseInt(time[0]),
-      minutes = parseInt(time[1])
-    if (ampm == 'PM') {
-      if (hours != 12) {
-        hours = hours + 12
-      }
-    } else {
-      hours = hours == 12 ? 0 : hours
-    }
-    hours = hours * 60
-    rMinutes = hours + minutes
-  }
-  return rMinutes > 1439 ? 1439 : rMinutes
 }

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import system from '../../design/theme'
 import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
-import TimeRangeSlider from '../TimeRangerSlider/'
+import TimeRangeSlider from './TimeRangeSlider'
 import Status from './Status'
 
 const Button = ({

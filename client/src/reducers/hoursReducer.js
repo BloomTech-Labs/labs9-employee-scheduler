@@ -46,6 +46,7 @@ export const hoursReducer = (state = initialState, action) => {
         error: ''
       }
     case OPEN_AND_CLOSE_HOURS_UPDATED:
+      const { start, end } = action.payload
       return {
         hours: state.hours.map(item => {
           // if this is not the item I want to update, leave it alone
@@ -55,8 +56,8 @@ export const hoursReducer = (state = initialState, action) => {
           // else return the an updated value
           return {
             ...item,
-            open_time: changes.start,
-            close_time: changes.end
+            open_time: start,
+            close_time: end
           }
         }),
         loading: false,

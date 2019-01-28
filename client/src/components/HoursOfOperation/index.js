@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-// import TimeRangeSlider from './TimeSlider'
 import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import moment from 'moment'
 import Fade from 'react-reveal/Fade'
 import Zoom from 'react-reveal/Zoom'
 import propTypes from 'prop-types'
@@ -13,6 +13,7 @@ class HoursOfOperation extends Component {
   constructor(props) {
     super(props)
     this.featureRef = React.createRef()
+
     this.state = {
       time: '',
       days: {
@@ -47,30 +48,6 @@ class HoursOfOperation extends Component {
     return nextProps.errors ? { errors: nextProps.errors } : null
   }
 
-  //closes the time keeper and sets the time on state that we want to send back to the DB
-  // saveOpenTime = time => {
-  //   const { dayId } = this.state
-  //   this.setState(function(prevState) {
-  //     return {
-  //       isOpen: !prevState.isOpen,
-  //       isClose: !prevState.isClosed
-  //     }
-  //   })
-
-  //   this.props.editOpenHours(dayId, time, this.props.token)
-  // }
-
-  // saveCloseTime = time => {
-  //   const { dayId } = this.state
-  //   this.setState(function(prevState) {
-  //     return {
-  //       isOpen: !prevState.isOpen,
-  //       isClose: !prevState.isClosed
-  //     }
-  //   })
-  //   this.props.editOpenHours(dayId, time, this.props.token)
-  // }
-
   closedAllDay = (e, idx) => {
     e.preventDefault()
     e.stopPropagation()
@@ -103,20 +80,28 @@ class HoursOfOperation extends Component {
     console.log(e.target)
   }
 
-  onChangeComplete = (newTime, i) => {
+  // handles the slider position when the user is done sliding
+  onChangeComplete = (num, i) => {
     // breaks object up and sets minutes to proper interval for server
-    let start = newTime.start.hours + newTime.start.minutes / 60
-    let newStart = start.toFixed(2)
-    let end = newTime.end.hours + newTime.end.minutes / 60
-    let newEnd = end.toFixed(2)
+    const start = parseFloat(moment(num.start, 'h:mm a').format('HH.MM'))
+    const end = parseFloat(moment(num.end, 'h:mm a').format('HH.MM'))
+
     const { hours } = this.props.hours
-    //gets the id for the affected close/open day
+    // //gets the id for the affected close/open day
     const id = hours[i].id
-    // // console.log()
-    this.setState({ openTime: newStart, closeTime: newEnd })
-    this.props.editHours(id, newStart, newEnd, this.props.token)
+    // Object.keys(this.state.days).map(day => {
+    //   if (day[day] === this.state.days[day]) {
+    //     return this.setState({ [day]: { start: start, end: end } })
+    //   } else {
+    //     return null
+    //   }
+    // })
+
+    // commented out until I can fix the slider
+    this.props.editHours(id, start, end, this.props.token)
   }
 
+  // handles recording positions when the slider moves
   timeChangeHandler(currentTime, idx, time) {
     console.log('timeChangeHandler fired')
 
@@ -128,14 +113,14 @@ class HoursOfOperation extends Component {
     // Object.keys(this.state.days).map(day =>
     //   this.setState({ [day]: currentTime })
     // )
-    this.onChangeComplete()
-  }
-
-  changeStartHandler = (currentTime, idx) => {
-    // set's the time for the currently picked day, bad idea because it sets every frame (that's crazy)
     this.setState({
       value: currentTime
     })
+  }
+
+  // handles returning the starting position of the slider
+  changeStartHandler = (currentTime, idx) => {
+    return currentTime
   }
 
   render() {
@@ -154,6 +139,7 @@ class HoursOfOperation extends Component {
             return (
               <>
                 <Button
+                  // props to days and close/open button
                   id={i}
                   key={i}
                   handleHours={this.handleHours}
@@ -162,21 +148,23 @@ class HoursOfOperation extends Component {
                   closedAllDay={e => this.closedAllDay(e, i)}
                   toggled={hours[i].closed}
                   status={hours[i].closed ? 'Open' : 'Closed'}
-                  // slider props
-                  disabled={!hours[i].closed}
-                  draggableTrack={true}
-                  open_time={hours[i].open_time}
-                  close_time={hours[i].close_time}
+                  ///////////////////
+                  // slider props //
+                  disabled={!hours[i].closed} //disabled if day is closed
+                  draggableTrack={true} //slide by touching the bar
+                  open_time={hours[i].open_time} //open time for day in redux store
+                  close_time={hours[i].close_time} //close time for the day in redux store
+                  value={this.state.value} //the value for each day on state
+                  start={days[day].start} //start of each day
+                  end={days[day].end} //end of each day
+                  maxValue={'11:59pm'} //max allowed slider value
+                  minValue={'12:00am'} // min allowed slider value
+                  // functions //
                   onChangeComplete={() =>
                     this.onChangeComplete(this.state.value, i)
-                  }
-                  onChange={this.timeChangeHandler}
-                  onChangeStart={() => this.changeStartHandler(days[day], i)}
-                  value={days[day]}
-                  start={days[day].start}
-                  end={days[day].end}
-                  minValue={'12:00am'}
-                  maxValue={'11:59pm'}
+                  } // records where the slider ends at (currently only one firing)
+                  onChange={this.timeChangeHandler} //handles when the slider moves
+                  onChangeStart={() => this.changeStartHandler(days[day], i)} // records the time in which the slider is started at
                 >
                   {this.props.children}
                 </Button>
@@ -201,8 +189,7 @@ export default connect(
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {
-  editOpenHours: propTypes.func.isRequired,
-  editCloseHours: propTypes.func.isRequired,
+  editHours: propTypes.func.isRequired,
   fetchHoursFromDB: propTypes.func.isRequired,
   closeAndOpenHours: propTypes.func.isRequired,
   showHandleHours: propTypes.func,
