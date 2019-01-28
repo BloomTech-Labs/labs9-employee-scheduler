@@ -2,69 +2,87 @@ import React from 'react'
 import LinkItem from './common/LinkItem'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-// import logo1 from '../img/logo1.png'
 import logo2 from '../img/logo2.png'
-
-// this will benefit from being refactored once Breadcrumb is getting loaded by App.js
-// once that happens we'll simply be able to this method down as props
-import { logout } from '../actions' // for initial call
 import { connect } from 'react-redux'
+import { fetchOrgFromDB } from '../actions'
 
-// this breadcrumb will be placed at the top should show the following links
-// Home component --> Sign Up || Sign In (if not logged in) --> Log Out (if logged)
-
-const BreadCrumb = props => {
-  // initialize content for condition
-  let breadContent
-  // ask the receiving component what location will be
-
-  if (props.location !== 'Home') {
-    breadContent = (
-      <Nav fixed={props.location === 'Employees' ? true : false}>
-        <Container logo>
-          <LinkItem to="/">
-            <img src={logo2} alt="logo" />
-          </LinkItem>
-          <p id="crumb"> {props.location}</p>
-        </Container>
-
-        <Container className="breadcrumbs">
-          {!props.auth ? (
-            <button id="logout" onClick={props.logout}>
-              Log out
-            </button>
-          ) : null}
-        </Container>
-      </Nav>
-    )
-  }
-  if (props.location === 'Home') {
-    breadContent = (
-      <Nav fixed={true}>
-        <Container logo>
-          <LinkItem to="/">
-            <img src={logo2} alt="logo" />
-          </LinkItem>
-        </Container>
-
-        <Container className="breadcrumbs" extra>
-          <LinkItem to="/register" className="entry">
-            Sign Up
-          </LinkItem>
-          <LinkItem to="/login" className="entry">
-            Log In
-          </LinkItem>
-        </Container>
-      </Nav>
-    )
+class BreadCrumb extends React.Component {
+  componentDidMount = () => {
+    const { user, token } = this.props.auth
+    if (user !== null) {
+      this.props.fetchOrgFromDB(user.organization_id, token)
+    }
   }
 
-  return breadContent
+  render() {
+    // initialize content for condition
+    let breadContent
+    // ask the receiving component what location will be
+    const { location, organization, auth } = this.props
+    const username =
+      auth.user !== null
+        ? ` | ${auth.user.first_name} ${auth.user.last_name}`
+        : null
+
+    const orgname =
+      organization.details.name !== undefined
+        ? `${organization.details.name}`
+        : null
+
+    if (location !== 'Home') {
+      breadContent = (
+        <Nav fixed={location === 'Employees' ? true : false}>
+          <Container logo>
+            <LinkItem to="/">
+              <img src={logo2} alt="logo" />
+            </LinkItem>
+            <p id="crumb">{location}</p>
+          </Container>
+
+          {/* want to put org or user names here */}
+          <Container className="breadcrumbs">
+            <h6 id="org-name">
+              {orgname}
+              <span id="user-name">{username}</span>
+            </h6>
+          </Container>
+        </Nav>
+      )
+    }
+    if (location === 'Home') {
+      breadContent = (
+        <Nav fixed={true}>
+          <Container logo>
+            <LinkItem to="/">
+              <img src={logo2} alt="logo" />
+            </LinkItem>
+          </Container>
+
+          <Container className="breadcrumbs" extra>
+            <LinkItem to="/register" className="entry">
+              Sign Up
+            </LinkItem>
+            <LinkItem to="/login" className="entry">
+              Log In
+            </LinkItem>
+          </Container>
+        </Nav>
+      )
+    }
+    return breadContent
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    organization: state.organization
+  }
 }
 
 export default connect(
-  null,
-  { logout }
+  mapStateToProps,
+  { fetchOrgFromDB }
 )(BreadCrumb)
 
 // basic styling to match design file
@@ -77,6 +95,20 @@ const Container = styled('div')`
 
   @media ${system.breakpoints[1]} {
     display: ${props => (props.extra ? 'none' : 'flex')};
+  }
+
+  h6 {
+    color: ${system.color.white};
+    font-size: ${system.fontSizing.m};
+
+    @media ${system.breakpoints[1]} {
+      display: none;
+    }
+
+    span {
+      font-family: 'Nunito', sans-serif;
+      font-size: ${system.fontSizing.sm};
+    }
   }
 
   img {
@@ -135,7 +167,7 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 2.5rem 10rem;
-  height: 7.5rem;
+  height: ${system.spacing.breadCrumb};
   margin-bottom: ${({ fixed }) => (fixed ? '10rem' : undefined)};
 
   @media ${system.breakpoints[0]} {

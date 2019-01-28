@@ -95,26 +95,26 @@ const Home = () => {
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence is very cool. Now, I always know which Robin is
-                  helping me out on a given night.
+                  Cadence is great! Now, I always know who is working at my cafe
+                  any given morning.
                 </p>
-                <h2>—Batman</h2>
+                <h2>—Bob Smith</h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence changed my life. I can now better plan which Robin
-                  should help Batman.
+                  Cadence changed my life. I can now better plan how many
+                  waiters we'll need and when we'll need them.
                 </p>
-                <h2>—Oracle</h2>
+                <h2>—Jane Doe</h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  I can attest that the guys who made Cadence are both gentlemen
-                  and scholars.
+                  Great product. I can attest that the guys who made Cadence are
+                  both gentlemen and scholars.
                 </p>
-                <h2>—Robin</h2>
+                <h2>—Louis Lambda</h2>
               </div>
             </Fade>
           </div>

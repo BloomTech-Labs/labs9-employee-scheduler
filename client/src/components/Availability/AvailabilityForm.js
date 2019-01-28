@@ -2,86 +2,51 @@ import React, { Component } from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import { connect } from 'react-redux'
-import { getAvailability, editAvailability } from '../../actions'
+import { editAvailability } from '../../actions'
 import Button from '../common/Button'
-import Availability from './AvailabilitySelect'
+import AvailabilitySelect from './AvailabilitySelect'
 import Checkbox from './Checkbox'
 
-const employee = '9474b689-ef77-47a1-ba20-b1bac12beeee'
+const dayNameMap = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+
+const processAvail = avail => {
+  return {
+    ...avail,
+    name: dayNameMap[avail.day],
+    updated: false
+  }
+}
 
 class AvailabilityForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      days: [
-        {
-          name: 'Sunday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Monday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Tuesday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Wednesday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Thursday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Friday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        },
-        {
-          name: 'Saturday',
-          startTime: undefined,
-          endTime: undefined,
-          off: false
-        }
-      ]
-    }
-  }
-
-  componentDidMount() {
-    const { id, token } = this.props
-    if (id) {
-      this.props.getAvailability(id, token)
+      days: props.availabilities.map(processAvail)
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { id, token } = this.props
-    if (prevProps.id !== this.props.id) {
-      this.props.getAvailability(id, token)
+    if (prevProps !== this.props) {
+      this.setState({ days: this.props.availabilities.map(processAvail) })
     }
   }
 
-  handleChange = (targetDay, property, value, availability) => {
+  handleChange = ({ availability, property, value }) => {
     this.setState({
       days: this.state.days.map(day => {
-        if (day.name === targetDay) {
+        if (day.day === availability.day) {
           // "processed' sets the property to a boolean or a number because it defaulted
           // to a string on the server without this
           const processed = property === 'off' ? Boolean(value) : Number(value)
-          return { ...day, [property]: processed, availability }
+          return { ...day, [property]: processed, updated: true }
         } else {
           return day
         }
@@ -92,18 +57,19 @@ class AvailabilityForm extends Component {
   //checks to see which availabilities have been updated and sends the changes to the server
   updateAvailability = () => {
     this.state.days.forEach(day => {
-      return day.availability
-        ? //ternary operator
-          this.props.editAvailability({
-            availability: day.availability,
-            changes: {
-              start_time: day.startTime,
-              end_time: day.endTime,
-              off: day.off
-            },
-            token: this.props.token
-          })
-        : null
+      const { updated, name, ...dayAttribs } = day
+      if (updated) {
+        console.log(day)
+        this.props.editAvailability({
+          availability: dayAttribs,
+          changes: {
+            start_time: day.start_time,
+            end_time: day.end_time,
+            off: day.off
+          },
+          token: this.props.token
+        })
+      }
     })
     this.props.toggleShow()
   }
@@ -115,40 +81,29 @@ class AvailabilityForm extends Component {
         <Close />
         <h5>{`Edit Availability for ${this.props.first_name}`}</h5>
         {/* maps over all availabilities and displays them with the ability to select changes */}
-        {this.props.availability.slice(0, 7).map((a, i) => {
-          //this function passes the the params the toggle to handleChange and is called in Checkbox
-          const toggle = () => {
-            const { name, off } = this.state.days[i]
-            this.handleChange(name, 'off', !off, a)
-          }
-
-          const setToggle = () => {
-            return a.off
-          }
-          return (
-            <Container key={a.id}>
-              <Availability
-                // uses local state to display the names of the days because the db sends a number
-                day={this.state.days[i].name}
-                startTime={a.start_time}
-                endTime={a.end_time}
-                off={a.off}
-                name={this.state.days[i]}
-                startTimeValue={this.state.days[i].startTime}
-                endTimeValue={this.state.days[i].endTime}
-                handleChange={this.handleChange}
-                submit={this.props.getAvailability}
-                availability={a}
-              />
-              {/* this is the toggle to change day from "available" to "unavailable" */}
-              <Checkbox
-                toggleAvailability={toggle}
-                name={this.state.days[i].name}
-                off={setToggle()}
-              />
-            </Container>
-          )
-        })}
+        <DayGrid>
+          {this.state.days.map((availability, i) => {
+            const { off, name } = availability
+            //this function passes the the params the toggle to handleChange and is called in Checkbox
+            const toggle = () => {
+              this.handleChange({
+                availability: availability,
+                property: 'off',
+                value: !off
+              })
+            }
+            return (
+              <Container key={availability.id}>
+                <AvailabilitySelect
+                  handleChange={this.handleChange}
+                  submit={this.props.getAvailability}
+                  availability={availability}
+                />
+                <Checkbox onToggle={toggle} name={name} toggled={off} />
+              </Container>
+            )
+          })}
+        </DayGrid>
         <Button onClick={this.updateAvailability}>submit</Button>
       </OuterContainer>
     )
@@ -157,22 +112,30 @@ class AvailabilityForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    availability: state.availability.availability,
     token: state.auth.token
   }
 }
 
 export default connect(
   mapStateToProps,
-  { editAvailability, getAvailability }
+  { editAvailability }
 )(AvailabilityForm)
 
 const Container = styled('div')`
-  /* border: 1px solid gray; */
+  border: 1px solid gray;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding: ${system.spacing.standardPadding};
 `
+const DayGrid = styled('div')`
+  /* border: 1px solid gray; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: ${system.spacing.standardPadding};
+`
+
 const OuterContainer = styled('div')`
   background-color: ${system.color.neutral};
   padding: ${system.spacing.bigPadding};

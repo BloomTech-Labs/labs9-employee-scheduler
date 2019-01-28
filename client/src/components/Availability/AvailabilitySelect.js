@@ -1,10 +1,8 @@
 import React from 'react'
-import Form from '../Form/index'
 import SelectList from '../common/SelectList'
 import options from './AvailabilityOptions'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Checkbox from './Checkbox'
 import { formatHours } from '../../utils/index'
 
 const SelectContainer = styled('div')`
@@ -13,7 +11,7 @@ const SelectContainer = styled('div')`
   margin-bottom: 10px;
 `
 
-const P = styled('p')`
+const Label = styled('label')`
   padding-right: 20px;
   margin-top: 5px;
 `
@@ -21,49 +19,61 @@ const TimeContainer = styled('div')`
   width: 100px;
 `
 
-const Availability = props => {
+const roundTo30 = time => {
+  return Math.round(time / 0.5) * 0.5
+}
+
+const Availability = ({ availability, handleChange, submit }) => {
+  const { day, start_time, end_time, name } = availability
+  console.log(start_time, end_time)
   //both functions pass in the correct params depending on if it's for start or end time.
   const handleUpdateStart = e => {
-    props.handleChange(
-      props.day,
-      'startTime',
-      e.target.value,
-      props.availability
-    )
+    handleChange({
+      availability,
+      value: e.target.value,
+      property: 'start_time'
+    })
   }
   const handleUpdateEnd = e => {
-    props.handleChange(props.day, 'endTime', e.target.value, props.availability)
+    handleChange({
+      availability,
+      value: e.target.value,
+      property: 'end_time'
+    })
   }
   return (
-    <div key={props.id}>
-      <label htmlFor="">{props.day}</label>
+    <fieldset>
+      <legend>{name}</legend>
       <SelectContainer>
         <TimeContainer>
-          <P>Start: {formatHours(props.startTime)} </P>
+          <Label htmlFor={`${name}-start`}>
+            Start: {formatHours(start_time)}
+          </Label>
         </TimeContainer>
         <SelectList
-          name={props.startTimeValue}
-          value={props.startTimeValue}
+          name={`${name}-start`}
+          id={`${name}-start`}
+          value={roundTo30(start_time)}
           //see function above
           changeHandler={handleUpdateStart}
           options={options}
-          ariaLabel="start time"
         />
       </SelectContainer>
       <SelectContainer>
         <TimeContainer>
-          <P>End: {formatHours(props.endTime)}</P>
+          <Label htmlFor={`${day}-end`}>End: {formatHours(end_time)}</Label>
         </TimeContainer>
         <SelectList
-          name={props.day}
-          value={props.endTimeValue}
+          name={`${day}-end`}
+          id={`${day}-end`}
+          value={roundTo30(end_time)}
           //see function above
           changeHandler={handleUpdateEnd}
           options={options}
           ariaLabel="end time"
         />
       </SelectContainer>
-    </div>
+    </fieldset>
   )
 }
 

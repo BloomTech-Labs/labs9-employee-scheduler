@@ -13,6 +13,7 @@ import EmptyScreen from './EmptyScreen'
 import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
+import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 
 class RegisterOwner extends Component {
@@ -108,9 +109,10 @@ class RegisterOwner extends Component {
       return (
         <EmptyScreen>
           <Status>
-            You are already logged in as a registered user. Please log out to
+            There is already an account for this email. Please log out to
             register a new account.
           </Status>
+          <Redirect to="/" />
         </EmptyScreen>
       )
     } else if (!oauthSuccess) {
@@ -144,7 +146,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={firstName}
                 onChange={handleChange}
-                placeholder="ex. Clark"
+                placeholder="ex. Samuel"
                 ariaLabel="first-name"
                 required
               />
@@ -155,7 +157,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={lastName}
                 onChange={handleChange}
-                placeholder="ex. Kent"
+                placeholder="ex. Machat"
                 ariaLabel="last-name"
                 required
               />
@@ -166,7 +168,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={email}
                 onChange={handleChange}
-                placeholder="ex. ckent@dailyplanet.com"
+                placeholder="ex. samuel@getcadence.co"
                 ariaLabel="email"
                 required
               />
@@ -188,7 +190,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={orgName}
                 onChange={handleChange}
-                placeholder="ex. The Daily Planet"
+                placeholder="ex. Cadence"
                 ariaLabel="org-name"
                 required
               />
@@ -199,7 +201,7 @@ class RegisterOwner extends Component {
                 type="text"
                 value={orgDescription}
                 onChange={handleChange}
-                placeholder="ex. Metropolis' newspaper of record"
+                placeholder="ex. A phenomenal shift scheduling Saas"
                 ariaLabel="org-description"
                 required
               />

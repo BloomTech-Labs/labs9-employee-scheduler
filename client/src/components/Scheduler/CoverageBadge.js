@@ -14,10 +14,13 @@ const Coverage = styled.div`
   display: flex;
   align-items: center;
   border-radius: ${system.borders.radius};
-  border: ${system.borders.transparent};
-  color: ${system.color.neutral};
-  background: ${props =>
+  border: ${props =>
+    props.isGood
+      ? `1px solid ${system.color.success}`
+      : `1px solid ${system.color.danger}`};
+  color: ${props =>
     props.isGood ? system.color.success : system.color.danger};
+  background: ${system.color.white};
   box-shadow: ${system.shadows.button};
   font-size: ${system.fontSizing.sm};
   padding: ${system.spacing.standardPadding};

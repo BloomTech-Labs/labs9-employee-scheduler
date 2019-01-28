@@ -35,14 +35,15 @@ class EmployeePool extends React.Component {
         <Spacer />
         <Container>
           <Input
+            search
             type="text"
             name="searchTerm"
-            placeholder="Search..."
+            placeholder="Search employees..."
             onChange={this.updateSearch}
             value={this.state.searchTerm}
           />
           {filteredEmployees.map(employee => (
-            <Zoom left duration={100} key={employee.id}>
+            <Zoom bottom duration={100} key={employee.id}>
               <EmployeeResource
                 employee={employee}
                 updateDragState={updateDragState}
@@ -83,8 +84,7 @@ const Container = styled('div')`
   }
 
   input {
-    margin: 0;
-    margin-top: 30px;
+    margin: 30px 0;
     width: 85%;
   }
 `

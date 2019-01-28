@@ -57,6 +57,15 @@ const StyledCalendar = styled(BigCalendar)`
     border: 1px solid ${system.color.white};
   }
 
+  @media ${system.breakpoints[0]} {
+    padding: ${system.spacing.hugePadding} 0;
+  }
+
+  .rbc-toolbar-label {
+    font-family: 'Lato', sans-serif;
+    font-size: ${system.fontSizing.m};
+  }
+
   .rbc-event-label {
     margin: 10px 0 0 7.5px;
   }

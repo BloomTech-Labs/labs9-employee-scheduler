@@ -154,7 +154,7 @@ class Settings extends Component {
                 type="email"
                 id="email"
                 name="email"
-                placeholder="ex. bruce@waynecorp.com"
+                placeholder="ex. kamry@getcadence.co"
                 onChange={this.changeHandler}
                 defaultValue={this.state.user.email}
                 disabled={this.state.disabled}
