@@ -92,7 +92,8 @@ class AddEmployee extends Component {
     const { role, Close, toggleShow } = this.props
     return (
       <ModalContainer>
-        {this.props.paid || this.props.employees.length < 2 ? (
+        {/* ternary checks to see if they have a paid account or less than three employees  */}
+        {this.props.paid || this.props.employees.length < 3 ? (
           <form onSubmit={this.submitHandler}>
             <h6 id="instructions">
               Fill this out and we'll send your employee a sign-up email!
@@ -155,12 +156,16 @@ class AddEmployee extends Component {
           </form>
         ) : (
           <form>
-            {this.props.role.owner ? (
-              <h6 id="instructions">
-                Oops! It looks like you have exceeded the number of employees
-                you can have on a free account. <br /> <br /> Would you like to
-                upgrade?
-              </h6>
+            {!this.props.role.owner ? (
+              <>
+                <h6 id="instructions">
+                  Oops! It looks like you have exceeded the number of employees
+                  you can have on a free account.
+                </h6>
+                <Link to="/billing">
+                  <Button>Upgrade</Button>
+                </Link>
+              </>
             ) : (
               <h6 id="instructions">
                 Oops! It looks like the company's account needs to be upgraded
