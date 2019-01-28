@@ -49,7 +49,7 @@ class Employees extends Component {
           <h1>Employee Directory</h1>
           <Button onClick={this.toggleShow}>Add Employee</Button>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
-            <AddEmployee pai />
+            <AddEmployee />
           </Modal>
           <InnerContainer>
             <Modal
