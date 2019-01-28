@@ -13,17 +13,12 @@ const Button = ({
   status,
   toggled,
   disabled,
-  open_time,
-  close_time,
+  start,
   draggableTrack,
-  value,
   onChangeComplete,
   onChangeStart,
   onChange,
-  start,
-  end,
-  minValue,
-  maxValue
+  end
 }) => {
   return (
     <Container>
@@ -36,9 +31,8 @@ const Button = ({
             onChangeComplete={onChangeComplete}
             disabled={disabled}
             name={name}
-            open_time={open_time}
-            close_time={close_time}
-            value={value}
+            start={start}
+            end={end}
           />
           <p>
             {start} to {end}

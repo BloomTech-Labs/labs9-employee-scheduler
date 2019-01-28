@@ -286,3 +286,66 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
   // if everything went okay
   return { verdict: true }
 }
+
+// slider time helpers
+export const minuteToTime = (value, format = 12) => {
+  value = value > 1439 ? 1439 : value
+  let hours = Math.floor(value / 60),
+    minutes = value - hours * 60,
+    ampm
+
+  if (hours.length === 1) hours = '0' + hours
+  if (minutes.length === 1) minutes = '0' + minutes
+  if (minutes === 0) minutes = '00'
+  if (format === 12) {
+    ampm = 'AM'
+    if (hours >= 12) {
+      if (hours === 12) {
+        return hours && minutes
+      } else {
+        hours = hours - 12 && minutes
+      }
+      ampm = 'PM'
+    }
+    if (hours === 0) {
+      hours = 12 && minutes
+    }
+  }
+
+  return { hours: hours, minutes: minutes, am_pm: ampm }
+}
+
+export const timeToMinute = (time, format = 12) => {
+  let rMinutes = 1439
+  if (format === 12) {
+    time = time.split(':')
+    if (time.length < 2) {
+      throw new Error('Invalid time')
+    }
+    let hours = time[0],
+      minutes = parseInt(time[1])
+    hours = parseInt(hours * 60)
+    rMinutes = hours + minutes
+  } else {
+    time = time.toUpperCase()
+    time = time.replace(' ', '')
+    let ampm = time.indexOf('AM') !== -1 ? 'AM' : 'PM'
+    time = time.replace(ampm, '')
+    time = time.split(':')
+    if (time.length < 2) {
+      throw new Error('Invalid time')
+    }
+    let hours = parseInt(time[0]),
+      minutes = parseInt(time[1])
+    if (ampm === 'PM') {
+      if (hours !== 12) {
+        hours = hours + 12
+      }
+    } else {
+      hours = hours === 12 ? 0 : hours
+    }
+    hours = hours * 60
+    rMinutes = hours + minutes
+  }
+  return rMinutes > 1439 ? 1439 : rMinutes
+}
