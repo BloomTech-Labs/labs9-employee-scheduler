@@ -67,35 +67,23 @@ const Slider = styled.div`
   }
 `
 
-class Checkbox extends React.Component {
-  state = { toggled: this.props.toggled }
-  handleUpdate = event => {
-    this.setState(prevState => {
-      return { toggled: !prevState.toggled }
-    })
-  }
-
-  render() {
-    const {
-      state: { toggled },
-      handleUpdate
-    } = this
-    return (
-      <Wrapper>
-        <Container>
-          <input
-            type="checkbox"
-            checked={this.props.toggled}
-            onChange={handleUpdate}
-            onClick={this.props.closedAllDay}
-          />
-          <Switch className={toggled ? undefined : 'toggled'}>
-            <Slider className={toggled ? undefined : 'toggled'} />
-          </Switch>
-        </Container>
-      </Wrapper>
-    )
-  }
+function Checkbox(props) {
+  const { toggled, onToggle, name } = props
+  return (
+    <Wrapper>
+      <Container>
+        <input
+          type="checkbox"
+          checked={toggled}
+          onChange={onToggle}
+          name={name}
+        />
+        <Switch className={toggled ? 'toggled' : undefined}>
+          <Slider className={toggled ? 'toggled' : undefined} />
+        </Switch>
+      </Container>
+    </Wrapper>
+  )
 }
 
 export default Checkbox

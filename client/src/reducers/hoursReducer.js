@@ -1,9 +1,8 @@
 import {
-  OPEN_AND_CLOSE_HOURS_UPDATED,
+  HOURS_UPDATED,
   HOURS_UPDATE_FAILED,
   HOURS_FETCHED,
   HOURS_FETCHING_FAILED,
-  HOURS_UPDATED,
   HOURS_LOADING,
   LOGOUT
 } from '../actions'
@@ -28,41 +27,24 @@ export const hoursReducer = (state = initialState, action) => {
         loading: false,
         error: ''
       }
-    case HOURS_UPDATED: // set day to closed
-      const { hourId, changes } = action.payload
+    case HOURS_UPDATED: {
+      const { changes, hourId } = action.payload
       return {
         hours: state.hours.map(item => {
           // if this is not the item I want to update, leave it alone
           if (item.id !== hourId) {
             return item
           }
-          // else return the an updated value
+          // else return an updated value
           return {
             ...item,
-            closed: changes
+            ...changes
           }
         }),
         loading: false,
         error: ''
       }
-    case OPEN_AND_CLOSE_HOURS_UPDATED:
-      const { start, end } = action.payload
-      return {
-        hours: state.hours.map(item => {
-          // if this is not the item I want to update, leave it alone
-          if (item.id !== hourId) {
-            return item
-          }
-          // else return the an updated value
-          return {
-            ...item,
-            open_time: start,
-            close_time: end
-          }
-        }),
-        loading: false,
-        error: ''
-      }
+    }
     case HOURS_UPDATE_FAILED:
       return {
         ...state,

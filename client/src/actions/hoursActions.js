@@ -4,22 +4,19 @@ export const HOURS_FETCHED = 'HOURS_FETCHED'
 export const HOURS_UPDATE_FAILED = 'HOURS_UPDATE_FAILED'
 export const OPEN_HOURS_UPDATED = 'OPEN_HOURS_UPDATED'
 export const HOURS_UPDATED = 'HOURS_UPDATED'
-export const OPEN_AND_CLOSE_HOURS_UPDATED = 'OPEN_AND_CLOSE_HOURS_UPDATED'
 export const HOURS_FETCHING_FAILED = 'HOURS_FETCHING_FAILED'
 export const HOURS_LOADING = 'HOURS_LOADING'
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
 // edits the open time for a specific day
-export const editHours = (hourId, start, end, token) => async dispatch => {
+export const editHours = (hourId, changes, token) => async dispatch => {
   try {
-    await axios.put(
-      `${baseUrl}/hours-of-operation/${hourId}`,
-      { open_time: start, close_time: end },
-      { headers: { authorization: token } }
-    )
+    await axios.put(`${baseUrl}/hours-of-operation/${hourId}`, changes, {
+      headers: { authorization: token }
+    })
     await dispatch({
-      type: OPEN_AND_CLOSE_HOURS_UPDATED,
-      payload: { hourId, start, end }
+      type: HOURS_UPDATED,
+      payload: { hourId, changes }
     })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })

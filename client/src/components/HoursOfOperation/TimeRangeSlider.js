@@ -5,9 +5,8 @@ import { minuteToTime, timeToMinute } from '../../utils'
 import moment from 'moment'
 
 const formatHours = minutes => {
-  console.log(minutes)
-  const time = minuteToTime(minutes)
-  console.log(time)
+  let clearMinutes = minutes < 0 ? 0 : minutes
+  const time = minuteToTime(clearMinutes, 24)
   return moment({ ...time }).format('h:mm a')
 }
 
@@ -70,11 +69,7 @@ TimeRangeSlider.defaultProps = {
   onChange: () => {},
   onChangeComplete: () => {},
   onChangeStart: () => {},
-  step: 15,
-  value: {
-    end: '11:59pm',
-    start: '12:00am'
-  }
+  step: 15
 }
 
 export default TimeRangeSlider

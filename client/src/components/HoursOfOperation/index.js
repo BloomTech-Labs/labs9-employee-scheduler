@@ -29,7 +29,6 @@ const buildDay = HOO => {
     id: HOO.id,
     name: dayNameMap[HOO.day]
   }
-  console.log(day)
   return day
 }
 
@@ -41,42 +40,27 @@ class HoursOfOperation extends Component {
     this.state = {
       days: this.props.hours.hours.map(buildDay),
       initialTime: null,
-      // time: '',
-      // days: {
-      //   // which day clock is open
-      //   sunday: { start: '12:00am', end: '11:59pm' },
-      //   monday: { start: '12:00am', end: '11:59pm' },
-      //   tuesday: { start: '12:00am', end: '11:59pm' },
-      //   wednesday: { start: '12:00am', end: '11:59pm' },
-      //   thursday: { start: '12:00am', end: '11:59pm' },
-      //   friday: { start: '12:00am', end: '11:59pm' },
-      //   saturday: { start: '12:00am', end: '11:59pm' }
-      // },
-      // value: {
-      //   start: '12:00am',
-      //   end: '11:59pm'
-      // },
-      // openTime: null,
-      // closeTime: null,
-      // dayId: '', // selected day id
       checked: new Map()
     }
   }
 
-  closedAllDay = (e, idx) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { hours } = this.props.hours
-    //gets the id for the affected close/open day
-    const id = hours[idx].id
-    //checks if this day is open or closed and saves the boolean
-    let closed
-    hours[idx].closed === true ? (closed = false) : (closed = true)
-    this.setState({
-      checked: !this.state.checked
+  closedAllDay = targetDay => {
+    this.setState(prevState => {
+      const { days } = prevState
+      return {
+        days: days.map(day => {
+          if (day.name === targetDay.name) {
+            return {
+              ...day,
+              updated: true,
+              closed: !day.closed
+            }
+          } else {
+            return day
+          }
+        })
+      }
     })
-
-    this.props.closeAndOpenHours(id, closed, this.props.token)
   }
 
   checkBox = e => {
@@ -92,18 +76,24 @@ class HoursOfOperation extends Component {
 
   handleCheck = e => {
     e.persist()
-    console.log(e.target)
   }
 
   // for submitting all of the hours
-  // submitHandler = (times) => {
-  //   const start = parseFloat(moment(times.start, 'h:mm a').format('HH.MM'))
-  //   const end = parseFloat(moment(times.end, 'h:mm a').format('HH.MM'))
-  //   const { hours } = this.props.hours
-  //   // //gets the id for the affected close/open day
-  //   const id = hours[i].id
-  //   this.props.editHours(id, start, end, this.props.token)
-  // }
+  submitHandler = () => {
+    this.state.days.forEach(day => {
+      if (day.updated) {
+        const start = parseFloat(moment(day.start, 'h:mm a').format('HH.MM'))
+        const end = parseFloat(moment(day.end, 'h:mm a').format('HH.MM'))
+        const closed = day.closed
+        this.props.editHours(
+          day.id,
+          { open_time: start, close_time: end, closed },
+          this.props.token
+        )
+      }
+    })
+    this.props.toggleShow()
+  }
 
   // handles the slider position when the user is done sliding
   onChangeComplete = (time, targetDay) => {
@@ -111,12 +101,17 @@ class HoursOfOperation extends Component {
     this.setState(prevState => {
       const { days, initialTime } = prevState
       return {
-        day: days.map(day => {
+        days: days.map(day => {
           if (day.name === targetDay.name) {
-            const equals =
+            const notEqual =
               initialTime.start !== targetDay.start ||
               initialTime.end !== targetDay.end
-            return { ...day, start: time.start, end: time.end, updated: equals }
+            return {
+              ...day,
+              start: time.start,
+              end: time.end,
+              updated: notEqual
+            }
           } else {
             return day
           }
@@ -127,10 +122,9 @@ class HoursOfOperation extends Component {
 
   // handles recording positions when the slider moves
   timeChangeHandler(time, targetDay) {
-    console.log(time, targetDay)
     this.setState(prevState => {
       return {
-        day: prevState.days.map(day => {
+        days: prevState.days.map(day => {
           if (day.name === targetDay.name) {
             return { ...day, start: time.start, end: time.end }
           } else {
@@ -164,16 +158,16 @@ class HoursOfOperation extends Component {
                 <Button
                   // props to days and close/open button
                   id={i}
-                  key={i}
+                  key={day.id}
                   handleHours={this.handleHours}
                   day={day}
                   name={day.name}
-                  closedAllDay={e => this.closedAllDay(e, i)}
+                  closedAllDay={() => this.closedAllDay(day)}
                   toggled={day.closed}
-                  status={day.closed ? 'Open' : 'Closed'}
+                  status={day.closed === false ? 'Open' : 'Closed'}
                   ///////////////////
                   // slider props //
-                  disabled={!day.closed} //disabled if day is closed
+                  disabled={day.closed} //disabled if day is closed
                   draggableTrack={true} //slide by touching the bar
                   start={day.start} //start of each day
                   end={day.end} //end of each day
@@ -187,6 +181,7 @@ class HoursOfOperation extends Component {
               </>
             )
           })}
+          <button onClick={this.submitHandler}>Submit</button>
         </div>
       </Modal>
     )

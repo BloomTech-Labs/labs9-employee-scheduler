@@ -46,7 +46,7 @@ const Button = ({
       </div>
       <Zoom left>
         <div className="closeToggle">
-          <Checkbox closedAllDay={closedAllDay} toggled={toggled} name={name} />
+          <Checkbox onToggle={closedAllDay} toggled={toggled} name={name} />
           <Status status={status} />
         </div>
       </Zoom>
