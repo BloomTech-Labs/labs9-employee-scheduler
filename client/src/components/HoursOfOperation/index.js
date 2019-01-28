@@ -3,12 +3,10 @@ import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import moment from 'moment'
-import Fade from 'react-reveal/Fade'
-import Zoom from 'react-reveal/Zoom'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formatHours } from '../../utils'
-import { editHours, fetchHoursFromDB, closeAndOpenHours } from '../../actions/'
+import { editHours } from '../../actions/'
 
 const dayNameMap = [
   'Sunday',
@@ -63,21 +61,6 @@ class HoursOfOperation extends Component {
     })
   }
 
-  checkBox = e => {
-    e.stopPropagation()
-    const item = e.target.name
-    const isChecked = e.target.checked
-    this.setState(function(prevState) {
-      return {
-        checked: !prevState.checked.set(item, isChecked)
-      }
-    })
-  }
-
-  handleCheck = e => {
-    e.persist()
-  }
-
   // for submitting all of the hours
   submitHandler = () => {
     this.state.days.forEach(day => {
@@ -97,7 +80,6 @@ class HoursOfOperation extends Component {
 
   // handles the slider position when the user is done sliding
   onChangeComplete = (time, targetDay) => {
-    // breaks object up and sets minutes to proper interval for server
     this.setState(prevState => {
       const { days, initialTime } = prevState
       return {
@@ -145,40 +127,34 @@ class HoursOfOperation extends Component {
     return (
       <Modal>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
-
         <div className="days-container">
           <Close />
           <h3>Hours of Operation</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
           {this.state.days.map((day, i) => {
-            // const { days } = this.state
-            // const { hours } = this.props.hours
             return (
-              <>
-                <Button
-                  // props to days and close/open button
-                  id={i}
-                  key={day.id}
-                  handleHours={this.handleHours}
-                  day={day}
-                  name={day.name}
-                  closedAllDay={() => this.closedAllDay(day)}
-                  toggled={day.closed}
-                  status={day.closed === false ? 'Open' : 'Closed'}
-                  ///////////////////
-                  // slider props //
-                  disabled={day.closed} //disabled if day is closed
-                  draggableTrack={true} //slide by touching the bar
-                  start={day.start} //start of each day
-                  end={day.end} //end of each day
-                  // functions //
-                  onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
-                  onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
-                  onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
-                >
-                  {this.props.children}
-                </Button>
-              </>
+              <Button
+                // props to days and close/open button
+                id={i}
+                key={day.id}
+                handleHours={this.handleHours}
+                day={day}
+                name={day.name}
+                closedAllDay={() => this.closedAllDay(day)}
+                toggled={day.closed}
+                status={day.closed === false ? 'Open' : 'Closed'}
+                // slider props //
+                disabled={day.closed} //disabled if day is closed
+                draggableTrack={true} //slide by touching the bar
+                start={day.start} //start of each day
+                end={day.end} //end of each day
+                // functions //
+                onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+                onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
+                onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
+              >
+                {this.props.children}
+              </Button>
             )
           })}
           <button onClick={this.submitHandler}>Submit</button>
@@ -196,13 +172,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editHours, fetchHoursFromDB, closeAndOpenHours }
+  { editHours }
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {
   editHours: propTypes.func.isRequired,
-  fetchHoursFromDB: propTypes.func.isRequired,
-  closeAndOpenHours: propTypes.func.isRequired,
   showHandleHours: propTypes.func,
   closeAllDay: propTypes.func,
   handleHours: propTypes.func,

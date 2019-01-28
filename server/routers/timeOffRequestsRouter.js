@@ -39,7 +39,6 @@ router.post('/:userId', authorize(['all']), (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err)
       return res.status(404).json({ error: 'Error with request', err })
     })
 })
@@ -50,7 +49,6 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   // const { status } = req.body
   updateTimeOffRequest(id, req.body)
     .then(result => {
-      console.log(result)
       return getTimeOffRequest(id)
     })
     .then(result => res.status(200).json(result))
