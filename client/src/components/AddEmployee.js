@@ -22,8 +22,6 @@ class AddEmployee extends Component {
     }
   }
 
-  checkIfPaid = () => {}
-
   changeHandler = event => {
     this.setState({
       newUser: {
@@ -88,7 +86,6 @@ class AddEmployee extends Component {
   }
 
   render() {
-    console.log(this.props.role)
     const { role, Close, toggleShow } = this.props
     return (
       <ModalContainer>
@@ -160,8 +157,7 @@ class AddEmployee extends Component {
             {this.props.role === 'owner' ? (
               <>
                 <h6 id="instructions">
-                  Oops! It looks like you have exceeded the number of employees
-                  you can have on a free account.
+                  You have reached the limit for the number of employees.
                 </h6>
                 <Link to="/billing">
                   <Button>Upgrade</Button>
