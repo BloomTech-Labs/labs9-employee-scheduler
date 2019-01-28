@@ -170,6 +170,32 @@ export const Input = styled.input`
   }
 `
 
+export const Select = styled.select`
+  outline: none;
+  font-size: ${system.fontSizing.m};
+  color: ${system.color.bodytext};
+  font-family: 'Nunito', sans-serif;
+
+  padding: 2.5px 5px;
+  margin: 0.5rem 0 ${system.spacing.hugePadding};
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #d2d2d2;
+  transition: ${system.transition};
+  :focus {
+    border-bottom: 2px solid ${system.color.primary};
+  }
+
+  option {
+    color: ${system.color.bodytext};
+    font-family: 'Nunito', sans-serif;
+
+    @media ${system.breakpoints[0]} {
+      font-size: ${system.fontSizing.sm};
+    }
+  }
+`
+
 export const Form = styled.form`
   display: flex;
   position: relative;
