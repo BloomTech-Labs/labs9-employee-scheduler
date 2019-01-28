@@ -157,7 +157,7 @@ class AddEmployee extends Component {
         ) : (
           <form>
             {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
-            {this.props.role.owner ? (
+            {!this.props.role.owner ? (
               <>
                 <h6 id="instructions">
                   Oops! It looks like you have exceeded the number of employees
