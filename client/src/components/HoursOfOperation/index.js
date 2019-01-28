@@ -7,12 +7,7 @@ import Fade from 'react-reveal/Fade'
 import Zoom from 'react-reveal/Zoom'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  editOpenHours,
-  editCloseHours,
-  fetchHoursFromDB,
-  closeAndOpenHours
-} from '../../actions/'
+import { editHours, fetchHoursFromDB, closeAndOpenHours } from '../../actions/'
 
 class HoursOfOperation extends Component {
   constructor(props) {
@@ -53,28 +48,28 @@ class HoursOfOperation extends Component {
   }
 
   //closes the time keeper and sets the time on state that we want to send back to the DB
-  saveOpenTime = time => {
-    const { dayId } = this.state
-    this.setState(function(prevState) {
-      return {
-        isOpen: !prevState.isOpen,
-        isClose: !prevState.isClosed
-      }
-    })
+  // saveOpenTime = time => {
+  //   const { dayId } = this.state
+  //   this.setState(function(prevState) {
+  //     return {
+  //       isOpen: !prevState.isOpen,
+  //       isClose: !prevState.isClosed
+  //     }
+  //   })
 
-    this.props.editOpenHours(dayId, time, this.props.token)
-  }
+  //   this.props.editOpenHours(dayId, time, this.props.token)
+  // }
 
-  saveCloseTime = time => {
-    const { dayId } = this.state
-    this.setState(function(prevState) {
-      return {
-        isOpen: !prevState.isOpen,
-        isClose: !prevState.isClosed
-      }
-    })
-    this.props.editOpenHours(dayId, time, this.props.token)
-  }
+  // saveCloseTime = time => {
+  //   const { dayId } = this.state
+  //   this.setState(function(prevState) {
+  //     return {
+  //       isOpen: !prevState.isOpen,
+  //       isClose: !prevState.isClosed
+  //     }
+  //   })
+  //   this.props.editOpenHours(dayId, time, this.props.token)
+  // }
 
   closedAllDay = (e, idx) => {
     e.preventDefault()
@@ -109,16 +104,19 @@ class HoursOfOperation extends Component {
   }
 
   onChangeComplete = (newTime, i) => {
-    console.log('changeCompleteHandler fired')
     // breaks object up and sets minutes to proper interval for server
-    // let start = newTime.start.hours + newTime.start.minutes / 60
-    // let newStart = start.toFixed(2)
-    // let end = newTime.end.hours + newTime.end.minutes / 60
-    // let newEnd = end.toFixed(2)
-
+    let start = newTime.start.hours + newTime.start.minutes / 60
+    let newStart = start.toFixed(2)
+    let end = newTime.end.hours + newTime.end.minutes / 60
+    let newEnd = end.toFixed(2)
+    const { hours } = this.props.hours
+    //gets the id for the affected close/open day
+    const id = hours[i].id
     // // console.log()
-    // this.setState({ openTime: newStart, closeTime: newEnd })
+    this.setState({ openTime: newStart, closeTime: newEnd })
+    this.props.editHours(id, newStart, newEnd, this.props.token)
   }
+
   timeChangeHandler(currentTime, idx, time) {
     console.log('timeChangeHandler fired')
 
@@ -169,7 +167,9 @@ class HoursOfOperation extends Component {
                   draggableTrack={true}
                   open_time={hours[i].open_time}
                   close_time={hours[i].close_time}
-                  onChangeComplete={this.onChangeComplete}
+                  onChangeComplete={() =>
+                    this.onChangeComplete(this.state.value, i)
+                  }
                   onChange={this.timeChangeHandler}
                   onChangeStart={() => this.changeStartHandler(days[day], i)}
                   value={days[day]}
@@ -197,7 +197,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editOpenHours, editCloseHours, fetchHoursFromDB, closeAndOpenHours }
+  { editHours, fetchHoursFromDB, closeAndOpenHours }
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {

@@ -1,6 +1,5 @@
 import {
-  OPEN_HOURS_UPDATED,
-  CLOSE_HOURS_UPDATED,
+  OPEN_AND_CLOSE_HOURS_UPDATED,
   HOURS_UPDATE_FAILED,
   HOURS_FETCHED,
   HOURS_FETCHING_FAILED,
@@ -46,7 +45,7 @@ export const hoursReducer = (state = initialState, action) => {
         loading: false,
         error: ''
       }
-    case OPEN_HOURS_UPDATED:
+    case OPEN_AND_CLOSE_HOURS_UPDATED:
       return {
         hours: state.hours.map(item => {
           // if this is not the item I want to update, leave it alone
@@ -56,21 +55,8 @@ export const hoursReducer = (state = initialState, action) => {
           // else return the an updated value
           return {
             ...item,
-            open_time: changes
-          }
-        }),
-        loading: false,
-        error: ''
-      }
-    case CLOSE_HOURS_UPDATED:
-      return {
-        hours: state.hours.map(item => {
-          if (item.id !== hourId) {
-            return item
-          }
-          return {
-            ...item,
-            close_time: changes
+            open_time: changes.start,
+            close_time: changes.end
           }
         }),
         loading: false,
