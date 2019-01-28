@@ -21,7 +21,9 @@ const Button = ({
   onChangeStart,
   onChange,
   start,
-  end
+  end,
+  minValue,
+  maxValue
 }) => {
   return (
     <Container>

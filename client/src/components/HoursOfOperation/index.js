@@ -22,17 +22,17 @@ class HoursOfOperation extends Component {
       time: '',
       days: {
         // which day clock is open
-        sunday: { start: '00:00', end: '23:59' },
-        monday: { start: '00:00', end: '23:59' },
-        tuesday: { start: '00:00', end: '23:59' },
-        wednesday: { start: '00:00', end: '23:59' },
-        thursday: { start: '00:00', end: '23:59' },
-        friday: { start: '00:00', end: '23:59' },
-        saturday: { start: '00:00', end: '23:59' }
+        sunday: { start: '12:00am', end: '11:59pm' },
+        monday: { start: '12:00am', end: '11:59pm' },
+        tuesday: { start: '12:00am', end: '11:59pm' },
+        wednesday: { start: '12:00am', end: '11:59pm' },
+        thursday: { start: '12:00am', end: '11:59pm' },
+        friday: { start: '12:00am', end: '11:59pm' },
+        saturday: { start: '12:00am', end: '11:59pm' }
       },
       value: {
-        start: '00:00',
-        end: '23:59'
+        start: '12:00am',
+        end: '11:59pm'
       },
       openTime: null,
       closeTime: null,
@@ -108,9 +108,8 @@ class HoursOfOperation extends Component {
     console.log(e.target)
   }
 
-  changeCompleteHandler = (newTime, i) => {
-    console.log(newTime)
-    console.log(i)
+  onChangeComplete = (newTime, i) => {
+    console.log('changeCompleteHandler fired')
     // breaks object up and sets minutes to proper interval for server
     // let start = newTime.start.hours + newTime.start.minutes / 60
     // let newStart = start.toFixed(2)
@@ -120,9 +119,25 @@ class HoursOfOperation extends Component {
     // // console.log()
     // this.setState({ openTime: newStart, closeTime: newEnd })
   }
-  onChangeStart = (currentTime, idx) => {
-    console.log(currentTime)
-    console.log(idx)
+  timeChangeHandler(currentTime, idx, time) {
+    console.log('timeChangeHandler fired')
+
+    // console.log(currentTime)
+    // console.log(idx)
+    // this.setState({
+    //   value: time
+    // })
+    // Object.keys(this.state.days).map(day =>
+    //   this.setState({ [day]: currentTime })
+    // )
+    this.onChangeComplete()
+  }
+
+  changeStartHandler = (currentTime, idx) => {
+    // set's the time for the currently picked day, bad idea because it sets every frame (that's crazy)
+    this.setState({
+      value: currentTime
+    })
   }
 
   render() {
@@ -154,12 +169,14 @@ class HoursOfOperation extends Component {
                   draggableTrack={true}
                   open_time={hours[i].open_time}
                   close_time={hours[i].close_time}
-                  onChangeComplete={this.changeCompleteHandler}
-                  onChange={this.onChange}
-                  onChangeStart={() => this.onChangeStart(days[day], i)}
+                  onChangeComplete={this.onChangeComplete}
+                  onChange={this.timeChangeHandler}
+                  onChangeStart={() => this.changeStartHandler(days[day], i)}
                   value={days[day]}
                   start={days[day].start}
                   end={days[day].end}
+                  minValue={'12:00am'}
+                  maxValue={'11:59pm'}
                 >
                   {this.props.children}
                 </Button>

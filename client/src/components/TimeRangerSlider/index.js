@@ -29,7 +29,7 @@ class TimeRangeSlider extends Component {
         }
         ampm = 'PM'
       }
-      if (hours === 0) {
+      if (hours == 0) {
         hours = 12
         minutes = minutes
       }
@@ -60,12 +60,12 @@ class TimeRangeSlider extends Component {
       }
       let hours = parseInt(time[0]),
         minutes = parseInt(time[1])
-      if (ampm == 'PM') {
+      if (ampm === 'PM') {
         if (hours != 12) {
           hours = hours + 12
         }
       } else {
-        hours = hours == 12 ? 0 : hours
+        hours = hours === 12 ? 0 : hours
       }
       hours = hours * 60
       rMinutes = hours + minutes
@@ -82,16 +82,19 @@ class TimeRangeSlider extends Component {
       nStart += ' ' + start.am_pm
       nEnd += ' ' + end.am_pm
     }
+
     this.props.onChangeStart({
       start: nStart,
       end: nEnd
     })
+
+    // return this.onChangeComplete({ start: nStart, end: nEnd })
   }
 
   onChangeComplete = value => {
     let start = this.minuteToTime(value.min),
       end = this.minuteToTime(value.max)
-    this.props.onChangeStart({
+    this.props.onChangeComplete({
       start: start,
       end: end
     })
@@ -121,6 +124,7 @@ class TimeRangeSlider extends Component {
         onChangeComplete={this.onChangeComplete}
         step={15}
         value={{ min: min, max: max }}
+        name={this.props.name}
       />
     )
   }
@@ -129,16 +133,16 @@ class TimeRangeSlider extends Component {
 TimeRangeSlider.defaultProps = {
   disabled: false,
   draggableTrack: true,
-  format: 24,
-  maxValue: '11:59PM',
-  minValue: '12:00AM',
-  onChange: () => {},
-  onChangeComplete: () => {},
-  onChangeStart: () => {},
-  step: 15,
+  // format: 12,
+  maxValue: '11:59pm',
+  minValue: '12:00am',
+  // onChange: () => {},
+  // onChangeComplete: () => {},
+  // onChangeStart: () => {},
+  // step: 15,
   value: {
-    start: '12:00AM',
-    end: '11:59PM'
+    start: '12:00am',
+    end: '11:59pm'
   }
 }
 
