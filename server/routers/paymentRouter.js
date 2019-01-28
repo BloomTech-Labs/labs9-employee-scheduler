@@ -46,7 +46,6 @@ router.post('/', authorize(['owner']), (req, res, next) => {
 })
 
 router.put('/', authorize(['owner']), (req, res) => {
-  console.log(req.body)
   const { subscription_id, org_id } = req.body
   stripe.subscriptions.del(subscription_id)
   updateOrg(org_id, {
@@ -55,8 +54,7 @@ router.put('/', authorize(['owner']), (req, res) => {
     paid: false
   })
     .then(res => {
-      console.log('Cancelled')
-      res.send('Cancelled')
+      return res.send('Cancelled')
     })
     .catch(err => res.send(err))
 })

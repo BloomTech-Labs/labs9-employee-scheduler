@@ -1,130 +1,125 @@
 import React, { Component } from 'react'
-import Timekeeper from './TimeKeeper'
 import Button from './Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Fade from 'react-reveal'
+import moment from 'moment'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  editOpenHours,
-  editCloseHours,
-  fetchHoursFromDB,
-  closeAndOpenHours
-} from '../../actions/'
+import { formatHours } from '../../utils'
+import { editHours } from '../../actions/'
+
+const dayNameMap = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+
+const buildDay = HOO => {
+  const day = {
+    updated: false,
+    start: formatHours(HOO.open_time),
+    end: formatHours(HOO.close_time),
+    closed: HOO.closed,
+    id: HOO.id,
+    name: dayNameMap[HOO.day]
+  }
+  return day
+}
 
 class HoursOfOperation extends Component {
   constructor(props) {
     super(props)
+    this.featureRef = React.createRef()
+
     this.state = {
-      isOpen: false, // open time clock show/hide
-      isClose: false, // close time clock show/hide
-      time: '',
-      show: false, // show or hide the open/close buttons
-      days: {
-        // which day clock is open
-        sunday: false,
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false
-      },
-      dayId: '', // selected day id
+      days: this.props.hours.hours.map(buildDay),
+      initialTime: null,
       checked: new Map()
     }
   }
 
-  componentDidMount() {
-    if (this.props.user !== null) {
-      const { organization_id } = this.props.user
-      this.props.fetchHoursFromDB(organization_id, this.props.token)
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return nextProps.errors ? { errors: nextProps.errors } : null
-  }
-
-  // //opens the correct version of the timekeeper so it sends back
-  //either open time or close time
-  handleHours = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (e.target.name === 'open') {
-      this.setState({ isOpen: true, isClose: false })
-    } else {
-      this.setState({ isOpen: false, isClose: true })
-    }
-  }
-
-  // slides out clock
-  showHandleHours = (e, idx) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    const { hours } = this.props.hours
-    if (Object.keys(hours).length > 0) {
-      const { days } = this.state
-      this.setState({
-        days: {
-          ...days,
-          [e.target.name]: !days[e.target.name] //change individual day
-        },
-        dayId: hours[idx].id //keep the data for this day on state
-      })
-    }
-  }
-
-  //closes the time keeper and sets the time on state that we want to send back to the DB
-  saveOpenTime = time => {
-    const { dayId } = this.state
-    this.setState(function(prevState) {
+  closedAllDay = targetDay => {
+    this.setState(prevState => {
+      const { days } = prevState
       return {
-        isOpen: !prevState.isOpen,
-        isClose: !prevState.isClosed
+        days: days.map(day => {
+          if (day.name === targetDay.name) {
+            return {
+              ...day,
+              updated: true,
+              closed: !day.closed
+            }
+          } else {
+            return day
+          }
+        })
       }
     })
-
-    this.props.editOpenHours(dayId, time, this.props.token)
   }
 
-  saveCloseTime = time => {
-    const { dayId } = this.state
-    this.setState(function(prevState) {
-      return {
-        isOpen: !prevState.isOpen,
-        isClose: !prevState.isClosed
+  // for submitting all of the hours
+  submitHandler = () => {
+    this.state.days.forEach(day => {
+      if (day.updated) {
+        const start = parseFloat(moment(day.start, 'h:mm a').format('HH.MM'))
+        const end = parseFloat(moment(day.end, 'h:mm a').format('HH.MM'))
+        const closed = day.closed
+        this.props.editHours(
+          day.id,
+          { open_time: start, close_time: end, closed },
+          this.props.token
+        )
       }
     })
-    this.props.editOpenHours(dayId, time, this.props.token)
+    this.props.toggleShow()
   }
 
-  closedAllDay = (e, idx) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { dayId } = this.state
-    let closed
-    this.props.hours.hours[idx].closed === 1 ? (closed = 0) : (closed = 1)
-    this.setState({
-      isOpen: false,
-      isClose: false,
-      checked: !this.state.checked
-    })
-
-    this.props.closeAndOpenHours(dayId, closed, this.props.token)
-  }
-
-  checkBox = e => {
-    e.stopPropagation()
-    const item = e.target.name
-    const isChecked = e.target.checked
-    this.setState(function(prevState) {
+  // handles the slider position when the user is done sliding
+  onChangeComplete = (time, targetDay) => {
+    this.setState(prevState => {
+      const { days, initialTime } = prevState
       return {
-        checked: !prevState.checked.set(item, isChecked)
+        days: days.map(day => {
+          if (day.name === targetDay.name) {
+            const notEqual =
+              initialTime.start !== targetDay.start ||
+              initialTime.end !== targetDay.end
+            return {
+              ...day,
+              start: time.start,
+              end: time.end,
+              updated: notEqual
+            }
+          } else {
+            return day
+          }
+        })
       }
     })
+  }
+
+  // handles recording positions when the slider moves
+  timeChangeHandler(time, targetDay) {
+    this.setState(prevState => {
+      return {
+        days: prevState.days.map(day => {
+          if (day.name === targetDay.name) {
+            return { ...day, start: time.start, end: time.end }
+          } else {
+            return day
+          }
+        })
+      }
+    })
+  }
+
+  // handles returning the starting position of the slider
+  changeStartHandler = currentTime => {
+    return this.setState({ initialTime: currentTime })
   }
 
   render() {
@@ -132,44 +127,38 @@ class HoursOfOperation extends Component {
     return (
       <Modal>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
-
         <div className="days-container">
           <Close />
           <h3>Hours of Operation</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
-          {Object.keys(this.state.days).map((day, i) => {
+          {this.state.days.map((day, i) => {
             return (
               <Button
+                // props to days and close/open button
                 id={i}
-                key={i}
+                key={day.id}
                 handleHours={this.handleHours}
-                day={this.state.days[day]}
-                name={day}
-                showHandleHours={e => this.showHandleHours(e, i)}
-                closedAllDay={e => this.closedAllDay(e, i)}
+                day={day}
+                name={day.name}
+                closedAllDay={() => this.closedAllDay(day)}
+                toggled={day.closed}
+                status={day.closed === false ? 'Open' : 'Closed'}
+                // slider props //
+                disabled={day.closed} //disabled if day is closed
+                draggableTrack={true} //slide by touching the bar
+                start={day.start} //start of each day
+                end={day.end} //end of each day
+                // functions //
+                onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+                onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
+                onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
               >
                 {this.props.children}
               </Button>
             )
           })}
+          <button onClick={this.submitHandler}>Submit</button>
         </div>
-        {this.state.isOpen === true ? (
-          <Fade top duration={100}>
-            <Timekeeper
-              name="open"
-              saveAndClose={this.saveOpenTime}
-              day={`Open time`}
-            />
-          </Fade>
-        ) : this.state.isClose === true ? (
-          <Fade top>
-            <Timekeeper
-              name="close"
-              saveAndClose={this.saveCloseTime}
-              day={`Close time`}
-            />
-          </Fade>
-        ) : null}
       </Modal>
     )
   }
@@ -183,14 +172,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editOpenHours, editCloseHours, fetchHoursFromDB, closeAndOpenHours }
+  { editHours }
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {
-  editOpenHours: propTypes.func.isRequired,
-  editCloseHours: propTypes.func.isRequired,
-  fetchHoursFromDB: propTypes.func.isRequired,
-  closeAndOpenHours: propTypes.func.isRequired,
+  editHours: propTypes.func.isRequired,
   showHandleHours: propTypes.func,
   closeAllDay: propTypes.func,
   handleHours: propTypes.func,
@@ -202,10 +188,12 @@ const Modal = styled.div`
   /* position: absolute;
   right: 10px;
   bottom: 40px; */
-  width: min-content;
+  border-radius: 5px;
+  width: 500px;
   z-index: 11;
   background-color: ${system.color.neutral};
   display: flex;
+  justify-content: center;
   flex-direction: row;
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};

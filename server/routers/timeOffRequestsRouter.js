@@ -24,15 +24,22 @@ router.get('/:userId', authorize(['all']), (req, res) => {
 router.post('/:userId', authorize(['all']), (req, res) => {
   const { userId } = req.params
   const { date, reason } = req.body
-  console.log(req.body)
   if (!date || !reason)
     return res.status(400).json({ error: 'Missing required field(s)' })
 
   addTimeOffRequest({ user_id: userId, date, reason, status: 'pending' })
-    .then(request => res.status(200).json(request))
+    .then(id => {
+      return getTimeOffRequest(id)
+    })
+    .then(request => {
+      if (request) {
+        return res.status(200).json(request)
+      } else {
+        return res.status(500).json({ error: 'something went wrong' })
+      }
+    })
     .catch(err => {
-      console.log(err)
-      res.status(404).json({ error: 'Error with request', err })
+      return res.status(404).json({ error: 'Error with request', err })
     })
 })
 
@@ -40,16 +47,12 @@ router.post('/:userId', authorize(['all']), (req, res) => {
 router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   // const { status } = req.body
-  console.log(req.body)
-
   updateTimeOffRequest(id, req.body)
     .then(result => {
-      console.log(result)
       return getTimeOffRequest(id)
     })
     .then(result => res.status(200).json(result))
     .catch(err => {
-      console.log(err)
       return res
         .status(404)
         .json({ error: 'Error getting time off requests', err })

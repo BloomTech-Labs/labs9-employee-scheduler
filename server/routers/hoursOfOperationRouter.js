@@ -26,7 +26,10 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   updateHoursOfOperation(id, req.body)
     .then(hours => res.status(200).json(hours))
-    .catch(err => res.status(500).json({ error: 'Server Error', err }))
+    .catch(err => {
+      console.log(err)
+      return res.status(500).json({ error: 'Server Error', err })
+    })
 })
 
 module.exports = router
