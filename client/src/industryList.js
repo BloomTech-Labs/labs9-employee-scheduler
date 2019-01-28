@@ -1,4 +1,4 @@
-export const industryList = [
+export default (industryList = [
   'Accounting',
   'Airlines/Aviation',
   'Alternative Dispute Resolution',
@@ -146,4 +146,4 @@ export const industryList = [
   'Wine and Spirits',
   'Wireless',
   'Writing and Editing'
-]
+])

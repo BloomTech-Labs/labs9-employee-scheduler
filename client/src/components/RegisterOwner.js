@@ -65,7 +65,7 @@ class RegisterOwner extends Component {
     e.preventDefault()
     const { email, phone, firstName, lastName, orgName, industry } = this.state
 
-    if (!email || !phone || !firstName || !lastName || !orgName || !industry) {
+    if (!email || !phone || !firstName || !lastName || !orgName) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
