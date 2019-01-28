@@ -103,8 +103,8 @@ const Home = () => {
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence changed my life. I can now better plan how many
-                  waiters we'll need and when we'll need them.
+                  I love Cadence. I can now better plan how many waiters we'll
+                  need and when we'll need them.
                 </p>
                 <h2>—Jane Doe</h2>
               </div>

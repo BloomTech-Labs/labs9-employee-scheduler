@@ -10,7 +10,9 @@ const getEmployees = async orgId => {
   // I divided the query up into three, that then get compiled together.
 
   // First, grab all the employees for a given org
-  const employeesP = db('users as u').where({ 'u.organization_id': orgId })
+  const employeesP = db('users as u')
+    .where({ 'u.organization_id': orgId })
+    .orderBy('first_name')
 
   // Second, grab the availabilities for each employee and crunch the data together
   // into an object of key value pairs where each key is a user id and the value
