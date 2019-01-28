@@ -39,6 +39,7 @@ class Employees extends Component {
   }
 
   render() {
+    console.log(this.props.org_id)
     const { employees } = this.props
     const { availTarget } = this.state
     return (
@@ -49,7 +50,7 @@ class Employees extends Component {
           <h1>Employee Directory</h1>
           <Button onClick={this.toggleShow}>Add Employee</Button>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
-            <AddEmployee />
+            <AddEmployee pai />
           </Modal>
           <InnerContainer>
             <Modal
