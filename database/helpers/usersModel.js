@@ -37,7 +37,9 @@ const getUser = id => {
 }
 
 const addUser = async user => {
-  const newUser = { ...user, id: uuid() }
+  // we must spread user in after uuid() otherwise registering accounts will fail
+  // the uuid() is only there for testing purposes
+  const newUser = { id: uuid(), ...user }
   await db('users').insert(newUser)
   const result = await insertAvailsForNewUser(newUser)
   return newUser
