@@ -156,7 +156,8 @@ class AddEmployee extends Component {
           </form>
         ) : (
           <form>
-            {!this.props.role.owner ? (
+            {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
+            {this.props.role.owner ? (
               <>
                 <h6 id="instructions">
                   Oops! It looks like you have exceeded the number of employees
@@ -169,7 +170,8 @@ class AddEmployee extends Component {
             ) : (
               <h6 id="instructions">
                 Oops! It looks like the company's account needs to be upgraded
-                before you can add more employees.
+                before you can add more employees. Contact the owner about
+                upgrading.
               </h6>
             )}
           </form>
