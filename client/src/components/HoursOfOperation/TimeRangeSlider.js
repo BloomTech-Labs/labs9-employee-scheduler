@@ -5,8 +5,10 @@ import { minuteToTime, timeToMinute } from '../../utils'
 import moment from 'moment'
 
 const formatHours = minutes => {
+  console.log(minutes)
   const time = minuteToTime(minutes)
-  return moment({ ...time })
+  console.log(time)
+  return moment({ ...time }).format('h:mm a')
 }
 
 class TimeRangeSlider extends Component {
@@ -15,35 +17,31 @@ class TimeRangeSlider extends Component {
     this.state = {}
   }
 
-  onChange = ({ start, end }) => {
-    this.props.onChangeStart({
-      start: formatHours(start),
-      end: formatHours(end)
+  onChange = ({ min, max }) => {
+    this.props.onChange({
+      start: formatHours(min),
+      end: formatHours(max)
     })
   }
 
-  onChangeComplete = ({ start, end }) => {
+  onChangeComplete = ({ min, max }) => {
     this.props.onChangeComplete({
-      start: formatHours(start),
-      end: formatHours(end)
+      start: formatHours(min),
+      end: formatHours(max)
     })
   }
 
-  onChangeStart = ({ start, end }) => {
+  onChangeStart = ({ min, max }) => {
     this.props.onChangeStart({
-      start: formatHours(start),
-      end: formatHours(end)
+      start: formatHours(min),
+      end: formatHours(max)
     })
   }
 
   render() {
     let { start, end } = this.props,
-      startMin = timeToMinute(start),
-      endMin = timeToMinute(end)
-    console.log(start)
-    console.log(startMin)
-    console.log(end)
-    console.log(endMin)
+      min = timeToMinute(start),
+      max = timeToMinute(end)
 
     return (
       <InputRange
@@ -54,8 +52,9 @@ class TimeRangeSlider extends Component {
         onChangeStart={this.onChangeStart}
         onChange={this.onChange}
         onChangeComplete={this.onChangeComplete}
+        format
         step={15}
-        value={{ start: startMin, end: endMin }}
+        value={{ min, max }}
         name={this.props.name}
       />
     )

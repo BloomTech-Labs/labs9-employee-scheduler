@@ -49,10 +49,13 @@ export function getHoursOfOperationRange(hours) {
   }
 }
 
-export const formatHours = hours =>
-  moment({ hours })
-    .format('h:mm a')
-    .replace(/$0:/, '12:')
+export const formatHours = hours => {
+  if (hours === 24) {
+  }
+  const hoursInt = hours === 24 ? 23 : Math.floor(hours)
+  const minutesInt = hours === 24 ? 59 : Math.floor((hours - hoursInt) * 60)
+  return moment({ hours: hoursInt, minutes: minutesInt }).format('h:mm a')
+}
 
 export const getRange = ({ date, view }) => {
   if (view === 'day') {
@@ -317,7 +320,7 @@ export const minuteToTime = (value, format = 12) => {
 
 export const timeToMinute = (time, format = 12) => {
   let rMinutes = 1439
-  if (format === 12) {
+  if (format === 24) {
     time = time.split(':')
     if (time.length < 2) {
       throw new Error('Invalid time')

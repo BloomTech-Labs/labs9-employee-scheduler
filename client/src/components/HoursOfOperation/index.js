@@ -7,7 +7,7 @@ import Fade from 'react-reveal/Fade'
 import Zoom from 'react-reveal/Zoom'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-// import { formatHours } from '../../utils'
+import { formatHours } from '../../utils'
 import { editHours, fetchHoursFromDB, closeAndOpenHours } from '../../actions/'
 
 const dayNameMap = [
@@ -20,13 +20,11 @@ const dayNameMap = [
   'Saturday'
 ]
 
-const formatTime = hours => moment({ hours }).format('h:mm a')
-
 const buildDay = HOO => {
   const day = {
     updated: false,
-    start: formatTime(HOO.open_time + 0.5),
-    end: formatTime(HOO.close_time),
+    start: formatHours(HOO.open_time),
+    end: formatHours(HOO.close_time),
     closed: HOO.closed,
     id: HOO.id,
     name: dayNameMap[HOO.day]
@@ -111,13 +109,13 @@ class HoursOfOperation extends Component {
   onChangeComplete = (time, targetDay) => {
     // breaks object up and sets minutes to proper interval for server
     this.setState(prevState => {
-      const { days, initialValue } = prevState
+      const { days, initialTime } = prevState
       return {
         day: days.map(day => {
           if (day.name === targetDay.name) {
             const equals =
-              initialValue.start !== targetDay.start ||
-              initialValue.end !== targetDay.end
+              initialTime.start !== targetDay.start ||
+              initialTime.end !== targetDay.end
             return { ...day, start: time.start, end: time.end, updated: equals }
           } else {
             return day
@@ -129,6 +127,7 @@ class HoursOfOperation extends Component {
 
   // handles recording positions when the slider moves
   timeChangeHandler(time, targetDay) {
+    console.log(time, targetDay)
     this.setState(prevState => {
       return {
         day: prevState.days.map(day => {
@@ -144,7 +143,7 @@ class HoursOfOperation extends Component {
 
   // handles returning the starting position of the slider
   changeStartHandler = currentTime => {
-    return this.setState({ initialTime: this.state.currentTime })
+    return this.setState({ initialTime: currentTime })
   }
 
   render() {
