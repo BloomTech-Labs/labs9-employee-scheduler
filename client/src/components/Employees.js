@@ -28,6 +28,10 @@ class Employees extends Component {
     this.setState({ availTarget: user })
   }
 
+  turnOffEditAvailability = () => {
+    this.setState({ availTarget: null })
+  }
+
   toggleShow = () => {
     this.setState({
       show: !this.state.show
@@ -48,20 +52,32 @@ class Employees extends Component {
             <AddEmployee />
           </Modal>
           <InnerContainer>
-            {availTarget ? (
-              <div>
-                <p>{availTarget.first_name}</p>
-                <AvailabilityForm id={availTarget.id} />
-              </div>
-            ) : null}
-
+            <Modal
+              show={Boolean(availTarget)}
+              toggleShow={this.turnOffEditAvailability}
+              availTarget={availTarget}
+            >
+              {({ toggleShow, Close, availTarget }) => {
+                return availTarget ? (
+                  <AvailabilityForm
+                    availabilities={availTarget.availabilities}
+                    Close={Close}
+                    first_name={availTarget.first_name}
+                    toggleShow={toggleShow}
+                  />
+                ) : null
+              }}
+            </Modal>
             {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
-              employees
-                .slice(0, 12)
-                .map((employee, i) => (
-                  <Card key={i} {...employee} updateAvail={this.updateAvail} />
-                ))}
+              employees.slice(0, 12).map((employee, i) => (
+                <FlexSpacer key={i}>
+                  <Card
+                    {...employee}
+                    updateAvail={() => this.updateAvail(employee)}
+                  />
+                </FlexSpacer>
+              ))}
           </InnerContainer>
         </MidContainer>
       </OuterContainer>
@@ -80,6 +96,9 @@ const MidContainer = styled('div')`
   margin: ${system.spacing.container};
   margin-top: 75px;
   position: relative;
+`
+const FlexSpacer = styled('div')`
+  margin: auto;
 `
 
 const InnerContainer = styled('div')`

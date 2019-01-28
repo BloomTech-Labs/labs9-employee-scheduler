@@ -103,7 +103,7 @@ class Join extends Component {
                 type="text"
                 value={firstName}
                 onChange={handleChange}
-                placeholder="ex. Clark"
+                placeholder="ex. Carlos"
                 ariaLabel="first-name"
                 required
               />
@@ -114,7 +114,7 @@ class Join extends Component {
                 type="text"
                 value={lastName}
                 onChange={handleChange}
-                placeholder="ex. Kent"
+                placeholder="ex. Lantigua"
                 ariaLabel="last-name"
                 required
               />
@@ -125,7 +125,7 @@ class Join extends Component {
                 type="text"
                 value={email}
                 onChange={handleChange}
-                placeholder="ex. ckent@dailyplanet.com"
+                placeholder="ex. carlos@getcadence.co"
                 ariaLabel="email"
                 required
               />

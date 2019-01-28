@@ -21,19 +21,14 @@ const insertHoursForNewOrg = org_id => {
     .returning('id')
 }
 
-// if no param all users
-const getOrgs = orgId => {
-  if (orgId) {
-    return db('organizations as o')
-      .where({ 'o.id': orgId })
-      .first()
-  } else {
-    return db('organizations')
-  }
-}
+// gets all orgs
+const getOrgs = () => db('organizations')
 
 // gets org by id
-const getOrg = id => db('organizations').where('id', id)
+const getOrg = id =>
+  db('organizations')
+    .where('id', id)
+    .first()
 
 const addOrg = org => {
   const id = org.id ? org.id : uuid()

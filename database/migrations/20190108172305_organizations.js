@@ -4,11 +4,8 @@ exports.up = knex =>
       .uuid('id')
       .primary()
       .notNullable()
-    table
-      .string('name', 128)
-      .notNullable()
-      .unique()
-    table.string('description', 1024)
+    table.string('name', 128).notNullable()
+    table.string('industry', 128)
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('organizations')

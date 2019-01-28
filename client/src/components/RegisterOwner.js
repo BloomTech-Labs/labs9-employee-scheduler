@@ -12,8 +12,10 @@ import Status from './Status'
 import EmptyScreen from './EmptyScreen'
 import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
-import { Container, Input } from './common/FormContainer'
+import { Container, Input, Select } from './common/FormContainer'
+import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
+import industryList from '../industryList'
 
 class RegisterOwner extends Component {
   state = {
@@ -23,7 +25,7 @@ class RegisterOwner extends Component {
     firstName: '',
     lastName: '',
     orgName: '',
-    orgDescription: ''
+    industry: ''
   }
   // ideall we'd start by checking that the user is not already logged in
   // we're not doing that now
@@ -61,23 +63,9 @@ class RegisterOwner extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const {
-      email,
-      phone,
-      firstName,
-      lastName,
-      orgName,
-      orgDescription
-    } = this.state
+    const { email, phone, firstName, lastName, orgName, industry } = this.state
 
-    if (
-      !email ||
-      !phone ||
-      !firstName ||
-      !lastName ||
-      !orgName ||
-      !orgDescription
-    ) {
+    if (!email || !phone || !firstName || !lastName || !orgName) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
@@ -86,7 +74,7 @@ class RegisterOwner extends Component {
         firstName,
         lastName,
         orgName,
-        orgDescription
+        industry
       })
     }
   }
@@ -99,7 +87,7 @@ class RegisterOwner extends Component {
       firstName,
       lastName,
       orgName,
-      orgDescription
+      industry
     } = this.state
     const { handleChange, handleSubmit } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
@@ -108,9 +96,10 @@ class RegisterOwner extends Component {
       return (
         <EmptyScreen>
           <Status>
-            You are already logged in as a registered user. Please log out to
+            There is already an account for this email. Please log out to
             register a new account.
           </Status>
+          <Redirect to="/" />
         </EmptyScreen>
       )
     } else if (!oauthSuccess) {
@@ -136,42 +125,42 @@ class RegisterOwner extends Component {
             </h1>
             <form type="submit" onSubmit={handleSubmit}>
               <h6 id="instructions">
-                Please register below. All fields are required.
+                Please register below. Starred fields are required.
               </h6>
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstName">First Name *</label>
               <Input
                 name="firstName"
                 type="text"
                 value={firstName}
                 onChange={handleChange}
-                placeholder="ex. Clark"
+                placeholder="ex. Samuel"
                 ariaLabel="first-name"
                 required
               />
 
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="lastName">Last Name *</label>
               <Input
                 name="lastName"
                 type="text"
                 value={lastName}
                 onChange={handleChange}
-                placeholder="ex. Kent"
+                placeholder="ex. Machat"
                 ariaLabel="last-name"
                 required
               />
 
-              <label htmlFor="email">Contact Email</label>
+              <label htmlFor="email">Contact Email *</label>
               <Input
                 name="email"
                 type="text"
                 value={email}
                 onChange={handleChange}
-                placeholder="ex. ckent@dailyplanet.com"
+                placeholder="ex. samuel@getcadence.co"
                 ariaLabel="email"
                 required
               />
 
-              <label htmlFor="phone">Contact Number</label>
+              <label htmlFor="phone">Contact Number *</label>
               <Input
                 name="phone"
                 type="tel"
@@ -182,27 +171,33 @@ class RegisterOwner extends Component {
                 required
               />
 
-              <label htmlFor="orgName">Organization Name</label>
+              <label htmlFor="orgName">Organization Name *</label>
               <Input
                 name="orgName"
                 type="text"
                 value={orgName}
                 onChange={handleChange}
-                placeholder="ex. The Daily Planet"
+                placeholder="ex. Cadence"
                 ariaLabel="org-name"
                 required
               />
 
-              <label htmlFor="orgDescription">Organization Description</label>
-              <Input
-                name="orgDescription"
+              <label htmlFor="industry">Your Industry</label>
+              <Select
+                name="industry"
                 type="text"
-                value={orgDescription}
+                value={industry}
                 onChange={handleChange}
-                placeholder="ex. Metropolis' newspaper of record"
+                placeholder="ex. software"
                 ariaLabel="org-description"
-                required
-              />
+              >
+                <option selected value="" />
+                {industryList.map((industry, i) => (
+                  <option value={industry} key={i}>
+                    {industry}
+                  </option>
+                ))}
+              </Select>
 
               <Button type="submit" className="register">
                 Register

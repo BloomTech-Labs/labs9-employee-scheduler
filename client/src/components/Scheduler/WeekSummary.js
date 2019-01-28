@@ -91,7 +91,7 @@ const Div = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 40px;
+  padding: 0px 40px 20px;
   /* margin: 0 25px 25px 90px; */
 `
 

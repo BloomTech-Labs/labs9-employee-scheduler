@@ -6,7 +6,7 @@ const Status = props => {
   return (
     // Pass this component a "success" boolean from your component's state. It will handle the rest.
     <Container success={props.success}>
-      <p>{props.children}</p>
+      <h6>{props.children}</h6>
     </Container>
   )
 }
@@ -19,15 +19,17 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   line-height: 1.25;
-  background: ${system.color.success};
+  border: 1px solid ${system.color.bodytext};
+  background: ${system.color.white};
   padding: ${system.spacing.standardPadding};
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
   width: 100%;
+  margin-bottom: 20px;
 
-  p {
-    color: ${system.color.white};
-    font-size: ${system.fontSizing.m};
+  h6 {
+    color: ${system.color.bodytext};
+    font-size: ${system.fontSizing.s};
     text-align: center;
   }
 `

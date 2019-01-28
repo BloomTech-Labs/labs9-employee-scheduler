@@ -5,6 +5,7 @@ import system from '../../design/theme'
 import axios from 'axios'
 import Availability from './Availability'
 import TimeOff from './TimeOff'
+import Button from '../common/Button'
 import { connect } from 'react-redux'
 import { fetchEmployeesFromDB } from '../../actions'
 import { Link } from 'react-router-dom'
@@ -51,9 +52,6 @@ class Card extends Component {
     } = this.props
     return (
       <Container data-testid="employee-card">
-        <button onClick={() => this.props.updateAvail({ id, first_name })}>
-          edit availability
-        </button>
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
             <p className="delete" onClick={this.openModal}>
@@ -77,16 +75,21 @@ class Card extends Component {
         </div>
         <div id="row">
           {/* the below two things should conditionally render based on whether there is data or not */}
-          {availabilities && availabilities.length ? (
+          {availabilities ? (
             <Availability availabilities={availabilities} />
           ) : null}
 
-          {time_off_requests && time_off_requests.length ? (
+          {time_off_requests ? (
             <TimeOff
               timeOffRequests={time_off_requests}
               view={this.props.view}
             />
           ) : null}
+        </div>
+        <div id="row">
+          <WideButton onClick={this.props.updateAvail}>
+            Edit Availability
+          </WideButton>
         </div>
       </Container>
     )
@@ -165,4 +168,7 @@ const P = styled.p`
     color: ${system.color.bodytext};
     font-weight: bold;
   }
+`
+const WideButton = styled(Button)`
+  width: 100%;
 `

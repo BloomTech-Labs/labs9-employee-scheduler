@@ -147,9 +147,15 @@ export const Input = styled.input`
   color: ${system.color.bodytext};
   padding: 2.5px 5px;
   margin: 0.5rem 0 ${system.spacing.hugePadding};
+  background: transparent;
   border: none;
   border-bottom: 2px solid
-    ${props => (props.disabled ? 'none !important' : '#d2d2d2')};
+    ${props =>
+      props.disabled
+        ? 'none !important'
+        : props.search
+        ? system.color.lightgrey
+        : '#d2d2d2'};
   transition: ${system.transition};
   :disabled {
     background: ${system.color.white};
@@ -161,6 +167,32 @@ export const Input = styled.input`
 
   @media ${system.breakpoints[0]} {
     font-size: ${system.fontSizing.sm};
+  }
+`
+
+export const Select = styled.select`
+  outline: none;
+  font-size: ${system.fontSizing.m};
+  color: ${system.color.bodytext};
+  font-family: 'Nunito', sans-serif;
+
+  padding: 2.5px 5px;
+  margin: 0.5rem 0 ${system.spacing.hugePadding};
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #d2d2d2;
+  transition: ${system.transition};
+  :focus {
+    border-bottom: 2px solid ${system.color.primary};
+  }
+
+  option {
+    color: ${system.color.bodytext};
+    font-family: 'Nunito', sans-serif;
+
+    @media ${system.breakpoints[0]} {
+      font-size: ${system.fontSizing.sm};
+    }
   }
 `
 

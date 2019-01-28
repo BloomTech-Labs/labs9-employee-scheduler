@@ -2,16 +2,16 @@ const express = require('express')
 const router = express.Router()
 const {
   getAvailabilities,
-  addAvailability,
+  // addAvailability,
   updateAvailability,
-  deleteAvailability,
+  // deleteAvailability,
   getUser,
   getAvailability
 } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
 
-// getAvailability, takes in user id and constraints object (start, end itmes)
+// getAvailability, takes in user id
 router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   const { constraints } = req.body
@@ -33,21 +33,22 @@ router.get('/:id', authorize(['all']), (req, res) => {
 })
 
 // addAvailability, takes in a user id and a day (week day)
-router.post('/:id', authorize(['all']), (req, res) => {
-  const { id } = req.params
-  const { day } = req.body
-  addAvailability(id, day)
-    .then(day => res.status(201).json(day))
-    .catch(err => res.status(404).json(err))
-})
+// router.post('/:id', authorize(['all']), (req, res) => {
+//   const { id } = req.params
+//   const { day } = req.body
+//   addAvailability(id, day)
+//     .then(day => res.status(201).json(day))
+//     .catch(err => res.status(404).json(err))
+// })
 
 // updateAvailability, takes in availibility Id, and updates
 
 router.put('/:id', authorize(['all']), async (req, res) => {
   const { id } = req.params
   const updates = req.body
+
   try {
-    const numberUpdated = await updateAvailability(id, req.body)
+    const numberUpdated = await updateAvailability(id, updates)
     if (numberUpdated > 0) {
       const updated = await getAvailability(id)
       return res.status(200).send(updated)
@@ -61,11 +62,11 @@ router.put('/:id', authorize(['all']), async (req, res) => {
 })
 
 // delete availability takes in availability id and deletes
-router.delete('/:id', authorize(['all']), (req, res) => {
-  const { id } = req.params
-  deleteAvailability(id)
-    .then(count => res.status(200).json(count))
-    .catch(err => res.status(404).json(err))
-})
+// router.delete('/:id', authorize(['all']), (req, res) => {
+//   const { id } = req.params
+//   deleteAvailability(id)
+//     .then(count => res.status(200).json(count))
+//     .catch(err => res.status(404).json(err))
+// })
 
 module.exports = router

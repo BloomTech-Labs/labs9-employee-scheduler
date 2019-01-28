@@ -9,6 +9,7 @@ describe('generateTeamData', () => {
     const originalEvents = await knex('events')
     const originalTimeOff = await knex('time_off_requests')
     const originalAvails = await knex('availabilities')
+    const originalHOO = await knex('hours_of_operation')
 
     // runs generateTeamData
     const { team, cleanup } = await generateTeamData(knex)
@@ -18,7 +19,8 @@ describe('generateTeamData', () => {
       users,
       events,
       timeOffRequests,
-      availabilities
+      availabilities,
+      hoursOfOperation
     } = team
 
     // gets new table data after generateTeamData runs
@@ -27,12 +29,14 @@ describe('generateTeamData', () => {
     let newEvents = await knex('events')
     let newTimeOff = await knex('time_off_requests')
     let newAvails = await knex('availabilities')
+    let newHOO = await knex('hours_of_operation')
 
     // make sure that team categories are non-0 length arrays
     expect(newUsers.length).toBeGreaterThan(0)
     expect(newEvents.length).toBeGreaterThan(0)
     expect(newTimeOff.length).toBeGreaterThan(0)
     expect(newAvails.length).toBeGreaterThan(0)
+    expect(newHOO.length).toBeGreaterThan(0)
 
     // make sure table lengths are longer
     expect(newOrg.length).toEqual(originalOrg.length + 1)
@@ -44,6 +48,7 @@ describe('generateTeamData', () => {
     expect(newAvails.length).toEqual(
       originalAvails.length + availabilities.length
     )
+    expect(newHOO.length - originalHOO.length).toEqual(7)
 
     // run cleanup to delete newly created data
     await cleanup()
@@ -54,6 +59,7 @@ describe('generateTeamData', () => {
     newEvents = await knex('events')
     newTimeOff = await knex('time_off_requests')
     newAvails = await knex('availabilities')
+    newHOO = await knex('hours_of_operation')
 
     // make sure table lengths have returned to original amount
     expect(newOrg.length).toEqual(originalOrg.length)
@@ -61,5 +67,6 @@ describe('generateTeamData', () => {
     expect(newEvents.length).toEqual(originalEvents.length)
     expect(newTimeOff.length).toEqual(originalTimeOff.length)
     expect(newAvails.length).toEqual(originalAvails.length)
+    expect(newHOO.length).toEqual(originalHOO.length)
   })
 })

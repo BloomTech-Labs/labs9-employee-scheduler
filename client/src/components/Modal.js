@@ -12,41 +12,59 @@ function makeCloseButton(close) {
 }
 
 class Modal extends React.Component {
+  ref = React.createRef()
+
   componentDidMount() {
-    this.handleRoot()
+    this.handleUpdate()
   }
   componentDidUpdate(prevProps) {
-    console.log(prevProps.show, this.props.show)
     if (prevProps.show !== this.props.show) {
-      this.handleRoot()
+      this.handleUpdate()
     }
   }
+
   componentWillUnmount() {
     document.body.classList.remove('no-scroll')
+    document.removeEventListener('click', this.handlePageClick)
   }
 
-  handleRoot = () => {
+  handlePageClick = e => {
+    const display = this.ref.current
+    if (!display.contains(e.target)) {
+      this.props.toggleShow()
+    }
+  }
+
+  handleUpdate = () => {
     if (this.props.show) {
       document.body.classList.add('no-scroll')
+      document.addEventListener('click', this.handlePageClick)
     } else {
       document.body.classList.remove('no-scroll')
+      document.removeEventListener('click', this.handlePageClick)
     }
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, {
-        toggleShow: this.props.toggleShow,
-        Close: makeCloseButton(this.props.toggleShow)
-      })
-    )
+    const Close = makeCloseButton(this.props.toggleShow)
+    const { children, toggleShow, ...rest } = this.props
+
+    const childrenWithProps =
+      typeof children === 'function'
+        ? children({ toggleShow, Close, ...rest })
+        : React.Children.map(children, child =>
+            React.cloneElement(child, {
+              toggleShow,
+              Close
+            })
+          )
 
     return (
       <StyledModal
         className={!this.props.show ? 'hidden' : undefined}
         show={this.props.show}
       >
-        <div>{this.props.show ? childrenWithProps : null}</div>
+        <div ref={this.ref}>{this.props.show ? childrenWithProps : null}</div>
       </StyledModal>
     )
   }
@@ -59,7 +77,6 @@ const StyledModal = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
   z-index: 99;
@@ -69,9 +86,21 @@ const StyledModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  padding-top: ${system.spacing.breadCrumb};
+  @media ${system.breakpoints[0]} {
+    align-items: stretch;
+  }
 
   & > div {
     transition: transform 0.3s linear;
+    padding: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[0]} {
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
   }
 
   &.hidden {

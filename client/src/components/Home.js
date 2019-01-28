@@ -11,6 +11,7 @@ import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
 
 const Home = () => {
+  const width = window.innerWidth
   return (
     <OuterContainer>
       <BreadCrumb location="Home" />
@@ -19,7 +20,7 @@ const Home = () => {
           <img id="header-img" alt="header" src={headerImg} />
           <img id="hero-img" alt="hero" src={heroImg} />
 
-          <Fade top>
+          <Fade top duration={width < 600 ? 0 : 750}>
             <div id="wrapper">
               <h1>Scheduling your employees is hard.</h1>
               <p>
@@ -45,7 +46,7 @@ const Home = () => {
             and painless. Here are some of the key features:
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <h2>Schedule Shifts Visually</h2>
                 <p>
@@ -90,30 +91,30 @@ const Home = () => {
             tests. We hope you'll love Cadence as much as they do.
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence is very cool. Now, I always know which Robin is
-                  helping me out on a given night.
+                  Cadence is great! Now, I always know who is working at my cafe
+                  any given morning.
                 </p>
-                <h2>—Batman</h2>
+                <h2>—Bob Smith</h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence changed my life. I can now better plan which Robin
-                  should help Batman.
+                  I love Cadence. I can now better plan how many waiters we'll
+                  need and when we'll need them.
                 </p>
-                <h2>—Oracle</h2>
+                <h2>—Jane Doe</h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  I can attest that the guys who made Cadence are both gentlemen
-                  and scholars.
+                  Great product. I can attest that the guys who made Cadence are
+                  both gentlemen and scholars.
                 </p>
-                <h2>—Robin</h2>
+                <h2>—Louis Lambda</h2>
               </div>
             </Fade>
           </div>
@@ -126,7 +127,7 @@ const Home = () => {
             accommodate your needs.
           </p>
           <div className="cards">
-            <Fade top>
+            <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <h2>SMB Plan</h2>
                 <h3>$20 / month</h3>
