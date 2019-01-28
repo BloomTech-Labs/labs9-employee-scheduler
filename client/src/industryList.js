@@ -1,4 +1,4 @@
-export default (industryList = [
+const industryList = [
   'Accounting',
   'Airlines/Aviation',
   'Alternative Dispute Resolution',
@@ -146,4 +146,6 @@ export default (industryList = [
   'Wine and Spirits',
   'Wireless',
   'Writing and Editing'
-])
+]
+
+export default industryList

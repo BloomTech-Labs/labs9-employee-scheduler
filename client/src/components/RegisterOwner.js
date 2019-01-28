@@ -15,7 +15,7 @@ import OuterContainer from './common/OuterContainer'
 import { Container, Input, Select } from './common/FormContainer'
 import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
-import { industryList } from '../industryList'
+import industryList from '../industryList'
 
 class RegisterOwner extends Component {
   state = {
