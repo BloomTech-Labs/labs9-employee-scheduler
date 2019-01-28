@@ -165,9 +165,8 @@ class AddEmployee extends Component {
               </>
             ) : (
               <h6 id="instructions">
-                Oops! It looks like the company's account needs to be upgraded
-                before you can add more employees. Contact the owner about
-                upgrading.
+                You have reached the limit for the number of employees. Contact
+                the owner about upgrading.
               </h6>
             )}
           </form>
