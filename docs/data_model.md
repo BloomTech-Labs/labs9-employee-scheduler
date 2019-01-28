@@ -6,7 +6,7 @@
 {
   id: UUID
   name: STRING
-  description: STRING
+  industry: STRING
   paid: BOOLEAN
   customer_id: STRING
   subscription_id: STRING

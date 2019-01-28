@@ -12,8 +12,7 @@ const populateStaticOrg = (size = 10) => {
   const organization = {
     id: '9126df31-2607-4166-9c0c-d0a300c59c62',
     name: 'Cadence',
-    description:
-      'Adipisci beatae amet qui sed porro totam voluptates voluptatem.'
+    industry: 'software'
   }
 
   let users = generateUsersForOrg({ org_id: organization.id, quantity: size })

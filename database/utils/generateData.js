@@ -5,8 +5,7 @@ const moment = require('moment')
 // Generates a new org using an id
 const generateOrg = (id = uuid()) => ({
   id,
-  name: faker.company.companyName(),
-  description: faker.lorem.sentence()
+  name: faker.company.companyName()
 })
 
 // Generates a group of orgs based off a list of ids
