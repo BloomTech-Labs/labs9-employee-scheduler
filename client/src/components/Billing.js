@@ -248,7 +248,7 @@ class Billing extends Component {
               <li>Different views for you, supervisors, and employees.</li>
             </ul>
             <CardElement />
-            <Button type="submit">Pay</Button>
+            <Button type="submit">Subscribe Now</Button>
           </form>
         </Container>
       </OuterContainer>

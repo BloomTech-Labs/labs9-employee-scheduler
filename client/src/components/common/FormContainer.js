@@ -135,7 +135,7 @@ export const Container = styled('div')`
     }
 
     button {
-      width: 150px;
+      width: ${props => (props.danger ? '250px' : '150px')};
       margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
       background: ${props => (props.danger ? system.color.danger : null)};
     }

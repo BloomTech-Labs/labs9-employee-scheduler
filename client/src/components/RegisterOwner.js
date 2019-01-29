@@ -186,12 +186,11 @@ class RegisterOwner extends Component {
               <Select
                 name="industry"
                 type="text"
-                value={industry}
                 onChange={handleChange}
                 placeholder="ex. software"
                 ariaLabel="org-description"
+                defaultValue={' '}
               >
-                <option selected value="" />
                 {industryList.map((industry, i) => (
                   <option value={industry} key={i}>
                     {industry}
