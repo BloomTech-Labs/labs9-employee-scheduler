@@ -6,6 +6,7 @@ import propTypes from 'prop-types'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import lines from '../../img/lines.svg'
 
 const DnDCal = withDragAndDrop(Calendar)
 
@@ -72,10 +73,9 @@ class DropCal extends Component {
       coverage,
       slotPropGetter
     } = this.props
-
     return connectDropTarget(
       <div>
-        <DnDCal
+        <StyledDndCal
           popup
           selectable
           resizable
@@ -100,6 +100,7 @@ class DropCal extends Component {
           onView={() => {}}
           onNavigate={() => {}}
           slotPropGetter={slotPropGetter}
+          longPressThreshold={100}
         />
       </div>
     )
@@ -107,3 +108,16 @@ class DropCal extends Component {
 }
 
 export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
+
+const StyledDndCal = styled(DnDCal)`
+  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
+    height: 15px;
+    padding: 5px;
+    background-image: url(${lines});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    border: none;
+  }
+`
