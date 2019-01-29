@@ -68,9 +68,8 @@ class Employees extends Component {
                 ) : null
               }}
             </Modal>
-            {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
-              employees.slice(0, 12).map((employee, i) => (
+              employees.map((employee, i) => (
                 <FlexSpacer key={i}>
                   <Card
                     {...employee}

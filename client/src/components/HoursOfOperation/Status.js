@@ -13,11 +13,10 @@ const Status = ({ status }) => {
 export default Status
 
 const Container = styled.div`
-  background: white;
   z-index: -2;
-  border-radius: 0 0 0px 12px;
-  padding: 1px 0 7px 13px;
-  width: 76px;
+  margin-right: 10px;
+  width: 70px;
+
   p {
     font-size: ${system.fontSizing.s};
   }
