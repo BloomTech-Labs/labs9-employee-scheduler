@@ -16,22 +16,17 @@ const Card = ({
   view
 }) => {
   return (
-      //tooltip added to help the user understand how to schedule employees
-      <Container
-        data-testid="employee-card"
-        data-tip="drag card to calendar to schedule"
-        className="tooltip"
-        id="employeePool"
-      >
-        <ReactTooltip type="dark" effect="solid" place="right" />
-        <div className="x" />
-        {/* Employee Name */}
-        <P main>{`${first_name} ${last_name}`}</P>
-        <div>
-          {/* the below two things should conditionally render based on whether there is data or not */}
-          {availabilities && availabilities.length ? (
-            <Availability availabilities={availabilities} />
-          ) : null}
+    //tooltip added to help the user understand how to schedule employees
+    <Container className="tooltip" id="employeePool">
+      <ReactTooltip type="dark" effect="solid" place="right" />
+      <div className="x" />
+      {/* Employee Name */}
+      <P main>{`${first_name} ${last_name}`}</P>
+      <div>
+        {/* the below two things should conditionally render based on whether there is data or not */}
+        {availabilities && availabilities.length ? (
+          <Availability availabilities={availabilities} />
+        ) : null}
         {time_off_requests && time_off_requests.length ? (
           <TimeOff timeOffRequests={time_off_requests} view={view} />
         ) : null}

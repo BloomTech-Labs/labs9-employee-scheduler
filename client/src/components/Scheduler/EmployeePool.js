@@ -33,7 +33,7 @@ class EmployeePool extends React.Component {
       <React.Fragment>
         {/* Spacer is provided to block out room for the Employee Side Bar, which is positioned absolute and therefore taken out of flow */}
         <Spacer />
-        <Container ref={this.props.setRef} data-name="employeePool">
+        <Container id="employeePool">
           <Input
             search
             type="text"
