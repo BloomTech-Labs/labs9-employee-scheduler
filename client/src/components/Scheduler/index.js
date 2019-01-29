@@ -9,6 +9,7 @@ import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
@@ -264,7 +265,9 @@ class Scheduler extends React.Component {
             </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>{this.state.view === 'week' ? 'Day View' : 'Week View'}</Button>
+                <Button onClick={this.toggleView}>
+                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                </Button>
               ) : null}
             </div>
           </CalendarButtons>
