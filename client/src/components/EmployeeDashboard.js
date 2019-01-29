@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
+import Availability from './EmployeeDashboard/Availability'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -67,6 +68,17 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
+            <Card className="tof-wrapper">
+              <div className="title">
+                <h5>Your Availabilities</h5>
+              </div>
+              {employee && employee.availabilities.length ? (
+                <Availability availabilities={employee.availabilities} />
+              ) : (
+                <Message>No availabilities to display.</Message>
+              )}
+            </Card>
+
             <Card>
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
