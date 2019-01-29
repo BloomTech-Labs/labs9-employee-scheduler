@@ -119,7 +119,8 @@ class Scheduler extends React.Component {
 
   getScheduleCoverage = () => {
     const { hours, employees } = this.props
-    const coverage = calculateCoverage({ hours, employees })
+    const { view, date } = this.state
+    const coverage = calculateCoverage({ hours, employees, view, date })
     this.props.displayCoverage(coverage)
   }
 

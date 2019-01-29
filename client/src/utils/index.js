@@ -83,9 +83,13 @@ const convertFloatToTime = num => {
   return [hours, minutes]
 }
 
-export const calculateCoverage = ({ hours, employees }) => {
+export const calculateCoverage = ({ hours, employees, view, date }) => {
   // combine all shifts into a single array
   const shifts = employees.reduce((acc, { events }) => [...acc, ...events], [])
+
+  // console.log(view)
+  // console.log(date)
+  // console.log(shifts)
 
   // initialize an object keyed by all open days on the schedule
   const days = hours.reduce(
@@ -95,11 +99,23 @@ export const calculateCoverage = ({ hours, employees }) => {
 
   // populate days object with all corresponding shifts
   shifts.forEach(shift => {
-    const shiftDay = moment(shift.start).day()
+    const shiftDay = moment(shift.start)
+      .subtract(5, 'hours')
+      .day()
+    console.log('DAY INFO')
+    console.log(
+      moment(shift.start)
+        .subtract(5, 'hours')
+        .toISOString()
+    )
+    console.log(`day of the week: ${shiftDay}`)
     if (days[shiftDay]) {
       days[shiftDay].push(shift)
     }
   })
+
+  console.log('DAYS')
+  console.log(days)
 
   // initialize covered and open hours variables
   let totalHoursCovered = 0
@@ -107,10 +123,14 @@ export const calculateCoverage = ({ hours, employees }) => {
 
   // for each day add number of covered and open hours
   Object.keys(days).forEach(key => {
+    console.log(`Generating hours for ${key}`)
     // sort shifts by start time
     const sortedShifts = days[key].sort((a, b) =>
       moment(a.start).isAfter(b.start)
     )
+
+    console.log('SORTED SHIFTS:')
+    console.log(sortedShifts)
 
     // merge shifts
     // take shifts and combine them into blocks of time
@@ -135,6 +155,9 @@ export const calculateCoverage = ({ hours, employees }) => {
       }
     }, [])
 
+    console.log('MERGED SHIFTS')
+    console.log(mergedShifts)
+
     // truncate merged shifts to only open hours
     const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
       // if schedule end is before shift start, discard shift
@@ -147,15 +170,23 @@ export const calculateCoverage = ({ hours, employees }) => {
       const shiftStartFloat = convertMomentToFloat(start)
       const shiftEndFloat = convertMomentToFloat(end)
 
+      console.log(`schedule start time: ${hours[key].open_time}`)
+      console.log(`schedule end time: ${hours[key].close_time}`)
+      console.log(`shift start time: ${shiftStartFloat}`)
+      console.log(`shift end time: ${shiftEndFloat}`)
+
       // run discard options first, then mutation options to make sure discards happen
       if (hours[key].close_time < shiftStartFloat) {
         // discard shift
+        console.log('discarding shift')
         return [...acc]
       } else if (hours[key].open_time > shiftEndFloat) {
         // discard shift
+        console.log('discarding shift')
         return [...acc]
       } else if (shiftStartFloat < hours[key].open_time) {
         // truncate start
+        console.log('truncating start')
         const diff = hours[key].open_time - shiftStartFloat
         const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
 
@@ -167,6 +198,7 @@ export const calculateCoverage = ({ hours, employees }) => {
         return [...acc.slice(0, acc.length - 1), { start: newStart, end }]
       } else if (shiftEndFloat > hours[key].close_time) {
         // truncate end
+        console.log('truncating end')
         const diff = shiftEndFloat - hours[key].close_time
         const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
 
@@ -182,10 +214,16 @@ export const calculateCoverage = ({ hours, employees }) => {
       }
     }, [])
 
+    console.log('TRUNCATED SHIFTS:')
+    console.log(truncatedShifts)
+
     // calculate shift coverage in hours
     const hoursCovered = truncatedShifts.reduce((acc, { start, end }) => {
       return acc + moment.duration(moment(end).diff(start)).asHours()
     }, 0)
+
+    console.log('HOURS COVERED:')
+    console.log(hoursCovered)
 
     // calculate hours open
     const hoursOpen = hours[key].close_time - hours[key].open_time
