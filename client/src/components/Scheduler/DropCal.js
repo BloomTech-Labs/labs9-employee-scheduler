@@ -50,7 +50,6 @@ class DropCal extends Component {
 
   render() {
     const {
-      setRef,
       connectDropTarget,
       events,
       eventPropGetter,
