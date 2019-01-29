@@ -4,6 +4,8 @@ import styled from '@emotion/styled'
 import system from '../../../design/theme'
 import Availability from './Availability'
 import TimeOff from './TimeOff'
+import ReactTooltip from 'react-tooltip'
+import './Tooltip.css'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -17,7 +19,7 @@ class Card extends Component {
       width
     } = this.props
     return (
-      <Container data-testid="employee-card">
+      <Container data-testid="employee-card" data-tip="drag to schedule">
         <div className="x" />
         {/* Employee Name */}
         <P main>{`${first_name} ${last_name}`}</P>
@@ -34,6 +36,7 @@ class Card extends Component {
             />
           ) : null}
         </div>
+        <ReactTooltip className="customTheme" effect="solid" />
       </Container>
     )
   }
