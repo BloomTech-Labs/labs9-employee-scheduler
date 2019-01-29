@@ -72,7 +72,6 @@ class DropCal extends Component {
       coverage,
       slotPropGetter
     } = this.props
-
     return connectDropTarget(
       <div>
         <DnDCal
