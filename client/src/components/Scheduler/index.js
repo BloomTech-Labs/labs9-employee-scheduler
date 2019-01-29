@@ -24,7 +24,8 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-
+import ReactJoyride, { STATUS } from 'react-joyride'
+import stepData from './Demo/steps'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
@@ -33,17 +34,23 @@ const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 class Scheduler extends React.Component {
   state = {
     draggedEmployee: null,
-    range: null,
     width: 'desktop',
     view: 'week',
     date: new Date(),
-    range: getRange({ view: 'week', date: new Date() })
+    range: getRange({ view: 'week', date: new Date() }),
+    run: false,
+    //react joyride demo steps
+    steps: undefined, //check demo folder for steps
+    stepIndex: 0
   }
 
   componentDidMount() {
     this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
+    if (stepData) {
+      this.setState({ steps: stepData })
+    }
   }
 
   componentDidUpdate() {
@@ -216,6 +223,28 @@ class Scheduler extends React.Component {
     }
   }
 
+  // for joyride demo
+  handleClickStart = e => {
+    e.preventDefault()
+    this.setState({
+      run: true,
+      stepIndex: 0
+    })
+  }
+
+  // joyride event handling, step index controls the position of the event
+  handleJoyrideCallback = data => {
+    const { status, type } = data
+
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      this.setState({ run: false })
+    }
+
+    console.groupCollapsed(type)
+    console.log(data) //eslint-disable-line no-console
+    console.groupEnd()
+  }
+
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
 
@@ -239,11 +268,24 @@ class Scheduler extends React.Component {
         })
       ]
     }, [])
-
     let hourRange = getHoursOfOperationRange(hours)
-
+    const { run, steps } = this.state
     return (
       <Container>
+        <ReactJoyride
+          callback={this.handleJoyrideCallback}
+          continuous
+          run={run}
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000
+            }
+          }}
+        />
         {width !== 'mobile' ? (
           <EmployeePool
             employees={employees}
@@ -253,7 +295,8 @@ class Scheduler extends React.Component {
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
-            <ModalButton onClick={this.props.toggleModal}>
+            <button onClick={this.handleClickStart}>Start Tutorial</button>
+            <ModalButton onClick={this.props.toggleModal} id="HOO">
               Edit Hours of Operation
             </ModalButton>
           </TopButtons>

@@ -2,8 +2,6 @@ import React from 'react'
 import { DragSource } from 'react-dnd'
 import EmployeeCard from './ResourceCard'
 import circle from '../../img/circle.svg'
-import styled from '@emotion/styled'
-import system from '../../design/theme'
 
 class EmployeeEvent extends React.Component {
   componentDidMount() {

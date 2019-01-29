@@ -296,10 +296,6 @@ export const minuteToTime = (value, format = 12) => {
   let hours = Math.floor(value / 60),
     minutes = value - hours * 60,
     ampm
-
-  // if (hours.length === 1) hours = '0' + hours
-  // if (minutes.length === 1) minutes = '0' + minutes
-  // if (minutes === 0) minutes = '00'
   if (format === 12) {
     ampm = 'AM'
     if (hours >= 12) {
