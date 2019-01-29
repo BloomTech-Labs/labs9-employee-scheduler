@@ -264,7 +264,7 @@ class Scheduler extends React.Component {
             </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>Toggle View</Button>
+                <Button onClick={this.toggleView}>{this.state.view === 'week' ? 'Day View' : 'Week View'}</Button>
               ) : null}
             </div>
           </CalendarButtons>
