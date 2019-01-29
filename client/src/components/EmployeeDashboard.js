@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
-import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
-import AssignedShifts from './EmpDashboardComp/AssignedShifts'
+import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
+import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest
