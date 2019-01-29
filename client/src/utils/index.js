@@ -388,3 +388,19 @@ export const timeToMinute = (time, format = 12) => {
   }
   return rMinutes > 1439 ? 1439 : rMinutes
 }
+
+export const utcTimeToLocalDate = utcString => {
+  const offset = new Date().getTimezoneOffset()
+  const dateNaive = moment.utc(utcString, 'HH:mm')
+  const hours = dateNaive.hours()
+  const minutes = dateNaive.minutes()
+  const totalMinutes = hours * 60 + minutes
+  if (totalMinutes > offset) {
+    return dateNaive.local().format()
+  } else {
+    return dateNaive
+      .add(1, 'day')
+      .local()
+      .format()
+  }
+}

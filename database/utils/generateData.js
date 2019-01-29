@@ -21,8 +21,8 @@ const generateHoursOfOperation = (org_id = uuid()) => {
       id: uuid(),
       organization_id: org_id,
       day: day[i],
-      open_time: open ? Math.random() * 12 : 0,
-      close_time: open ? Math.random() * 12 + 12 : 24,
+      open_time: moment({ hours: 9 }).utc().format('HH:mm'),
+      close_time: moment({ hours: 17 }).utc().format('HH:mm'),
       closed: !open
     }
     hours.push(thisDay)
