@@ -8,6 +8,7 @@ import EmployeePool from './EmployeePool'
 import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 import system from '../../design/theme'
 import {
   fetchEmployeesFromDB,
@@ -23,20 +24,99 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-
+import ReactJoyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride'
+import stepData from './Demo/steps'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 
 class Scheduler extends React.Component {
+  employeePool
+  calendar
+  navButtons
+
   state = {
     draggedEmployee: null,
-    range: null,
     width: 'desktop',
     view: 'week',
     date: new Date(),
-    range: getRange({ view: 'week', date: new Date() })
+    range: getRange({ view: 'week', date: new Date() }),
+    run: false,
+    //react joyride demo steps
+    steps: [
+      {
+        target: '#employeePool',
+        content: (
+          <div>
+            Here are your employees, you can drag them onto the Calendar to
+            begin scheduling.
+          </div>
+        ),
+        locale: { skip: <strong arial-label="skip">S-K-I-P</strong> },
+        textAlign: 'center',
+        event: 'click',
+        placement: 'right',
+        disableBeacon: true,
+        disableOverlayClose: false,
+        hideCloseButton: false,
+        hideFooter: false,
+        spotlightClicks: false,
+        styles: {
+          options: {
+            zIndex: 10000
+          }
+        },
+        title: 'Employees List'
+      },
+      {
+        target: '#calendar',
+        content: (
+          <div>
+            <p>
+              Once you drop your employees in, you can move them around or
+              stretch and shrink their hours until everything is just right. We
+              also let you know when an employee isn't available so you don't
+              have to remember.
+            </p>
+          </div>
+        ),
+        locale: { skip: <strong arial-label="skip">S-K-I-P</strong> },
+        textAlign: 'center',
+        placement: 'left',
+        disableBeacon: true,
+        disableOverlayClose: false,
+        hideCloseButton: false,
+        hideFooter: false,
+        spotlightClicks: false,
+        styles: {
+          options: {
+            zIndex: 10000
+          }
+        },
+        title: <h3>Calendar</h3>
+      },
+      {
+        target: '#navBar',
+        content: (
+          <div>
+            <p>
+              Navigate through your settings, checkout employee PTO requests,
+              and add employees to your organization.
+            </p>
+          </div>
+        ),
+        textAlign: 'center',
+        placement: 'bottom',
+        styles: {
+          options: {
+            zIndex: 10000
+          }
+        },
+        title: '<h3>Navigation</h3>'
+      }
+    ],
+    stepIndex: 0
   }
 
   componentDidMount() {
@@ -215,6 +295,76 @@ class Scheduler extends React.Component {
     }
   }
 
+  // for joyride demo
+  handleClickStart = e => {
+    e.preventDefault()
+    this.setState({
+      run: true,
+      stepIndex: 0
+    })
+  }
+
+  // joyride event handling, step index controls the position of the event
+  handleJoyrideCallback = data => {
+    const { action, index, type, status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      this.setState({ run: false, stepIndex: 0 })
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
+      if (index === 0) {
+        setTimeout(() => {
+          this.setState({ run: true })
+        }, 400)
+      } else if (index === 1) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else if (index === 2 && action === ACTIONS.PREV) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else {
+        // Update state to advance the tour
+        this.setState({
+          stepIndex
+        })
+      }
+    }
+  }
+
+  handleClickOpen = () => {
+    const { run, stepIndex } = this.state
+
+    this.setState({
+      run: stepIndex === 0 ? false : run,
+      stepIndex: stepIndex === 0 ? 1 : stepIndex
+    })
+  }
+
+  // set the joyride refs
+  setRef = el => {
+    if (!el) return
+    const { dataset } = el
+
+    this[dataset.name] = el
+  }
+
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
 
@@ -238,13 +388,23 @@ class Scheduler extends React.Component {
         })
       ]
     }, [])
-
     let hourRange = getHoursOfOperationRange(hours)
-
+    const { run, steps, stepIndex } = this.state
     return (
       <Container>
+        <ReactJoyride
+          continuous
+          run={run}
+          steps={steps}
+          stepIndex={stepIndex}
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          callback={this.handleJoyrideCallback}
+        />
         {width !== 'mobile' ? (
           <EmployeePool
+            setRef={this.setRef}
             employees={employees}
             updateDragState={this.updateDragState}
           />
@@ -252,6 +412,7 @@ class Scheduler extends React.Component {
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
+            <button onClick={this.handleClickStart}>Start Tutorial</button>
             <ModalButton onClick={this.props.toggleModal}>
               Edit Hours of Operation
             </ModalButton>
@@ -269,6 +430,7 @@ class Scheduler extends React.Component {
             </div>
           </CalendarButtons>
           <DropCal
+            setRef={this.setRef}
             popover
             events={events}
             eventPropGetter={event => ({

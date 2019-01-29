@@ -7,36 +7,30 @@ import TimeOff from './TimeOff'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
-class Card extends Component {
-  render() {
-    const {
-      first_name,
-      last_name,
-      availabilities,
-      time_off_requests,
-      width
-    } = this.props
-    return (
-      <Container data-testid="employee-card">
-        <div className="x" />
-        {/* Employee Name */}
-        <P main>{`${first_name} ${last_name}`}</P>
-        <div>
-          {/* the below two things should conditionally render based on whether there is data or not */}
-          {availabilities && availabilities.length ? (
-            <Availability availabilities={availabilities} />
-          ) : null}
+const Card = ({
+  first_name,
+  last_name,
+  availabilities,
+  time_off_requests,
+  view
+}) => {
+  return (
+    <Container id="employeePool">
+      <div className="x" />
+      {/* Employee Name */}
+      <P main>{`${first_name} ${last_name}`}</P>
+      <div>
+        {/* the below two things should conditionally render based on whether there is data or not */}
+        {availabilities && availabilities.length ? (
+          <Availability availabilities={availabilities} />
+        ) : null}
 
-          {time_off_requests && time_off_requests.length ? (
-            <TimeOff
-              timeOffRequests={time_off_requests}
-              view={this.props.view}
-            />
-          ) : null}
-        </div>
-      </Container>
-    )
-  }
+        {time_off_requests && time_off_requests.length ? (
+          <TimeOff timeOffRequests={time_off_requests} view={view} />
+        ) : null}
+      </div>
+    </Container>
+  )
 }
 
 export default Card
