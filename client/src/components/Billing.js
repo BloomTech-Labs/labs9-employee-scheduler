@@ -169,7 +169,7 @@ class Billing extends Component {
                 Here's what's included in the $20 / month SMB Plan:
               </h6>
               <ul>
-                <li>A simple calendar interface to manage shifts</li>
+                <li>A simple calendar interface to manage shifts.</li>
                 <li>
                   An employee directory to add new users and adjust
                   availability.
@@ -185,7 +185,7 @@ class Billing extends Component {
                 <li>Different views for you, supervisors, and employees.</li>
               </ul>
               <Button className="danger" type="submit">
-                Delete
+                Cancel Subscription
               </Button>
             </form>
           </Container>
@@ -234,6 +234,7 @@ class Billing extends Component {
               Here's what's included in the $20 / month SMB Plan:
             </h6>
             <ul>
+              <li>A 14-day free trial.</li>
               <li>A simple calendar interface to manage shifts.</li>
               <li>
                 An employee directory to add new users and adjust availability.
