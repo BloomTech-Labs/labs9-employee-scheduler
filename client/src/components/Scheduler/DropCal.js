@@ -91,7 +91,6 @@ class DropCal extends Component {
           onSelectSlot={onSelectSlot}
           onSelectEvent={onSelectEvent}
           onRangeChange={onRangeChange}
-          longClick
           min={min}
           max={max}
           views={views}

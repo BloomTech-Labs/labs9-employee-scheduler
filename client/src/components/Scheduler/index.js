@@ -280,7 +280,6 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
-            onLong
             min={hourRange.min}
             max={hourRange.max}
             view={view}
