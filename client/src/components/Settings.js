@@ -121,7 +121,9 @@ class Settings extends Component {
         <BreadCrumb location="Settings" />
 
         <Container settings>
-          <h1 data-testid="settings">Settings</h1>
+          <h1 data-testid="settings">
+            Hiya, {this.props.user.first_name}! Here are your settings.
+          </h1>
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
             <Status success={this.state.success}>

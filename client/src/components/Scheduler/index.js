@@ -190,7 +190,7 @@ class Scheduler extends React.Component {
     End: ${moment(end).format('ddd, MMMM Do, h:mm a')}
     `
     const r = window.confirm(
-      'Would you like to cancel this shift?\n\n' + eventText
+      'Would you like to unschedule this shift?\n\n' + eventText
     )
 
     if (r) {

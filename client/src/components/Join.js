@@ -5,7 +5,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import { registerViaJoinOrg, authenticate } from '../actions' // for calling once all data is in
+import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
 import BreadCrumb from './BreadCrumb'
@@ -71,6 +71,22 @@ class Join extends Component {
     const { oauthSuccess, email, firstName, lastName } = this.state
     const { handleChange, handleSubmit } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
+
+    //checks to see if there is a current user logged in and forces a logout to enable registration.
+    //this is a bug fix
+    if (this.props.token) {
+      return (
+        <OuterContainer height="true">
+          <BreadCrumb />
+          <Container className="wrapper">
+            <h1 className="headerText">
+              Please logout then click the register link in your email again
+            </h1>
+            <Button onClick={this.props.logout}>Logout</Button>
+          </Container>
+        </OuterContainer>
+      )
+    }
 
     if (!oauthSuccess) {
       return <Login />
@@ -152,9 +168,12 @@ class Join extends Component {
   }
 }
 
-const mapStateToProps = ({ registration }) => ({ registration })
+const mapStateToProps = ({ registration, auth }) => ({
+  registration,
+  token: auth.token
+})
 
 export default connect(
   mapStateToProps,
-  { registerViaJoinOrg, authenticate }
+  { registerViaJoinOrg, authenticate, logout }
 )(Join)

@@ -99,7 +99,7 @@ class RegisterOwner extends Component {
             There is already an account for this email. Please log out to
             register a new account.
           </Status>
-          <Redirect to="/" />
+          <Redirect to="/shift-calendar" />
         </EmptyScreen>
       )
     } else if (!oauthSuccess) {
