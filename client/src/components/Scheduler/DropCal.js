@@ -75,6 +75,7 @@ class DropCal extends Component {
       slotPropGetter
     } = this.props
     return connectDropTarget(
+      //tooltip added to help the user better understand how to use the calendar
       <div data-tip="Click and drag to adjust length or day of shift.  Single click to delete.">
         <ReactTooltip type="dark" effect="solid" place="left" />
         <StyledDndCal

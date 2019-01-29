@@ -18,6 +18,7 @@ class Card extends Component {
       width
     } = this.props
     return (
+      //tooltip added to help the user understand how to schedule employees
       <Container
         data-testid="employee-card"
         data-tip="drag card to calendar to schedule"
