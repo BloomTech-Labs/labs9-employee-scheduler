@@ -60,7 +60,8 @@ export const Container = styled('div')`
 
       h5 {
         font-size: ${system.fontSizing.ml};
-        text-align: center;
+        text-align: left;
+        color: ${system.color.primary};
       }
     }
   }
