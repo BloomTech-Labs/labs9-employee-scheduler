@@ -24,8 +24,9 @@ const Home = () => {
             <div id="wrapper">
               <h1>Scheduling your employees is hard.</h1>
               <p>
-                Cadence is an easy-to-use shift scheduling tool. You'll never
-                have to waste time worrying about wasting time ever again.
+                Cadence is an easy-to-use shift scheduling assistant. Soon
+                enough, scheduling shifts for your business will be quick and
+                painless.
               </p>
               <Button type="text" id="schedule">
                 <LinkItem to="/login">Schedule Now</LinkItem>
@@ -35,49 +36,40 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          {/* nudge this over to the right a bit */}
           <div id="video">Video Placeholder</div>
         </section>
 
         <section id="features">
           <h1>Meet Cadence.</h1>
           <p>
-            Cadence is here to make scheduling shifts for your business quick
-            and painless. Here are some of the key features:
+            Cadence is here to make your stress about shift scheduling
+            disappear. Here are some key features:
           </p>
           <div className="cards">
             <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
                 <h2>Schedule Shifts Visually</h2>
                 <p>
-                  With Cadence, you don't have to rely on spreadsheets or legacy
-                  software from the 90s. <br />
-                  <br /> Our simple calendar interface lets you see who's
-                  scheduled when and make updates right there. We'll even
-                  summarize information about how many people are working and
-                  for how long.
+                  No more spreadsheets and legacy software from the 90s. <br />
+                  <br /> Cadence's simple calendar interface lets you schedule
+                  employees with just a drag & drop.
                 </p>
               </div>
               <div className="card">
                 <h2>See Employees at a Glance</h2>
                 <p>
-                  You'll never need to fret about knowing who's available when
-                  ever again.
+                  No more fretting about your employees' availability.
                   <br />
-                  <br /> With our employee directory, you can easily see all of
-                  your employees' info from availability to contact details. You
-                  can even edit employee availability and add new employees.
+                  <br /> With Cadence, you can easily see all of your employees'
+                  info from availability to contact details.
                 </p>
               </div>
               <div className="card">
                 <h2>Manage Time Off</h2>
                 <p>
-                  Know exactly which employees are taking time off before it
-                  catches you unaware. <br />
-                  <br /> With our PTO management system, you'll be able to
-                  approve or deny pending PTO requests. Better yet, your
-                  employees will be able to see their upcoming shifts and PTO
-                  instantly.
+                  No more anxiety about mis-scheduled shifts. <br />
+                  <br /> Cadence's time off management system will let you
+                  manage your employees' PTO instantly.
                 </p>
               </div>
             </Fade>
@@ -85,9 +77,9 @@ const Home = () => {
         </section>
 
         <section id="social-proof">
-          <h1>Here's what our users have to say:</h1>
+          <h1>People love Cadence.</h1>
           <p>
-            This is real feedback we've gotten on social media and during user
+            This is fake feedback we've gotten on social media and during user
             tests. We hope you'll love Cadence as much as they do.
           </p>
           <div className="cards">
@@ -103,8 +95,8 @@ const Home = () => {
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence changed my life. I can now better plan how many
-                  waiters we'll need and when we'll need them.
+                  I love Cadence. I can now better plan how many waiters we'll
+                  need and when we'll need them.
                 </p>
                 <h2>—Jane Doe</h2>
               </div>
@@ -129,10 +121,22 @@ const Home = () => {
           <div className="cards">
             <Fade top duration={width < 600 ? 0 : 750}>
               <div className="card">
+                <h2>Basic Plan</h2>
+                <h3>Free</h3>
+                <ul>
+                  <li>Up to 3 total users</li>
+                  <li>Includes all main features</li>
+                  <li>Get to know Cadence risk-free</li>
+                </ul>
+                <Button>
+                  <LinkItem to="/register">Sign Up Now</LinkItem>
+                </Button>
+              </div>
+              <div className="card">
                 <h2>SMB Plan</h2>
                 <h3>$20 / month</h3>
                 <ul>
-                  <li>Up to 20 users</li>
+                  <li>Up to 20 total users</li>
                   <li>Easy-to-use graphical interface</li>
                   <li>Owner, Supervisor, & Employee Views</li>
                 </ul>

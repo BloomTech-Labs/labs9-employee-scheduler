@@ -75,11 +75,11 @@ class Card extends Component {
         </div>
         <div id="row">
           {/* the below two things should conditionally render based on whether there is data or not */}
-          {availabilities && availabilities.length ? (
+          {availabilities ? (
             <Availability availabilities={availabilities} />
           ) : null}
 
-          {time_off_requests && time_off_requests.length ? (
+          {time_off_requests ? (
             <TimeOff
               timeOffRequests={time_off_requests}
               view={this.props.view}

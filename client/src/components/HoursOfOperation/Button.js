@@ -1,37 +1,55 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import Fade from 'react-reveal'
+import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
+import TimeRangeSlider from './TimeRangeSlider'
+import Status from './Status'
 
 const Button = ({
-  handleHours,
-  showHandleHours,
   id,
-  day,
   name,
-  closedAllDay
+  closedAllDay,
+  status,
+  toggled,
+  disabled,
+  start,
+  draggableTrack,
+  onChangeComplete,
+  onChangeStart,
+  onChange,
+  end
 }) => {
   return (
     <Container>
-      <button name={name} onClick={showHandleHours} className="days" id={id}>
-        {name}
-      </button>
-      {day === true ? (
-        <Fade top>
-          <div className="buttons">
-            <button id={id} onClick={handleHours} name="open">
-              open
-            </button>
-            <button id={id} onClick={handleHours} name="close">
-              close
-            </button>
-          </div>
-          <div className="container">
-            <Checkbox closedAllDay={closedAllDay} />
-          </div>
-        </Fade>
-      ) : null}
+      <Zoom right>
+        <div className="buttons">
+          <TimeRangeSlider
+            onChangeStart={onChangeStart}
+            draggableTrack={draggableTrack}
+            onChange={onChange}
+            onChangeComplete={onChangeComplete}
+            disabled={disabled}
+            name={name}
+            start={start}
+            end={end}
+          />
+          <p>
+            {start} to {end}
+          </p>
+        </div>
+      </Zoom>
+      <div>
+        <p className="days" id={id}>
+          {name}
+        </p>
+      </div>
+      <Zoom left>
+        <div className="closeToggle">
+          <Checkbox onToggle={closedAllDay} toggled={toggled} name={name} />
+          <Status status={status} />
+        </div>
+      </Zoom>
     </Container>
   )
 }
@@ -40,8 +58,8 @@ export default Button
 
 const Container = styled('div')`
   display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
+  flex-direction: row;
+  justify-content: center;
   margin: 0 auto;
   margin-bottom: 15px;
   .days {
@@ -50,18 +68,17 @@ const Container = styled('div')`
     border: 0;
     box-shadow: ${system.shadows.button};
     padding: ${system.spacing.standardPadding};
-    margin-bottom: 10px;
-    cursor: pointer;
-    &:hover {
-      background: ${system.color.button};
-      box-shadow: ${system.shadows.buttonHoverLight};
-    }
+    width: 116px;
+    text-align: center;
+    margin: 0 10px 10px 11px;
+    font-size: ${system.fontSizing.sm};
   }
   .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    width: 177px;
+    background: white;
+    padding: 12px;
+    margin-right: 15px;
+    border-radius: 0 25px 25px 0;
     button {
       cursor: pointer;
       margin: 5px;
@@ -69,10 +86,10 @@ const Container = styled('div')`
       border: transparent;
     }
   }
-  .container {
+  .closeToggle {
     display: flex;
-    flex-direction: row;
-    justify-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     height: 6px;
     position: relative;
     margin-bottom: 12px;
