@@ -9,7 +9,6 @@ import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import ReactTooltip from 'react-tooltip'
 
 import {
   fetchEmployeesFromDB,
@@ -251,8 +250,7 @@ class Scheduler extends React.Component {
             updateDragState={this.updateDragState}
           />
         ) : null}
-        <CalendarContainer data-tip="Click and drag to adjust length or day of shift.  Single click to delete.">
-          <ReactTooltip type="dark" effect="solid" place="left" />
+        <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
             <ModalButton onClick={this.props.toggleModal}>
