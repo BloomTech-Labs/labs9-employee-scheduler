@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import system from '../../../design/theme'
 import Availability from './Availability'
 import TimeOff from './TimeOff'
-import ReactTooltip from 'react-tooltip'
+import drag from '../../../img/drag.svg'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -16,12 +16,13 @@ const Card = ({
   view
 }) => {
   return (
-    //tooltip added to help the user understand how to schedule employees
-    <Container className="tooltip" id="employeePool">
-      <ReactTooltip type="dark" effect="solid" place="right" />
+    <Container id="employeePool">
       <div className="x" />
       {/* Employee Name */}
-      <P main>{`${first_name} ${last_name}`}</P>
+      <Name>
+        <P main>{`${first_name} ${last_name}`}</P>
+        <img src={drag} alt="this card is draggable" />
+      </Name>
       <div>
         {/* the below two things should conditionally render based on whether there is data or not */}
         {availabilities && availabilities.length ? (
@@ -54,9 +55,7 @@ const Container = styled('div')`
   border-radius: ${system.borders.bigRadius};
   width: 300px;
   box-shadow: ${system.shadows.otherLight};
-  a {
-    z-index: 200;
-  }
+
   @media ${system.breakpoints[1]} {
     width: 220px;
   }
@@ -81,5 +80,16 @@ const P = styled.p`
     font-size: ${system.fontSizing.s};
     color: ${system.color.bodytext};
     font-weight: bold;
+  }
+`
+const Name = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  img {
+    width: 28px;
+    height: 28px;
+    margin-top: 3px;
   }
 `

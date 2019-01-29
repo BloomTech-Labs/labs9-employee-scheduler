@@ -2,6 +2,28 @@ import React from 'react'
 
 export default [
   {
+    target: 'body',
+    content: (
+      <div>
+        Hi, Cadence is here to help. Here's a quick tutorial to get you going.
+      </div>
+    ),
+    locale: { skip: <strong arial-label="skip">S-K-I-P</strong> },
+    textAlign: 'center',
+    placement: 'right',
+    disableBeacon: true,
+    disableOverlayClose: false,
+    hideCloseButton: false,
+    hideFooter: false,
+    spotlightClicks: false,
+    styles: {
+      options: {
+        zIndex: 10000
+      }
+    },
+    title: 'Employees List'
+  },
+  {
     target: '#employeePool',
     content: (
       <div>
