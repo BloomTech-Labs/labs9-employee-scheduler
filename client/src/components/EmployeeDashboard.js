@@ -10,7 +10,7 @@ import {
   deleteTimeOffRequest
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
-import { Message, Container, Card } from './EmpDashboardComp/styles'
+import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
