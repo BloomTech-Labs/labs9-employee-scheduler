@@ -295,7 +295,9 @@ class Scheduler extends React.Component {
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
-            <button onClick={this.handleClickStart}>Start Tutorial</button>
+            {width === 'desktop' ? (
+              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
+            ) : null}
             <ModalButton onClick={this.props.toggleModal} id="HOO">
               Edit Hours of Operation
             </ModalButton>
