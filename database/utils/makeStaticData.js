@@ -22,7 +22,7 @@ const populateStaticOrg = (size = 10) => {
     if (user.role === 'owner') {
       return {
         ...user,
-        id: 'yJgErAY0haNm0zdLSvzLUed6UXK2',
+        id: 'saSV8fdc3ThHNCwlpvgJt2F70Qu1',
         first_name: 'Cadence',
         last_name: 'Sassafras',
         email: 'fake0@gmail.com'
@@ -132,15 +132,23 @@ const populateStaticOrg = (size = 10) => {
       ...seed
     }
   })
+  let HOO = generateHoursOfOperation(organization.id)
 
   let availabilities = []
   let events = []
   let timeOffRequests = []
 
   users.forEach(user => {
-    availabilities = [...availabilities, ...generateAvailabilities(user.id)]
-    events = [...events, ...generateEvents(user.id)]
-    timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
+    const userAvailabilities = generateAvailabilities(user.id, HOO)
+    const userTimeOffRequests = generateDayOffRequests(
+      availabilities,
+      userAvailabilities
+    )
+    const userEvents = generateEvents(user.id, userAvailabilities)
+
+    timeOffRequests = [...timeOffRequests, ...userTimeOffRequests]
+    events = [...events, ...userEvents]
+    availabilities = [...availabilities, ...userAvailabilities]
   })
 
   return {
@@ -149,7 +157,7 @@ const populateStaticOrg = (size = 10) => {
     availabilities,
     events,
     timeOffRequests,
-    hoursOfOperation: generateHoursOfOperation(organization.id)
+    hoursOfOperation: HOO
   }
 }
 

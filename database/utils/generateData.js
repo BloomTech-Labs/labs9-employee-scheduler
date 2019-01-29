@@ -2,6 +2,17 @@ const faker = require('faker')
 const uuid = require('uuid/v4')
 const moment = require('moment')
 
+const addTime = (time, { hours, minutes }) => {
+  const timeObj = moment.utc(time, 'HH:aa')
+  if (typeof hours === 'number') {
+    timeObj.add(hours, 'hour')
+  }
+  if (typeof miutes === 'number') {
+    timeObj.add(minutes, 'minute')
+  }
+  return timeObj.format('HH:mm')
+}
+
 // Generates a new org using an id
 const generateOrg = (id = uuid()) => ({
   id,
@@ -21,8 +32,12 @@ const generateHoursOfOperation = (org_id = uuid()) => {
       id: uuid(),
       organization_id: org_id,
       day: day[i],
-      open_time: moment({ hours: 9 }).utc().format('HH:mm'),
-      close_time: moment({ hours: 17 }).utc().format('HH:mm'),
+      open_time: moment({ hours: 9 })
+        .utc()
+        .format('HH:mm'),
+      close_time: moment({ hours: 17 })
+        .utc()
+        .format('HH:mm'),
       closed: !open
     }
     hours.push(thisDay)
@@ -82,56 +97,30 @@ const generateRandomBetween = (min, max) =>
 // only create availability for supervisors and employees
 // randomly pick 5 available days for each of those users
 // for those five days, pick two of them to have reduced hours
-const generateAvailabilities = userId => {
+const generateAvailabilities = (userId, HOO) => {
   // generate random numbers between two numbers
 
-  // generate sorted array of 5 numbers between 0 and 6 with no duplicates
-  const generateWeekdays = () => {
-    const days = []
-    while (days.length < 7) {
-      const day = generateRandomBetween(0, 6)
-      if (!days.includes(day)) {
-        days.push(day)
-      }
-    }
-    return days.sort()
-  }
+  return HOO.map(hours => {
+    const off = hours.closed ? true : Math.random() < 0.25
+    const startOffset = off ? 0 : generateRandomBetween(0, 3)
+    const endOffset = off ? 0 : generateRandomBetween(0, 4)
+    console.log(endOffset)
+    const start_time = addTime(hours.open_time, { hours: startOffset })
+    const end_time = addTime(hours.close_time, { hours: -1 * endOffset })
+    console.log(end_time)
 
-  // randomly give some days full availability and other days partial
-  const generateTimes = () => {
-    const times = []
-    for (let i = 0; i < 7; i++) {
-      if (Math.random() > 0.2) {
-        times.push([
-          generateRandomBetween(0, 12),
-          generateRandomBetween(12, 23)
-        ])
-      } else {
-        times.push([0, 23])
-      }
-    }
-    return times
-  }
-
-  const days = generateWeekdays()
-  const times = generateTimes()
-  const availabilities = []
-
-  // generates availabilities for 7 days
-  for (let i = 0; i < 7; i++) {
-    availabilities.push({
+    return {
+      day: hours.day,
       id: uuid(),
       user_id: userId,
-      day: days[i],
-      start_time: times[i][0],
-      end_time: times[i][1],
-      off: Boolean(Math.random() < 0.2)
-    })
-  }
-  return availabilities
+      start_time,
+      end_time,
+      off
+    }
+  })
 }
 
-const generateEvents = (userId = uuid()) => {
+const generateEvents = (userId = uuid(), availabilities, timeOffRequests) => {
   // generate random numbers between two numbers
 
   // generate sorted array of 5 numbers between 0 and 6 with no duplicates
@@ -214,12 +203,20 @@ const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
       day = candidate
     }
   }
+
+  const dateOff = moment().add(day, 'd')
+
   return {
     id: uuid(),
     user_id: userId,
-    date: moment()
-      .add(day, 'd')
-      .format('YYYY-MM-DD'),
+    start: dateOff
+      .startOf('day')
+      .utc()
+      .format('HH:mm'),
+    end: dateOff
+      .endOf('day')
+      .utc()
+      .format('HH:mm'),
     reason: faker.lorem.sentence(),
     status
   }
