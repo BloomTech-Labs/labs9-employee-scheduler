@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
-import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
-import AssignedShifts from './EmpDashboardComp/AssignedShifts'
+import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
+import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
-import { Message, Container, Card } from './EmpDashboardComp/styles'
+import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
