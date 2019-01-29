@@ -35,6 +35,7 @@ class EmployeePool extends React.Component {
         <Spacer />
         <Container id="employeePool">
           <Input
+            id="search"
             search
             type="text"
             name="searchTerm"
