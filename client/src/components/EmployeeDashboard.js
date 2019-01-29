@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
-import TimeOffApproved from './EmpDashboardComp/TimeOffApproved'
-import TimeOffRequest from './EmpDashboardComp/TimeOffRequest'
-import AssignedShifts from './EmpDashboardComp/AssignedShifts'
+import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
+import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
-import { Message, Container, Card } from './EmpDashboardComp/styles'
+import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
@@ -36,7 +36,7 @@ class EmployeeDashboard extends Component {
 
   deleteExpiredRequest = (torId, token) => {
     const r = window.confirm(
-      `This will delete your PTO request. Are you sure you want to do that?`
+      `This will rescind your PTO request. Are you sure you want to do that?`
     )
     if (r) {
       this.props.deleteTimeOffRequest(torId, token)
@@ -69,7 +69,7 @@ class EmployeeDashboard extends Component {
           <div className="wrapper">
             <Card>
               <div className="title">
-                <h5>Your Shifts</h5>
+                <h5>Your Upcoming Shifts</h5>
               </div>
               {/* returns all assigned shift dates and times for the user */}
               {employee && employee.shifts ? (
@@ -87,7 +87,7 @@ class EmployeeDashboard extends Component {
 
             <Card className="tof-wrapper">
               <div className="title">
-                <h5>Approved Time Off</h5>
+                <h5>Requested Time Off</h5>
                 {employee && employee.time_off.length ? (
                   <Message>
                     <>
@@ -108,7 +108,7 @@ class EmployeeDashboard extends Component {
                     </>
                   </Message>
                 ) : (
-                  <p>No requests to display.</p>
+                  <Message>No requests to display.</Message>
                 )}
               </div>
             </Card>

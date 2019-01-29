@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 export const Message = styled('div')`
   margin-top: 30px;
   font-size: ${system.fontSizing.sm};
+  text-align: center;
 `
 
 export const Card = styled.div`

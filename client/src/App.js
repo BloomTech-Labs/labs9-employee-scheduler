@@ -12,7 +12,6 @@ import Login from './components/Login'
 import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
 import system from './design/theme'
-
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'

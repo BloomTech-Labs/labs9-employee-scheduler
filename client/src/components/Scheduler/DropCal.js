@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../Calendar'
+import propTypes from 'prop-types'
+import Button from '../common/Button'
+import styled from '@emotion/styled'
+import system from '../../design/theme'
+import lines from '../../img/lines.svg'
+import ReactTooltip from 'react-tooltip'
 
 const DnDCal = withDragAndDrop(Calendar)
 
@@ -67,10 +73,11 @@ class DropCal extends Component {
       date,
       slotPropGetter
     } = this.props
-
     return connectDropTarget(
-      <div id="calendar">
-        <DnDCal
+      //tooltip added to help the user better understand how to use the calendar
+      <div data-tip="Click and drag to adjust length or day of shift.  Single click to delete.">
+        <ReactTooltip type="dark" effect="solid" place="left" id="calendar"/>
+        <StyledDndCal
           popup
           selectable
           resizable
@@ -94,6 +101,7 @@ class DropCal extends Component {
           onView={() => {}}
           onNavigate={() => {}}
           slotPropGetter={slotPropGetter}
+          longPressThreshold={100}
         />
       </div>
     )
@@ -101,3 +109,16 @@ class DropCal extends Component {
 }
 
 export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
+
+const StyledDndCal = styled(DnDCal)`
+  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
+    height: 15px;
+    padding: 5px;
+    background-image: url(${lines});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    border: none;
+  }
+`

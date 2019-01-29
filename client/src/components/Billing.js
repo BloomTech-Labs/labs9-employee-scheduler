@@ -181,7 +181,7 @@ class Billing extends Component {
                   A convenient dashboard where an employee can see their shifts
                   and time off.
                 </li>
-                <li>Up to 20 seats in our software.</li>
+                <li>Up to 20 total user accounts in our software.</li>
                 <li>Different views for you, supervisors, and employees.</li>
               </ul>
               <Button className="danger" type="submit">
@@ -243,7 +243,7 @@ class Billing extends Component {
                 A convenient dashboard where an employee can see their shifts
                 and time off.
               </li>
-              <li>Up to 20 seats in our software.</li>
+              <li>Up to 20 total user accounts in our software.</li>
               <li>Different views for you, supervisors, and employees.</li>
             </ul>
             <CardElement />

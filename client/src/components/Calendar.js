@@ -45,13 +45,14 @@ export default function Calendar(props) {
       views={['week', 'day']}
       step={30}
       {...props}
+      showMultiDayTimes={true}
     />
   )
 }
 
 const StyledCalendar = styled(BigCalendar)`
   width: 100%;
-  padding: ${system.spacing.hugePadding};
+  padding: ${system.spacing.hugePadding} ${system.spacing.hugePadding} 10px;
 
   ${props => props.colors} .rbc-event {
     border: 1px solid ${system.color.white};
@@ -80,6 +81,13 @@ const StyledCalendar = styled(BigCalendar)`
 
   .rbc-btn-group {
     display: none;
+  }
+
+  .rbc-allday-cell {
+    display: none;
+  }
+  .rbc-time-view .rbc-header {
+    border-bottom: none;
   }
 
   /* the below makes the Agenda view normally colored instead of the same color as events */
