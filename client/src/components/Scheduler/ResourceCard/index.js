@@ -31,6 +31,7 @@ class Card extends Component {
         <Name>
 
         <P main>{`${first_name} ${last_name}`}</P>
+        {/* drag and drop icon */}
         <img src={drag}/>
         </Name>
         <div>
