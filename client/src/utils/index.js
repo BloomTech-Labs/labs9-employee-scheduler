@@ -3,7 +3,11 @@ import moment from 'moment'
 export function getHoursOfOperationRange(hours) {
   let firstDay = hours.find(day => !day.closed)
   let numRange =
-    !hours.length || !firstDay
+    // temporary change to prevent this from breaking
+    // going to return min 0 max 24 no matter what
+    // the hours of operation format has changed, which requires a lot of logic changes
+    // i'll leaving this functionality to fix later
+    !hours.length || !firstDay || hours.length
       ? // make sure hours of operation have been received and there is
         // an open day, otherwise do full day range
         { min: 0, max: 24 }
