@@ -16,7 +16,7 @@ export const Card = styled.div`
   display: flex;
   flex-flow: column nowrap;
   min-width: 30rem;
-  width: 37.5%;
+  width: 35%;
 
   @media ${system.breakpoints[2]} {
     width: 80%;
