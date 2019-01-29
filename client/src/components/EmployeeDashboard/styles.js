@@ -16,7 +16,7 @@ export const Card = styled.div`
   display: flex;
   flex-flow: column nowrap;
   min-width: 30rem;
-  width: 28%;
+  width: 35%;
 
   @media ${system.breakpoints[2]} {
     width: 80%;
@@ -60,7 +60,8 @@ export const Container = styled('div')`
 
       h5 {
         font-size: ${system.fontSizing.ml};
-        text-align: center;
+        text-align: left;
+        color: ${system.color.primary};
       }
     }
   }

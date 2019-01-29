@@ -2,12 +2,8 @@ import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../Calendar'
-import propTypes from 'prop-types'
-import Button from '../common/Button'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
 import lines from '../../img/lines.svg'
-import ReactTooltip from 'react-tooltip'
 
 const DnDCal = withDragAndDrop(Calendar)
 
@@ -74,12 +70,7 @@ class DropCal extends Component {
       slotPropGetter
     } = this.props
     return connectDropTarget(
-      //tooltip added to help the user better understand how to use the calendar
-      <div
-        data-tip="Click and drag to adjust length or day of shift.  Single click to delete."
-        id="calendar"
-      >
-        <ReactTooltip type="dark" effect="solid" place="left" id="calendar" />
+      <div id="calendar">
         <StyledDndCal
           popup
           selectable
