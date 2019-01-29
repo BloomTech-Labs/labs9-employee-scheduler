@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Button from './Button'
+import HOOSlider from './HOOSlider'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import moment from 'moment'
@@ -7,6 +7,7 @@ import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formatHours } from '../../utils'
 import { editHours } from '../../actions/'
+import Button from '../common/Button'
 
 const dayNameMap = [
   'Sunday',
@@ -129,11 +130,11 @@ class HoursOfOperation extends Component {
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
         <div className="days-container">
           <Close />
-          <h3>Hours of Operation</h3>
+          <h3>What times is your business open?</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
           {this.state.days.map((day, i) => {
             return (
-              <Button
+              <HOOSlider
                 // props to days and close/open button
                 id={i}
                 key={day.id}
@@ -154,10 +155,10 @@ class HoursOfOperation extends Component {
                 onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
               >
                 {this.props.children}
-              </Button>
+              </HOOSlider>
             )
           })}
-          <button onClick={this.submitHandler}>Submit</button>
+          <Button onClick={this.submitHandler}>Submit</Button>
         </div>
       </Modal>
     )
@@ -189,9 +190,9 @@ const Modal = styled.div`
   right: 10px;
   bottom: 40px; */
   border-radius: 5px;
-  width: 500px;
+  width: 100%;
   z-index: 11;
-  background-color: ${system.color.neutral};
+  background-color: ${system.color.white};
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -203,8 +204,13 @@ const Modal = styled.div`
     flex-direction: column;
     justify-content: space-between;
     h3 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
+      font-size: ${system.fontSizing.m};
+      padding: ${system.spacing.standardPadding};
+      margin: 0 10px 20px;
     }
+  }
+  button {
+    width: 30%;
+    margin: ${system.spacing.bigPadding};
   }
 `

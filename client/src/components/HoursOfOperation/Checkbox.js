@@ -14,7 +14,6 @@ const Wrapper = styled('div')`
   width: 83px;
   padding: 7px;
   padding-left: 8px;
-  background: white;
   justify-content: space-between;
   z-index: 15;
 `
@@ -45,11 +44,11 @@ const Switch = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: ${system.color.primary};
+  background-color: ${system.color.success};
   transition: background-color 300ms;
   border-radius: 10px;
   &.toggled {
-    background-color: ${system.color.success};
+    background-color: ${system.color.danger};
   }
 `
 
