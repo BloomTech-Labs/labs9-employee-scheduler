@@ -5,7 +5,6 @@ import styled from '@emotion/styled'
 function makeCloseButton(close) {
   return props => (
     <Delete {...props} onClick={close}>
-      {' '}
       ✕
     </Delete>
   )
@@ -124,10 +123,15 @@ const Delete = styled.p`
     background: transparent;
     color: inherit;
     font: inherit;
+    text-align: right;
     line-height: normal;
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
     -webkit-appearance: none;
+
+    :hover {
+      color: ${system.color.danger};
+    }
 }
 
 /* Remove excess padding and border in Firefox 4+ */

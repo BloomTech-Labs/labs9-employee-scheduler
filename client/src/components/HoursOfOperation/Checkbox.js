@@ -4,13 +4,19 @@ import system from '../../design/theme'
 
 const Wrapper = styled('div')`
   display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
-  width: 100%;
+  position: absolute;
+  /* right: 134px; */
+  border-radius: 25px 0 0 25px;
+  top: 14px;
+  width: 83px;
+  padding: 7px;
+  padding-left: 8px;
+  background: white;
   justify-content: space-between;
-  p {
-    font-size: ${system.fontSizing.s};
-    margin-bottom: 10px;
-  }
+  z-index: 15;
 `
 
 const Container = styled.div`
@@ -30,6 +36,7 @@ const Container = styled.div`
 `
 
 const Switch = styled.div`
+  z-index: -2;
   margin-bottom: 10px;
   position: absolute;
   top: 0;
@@ -60,36 +67,23 @@ const Slider = styled.div`
   }
 `
 
-class Checkbox extends React.Component {
-  state = { toggled: false }
-  handleUpdate = event => {
-    this.setState(prevState => {
-      return { toggled: !prevState.toggled }
-    })
-  }
-
-  render() {
-    const {
-      state: { toggled },
-      handleUpdate
-    } = this
-    return (
-      <Wrapper>
-        <p>{toggled ? 'Closed' : 'Open'}</p>
-        <Container>
-          <input
-            type="checkbox"
-            checked={toggled}
-            onChange={handleUpdate}
-            onClick={this.props.closedAllDay}
-          />
-          <Switch className={toggled ? 'toggled' : undefined}>
-            <Slider className={toggled ? 'toggled' : undefined} />
-          </Switch>
-        </Container>
-      </Wrapper>
-    )
-  }
+function Checkbox(props) {
+  const { toggled, onToggle, name } = props
+  return (
+    <Wrapper>
+      <Container>
+        <input
+          type="checkbox"
+          checked={toggled}
+          onChange={onToggle}
+          name={name}
+        />
+        <Switch className={toggled ? 'toggled' : undefined}>
+          <Slider className={toggled ? 'toggled' : undefined} />
+        </Switch>
+      </Container>
+    </Wrapper>
+  )
 }
 
 export default Checkbox

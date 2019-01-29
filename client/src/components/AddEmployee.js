@@ -93,12 +93,12 @@ class AddEmployee extends Component {
         {this.props.paid || this.props.employees.length < 3 ? (
           <form onSubmit={this.submitHandler}>
             <h6 id="instructions">
-              Fill this out and we'll send your employee a sign-up email!
+              Fill all fields & we'll send your employee a sign-up invite!
             </h6>
             <Close
               style={{ position: 'absolute', top: '25px', right: '25px' }}
             />
-            <label htmlFor="name">Employee Name</label>
+            <label htmlFor="name">Employee Name *</label>
             <Input
               type="name"
               id="name"
@@ -109,7 +109,7 @@ class AddEmployee extends Component {
               aria-label="name"
               required
             />
-            <label htmlFor="email">Employee Email</label>
+            <label htmlFor="email">Employee Email *</label>
             <Input
               type="email"
               id="email"
@@ -123,7 +123,7 @@ class AddEmployee extends Component {
             />
             {role === 'owner' ? (
               <>
-                <label htmlFor="role">Employee Role</label>
+                <label htmlFor="role">Employee Role *</label>
                 <div className="radio">
                   <Input
                     type="radio"
@@ -157,7 +157,8 @@ class AddEmployee extends Component {
             {this.props.role === 'owner' ? (
               <>
                 <h6 id="instructions">
-                  You have reached the limit for the number of employees on a free account.
+                  You have reached the limit for the number of employees on a
+                  free account.
                 </h6>
                 <Link to="/billing">
                   <Button>Upgrade</Button>
@@ -165,8 +166,8 @@ class AddEmployee extends Component {
               </>
             ) : (
               <h6 id="instructions">
-                You have reached the limit for the number of employees on a free account. Contact
-                the owner about upgrading.
+                You have reached the limit for the number of employees on a free
+                account. Contact the owner about upgrading.
               </h6>
             )}
           </form>
