@@ -72,6 +72,8 @@ class Join extends Component {
     const { handleChange, handleSubmit } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
+    //checks to see if there is a current user logged in and forces a logout to enable registration.
+    //this is a bug fix
     if (this.props.token) {
       return (
         <OuterContainer height="true">
