@@ -51,7 +51,7 @@ export default function Calendar(props) {
 
 const StyledCalendar = styled(BigCalendar)`
   width: 100%;
-  padding: ${system.spacing.hugePadding};
+  padding: ${system.spacing.hugePadding} ${system.spacing.hugePadding} 10px;
 
   ${props => props.colors} .rbc-event {
     border: 1px solid ${system.color.white};
