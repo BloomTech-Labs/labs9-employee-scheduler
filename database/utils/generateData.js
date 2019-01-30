@@ -136,7 +136,7 @@ const utcToLocal = ({ date, string }) => {
 }
 
 const isDayAhead = time => {
-  const offset = moment().utcOffset()
+  const offset = Math.abs(moment().utcOffset())
   const hours = time.hours()
   const minutes = time.minutes()
 

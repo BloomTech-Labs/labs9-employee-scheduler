@@ -2,54 +2,47 @@ import moment from 'moment'
 
 export function getHoursOfOperationRange(hours) {
   let firstDay = hours.find(day => !day.closed)
-  let numRange =
+  let range =
     // temporary change to prevent this from breaking
     // going to return min 0 max 24 no matter what
     // the hours of operation format has changed, which requires a lot of logic changes
     // i'll leaving this functionality to fix later
-    !hours.length || !firstDay || hours.length
+    !hours.length || !firstDay
       ? // make sure hours of operation have been received and there is
         // an open day, otherwise do full day range
-        { min: 0, max: 24 }
+        {
+          min: moment().startOf('day'),
+          max: moment().endOf('day')
+        }
       : hours.reduce(
           (acc, day) => {
+            console.log(acc, day)
             let returnVal = { ...acc }
-            const dayStart = day.open_time
-            const dayEnd = day.close_time
+            const dayStart = moment.utc(day.open_time, 'HH:mm')
+            const dayEnd = moment.utc(day.close_time, 'HH:mm')
 
             if (day.closed) {
               return returnVal
             }
-            if (dayStart < acc.min) {
+            if (dayStart.isBefore(acc.min)) {
               returnVal.min = dayStart
             }
-            if (dayEnd > acc.max) {
+            if (dayEnd.isAfter(acc.max)) {
               returnVal.max = dayEnd
             }
             return returnVal
           },
           {
-            min: hours[0].open_time,
-            max: hours[0].close_time
+            min: moment.utc(firstDay.open_time, 'HH:mm'),
+            max: moment.utc(firstDay.close_time, 'HH:mm')
           }
         )
-  let today = new Date()
-
-  // return a min/max object with dates, as expected by react-big-calendar
   return {
-    min: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      Math.floor(numRange.min)
-    ),
-    max: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      Math.ceil(numRange.max) - 1,
-      59
-    )
+    min: range.min.toDate(),
+    max: range.max
+      .subtract(1, 'minute')
+      .endOf('hour')
+      .toDate()
   }
 }
 
@@ -475,20 +468,4 @@ export const timeToMinute = (time, format = 12) => {
     rMinutes = hours + minutes
   }
   return rMinutes > 1439 ? 1439 : rMinutes
-}
-
-export const utcTimeToLocalDate = utcString => {
-  const offset = new Date().getTimezoneOffset()
-  const dateNaive = moment.utc(utcString, 'HH:mm')
-  const hours = dateNaive.hours()
-  const minutes = dateNaive.minutes()
-  const totalMinutes = hours * 60 + minutes
-  if (totalMinutes > offset) {
-    return dateNaive.local().format()
-  } else {
-    return dateNaive
-      .add(1, 'day')
-      .local()
-      .format()
-  }
 }
