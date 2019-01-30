@@ -163,7 +163,7 @@ const populateStaticOrg = (size = 10) => {
 }
 
 fs.writeFile(
-  'static_seed.json',
+  '../static_seed.json',
   JSON.stringify(populateStaticOrg()),
   console.log
 )
