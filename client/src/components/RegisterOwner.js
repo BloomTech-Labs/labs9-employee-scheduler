@@ -210,12 +210,7 @@ class RegisterOwner extends Component {
                     Register
                   </Button>
                 </div>
-                <Button
-                  onClick={this.props.logout}
-                  color={system.color.neutral}
-                >
-                  Cancel
-                </Button>
+                <Button onClick={this.props.logout}>Cancel</Button>
               </ButtonContainer>
             </form>
           </Container>
