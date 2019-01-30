@@ -3,22 +3,23 @@ import { Redirect } from 'react-router-dom'
 
 export default [
   {
-    title: 'Employees List',
+    title: 'Shift Calendar',
     target: 'body',
     content: (
       <div>
         <p>
-          Hi, Cadence is here to help. Let's go over a few features to get you
-          started.
+          Cadence is here to help!
+          <br /> <br />
+          Let's go over a few features of our shift scheduler quickly.
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
-    textAlign: 'center',
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    textAlign: 'left',
     placement: 'center',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -33,17 +34,16 @@ export default [
     content: (
       <div>
         <p>
-          No need to scroll around. Cadence allows you to just filter your
-          employee's name for a quick and easy search.
+          With this search bar, you can quickly look up the employee you need.
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
-    textAlign: 'right',
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    textAlign: 'left',
     placement: 'right',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -58,18 +58,17 @@ export default [
     content: (
       <div>
         <p>
-          Ever wanted to see when your employee would be available for
-          scheduling? Cadence will show you here so that you can schedule with
-          confidence.
+          Cadence will show you when each employee is available here so that you
+          can schedule shifts with confidence.
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -84,18 +83,17 @@ export default [
     content: (
       <div>
         <p>
-          Here you'll have visibility of any PTO requests your employees have on
-          file. You can see their status as well as the days they are
-          requesting.
+          You can also see your employees' approved and pending time off
+          requests, so you don't schedule someone on their day off.
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -108,17 +106,18 @@ export default [
     target: '#employeePool',
     content: (
       <div>
-        Here are your employees, you can drag them onto the Calendar to begin
-        scheduling. All of your future employees will also be here once you
-        invite them and they register.
+        Each of your future employees will be a card here. Right now, it's just
+        you! <br /> <br />
+        Click and drag your card to the calendar to create a shift. <br />{' '}
+        <br />
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -133,18 +132,20 @@ export default [
     content: (
       <div>
         <p>
-          Once you drop your employees in, you can move them around or stretch
-          and shrink their hours until everything is just right. We'll also warn
-          you when an employee isn't available so you don't have to remember.
+          Once you drag your employee to the calendar, you can move their shift
+          around or stretch and shrink it until everything is just right. <br />
+          <br />
+          We'll also warn you when an employee isn't available so you don't have
+          to remember.
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'left',
     placement: 'bottom',
-    disableBeacon: false,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableBeacon: true,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -159,11 +160,14 @@ export default [
     content: (
       <div>
         <p>
-          Set the hours of operations for the week by clicking this button. You
-          can also set your business to be closed if you want.
+          Set your business' weekly hours of operations by clicking this button.
+          You can also set your business to be closed on any day if you want.
         </p>
       </div>
     ),
+    disableBeacon: true,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     textAlign: 'center',
     placement: 'left',
     styles: {
@@ -185,12 +189,12 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">SKIP</strong> },
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'center',
     placement: 'bottom',
     disableBeacon: true,
-    disableOverlayClose: false,
-    hideCloseButton: false,
+    disableOverlayClose: true,
+    hideCloseButton: true,
     hideFooter: false,
     spotlightClicks: false,
     styles: {
@@ -200,7 +204,6 @@ export default [
     }
   },
   {
-    title: 'Redirect',
     target: 'body',
     content: <Redirect to="/employees" />
   }
