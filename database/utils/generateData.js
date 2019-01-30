@@ -34,7 +34,7 @@ const generateHoursOfOperation = (org_id = uuid()) => {
     let thisDay = {
       id: uuid(),
       organization_id: org_id,
-      day: isDayAhead(open_time) ? day[i] + 1 : day[0],
+      day: isDayAhead(open_time) ? day[i] + 1 : day[i],
       open_time: open_time.format('HH:mm'),
       close_time: close_time.format('HH:mm'),
       closed: !open
