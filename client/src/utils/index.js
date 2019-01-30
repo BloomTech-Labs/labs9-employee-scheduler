@@ -129,12 +129,19 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   Object.keys(days).forEach(key => {
     console.log(`Generating hours for ${key}`)
     // sort shifts by start time
-    const sortedShifts = days[key].sort((a, b) =>
-      moment(a.start).isAfter(b.start)
-    )
+    console.log('ALL SHIFTS')
+    console.log(days[key])
 
-    // console.log('SORTED SHIFTS:')
-    // console.log(sortedShifts)
+    const sortedShifts = days[key].sort((a, b) => {
+      if (moment(a.start).isAfter(b.start)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+
+    console.log('SORTED SHIFTS:')
+    console.log(sortedShifts)
 
     // merge shifts
     // take shifts and combine them into blocks of time
@@ -162,6 +169,9 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
     console.log('MERGED SHIFTS')
     console.log(mergedShifts)
 
+    // initialize hours open variable
+    let hoursOpen = 0
+
     // truncate merged shifts to only open hours
     const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
       // if schedule end is before shift start, discard shift
@@ -183,11 +193,21 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         utcScheduleEnd = utcScheduleEnd.add(1, 'days')
       }
 
+      console.log(utcScheduleStart.utc().format())
+      console.log(utcScheduleEnd.utc().format())
+
+      // increment hours open appropriately
+      hoursOpen = moment
+        .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
+        .asHours()
+
       // run discard options first, then mutation options to make sure discards happen
       // `!` (not sign) necessary in comparisons where it appears
       if (moment(!utcScheduleEnd).isAfter(start)) {
+        console.log('discarding shift')
         return [...acc]
       } else if (!moment(utcScheduleStart).isBefore(end)) {
+        console.log('discarding shift')
         return [...acc]
       } else if (
         moment(start).isBefore(utcScheduleStart) &&
@@ -239,16 +259,16 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       return acc + moment.duration(moment(end).diff(start)).asHours()
     }, 0)
 
-    // console.log('HOURS COVERED:')
-    // console.log(hoursCovered)
-
-    // calculate hours open
-    const hoursOpen = hours[key].close_time - hours[key].open_time
+    console.log('HOURS COVERED:')
+    console.log(hoursCovered)
 
     // increment the weekly totals accordingly
     totalHoursCovered += hoursCovered
     totalHoursOpen += hoursOpen
   })
+
+  console.log(totalHoursCovered)
+  console.log(totalHoursOpen)
 
   // calculate percentage
   const percentCoverage = Math.floor((totalHoursCovered / totalHoursOpen) * 100)
