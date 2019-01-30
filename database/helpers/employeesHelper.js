@@ -64,13 +64,20 @@ const getEmployees = async orgId => {
     .select(
       'u.id as user_id',
       'tor.id as time_off_request_id',
-      'tor.date',
-      'tor.reason',
+      'tor.start',
+      'tor.end',
       'tor.status'
     )
     .reduce((acc, current) => {
-      const { user_id, time_off_request_id, date, reason, status } = current
-      const newItem = { id: time_off_request_id, date, reason, status }
+      const {
+        user_id,
+        time_off_request_id,
+        start,
+        end,
+        reason,
+        status
+      } = current
+      const newItem = { id: time_off_request_id, start, end, reason, status }
 
       if (acc[user_id]) {
         acc[user_id].push(newItem)
