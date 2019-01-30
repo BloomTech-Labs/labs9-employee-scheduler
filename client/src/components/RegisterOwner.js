@@ -5,7 +5,12 @@ import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-import { registerAsOwner, authenticate, registerReset } from '../actions' // for calling once all data is in
+import {
+  registerAsOwner,
+  authenticate,
+  registerReset,
+  logout
+} from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
 import Status from './Status'
@@ -201,6 +206,7 @@ class RegisterOwner extends Component {
               <Button type="submit" className="register">
                 Register
               </Button>
+              <Button onClick={this.props.logout}>Cancel</Button>
             </form>
           </Container>
         </OuterContainer>
@@ -216,5 +222,5 @@ const mapStateToProps = ({ registration, auth }) => ({
 
 export default connect(
   mapStateToProps,
-  { registerAsOwner, authenticate, registerReset }
+  { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
