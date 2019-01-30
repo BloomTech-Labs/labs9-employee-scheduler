@@ -68,17 +68,6 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card className="tof-wrapper">
-              <div className="title">
-                <h5>Your Availabilities</h5>
-              </div>
-              {employee && employee.availabilities.length ? (
-                <Availability availabilities={employee.availabilities} />
-              ) : (
-                <Message>No availabilities to display.</Message>
-              )}
-            </Card>
-
             <Card>
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
@@ -99,7 +88,18 @@ class EmployeeDashboard extends Component {
 
             <Card className="tof-wrapper">
               <div className="title">
-                <h5>Requested Time Off</h5>
+                <h5>Your Weekly Availability</h5>
+              </div>
+              {employee && employee.availabilities.length ? (
+                <Availability availabilities={employee.availabilities} />
+              ) : (
+                <Message>You have no availabilities to display.</Message>
+              )}
+            </Card>
+
+            <Card className="tof-wrapper">
+              <div className="title">
+                <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
                   <Message>
                     <>

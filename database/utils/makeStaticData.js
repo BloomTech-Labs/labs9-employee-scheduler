@@ -46,7 +46,7 @@ const populateStaticOrg = (size = 10) => {
     {
       id: 'gTuUJ2rhsVN95uWEbMkQEiZ350v1',
       first_name: 'Adam',
-      last_name: 'Adam Hinckley',
+      last_name: 'Hinckley',
       role: 'supervisor',
       email: 'fake2@gmail.com',
       phone: '1-281-076-2473 x751',
