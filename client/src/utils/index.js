@@ -94,9 +94,63 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // combine all shifts into a single array
   const shifts = employees.reduce((acc, { events }) => [...acc, ...events], [])
 
-  // console.log(view)
-  // console.log(date)
-  // console.log(shifts)
+  console.log(view)
+  console.log(date)
+  console.log(shifts)
+
+  const rangeStart = moment(date).startOf(view)
+  const rangeEnd = moment(date).endOf(view)
+
+  console.log(rangeStart)
+  console.log(rangeEnd)
+
+  // the logic for this fuction is duplicated later on and should be abstracted into separate func
+  const rangeFilteredShifts = shifts.reduce((acc, { start, end }) => {
+    if (!moment(rangeEnd).isAfter(start)) {
+      return [...acc]
+    } else if (!moment(rangeStart).isBefore(end)) {
+      return [...acc]
+    } else if (
+      moment(start).isBefore(rangeStart) &&
+      moment(end).isAfter(rangeEnd)
+    ) {
+      // if we need to truncate both start and end
+      return [
+        ...acc,
+        {
+          start: moment(rangeStart)
+            .utc()
+            .format(),
+          end: moment(rangeEnd)
+            .utc()
+            .format()
+        }
+      ]
+    } else if (moment(start).isBefore(rangeStart)) {
+      return [
+        ...acc,
+        {
+          start: moment(rangeStart)
+            .utc()
+            .format(),
+          end
+        }
+      ]
+    } else if (moment(end).isAfter(rangeEnd)) {
+      return [
+        ...acc,
+        {
+          start,
+          end: moment(rangeEnd)
+            .utc()
+            .format()
+        }
+      ]
+    } else {
+      // otherwise do nothing
+      return [...acc, { start, end }]
+    }
+  }, [])
 
   // initialize an object keyed by all open days on the schedule
   const days = hours.reduce(
@@ -108,7 +162,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // console.log(days)
 
   // populate days object with all corresponding shifts
-  shifts.forEach(shift => {
+  rangeFilteredShifts.forEach(shift => {
     const shiftDay = moment(shift.start).day()
     // console.log('DAY INFO')
     // console.log(moment(shift.start).day())
@@ -127,10 +181,10 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
   // for each day add number of covered and open hours
   Object.keys(days).forEach(key => {
-    console.log(`Generating hours for ${key}`)
+    // console.log(`Generating hours for ${key}`)
     // sort shifts by start time
-    console.log('ALL SHIFTS')
-    console.log(days[key])
+    // console.log('ALL SHIFTS')
+    // console.log(days[key])
 
     const sortedShifts = days[key].sort((a, b) => {
       if (moment(a.start).isAfter(b.start)) {
@@ -140,8 +194,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       }
     })
 
-    console.log('SORTED SHIFTS:')
-    console.log(sortedShifts)
+    // console.log('SORTED SHIFTS:')
+    // console.log(sortedShifts)
 
     // merge shifts
     // take shifts and combine them into blocks of time
@@ -166,8 +220,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       }
     }, [])
 
-    console.log('MERGED SHIFTS')
-    console.log(mergedShifts)
+    // console.log('MERGED SHIFTS')
+    // console.log(mergedShifts)
 
     // initialize hours open variable
     let hoursOpen = 0
@@ -193,8 +247,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         utcScheduleEnd = utcScheduleEnd.add(1, 'days')
       }
 
-      console.log(utcScheduleStart.utc().format())
-      console.log(utcScheduleEnd.utc().format())
+      // console.log(utcScheduleStart.utc().format())
+      // console.log(utcScheduleEnd.utc().format())
 
       // increment hours open appropriately
       hoursOpen = moment
@@ -203,11 +257,11 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
       // run discard options first, then mutation options to make sure discards happen
       // `!` (not sign) necessary in comparisons where it appears
-      if (moment(!utcScheduleEnd).isAfter(start)) {
-        console.log('discarding shift')
+      if (!moment(utcScheduleEnd).isAfter(start)) {
+        // console.log('discarding shift')
         return [...acc]
       } else if (!moment(utcScheduleStart).isBefore(end)) {
-        console.log('discarding shift')
+        // console.log('discarding shift')
         return [...acc]
       } else if (
         moment(start).isBefore(utcScheduleStart) &&
@@ -215,7 +269,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       ) {
         // if we need to truncate both start and end
         return [
-          ...acc.slice(0, acc.length - 1),
+          ...acc,
           {
             start: moment(utcScheduleStart)
               .utc()
@@ -227,7 +281,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         ]
       } else if (moment(start).isBefore(utcScheduleStart)) {
         return [
-          ...acc.slice(0, acc.length - 1),
+          ...acc,
           {
             start: moment(utcScheduleStart)
               .utc()
@@ -237,7 +291,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         ]
       } else if (moment(end).isAfter(utcScheduleEnd)) {
         return [
-          ...acc.slice(0, acc.length - 1),
+          ...acc,
           {
             start,
             end: moment(utcScheduleEnd)
@@ -251,24 +305,24 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       }
     }, [])
 
-    console.log('TRUNCATED SHIFTS:')
-    console.log(truncatedShifts)
+    // console.log('TRUNCATED SHIFTS:')
+    // console.log(truncatedShifts)
 
     // calculate shift coverage in hours
     const hoursCovered = truncatedShifts.reduce((acc, { start, end }) => {
       return acc + moment.duration(moment(end).diff(start)).asHours()
     }, 0)
 
-    console.log('HOURS COVERED:')
-    console.log(hoursCovered)
+    // console.log('HOURS COVERED:')
+    // console.log(hoursCovered)
 
     // increment the weekly totals accordingly
     totalHoursCovered += hoursCovered
     totalHoursOpen += hoursOpen
   })
 
-  console.log(totalHoursCovered)
-  console.log(totalHoursOpen)
+  // console.log(totalHoursCovered)
+  // console.log(totalHoursOpen)
 
   // calculate percentage
   const percentCoverage = Math.floor((totalHoursCovered / totalHoursOpen) * 100)
