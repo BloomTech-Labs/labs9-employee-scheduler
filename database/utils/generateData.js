@@ -114,23 +114,24 @@ const generateAvailabilities = (userId, HOO) => {
 }
 
 const utcToLocal = ({ date, string }) => {
-  const offset = moment(date).utcOffset()
-  const converting = moment.utc(string, 'HH:mm')
+  const offset = Math.abs(moment().utcOffset())
+  const converting = moment(string, 'HH:mm')
   const hours = converting.hours()
   const minutes = converting.minutes()
+  const returnVal = date.clone()
   // set date's hours and minutes to match utc string
-  date.hours(hours)
-  date.minutes(minutes)
+  returnVal.hours(hours)
+  returnVal.minutes(minutes)
   // convert date to local time
-  date.local()
+  returnVal.local()
 
   // check if the current time in minutes is within the offset
   // that would cause UTC to be ahead of local time
   const totalMinutes = hours * 60 + minutes
   if (totalMinutes > offset) {
-    return date
+    return returnVal
   } else {
-    return date.add(1, 'day')
+    return returnVal.add(1, 'day')
   }
 }
 
@@ -175,20 +176,20 @@ const generateEvents = (userId = uuid(), availabilities, timeOffRequests) => {
   processedAvails.forEach(avail => {
     // 30% they aren't scheduled on a given day
     if (!avail.off && Math.random() > 0.3) {
-      const date = moment()
+      const _date = moment()
         .startOf('week')
         .add(avail.day, 'day')
+      const date = moment.utc([_date.year(), _date.month(), _date.date()])
       const availStart = utcToLocal({ date, string: avail.start_time })
       const availEnd = utcToLocal({ date, string: avail.end_time })
-      const availRange = moment.duration(availEnd.diff(availStart))
+      const availRange = availEnd.diff(availStart, 'minutes')
 
       // event start is calculated as being in the first 60% of availability, rounding to 30 min
       const startMinutesForward =
-        Math.floor((Math.random() * availRange.minutes() * 0.6) / 2) * 2
+        Math.floor((Math.random() * availRange * 0.6) / 30) * 30
       const eventStart = availStart.add(startMinutesForward, 'minutes')
-      const endRange = moment.duration(availEnd, eventStart)
-      const endMinutesForward =
-        Math.ceil((Math.random() * endRange.minutes()) / 2) * 2
+      const endRange = availEnd.diff(eventStart, 'minutes')
+      const endMinutesForward = Math.ceil((Math.random() * endRange) / 30) * 30
       const eventEnd = eventStart.clone().add(endMinutesForward, 'minutes')
 
       // convert event times to utc
@@ -223,9 +224,6 @@ const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
       day = candidate
     }
   }
-
-  const dateOff = moment().add(day, 'd')
-  console.log(dateOff.format())
 
   return {
     id: uuid(),
