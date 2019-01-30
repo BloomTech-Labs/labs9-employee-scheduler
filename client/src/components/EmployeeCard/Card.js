@@ -64,7 +64,7 @@ class Card extends Component {
           <P main>{`${first_name} ${last_name}`}</P>
           {/* Employee Email */}
           <P>
-            {email}
+            <a href={`mailto:${email}`}>{email}</a>
             {Boolean(emailpref) ? <span> (pref)</span> : null}
           </P>
           {/* Employee Phone */}
