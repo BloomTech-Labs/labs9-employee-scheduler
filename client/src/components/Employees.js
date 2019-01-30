@@ -66,6 +66,16 @@ class Employees extends Component {
         <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
+
+          <Input
+            id="search"
+            search
+            type="text"
+            name="searchTerm"
+            placeholder="Search employees..."
+            onChange={this.updateSearch}
+            value={this.state.searchTerm}
+          />
           <Button onClick={this.toggleShow}>Add Employee</Button>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
             <AddEmployee />
@@ -87,15 +97,6 @@ class Employees extends Component {
                 ) : null
               }}
             </Modal>
-            <Input
-              id="search"
-              search
-              type="text"
-              name="searchTerm"
-              placeholder="Search employees..."
-              onChange={this.updateSearch}
-              value={this.state.searchTerm}
-            />
             {employees &&
               filteredEmployees.map((employee, i) => (
                 <FlexSpacer key={i}>

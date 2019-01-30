@@ -35,7 +35,7 @@ class LeftSideBar extends Component {
     const { role } = this.props.auth.user
     return (
       <Container fixed={this.props.fixed ? true : false}>
-        <Hamburger classname="hamburger" onClick={() => toggleShow()}>
+        <Hamburger classname="hamburger" id="menu" onClick={() => toggleShow()}>
           &#9776;
         </Hamburger>
         <Fade left when={this.state.show} duration={350}>
