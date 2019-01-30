@@ -104,25 +104,22 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
     {}
   )
 
+  // console.log(hours)
+  // console.log(days)
+
   // populate days object with all corresponding shifts
   shifts.forEach(shift => {
-    const shiftDay = moment(shift.start)
-      .subtract(5, 'hours')
-      .day()
-    console.log('DAY INFO')
-    console.log(
-      moment(shift.start)
-        .subtract(5, 'hours')
-        .toISOString()
-    )
-    console.log(`day of the week: ${shiftDay}`)
+    const shiftDay = moment(shift.start).day()
+    // console.log('DAY INFO')
+    // console.log(moment(shift.start).day())
+    // console.log(`day of the week: ${shiftDay}`)
     if (days[shiftDay]) {
       days[shiftDay].push(shift)
     }
   })
 
-  console.log('DAYS')
-  console.log(days)
+  // console.log('DAYS')
+  // console.log(days)
 
   // initialize covered and open hours variables
   let totalHoursCovered = 0
@@ -136,8 +133,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       moment(a.start).isAfter(b.start)
     )
 
-    console.log('SORTED SHIFTS:')
-    console.log(sortedShifts)
+    // console.log('SORTED SHIFTS:')
+    // console.log(sortedShifts)
 
     // merge shifts
     // take shifts and combine them into blocks of time
@@ -177,10 +174,93 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       const shiftStartFloat = convertMomentToFloat(start)
       const shiftEndFloat = convertMomentToFloat(end)
 
+      // const utcDayStartHasRolledOver =
+      //   moment(start).day() !==
+      //   moment(start)
+      //     .utc()
+      //     .day()
+
+      // const utcDayEndHasRolledOver =
+      //   moment(end).day() !==
+      //   moment(end)
+      //     .utc()
+      //     .day()
+
+      // console.log(moment(start).day())
+      // console.log(
+      //   moment(start)
+      //     .utc()
+      //     .day()
+      // )
+      // console.log(moment(end).day())
+      // console.log(
+      //   moment(end)
+      //     .utc()
+      //     .day()
+      // )
+
+      // const utcToLocal = ({ date, string }) => {
+      //   const offset = moment(date).utcOffset()
+      //   const dateNaive = moment.utc(string, 'HH:mm')
+      //   const hours = dateNaive.hours()
+      //   const minutes = dateNaive.minutes()
+      //   const totalMinutes = hours * 60 + minutes
+      //   // check if the current time in minutes is within the offset
+      //   // that would cause UTC to be ahead of local time
+      //   if (totalMinutes > offset) {
+      //     return dateNaive.local().format()
+      //   } else {
+      //     return dateNaive.add(1, 'day').local()
+      //   }
+      // }
+
+      // const calcScheduleStartFromTime = time => {
+      //   const offset = moment().utcOffset()
+      //   const dateNaive = moment.utc(string, 'HH:mm')
+      //   const hours = dateNaive.hours()
+      //   const minutes = dateNaive.minutes()
+      //   const totalMinutes = hours * 60 + minutes
+      //   // check if the current time in minutes is within the offset
+      //   // that would cause UTC to be ahead of local time
+      //   if (totalMinutes > offset) {
+      //     return dateNaive.local().format()
+      //   } else {
+      //     return dateNaive.add(1, 'day').local()
+      //   }
+      // }
+
+      const startDate = moment(start)
+        .utc()
+        .format('YYYY-MM-DD')
+
+      let utcScheduleStart = moment(`${startDate}Z ${hours[key].open_time}:00`)
+      let utcScheduleEnd = moment(`${startDate}Z ${hours[key].close_time}:00`)
+
+      if (moment(utcScheduleEnd).isBefore(utcScheduleStart)) {
+        utcScheduleEnd = utcScheduleEnd.add(1, 'days')
+      }
+
+      console.log(utcScheduleStart.utc().format())
+      console.log(utcScheduleEnd.utc().format())
+
+      // console.log(utcDayStartHasRolledOver)
+      // console.log(utcDayEndHasRolledOver)
+
+      // for seeing times
+
+      const shiftStart = moment(start)
+        .utc()
+        .format('HH:mm')
+      const shiftEnd = moment(end)
+        .utc()
+        .format('HH:mm')
+
       console.log(`schedule start time: ${hours[key].open_time}`)
       console.log(`schedule end time: ${hours[key].close_time}`)
-      console.log(`shift start time: ${shiftStartFloat}`)
-      console.log(`shift end time: ${shiftEndFloat}`)
+      console.log(`shift start time: ${shiftStart}`)
+      console.log(`shift end time: ${shiftEnd}`)
+      // console.log(`shift start time: ${shiftStartFloat}`)
+      // console.log(`shift end time: ${shiftEndFloat}`)
 
       // run discard options first, then mutation options to make sure discards happen
       if (hours[key].close_time < shiftStartFloat) {
@@ -229,8 +309,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       return acc + moment.duration(moment(end).diff(start)).asHours()
     }, 0)
 
-    console.log('HOURS COVERED:')
-    console.log(hoursCovered)
+    // console.log('HOURS COVERED:')
+    // console.log(hoursCovered)
 
     // calculate hours open
     const hoursOpen = hours[key].close_time - hours[key].open_time
