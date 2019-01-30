@@ -9,11 +9,11 @@ const getDashboard = async userId => {
   const availabilities = await db('users as u')
     .where({ 'u.id': userId })
     .join('availabilities as a', { 'u.id': 'a.user_id' })
-    .select('a.id', 'a.day', 'a.start_time', 'a.end_time')
-    .reduce((acc, { id, day, start_time, end_time }) => {
+    .select('a.id', 'a.day', 'a.off', 'a.start_time', 'a.end_time')
+    .reduce((acc, { id, day, off, start_time, end_time }) => {
       // do a little clever formatting with the date formatting
       // depending on calendar api this might change later
-      return [...acc, { id, day, start_time, end_time }]
+      return [...acc, { id, day, off, start_time, end_time }]
     }, [])
 
   const shifts = await db('users as u')
