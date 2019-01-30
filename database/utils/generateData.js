@@ -97,8 +97,10 @@ const generateAvailabilities = (userId, HOO) => {
 
   return HOO.map(hours => {
     const off = hours.closed ? true : Math.random() > 0.85
-    const startOffset = off ? 0 : generateRandomBetween(0, 3)
-    const endOffset = off ? 0 : generateRandomBetween(0, 4)
+    const startOffset =
+      off || Math.random() < 0.5 ? 0 : generateRandomBetween(0, 2)
+    const endOffset =
+      off || Math.random() < 0.5 ? 0 : generateRandomBetween(0, 2)
     const start_time = addTime(hours.open_time, { hours: startOffset })
     const end_time = addTime(hours.close_time, { hours: -1 * endOffset })
 
@@ -136,7 +138,7 @@ const utcToLocal = ({ date, string }) => {
 }
 
 const isDayAhead = time => {
-  const offset = moment().utcOffset()
+  const offset = Math.abs(moment().utcOffset())
   const hours = time.hours()
   const minutes = time.minutes()
 
@@ -174,8 +176,8 @@ const generateEvents = (userId = uuid(), availabilities, timeOffRequests) => {
 
   const processedAvails = availabilities.map(availToLocal)
   processedAvails.forEach(avail => {
-    // 30% they aren't scheduled on a given day
-    if (!avail.off && Math.random() > 0.3) {
+    // 50% they aren't scheduled on a given day
+    if (!avail.off && Math.random() > 0.4) {
       const _date = moment()
         .startOf('week')
         .add(avail.day, 'day')
@@ -186,10 +188,15 @@ const generateEvents = (userId = uuid(), availabilities, timeOffRequests) => {
 
       // event start is calculated as being in the first 60% of availability, rounding to 30 min
       const startMinutesForward =
-        Math.floor((Math.random() * availRange * 0.6) / 30) * 30
+        Math.random() < 0.3
+          ? 0
+          : Math.floor((Math.random() * availRange * 0.6) / 30) * 30
       const eventStart = availStart.add(startMinutesForward, 'minutes')
       const endRange = availEnd.diff(eventStart, 'minutes')
-      const endMinutesForward = Math.ceil((Math.random() * endRange) / 30) * 30
+      const endMinutesForward =
+        Math.random() < 0.3
+          ? endRange
+          : Math.ceil(((endRange * (0.4 + Math.random() * 0.6)) / 30) * 30)
       const eventEnd = eventStart.clone().add(endMinutesForward, 'minutes')
 
       // convert event times to utc
