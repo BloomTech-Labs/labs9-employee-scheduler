@@ -22,6 +22,9 @@ let timeOffRequests = []
 
 // loop through both id arrays to get eveything mixed properly
 org_ids.forEach((org_id, id_index) => {
+  const HOO = generateHoursOfOperation(org_id)
+  HOOs = [...HOOs, ...HOO]
+
   for (let i = 0; i < ratio; i++) {
     // set one owner, two supervisors, and the rest employees
     const userRole = i === 0 ? 'owner' : i < 3 ? 'supervisor' : 'employee'
@@ -32,8 +35,6 @@ org_ids.forEach((org_id, id_index) => {
     }
     const user = generateUser(userStats)
     users.push(user)
-    const HOO = generateHoursOfOperation(org_id)
-    HOOs = [...HOOs, ...HOO]
 
     const userAvailabilities = generateAvailabilities(user.id, HOO)
     const userTimeOffRequests = generateDayOffRequests(user.id)
@@ -53,6 +54,7 @@ exports.seed = knex =>
   knex('organizations')
     .delete()
     .then(() => knex('organizations').insert(organizations))
+    .then(() => knex('hours_of_operation').insert(HOOs))
     .then(() => knex('users').insert(users))
     .then(() => knex('time_off_requests').insert(timeOffRequests))
     .then(() => knex('availabilities').insert(availabilities))
