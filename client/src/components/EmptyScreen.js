@@ -4,14 +4,16 @@ import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
 
 // This component will render out settings for the signed in user
-export default function({ children, auth }) {
+const EmptyScreen = (props, auth) => {
   return (
-    <OuterContainer height="true">
+    <OuterContainer height="true" background={props.background ? true : false}>
       <BreadCrumb location="" auth={auth} />
-      <Container>{children}</Container>
+      <Container>{props.children}</Container>
     </OuterContainer>
   )
 }
+
+export default EmptyScreen
 
 const Container = styled('div')`
   padding-top: 20px;

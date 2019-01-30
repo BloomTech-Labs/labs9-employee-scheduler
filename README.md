@@ -2,6 +2,8 @@
 LOGO
 BADGES
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
+
 Cadence is an employee shift scheduling SaaS for small-to-medium businesses. In this document, you will find everything you need to know about this open-source software project. <br><br>
 
 Front-end Deployment: https://cadence.netlify.com/ <br>
