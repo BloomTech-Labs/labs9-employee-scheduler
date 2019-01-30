@@ -69,8 +69,15 @@ const getEmployees = async orgId => {
       'tor.status'
     )
     .reduce((acc, current) => {
-      const { user_id, time_off_request_id, date, reason, status } = current
-      const newItem = { id: time_off_request_id, date, reason, status }
+      const {
+        user_id,
+        time_off_request_id,
+        start,
+        end,
+        reason,
+        status
+      } = current
+      const newItem = { id: time_off_request_id, start, end, reason, status }
 
       if (acc[user_id]) {
         acc[user_id].push(newItem)
