@@ -359,8 +359,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
   // check for conflicts with approved day off requests
   let conflicts = false
 
-  employee.time_off_requests.forEach(({ date, status }) => {
-    if (status === 'approved' && moment(eventTimes.start).isSame(date, 'day')) {
+  employee.time_off_requests.forEach(({ start, end, status }) => {
+    if (
+      status === 'approved' &&
+      (moment(start).isBetween(eventTimes.start, eventTimes.end) ||
+        moment(end).isBetween(eventTimes.start, eventTimes.end))
+    ) {
       conflicts = true
     }
   })
