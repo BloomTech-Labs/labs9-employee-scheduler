@@ -140,11 +140,12 @@ const populateStaticOrg = (size = 10) => {
 
   users.forEach(user => {
     const userAvailabilities = generateAvailabilities(user.id, HOO)
-    const userTimeOffRequests = generateDayOffRequests(
-      availabilities,
-      userAvailabilities
+    const userTimeOffRequests = generateDayOffRequests(user.id)
+    const userEvents = generateEvents(
+      user.id,
+      userAvailabilities,
+      userTimeOffRequests
     )
-    const userEvents = generateEvents(user.id, userAvailabilities)
 
     timeOffRequests = [...timeOffRequests, ...userTimeOffRequests]
     events = [...events, ...userEvents]

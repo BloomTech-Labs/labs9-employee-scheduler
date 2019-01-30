@@ -7,7 +7,7 @@ const addTime = (time, { hours, minutes }) => {
   if (typeof hours === 'number') {
     timeObj.add(hours, 'hour')
   }
-  if (typeof miutes === 'number') {
+  if (typeof minutes === 'number') {
     timeObj.add(minutes, 'minute')
   }
   return timeObj.format('HH:mm')
@@ -27,17 +27,16 @@ const generateHoursOfOperation = (org_id = uuid()) => {
   let hours = []
   let day = [0, 1, 2, 3, 4, 5, 6]
   for (let i = 0; i < 7; i++) {
+    const open_time = moment({ hours: 9 }).utc()
+    const close_time = moment({ hours: 17 }).utc()
+
     let open = Math.random() > 0.3
     let thisDay = {
       id: uuid(),
       organization_id: org_id,
-      day: day[i],
-      open_time: moment({ hours: 9 })
-        .utc()
-        .format('HH:mm'),
-      close_time: moment({ hours: 17 })
-        .utc()
-        .format('HH:mm'),
+      day: isDayAhead(open_time) ? day[i] + 1 : day[0],
+      open_time: open_time.format('HH:mm'),
+      close_time: close_time.format('HH:mm'),
       closed: !open
     }
     hours.push(thisDay)
@@ -93,21 +92,15 @@ const generateUsersForOrg = ({
 const generateRandomBetween = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
-// Constraints:
-// only create availability for supervisors and employees
-// randomly pick 5 available days for each of those users
-// for those five days, pick two of them to have reduced hours
 const generateAvailabilities = (userId, HOO) => {
   // generate random numbers between two numbers
 
   return HOO.map(hours => {
-    const off = hours.closed ? true : Math.random() < 0.25
+    const off = hours.closed ? true : Math.random() > 0.85
     const startOffset = off ? 0 : generateRandomBetween(0, 3)
     const endOffset = off ? 0 : generateRandomBetween(0, 4)
-    console.log(endOffset)
     const start_time = addTime(hours.open_time, { hours: startOffset })
     const end_time = addTime(hours.close_time, { hours: -1 * endOffset })
-    console.log(end_time)
 
     return {
       day: hours.day,
@@ -120,72 +113,99 @@ const generateAvailabilities = (userId, HOO) => {
   })
 }
 
+const utcToLocal = ({ date, string }) => {
+  const offset = moment(date).utcOffset()
+  const converting = moment.utc(string, 'HH:mm')
+  const hours = converting.hours()
+  const minutes = converting.minutes()
+  // set date's hours and minutes to match utc string
+  date.hours(hours)
+  date.minutes(minutes)
+  // convert date to local time
+  date.local()
+
+  // check if the current time in minutes is within the offset
+  // that would cause UTC to be ahead of local time
+  const totalMinutes = hours * 60 + minutes
+  if (totalMinutes > offset) {
+    return date
+  } else {
+    return date.add(1, 'day')
+  }
+}
+
+const isDayAhead = time => {
+  const offset = moment().utcOffset()
+  const hours = time.hours()
+  const minutes = time.minutes()
+
+  const totalMinutes = hours * 60 + minutes
+
+  return totalMinutes <= offset
+}
+
+// converts the avail day to its local value by checking start_time for offset rollover
+const availToLocal = avail => {
+  const dateIsAhead = isDayAhead(moment(avail.start_time, 'HH:mm'))
+  let day = dateIsAhead ? avail.day - 1 : avail.day
+  // check if day is negative, meaning it has gone around to the end of the week
+  day = day < 0 ? day + 7 : day
+  return { ...avail, day }
+}
+
 const generateEvents = (userId = uuid(), availabilities, timeOffRequests) => {
-  // generate random numbers between two numbers
-
-  // generate sorted array of 5 numbers between 0 and 6 with no duplicates
-  const generateWeekdays = () => {
-    const days = []
-    while (days.length < 5) {
-      const day = generateRandomBetween(0, 6)
-      if (!days.includes(day)) {
-        days.push(day)
-      }
-    }
-    return days.sort()
-  }
-
-  // randomly give some days full events and other days partial
-  const generateTimes = () => {
-    const times = []
-    for (let i = 0; i < 5; i++) {
-      if (Math.random() < 0.4) {
-        times.push([
-          // 9 to 5 shift
-          9,
-          17
-          //generateRandomBetween(0, 12),
-          //generateRandomBetween(12, 23)
-        ])
-      } else if (Math.random() > 0.8) {
-        // created a morning shift
-        times.push([0, 9])
-      } else {
-        times.push([17, 23]) // night shift
-      }
-    }
-    return times
-  }
-
-  const days = generateWeekdays()
-  const times = generateTimes()
   const events = []
 
-  // Determines today's date, and uses it to get useful info about it, which
-  // will be useful in generating timestamps for start and end
-  const today = new Date()
-  const year = today.getFullYear()
-  const month = today.getMonth()
-  const date = today.getDate()
-  const dayOfWeek = today.getDay()
-  const weekStart = date - dayOfWeek
-
-  // generates availabilities for 5 days
-  for (let i = 0; i < 5; i++) {
-    // calculates startDate and endDate using availabile data
-    const day = weekStart + days[i]
-    const start = times[i][0]
-    const end = times[i][1]
-    const startDate = new Date(year, month, day, start)
-    const endDate = new Date(year, month, day, end)
-
-    events.push({
-      id: uuid(),
-      user_id: userId,
-      start: startDate,
-      end: endDate
+  // helper function to determine if an event falls within timeOffRequests
+  const validateEventAgainstPTO = ({ start: eventStart, end: eventEnd }) => {
+    timeOffRequests.forEach(({ start_time, end_time }) => {
+      const ptoStart = moment.utc(start_time)
+      const ptoEnd = moment.utc(end_time)
+      if (
+        eventStart.isBetween(ptoStart, ptoEnd) ||
+        eventEnd.isBetween(ptoStart, ptoEnd)
+      ) {
+        return false
+      }
     })
+    return true
   }
+
+  const processedAvails = availabilities.map(availToLocal)
+  processedAvails.forEach(avail => {
+    // 30% they aren't scheduled on a given day
+    if (!avail.off && Math.random() > 0.3) {
+      const date = moment()
+        .startOf('week')
+        .add(avail.day, 'day')
+      const availStart = utcToLocal({ date, string: avail.start_time })
+      const availEnd = utcToLocal({ date, string: avail.end_time })
+      const availRange = moment.duration(availEnd.diff(availStart))
+
+      // event start is calculated as being in the first 60% of availability, rounding to 30 min
+      const startMinutesForward =
+        Math.floor((Math.random() * availRange.minutes() * 0.6) / 2) * 2
+      const eventStart = availStart.add(startMinutesForward, 'minutes')
+      const endRange = moment.duration(availEnd, eventStart)
+      const endMinutesForward =
+        Math.ceil((Math.random() * endRange.minutes()) / 2) * 2
+      const eventEnd = eventStart.clone().add(endMinutesForward, 'minutes')
+
+      // convert event times to utc
+      eventStart.utc()
+      eventEnd.utc()
+
+      if (validateEventAgainstPTO({ start: eventStart, end: eventEnd })) {
+        events.push({
+          id: uuid(),
+          user_id: userId,
+          start: eventStart.format(),
+          end: eventEnd.format()
+        })
+      }
+    }
+  })
+
   return events
 }
 
@@ -205,18 +225,21 @@ const generateDayOffRequest = ({ userId = uuid(), existing = [] }) => {
   }
 
   const dateOff = moment().add(day, 'd')
+  console.log(dateOff.format())
 
   return {
     id: uuid(),
     user_id: userId,
-    start: dateOff
+    start: moment()
+      .add(day, 'd')
       .startOf('day')
       .utc()
-      .format('HH:mm'),
-    end: dateOff
+      .format(),
+    end: moment()
+      .add(day, 'd')
       .endOf('day')
       .utc()
-      .format('HH:mm'),
+      .format(),
     reason: faker.lorem.sentence(),
     status
   }
