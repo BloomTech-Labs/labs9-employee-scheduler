@@ -395,9 +395,13 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     let start = moment(eventTimes.start).set(
       convertTimeToObject(availabilityForDay.start_time)
     )
-    let end = moment(eventTimes.end).set(
+    let end = moment(eventTimes.start).set(
       convertTimeToObject(availabilityForDay.end_time)
     )
+
+    if (moment(end).isBefore(start)) {
+      end = end.add(1, 'days')
+    }
 
     if (
       moment(start).isAfter(eventTimes.start) ||
@@ -417,11 +421,44 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // step 3
   // check for event falling outside hours of operation
-  const day = moment(eventTimes.start).day()
+  const day = moment(eventTimes.start)
+    .utc()
+    .day()
+
+  if (hours[day].closed) {
+    return {
+      verdict: false,
+      message: `Sorry, you can't schedule this employee outside the hours of operation.`
+    }
+  }
+
+  const convertTimeToObject = time => {
+    const [hour, minute] = time.split(':')
+    return { hour, minute, second: '00' }
+  }
+
+  let scheduleStart = moment(eventTimes.start).set(
+    convertTimeToObject(hours[day].open_time)
+  )
+  let scheduleEnd = moment(eventTimes.start).set(
+    convertTimeToObject(hours[day].close_time)
+  )
+
+  if (moment(scheduleEnd).isBefore(scheduleStart)) {
+    scheduleEnd = scheduleEnd.add(1, 'days')
+  }
 
   if (
-    convertMomentToFloat(eventTimes.start) < hours[day].open_time ||
-    convertMomentToFloat(eventTimes.end) > hours[day].close_time
+    !moment(eventTimes.start).isBetween(
+      scheduleStart,
+      scheduleEnd,
+      [] /*inclusive*/
+    ) ||
+    !moment(eventTimes.end).isBetween(
+      scheduleStart,
+      scheduleEnd,
+      [] /*inclusive*/
+    )
   ) {
     return {
       verdict: false,
