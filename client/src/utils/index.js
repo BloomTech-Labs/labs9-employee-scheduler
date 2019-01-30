@@ -378,29 +378,40 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // step 2
   // check for the event falling inside an availability window
-  const availabilityForDay =
-    employee.availabilities.filter(
-      ({ day }) => day === moment(eventTimes.start).day()
-    )[0] || null
+  const availabilityForDay = employee.availabilities.find(
+    ({ day }) =>
+      day ===
+      moment(eventTimes.start)
+        .utc()
+        .day()
+  )
 
-  if (!availabilityForDay) {
+  if (!availabilityForDay.off) {
+    const convertTimeToObject = time => {
+      const [hour, minute] = time.split(':')
+      return { hour, minute, second: '00' }
+    }
+
+    let start = moment(eventTimes.start).set(
+      convertTimeToObject(availabilityForDay.start_time)
+    )
+    let end = moment(eventTimes.end).set(
+      convertTimeToObject(availabilityForDay.end_time)
+    )
+
+    if (
+      moment(start).isAfter(eventTimes.start) ||
+      moment(end).isBefore(eventTimes.end)
+    ) {
+      return {
+        verdict: false,
+        message: `Sorry, you can't schedule this employee outside their availability window.`
+      }
+    }
+  } else {
     return {
       verdict: false,
       message: `Sorry, the employee you're trying to schedule isn't available on this day.`
-    }
-  }
-
-  if (
-    // day cannot have an off property of true
-    availabilityForDay.off ||
-    // start time must be earlier than or the same as eventTimes.start
-    !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
-    // end_time must be later than or the same as eventTimes.end
-    !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
-  ) {
-    return {
-      verdict: false,
-      message: `Sorry, you can't schedule this employee outside their availability window.`
     }
   }
 
