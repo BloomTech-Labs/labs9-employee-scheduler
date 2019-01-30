@@ -65,6 +65,11 @@ const Container = styled('div')`
   margin-bottom: 7.5px;
   padding-bottom: 7.5px;
   border-bottom: 2px solid ${system.color.neutral};
+
+  :last-of-type {
+    border-bottom: none;
+  }
+
   .days {
     border: 0;
     padding: ${system.spacing.standardPadding};

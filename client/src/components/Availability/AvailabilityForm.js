@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import styled from '@emotion/styled'
-import system from '../../design/theme'
 import { connect } from 'react-redux'
 import { editAvailability } from '../../actions'
 import Button from '../common/Button'
 import { formatHours } from '../../utils'
 import moment from 'moment'
 import HOOSlider from '../HoursOfOperation/HOOSlider'
+import { Modal } from '../HoursOfOperation'
 
 const dayNameMap = [
   'Sunday',
@@ -125,38 +124,40 @@ class AvailabilityForm extends Component {
   render() {
     const { Close } = this.props
     return (
-      <OuterContainer>
-        <Close />
-        <h5>{`Edit Availability for ${this.props.first_name}`}</h5>
-        {/* maps over all availabilities and displays them with the ability to select changes */}
-        {this.state.days.map((day, i) => {
-          return (
-            <HOOSlider
-              // props to days and close/open button
-              id={i}
-              key={day.id}
-              handleHours={this.handleHours}
-              day={day}
-              name={day.name}
-              closedAllDay={() => this.toggle(day)}
-              toggled={day.closed}
-              status={day.closed === false ? 'Open' : 'Closed'}
-              // slider props //
-              disabled={day.closed} //disabled if day is closed
-              draggableTrack={true} //slide by touching the bar
-              start={day.start} //start of each day
-              end={day.end} //end of each day
-              // functions //
-              onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
-              onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
-              onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
-            >
-              {this.props.children}
-            </HOOSlider>
-          )
-        })}
-        <Button onClick={this.submitHandler}>submit</Button>
-      </OuterContainer>
+      <Modal>
+        <div className="days-container">
+          <Close />
+          <h3>{`Edit ${this.props.first_name}'s Availability`}</h3>
+          {/* maps over all availabilities and displays them with the ability to select changes */}
+          {this.state.days.map((day, i) => {
+            return (
+              <HOOSlider
+                // props to days and close/open button
+                id={i}
+                key={day.id}
+                handleHours={this.handleHours}
+                day={day}
+                name={day.name}
+                closedAllDay={() => this.toggle(day)}
+                toggled={day.closed}
+                status={day.closed === false ? 'Available' : 'Unavailable'}
+                // slider props //
+                disabled={day.closed} //disabled if day is closed
+                draggableTrack={true} //slide by touching the bar
+                start={day.start} //start of each day
+                end={day.end} //end of each day
+                // functions //
+                onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+                onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
+                onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
+              >
+                {this.props.children}
+              </HOOSlider>
+            )
+          })}
+          <Button onClick={this.submitHandler}>Submit Availabilities</Button>
+        </div>
+      </Modal>
     )
   }
 }
@@ -171,23 +172,3 @@ export default connect(
   mapStateToProps,
   { editAvailability }
 )(AvailabilityForm)
-
-const Container = styled('div')`
-  border: 1px solid gray;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: ${system.spacing.standardPadding};
-`
-const DayGrid = styled('div')`
-  /* border: 1px solid gray; */
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: ${system.spacing.standardPadding};
-`
-
-const OuterContainer = styled('div')`
-  background-color: ${system.color.neutral};
-  padding: ${system.spacing.bigPadding};
-`

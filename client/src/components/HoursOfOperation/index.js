@@ -157,7 +157,9 @@ class HoursOfOperation extends Component {
               </HOOSlider>
             )
           })}
-          <Button onClick={this.submitHandler}>Submit</Button>
+          <Button onClick={this.submitHandler}>
+            Submit Hours of Operation
+          </Button>
         </div>
       </Modal>
     )
@@ -184,7 +186,7 @@ HoursOfOperation.propTypes = {
   saveOpenTime: propTypes.func
 }
 
-const Modal = styled.div`
+export const Modal = styled.div`
   /* position: absolute;
   right: 10px;
   bottom: 40px; */
