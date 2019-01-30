@@ -43,22 +43,59 @@ class LeftSideBar extends Component {
             {/* render the uneditable calendar page for employees */}
             {role === 'employee' ? (
               <>
-                <NavItem to="/dashboard">Dashboard</NavItem>
-                <NavItem to="/calendar">Calendar</NavItem>
+                <NavItem
+                  to="/calendar"
+                  activeStyle={{ color: system.color.primary }}
+                >
+                  Shift Calendar
+                </NavItem>
+                <NavItem
+                  to="/dashboard"
+                  activeStyle={{ color: system.color.primary }}
+                >
+                  Your Dashboard
+                </NavItem>
               </>
             ) : null}
             {/* render employees and shift-calender for supervisors and above */}
             {role === 'supervisor' || role === 'owner' ? (
               <>
-                <NavItem to="/employees">Employee List</NavItem>
-                <NavItem to="/shift-calendar">Create Schedule</NavItem>
-                <NavItem to="/dashboard">Dashboard</NavItem>
+                <NavItem
+                  to="/shift-calendar"
+                  activeStyle={{ color: system.color.primary }}
+                >
+                  Shift Scheduler
+                </NavItem>
+                <NavItem
+                  to="/employees"
+                  activeStyle={{ color: system.color.primary }}
+                >
+                  Employee List
+                </NavItem>
+                <NavItem
+                  to="/dashboard"
+                  activeStyle={{ color: system.color.primary }}
+                >
+                  Your Dashboard
+                </NavItem>
               </>
             ) : null}
             {/* Billing page viable only to owner */}
-            {role === 'owner' ? <NavItem to="/billing">Billing</NavItem> : null}
+            {role === 'owner' ? (
+              <NavItem
+                to="/billing"
+                activeStyle={{ color: system.color.primary }}
+              >
+                Billing
+              </NavItem>
+            ) : null}
             {/* render settings page for all */}
-            <NavItem to="/settings">Settings</NavItem>
+            <NavItem
+              to="/settings"
+              activeStyle={{ color: system.color.primary }}
+            >
+              Profile Settings
+            </NavItem>
             <button href="#" id="logout" onClick={this.props.logout}>
               Log Out
             </button>
@@ -120,7 +157,7 @@ const Nav = styled.nav`
     font-size: ${system.fontSizing.m};
     transition: ${system.transition};
     :hover {
-      color: ${system.color.neutral};
+      color: ${system.color.white} !important;
       background: ${system.color.primary};
     }
   }

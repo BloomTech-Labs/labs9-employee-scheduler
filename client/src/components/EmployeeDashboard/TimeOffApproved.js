@@ -89,6 +89,7 @@ const PTO = styled.div`
     }
 
     .status {
+      text-align: left;
       color: ${props =>
         props.status === 'approved'
           ? system.color.success
