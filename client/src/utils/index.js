@@ -171,8 +171,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       // otherwise do nothing
 
       // convert times to floats
-      const shiftStartFloat = convertMomentToFloat(start)
-      const shiftEndFloat = convertMomentToFloat(end)
+      // const shiftStartFloat = convertMomentToFloat(start)
+      // const shiftEndFloat = convertMomentToFloat(end)
 
       // const utcDayStartHasRolledOver =
       //   moment(start).day() !==
@@ -229,6 +229,28 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       //   }
       // }
 
+      // console.log(utcScheduleStart.utc().format())
+      // console.log(utcScheduleEnd.utc().format())
+
+      // console.log(utcDayStartHasRolledOver)
+      // console.log(utcDayEndHasRolledOver)
+
+      // for seeing times
+
+      // const shiftStart = moment(start)
+      //   .utc()
+      //   .format('HH:mm')
+      // const shiftEnd = moment(end)
+      //   .utc()
+      //   .format('HH:mm')
+
+      // console.log(`schedule start time: ${hours[key].open_time}`)
+      // console.log(`schedule end time: ${hours[key].close_time}`)
+      // console.log(`shift start time: ${shiftStart}`)
+      // console.log(`shift end time: ${shiftEnd}`)
+      // console.log(`shift start time: ${shiftStartFloat}`)
+      // console.log(`shift end time: ${shiftEndFloat}`)
+
       const startDate = moment(start)
         .utc()
         .format('YYYY-MM-DD')
@@ -243,58 +265,46 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       console.log(utcScheduleStart.utc().format())
       console.log(utcScheduleEnd.utc().format())
 
-      // console.log(utcDayStartHasRolledOver)
-      // console.log(utcDayEndHasRolledOver)
-
-      // for seeing times
-
-      const shiftStart = moment(start)
-        .utc()
-        .format('HH:mm')
-      const shiftEnd = moment(end)
-        .utc()
-        .format('HH:mm')
-
-      console.log(`schedule start time: ${hours[key].open_time}`)
-      console.log(`schedule end time: ${hours[key].close_time}`)
-      console.log(`shift start time: ${shiftStart}`)
-      console.log(`shift end time: ${shiftEnd}`)
-      // console.log(`shift start time: ${shiftStartFloat}`)
-      // console.log(`shift end time: ${shiftEndFloat}`)
-
       // run discard options first, then mutation options to make sure discards happen
-      if (hours[key].close_time < shiftStartFloat) {
-        // discard shift
-        console.log('discarding shift')
+      if (moment(!utcScheduleEnd).isAfter(start)) {
         return [...acc]
-      } else if (hours[key].open_time > shiftEndFloat) {
-        // discard shift
-        console.log('discarding shift')
+      } else if (!moment(utcScheduleStart).isBefore(end)) {
         return [...acc]
-      } else if (shiftStartFloat < hours[key].open_time) {
-        // truncate start
-        console.log('truncating start')
-        const diff = hours[key].open_time - shiftStartFloat
-        const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
-
-        const newStart = moment(start)
-          .add(hoursDiff, 'hours')
-          .add(minutesDiff, 'minutes')
-          .toISOString()
-
-        return [...acc.slice(0, acc.length - 1), { start: newStart, end }]
-      } else if (shiftEndFloat > hours[key].close_time) {
-        // truncate end
-        console.log('truncating end')
-        const diff = shiftEndFloat - hours[key].close_time
-        const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
-
-        const newEnd = moment(end)
-          .subtract(hoursDiff, 'hours')
-          .subtract(minutesDiff, 'minutes')
-          .toISOString()
-
-        return [...acc.slice(0, acc.length - 1), { start, end: newEnd }]
+      } else if (
+        moment(start).isBefore(utcScheduleStart) &&
+        moment(end).isAfter(utcScheduleEnd)
+      ) {
+        return [
+          ...acc.slice(0, acc.length - 1),
+          {
+            start: moment(utcScheduleStart)
+              .utc()
+              .format(),
+            end: moment(utcScheduleEnd)
+              .utc()
+              .format()
+          }
+        ]
+      } else if (moment(start).isBefore(utcScheduleStart)) {
+        return [
+          ...acc.slice(0, acc.length - 1),
+          {
+            start: moment(utcScheduleStart)
+              .utc()
+              .format(),
+            end
+          }
+        ]
+      } else if (moment(end).isAfter(utcScheduleEnd)) {
+        return [
+          ...acc.slice(0, acc.length - 1),
+          {
+            start,
+            end: moment(utcScheduleEnd)
+              .utc()
+              .format()
+          }
+        ]
       } else {
         // otherwise do nothing
         return [...acc, { start, end }]
