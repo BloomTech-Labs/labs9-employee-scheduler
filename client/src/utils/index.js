@@ -94,15 +94,15 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // combine all shifts into a single array
   const shifts = employees.reduce((acc, { events }) => [...acc, ...events], [])
 
-  console.log(view)
-  console.log(date)
-  console.log(shifts)
+  // console.log(view)
+  // console.log(date)
+  // console.log(shifts)
 
   const rangeStart = moment(date).startOf(view)
   const rangeEnd = moment(date).endOf(view)
 
-  console.log(rangeStart)
-  console.log(rangeEnd)
+  // console.log(rangeStart)
+  // console.log(rangeEnd)
 
   // the logic for this fuction is duplicated later on and should be abstracted into separate func
   const rangeFilteredShifts = shifts.reduce((acc, { start, end }) => {
