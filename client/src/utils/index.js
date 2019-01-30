@@ -3,7 +3,11 @@ import moment from 'moment'
 export function getHoursOfOperationRange(hours) {
   let firstDay = hours.find(day => !day.closed)
   let numRange =
-    !hours.length || !firstDay
+    // temporary change to prevent this from breaking
+    // going to return min 0 max 24 no matter what
+    // the hours of operation format has changed, which requires a lot of logic changes
+    // i'll leaving this functionality to fix later
+    !hours.length || !firstDay || hours.length
       ? // make sure hours of operation have been received and there is
         // an open day, otherwise do full day range
         { min: 0, max: 24 }
@@ -94,31 +98,82 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // console.log(date)
   // console.log(shifts)
 
+  const rangeStart = moment(date).startOf(view)
+  const rangeEnd = moment(date).endOf(view)
+
+  // console.log(rangeStart)
+  // console.log(rangeEnd)
+
+  // the logic for this fuction is duplicated later on and should be abstracted into separate func
+  const rangeFilteredShifts = shifts.reduce((acc, { start, end }) => {
+    if (!moment(rangeEnd).isAfter(start)) {
+      return [...acc]
+    } else if (!moment(rangeStart).isBefore(end)) {
+      return [...acc]
+    } else if (
+      moment(start).isBefore(rangeStart) &&
+      moment(end).isAfter(rangeEnd)
+    ) {
+      // if we need to truncate both start and end
+      return [
+        ...acc,
+        {
+          start: moment(rangeStart)
+            .utc()
+            .format(),
+          end: moment(rangeEnd)
+            .utc()
+            .format()
+        }
+      ]
+    } else if (moment(start).isBefore(rangeStart)) {
+      return [
+        ...acc,
+        {
+          start: moment(rangeStart)
+            .utc()
+            .format(),
+          end
+        }
+      ]
+    } else if (moment(end).isAfter(rangeEnd)) {
+      return [
+        ...acc,
+        {
+          start,
+          end: moment(rangeEnd)
+            .utc()
+            .format()
+        }
+      ]
+    } else {
+      // otherwise do nothing
+      return [...acc, { start, end }]
+    }
+  }, [])
+
   // initialize an object keyed by all open days on the schedule
   const days = hours.reduce(
     (acc, { day, closed }) => (!closed ? { ...acc, [day]: [] } : { ...acc }),
     {}
   )
 
+  // console.log(hours)
+  // console.log(days)
+
   // populate days object with all corresponding shifts
-  shifts.forEach(shift => {
-    const shiftDay = moment(shift.start)
-      .subtract(5, 'hours')
-      .day()
-    console.log('DAY INFO')
-    console.log(
-      moment(shift.start)
-        .subtract(5, 'hours')
-        .toISOString()
-    )
-    console.log(`day of the week: ${shiftDay}`)
+  rangeFilteredShifts.forEach(shift => {
+    const shiftDay = moment(shift.start).day()
+    // console.log('DAY INFO')
+    // console.log(moment(shift.start).day())
+    // console.log(`day of the week: ${shiftDay}`)
     if (days[shiftDay]) {
       days[shiftDay].push(shift)
     }
   })
 
-  console.log('DAYS')
-  console.log(days)
+  // console.log('DAYS')
+  // console.log(days)
 
   // initialize covered and open hours variables
   let totalHoursCovered = 0
@@ -126,14 +181,21 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
   // for each day add number of covered and open hours
   Object.keys(days).forEach(key => {
-    console.log(`Generating hours for ${key}`)
+    // console.log(`Generating hours for ${key}`)
     // sort shifts by start time
-    const sortedShifts = days[key].sort((a, b) =>
-      moment(a.start).isAfter(b.start)
-    )
+    // console.log('ALL SHIFTS')
+    // console.log(days[key])
 
-    console.log('SORTED SHIFTS:')
-    console.log(sortedShifts)
+    const sortedShifts = days[key].sort((a, b) => {
+      if (moment(a.start).isAfter(b.start)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+
+    // console.log('SORTED SHIFTS:')
+    // console.log(sortedShifts)
 
     // merge shifts
     // take shifts and combine them into blocks of time
@@ -158,83 +220,109 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       }
     }, [])
 
-    console.log('MERGED SHIFTS')
-    console.log(mergedShifts)
+    // console.log('MERGED SHIFTS')
+    // console.log(mergedShifts)
+
+    // initialize hours open variable
+    let hoursOpen = 0
 
     // truncate merged shifts to only open hours
     const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
       // if schedule end is before shift start, discard shift
       // if schedule start is after shift end, discard shift
+      // if shift start is before schedule start and if shift end is after end,
+      //    truncate both shift start and shift end
       // if shift start is before schedule start, truncate shift start
       // if shift end is after end, trucate shift end
       // otherwise do nothing
 
-      // convert times to floats
-      const shiftStartFloat = convertMomentToFloat(start)
-      const shiftEndFloat = convertMomentToFloat(end)
+      const startDate = moment(start)
+        .utc()
+        .format('YYYY-MM-DD')
 
-      console.log(`schedule start time: ${hours[key].open_time}`)
-      console.log(`schedule end time: ${hours[key].close_time}`)
-      console.log(`shift start time: ${shiftStartFloat}`)
-      console.log(`shift end time: ${shiftEndFloat}`)
+      let utcScheduleStart = moment(`${startDate}Z ${hours[key].open_time}:00`)
+      let utcScheduleEnd = moment(`${startDate}Z ${hours[key].close_time}:00`)
+
+      if (moment(utcScheduleEnd).isBefore(utcScheduleStart)) {
+        utcScheduleEnd = utcScheduleEnd.add(1, 'days')
+      }
+
+      // console.log(utcScheduleStart.utc().format())
+      // console.log(utcScheduleEnd.utc().format())
+
+      // increment hours open appropriately
+      hoursOpen = moment
+        .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
+        .asHours()
 
       // run discard options first, then mutation options to make sure discards happen
-      if (hours[key].close_time < shiftStartFloat) {
-        // discard shift
-        console.log('discarding shift')
+      // `!` (not sign) necessary in comparisons where it appears
+      if (!moment(utcScheduleEnd).isAfter(start)) {
+        // console.log('discarding shift')
         return [...acc]
-      } else if (hours[key].open_time > shiftEndFloat) {
-        // discard shift
-        console.log('discarding shift')
+      } else if (!moment(utcScheduleStart).isBefore(end)) {
+        // console.log('discarding shift')
         return [...acc]
-      } else if (shiftStartFloat < hours[key].open_time) {
-        // truncate start
-        console.log('truncating start')
-        const diff = hours[key].open_time - shiftStartFloat
-        const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
-
-        const newStart = moment(start)
-          .add(hoursDiff, 'hours')
-          .add(minutesDiff, 'minutes')
-          .toISOString()
-
-        return [...acc.slice(0, acc.length - 1), { start: newStart, end }]
-      } else if (shiftEndFloat > hours[key].close_time) {
-        // truncate end
-        console.log('truncating end')
-        const diff = shiftEndFloat - hours[key].close_time
-        const [hoursDiff, minutesDiff] = convertFloatToTime(diff)
-
-        const newEnd = moment(end)
-          .subtract(hoursDiff, 'hours')
-          .subtract(minutesDiff, 'minutes')
-          .toISOString()
-
-        return [...acc.slice(0, acc.length - 1), { start, end: newEnd }]
+      } else if (
+        moment(start).isBefore(utcScheduleStart) &&
+        moment(end).isAfter(utcScheduleEnd)
+      ) {
+        // if we need to truncate both start and end
+        return [
+          ...acc,
+          {
+            start: moment(utcScheduleStart)
+              .utc()
+              .format(),
+            end: moment(utcScheduleEnd)
+              .utc()
+              .format()
+          }
+        ]
+      } else if (moment(start).isBefore(utcScheduleStart)) {
+        return [
+          ...acc,
+          {
+            start: moment(utcScheduleStart)
+              .utc()
+              .format(),
+            end
+          }
+        ]
+      } else if (moment(end).isAfter(utcScheduleEnd)) {
+        return [
+          ...acc,
+          {
+            start,
+            end: moment(utcScheduleEnd)
+              .utc()
+              .format()
+          }
+        ]
       } else {
         // otherwise do nothing
         return [...acc, { start, end }]
       }
     }, [])
 
-    console.log('TRUNCATED SHIFTS:')
-    console.log(truncatedShifts)
+    // console.log('TRUNCATED SHIFTS:')
+    // console.log(truncatedShifts)
 
     // calculate shift coverage in hours
     const hoursCovered = truncatedShifts.reduce((acc, { start, end }) => {
       return acc + moment.duration(moment(end).diff(start)).asHours()
     }, 0)
 
-    console.log('HOURS COVERED:')
-    console.log(hoursCovered)
-
-    // calculate hours open
-    const hoursOpen = hours[key].close_time - hours[key].open_time
+    // console.log('HOURS COVERED:')
+    // console.log(hoursCovered)
 
     // increment the weekly totals accordingly
     totalHoursCovered += hoursCovered
     totalHoursOpen += hoursOpen
   })
+
+  // console.log(totalHoursCovered)
+  // console.log(totalHoursOpen)
 
   // calculate percentage
   const percentCoverage = Math.floor((totalHoursCovered / totalHoursOpen) * 100)
