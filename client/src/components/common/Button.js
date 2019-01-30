@@ -12,9 +12,10 @@ const StyledButton = styled.button`
   /* some styles go here */
   cursor: pointer;
   border-radius: ${system.borders.radius};
-  border: ${system.borders.transparent};
-  color: ${system.color.neutral};
-  background: ${system.color.primary};
+  border: 1px solid ${system.color.primary};
+  color: ${props => (props.cancel ? system.color.primary : system.color.white)};
+  background: ${props =>
+    props.cancel ? system.color.white : system.color.primary};
   box-shadow: ${system.shadows.button};
   font-size: ${system.fontSizing.sm};
   padding: ${system.spacing.standardPadding};
