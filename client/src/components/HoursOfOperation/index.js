@@ -38,12 +38,11 @@ class HoursOfOperation extends Component {
 
     this.state = {
       days: this.props.hours.hours.map(buildDay),
-      initialTime: null,
-      checked: new Map()
+      initialTime: null
     }
   }
 
-  closedAllDay = targetDay => {
+  toggle = targetDay => {
     this.setState(prevState => {
       const { days } = prevState
       return {
@@ -141,7 +140,7 @@ class HoursOfOperation extends Component {
                 handleHours={this.handleHours}
                 day={day}
                 name={day.name}
-                closedAllDay={() => this.closedAllDay(day)}
+                closedAllDay={() => this.toggle(day)}
                 toggled={day.closed}
                 status={day.closed === false ? 'Open' : 'Closed'}
                 // slider props //
