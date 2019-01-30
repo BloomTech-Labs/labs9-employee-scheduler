@@ -166,90 +166,11 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
     const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
       // if schedule end is before shift start, discard shift
       // if schedule start is after shift end, discard shift
+      // if shift start is before schedule start and if shift end is after end,
+      //    truncate both shift start and shift end
       // if shift start is before schedule start, truncate shift start
       // if shift end is after end, trucate shift end
       // otherwise do nothing
-
-      // convert times to floats
-      // const shiftStartFloat = convertMomentToFloat(start)
-      // const shiftEndFloat = convertMomentToFloat(end)
-
-      // const utcDayStartHasRolledOver =
-      //   moment(start).day() !==
-      //   moment(start)
-      //     .utc()
-      //     .day()
-
-      // const utcDayEndHasRolledOver =
-      //   moment(end).day() !==
-      //   moment(end)
-      //     .utc()
-      //     .day()
-
-      // console.log(moment(start).day())
-      // console.log(
-      //   moment(start)
-      //     .utc()
-      //     .day()
-      // )
-      // console.log(moment(end).day())
-      // console.log(
-      //   moment(end)
-      //     .utc()
-      //     .day()
-      // )
-
-      // const utcToLocal = ({ date, string }) => {
-      //   const offset = moment(date).utcOffset()
-      //   const dateNaive = moment.utc(string, 'HH:mm')
-      //   const hours = dateNaive.hours()
-      //   const minutes = dateNaive.minutes()
-      //   const totalMinutes = hours * 60 + minutes
-      //   // check if the current time in minutes is within the offset
-      //   // that would cause UTC to be ahead of local time
-      //   if (totalMinutes > offset) {
-      //     return dateNaive.local().format()
-      //   } else {
-      //     return dateNaive.add(1, 'day').local()
-      //   }
-      // }
-
-      // const calcScheduleStartFromTime = time => {
-      //   const offset = moment().utcOffset()
-      //   const dateNaive = moment.utc(string, 'HH:mm')
-      //   const hours = dateNaive.hours()
-      //   const minutes = dateNaive.minutes()
-      //   const totalMinutes = hours * 60 + minutes
-      //   // check if the current time in minutes is within the offset
-      //   // that would cause UTC to be ahead of local time
-      //   if (totalMinutes > offset) {
-      //     return dateNaive.local().format()
-      //   } else {
-      //     return dateNaive.add(1, 'day').local()
-      //   }
-      // }
-
-      // console.log(utcScheduleStart.utc().format())
-      // console.log(utcScheduleEnd.utc().format())
-
-      // console.log(utcDayStartHasRolledOver)
-      // console.log(utcDayEndHasRolledOver)
-
-      // for seeing times
-
-      // const shiftStart = moment(start)
-      //   .utc()
-      //   .format('HH:mm')
-      // const shiftEnd = moment(end)
-      //   .utc()
-      //   .format('HH:mm')
-
-      // console.log(`schedule start time: ${hours[key].open_time}`)
-      // console.log(`schedule end time: ${hours[key].close_time}`)
-      // console.log(`shift start time: ${shiftStart}`)
-      // console.log(`shift end time: ${shiftEnd}`)
-      // console.log(`shift start time: ${shiftStartFloat}`)
-      // console.log(`shift end time: ${shiftEndFloat}`)
 
       const startDate = moment(start)
         .utc()
@@ -262,10 +183,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         utcScheduleEnd = utcScheduleEnd.add(1, 'days')
       }
 
-      console.log(utcScheduleStart.utc().format())
-      console.log(utcScheduleEnd.utc().format())
-
       // run discard options first, then mutation options to make sure discards happen
+      // `!` (not sign) necessary in comparisons where it appears
       if (moment(!utcScheduleEnd).isAfter(start)) {
         return [...acc]
       } else if (!moment(utcScheduleStart).isBefore(end)) {
@@ -274,6 +193,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         moment(start).isBefore(utcScheduleStart) &&
         moment(end).isAfter(utcScheduleEnd)
       ) {
+        // if we need to truncate both start and end
         return [
           ...acc.slice(0, acc.length - 1),
           {
