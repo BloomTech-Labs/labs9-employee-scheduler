@@ -21,6 +21,8 @@ import { Container, Input, Select } from './common/FormContainer'
 import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 import industryList from '../industryList'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
 class RegisterOwner extends Component {
   state = {
@@ -202,11 +204,19 @@ class RegisterOwner extends Component {
                   </option>
                 ))}
               </Select>
-
-              <Button type="submit" className="register">
-                Register
-              </Button>
-              <Button onClick={this.props.logout}>Cancel</Button>
+              <ButtonContainer>
+                <div>
+                  <Button type="submit" className="register">
+                    Register
+                  </Button>
+                </div>
+                <Button
+                  onClick={this.props.logout}
+                  color={system.color.neutral}
+                >
+                  Cancel
+                </Button>
+              </ButtonContainer>
             </form>
           </Container>
         </OuterContainer>
@@ -224,3 +234,12 @@ export default connect(
   mapStateToProps,
   { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
+
+const ButtonContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+
+  div {
+    margin-right: 20px;
+  }
+`
