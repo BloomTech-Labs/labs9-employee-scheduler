@@ -158,6 +158,9 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
     {}
   )
 
+  console.log(hours)
+  console.log(days)
+
   // console.log(hours)
   // console.log(days)
 

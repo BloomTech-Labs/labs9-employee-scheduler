@@ -64,8 +64,8 @@ const getEmployees = async orgId => {
     .select(
       'u.id as user_id',
       'tor.id as time_off_request_id',
-      'tor.date',
-      'tor.reason',
+      'tor.start',
+      'tor.end',
       'tor.status'
     )
     .reduce((acc, current) => {
