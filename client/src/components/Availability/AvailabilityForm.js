@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editAvailability } from '../../actions'
 import Button from '../common/Button'
-import { formatHours } from '../../utils'
+import { formatHours, utcDayToLocal } from '../../utils'
 import moment from 'moment'
 import HOOSlider from '../HoursOfOperation/HOOSlider'
 import { Modal } from '../HoursOfOperation'
@@ -25,7 +25,7 @@ const buildDay = avail => {
     // think about what word is right for 'closed' v 'off'
     closed: avail.off,
     id: avail.id,
-    name: dayNameMap[avail.day]
+    name: dayNameMap[utcDayToLocal({ day: avail.day, time: avail.start_time })]
   }
   return day
 }
@@ -66,8 +66,12 @@ class AvailabilityForm extends Component {
         this.props.editAvailability({
           availability: dayAttribs,
           changes: {
-            start_time: parseFloat(moment(day.start, 'h:mm a').format('HH.MM')),
-            end_time: parseFloat(moment(day.end, 'h:mm a').format('HH.MM')),
+            start_time: moment(day.start, 'h:mm a')
+              .utc()
+              .format('HH:mm'),
+            end_time: moment(day.end, 'h:mm a')
+              .utc()
+              .format('HH:mm'),
             off: day.closed
           },
           token: this.props.token
