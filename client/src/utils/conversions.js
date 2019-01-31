@@ -82,15 +82,3 @@ export const timeToMinute = (time, format = 12) => {
   }
   return rMinutes > 1439 ? 1439 : rMinutes
 }
-
-// deprecate?
-export const convertMomentToFloat = time =>
-  moment(time).hours() + moment(time).minutes() / 60
-
-// deprecate?
-// converts a float into an object with hours and minutes
-const convertFloatToTime = num => {
-  const [hours, fraction] = num.toString().split('.')
-  const minutes = parseInt((60 * (fraction / 10)).toString().slice(0, 2)) || 0
-  return [hours, minutes]
-}
