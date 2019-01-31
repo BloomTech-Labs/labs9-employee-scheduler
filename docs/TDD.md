@@ -23,9 +23,11 @@ requests.
 1. Sling: Sling is a design-led shift scheduling SaaS product priced at $2 / user / month. Its
     core functionality includes shift scheduling, clock-in and -out, and labor costing. Notably,
     it includes social features such as chat, newsfeed, and to-do lists.
+
 2. TSheets: TSheets is built for small to medium business to track scheduling and time on
     the clock. 2-99 users is $4.99 per month with a $16 base fee. 100+ users has a base
     fee of $80 per month. It’s owned by intuit so it integrates with quickbooks.
+
 3. Humanity: Provides easy-to-access employee scheduling app with timeclock, shift
     trading, availability communication, automation, and more. Rated easiest to use by
     Business.com. $3/user/month
@@ -37,6 +39,7 @@ requests.
     month) + 10 day scheduling, schedule multiple teams, remote job sites. $2.25 (+$1.
     additional employees) + Manage Team Tasks Assign Tasks to Employees Monitor Task
     Progress.
+
 5. Shiftboard: Self-description: “Shiftboard transforms complex, hourly workforce
     scheduling processes to help lower labor costs, improve employee retention, & ensure
     workplace compliance.” UI is not featured prominently. Also does timesheet and
@@ -53,25 +56,31 @@ To do this, you must understand who they are and how they interact with your app
 understanding will also have a direct impact on many elements of your technical solution,
 particularly your user accounts, database type and structure, and APIs or services required to
 meet your users’ needs.
-**How many types of user accounts will you need for this project? For** ​ **each user account
+**How many types of user accounts will you need for this project? For** ​
+**each user account
 type** ​ **, answer the following:
 Account Type: Owner / Superuser
 Description:** ​Superuser account(s) are used by the business owner(s) in order to perform HR
 tasks, such as hiring and firing employees.
-**Needs:** ​Add/remove managers and employees; view, create, edit, save and delete all data on
+**Needs:**
+​Add/remove managers and employees; view, create, edit, save and delete all data on
 the site.
 **Account Type: Supervisor
 Description:** ​Can create new employees and set the schedule for them.
-**Needs:** ​View, create, edit, and delete employees information (name, phone etc) and create edit
+**Needs:**
+​View, create, edit, and delete employees information (name, phone etc) and create edit
 and delete the schedule.
 **Account Type: Employee**
 
 
-**Description:** ​Employees need to be able to communicate their availability in advance, to ensure
+**Description:**
+​Employees need to be able to communicate their availability in advance, to ensure
 they can get scheduled without unnecessary conflicts. They can also request time off in
 advance. The interface allows them to see whether requests and schedules are pending, or
 have been accepted.
-**Needs:** ​Can access schedules to which they are assigned, request time off, provide availability.
+
+**Needs:**
+​Can access schedules to which they are assigned, request time off, provide availability.
 Can change some personal information.
 
 ## Features
@@ -80,25 +89,31 @@ Features are how your app solves your users needs. A Minimally Viable Product (M
 smallest set of features that can deliver a useful experience to your users. It is important that
 you understand the features in your design including what they are and how your users will
 interact with them.
-**List** ​ **all** ​ **the features found in your spec and answer the following:
-Name:** ​Landing Page
+
+**List** ​ **all** ​
+**the features found in your spec and answer the following:**
+**Name:** ​Landing Page
 **User type:** ​All
-**Description:** ​Marketing site for existing and prospective users, contains login and registration
+**Description:**
+ ​Marketing site for existing and prospective users, contains login and registration
 buttons to access software
 **Use Case:** ​A prospective user is seeking shift scheduling software so they come to our landing
 page to learn more about our specific value proposition and potentially register for our product.
 An existing user wishes to login.
+
 **Name:** ​Login Page
 **User type:** ​All
 **Description:** ​Performs login authentication, redirects based on result
 **Use Case:** ​A user wants to login using proper credentials; malicious actors and others using
 bad credentials will be stopped.
+
 **Name:** ​Registration Page
 **User type:** ​All
 **Description:** ​Allows for creation of new users, organizations, ​possibly need roles assigned by
 owners. Need to figure out who creates accounts?
 **Use Case:** ​A new employee needs an account, that needs to get created. New owner sets up
 own account and organization. Supervisors get registered
+
 **Name:** ​Schedule Now Button
 **User type:** ​Mixed
 **Description:** ​Takes owner/supervisor to schedule page, takes employee to employee page.
@@ -110,94 +125,110 @@ Only shows up if logged in.
 **User type:** ​Supervisor / Owner
 **Description:** ​Hours of Operation Modal - ​ask Brian what this is.
 **Use Case:** ​Shows hours if if operation
+
 **Name:** ​Left Bar
 **User type:** ​All (with limitations based on role)
 **Description:** ​Slide out drawer sidebar that includes user menu/settings options
 **Use Case:** ​User will have a list of options to choose and navigate through the site.
+
 **Name:** ​Top Bar
 **User type:** ​All
 **Description:** ​Minimalist top bar containing navigation help (e.g. home button) and sign out
 **Use Case:** ​A user wishes to navigate back home or to sign out of our application.
+
 **Name:** ​Calendar display
 **User type:** ​All
 **Description:** ​Employee schedule is shown in a calendar format
 **Use Case:** ​Show off what is scheduled currently
+
 **Name:** ​ Calendar Data Entry -- add / delete shifts
 **User type:** ​Supervisor, Owner
 **Description:** ​Schedulers can add or delete shifts by dragging and dropping
 **Use Case:** ​Employers can schedule employees through drag and drop.
+
 **Name:** ​ Calendar Data Entry -- move/edit shifts
 **User type:** ​Supervisor, Owner
 **Description:** ​Schedulers can change shifts by dragging extremities, or dragging entire block.
 Also a modal for text editing?
 **Use Case:** ​Employers can schedule employees through drag and drop.
+
 **Name:** ​Daily Summary
 **User type:** ​Supervisor, Owner
 **Description:** ​Shows the total employees and time scheduled for a day. ​Also some test for
 whether a day is fully scheduled / aka done?
 **Use Case:** ​Allows a scheduler to see at a glance the important stats for a day
+
 **Name:** ​Employee List
 **User type:** ​Admin
 **Description:** ​A column listing employees. For each employee, there is a box showing
 availability and a box showing time off.
-
-
 **Use Case:** ​In the shift scheduler page shows supervisor all of the employees with their
 availability and time off.
+
 **Name:** ​ Time off dialogues
 **User type:** ​Manager, Owner
 **Description:** ​View all employees and their availability
 **Use Case:** ​Makes scheduling a lot easier
+
 **Name:** ​Availability window
 **User type:** ​Manager, Owner
 **Description:** ​Supervisors see an aside menu with the availability of their employees
 **Use Case:** ​Supervisors pick employees from this list to drop their names for work schedule.
+
 **Name:** ​Employee Shift View
 **User type:** ​Employee
 **Description:** ​Shows employ shifts
 **Use Case:** ​Employees will quickly be able to see scheduled shift days.
+
 **Name:** ​Admin Employees
 **User type:** ​Supervisor, Owner
 **Description:** ​Shows approved time off
 **Use Case:** ​Supervisor can easily see when employees have approved time off.
+
 **Name:** ​Add Employee
 **User type:** ​Supervisor, Owner
 **Description:** ​Supervisor or owner can add an employee’s details
 **Use Case:** ​As new employees join, they needed to be added to the shift scheduling platform.
+
 **Name:** ​Payment form
 **User type:** ​Owner
 **Description:** ​Billing info
 **Use Case:** ​Pay the bill for using the app
+
 **Name:** ​Checkbox for Recurring Payment
 **User type:** ​Owner
 **Description:** ​A checkbox in the payment dialog​ (Stripe integration)
 **Use Case:** ​Allows owner to select a recurring payment option when checking out.
+
 **Name:** ​Input Email / Phone
 **User type:** ​employee
 **Description:** ​On the settings page two boxes, one for email and one for phone, where the user
 can update the values.
-
-
 **Use Case:** ​User can update their email and phone information so that the supervisor can
 contact them with schedule information.
+
 **Name:** ​Select Emails / Text Preference
 **User type:** ​employee
 **Description:** ​Two checkmark boxes in the settings page, one for emails and one for text.
 **Use Case:** ​Employees can select email and/or text, indicating to their supervisor how they
 would like to review updates on the schedule.
+
 **Name:** ​Edit password
 **User type:** ​Owner/supervisor/employee
 **Description:** ​Two boxes that allow a user to enter their new desired password, a second box to
 confirm the password, and a button to submit the password.
 **Use Case:** ​Allows users to to change their password.
+
 **Name:** ​Time off request
 **User type:** ​Employees
 **Description:** ​Employee requested time off
 **Use Case:** ​Employees can see times they have requested off
+
 **Name:** ​Pricing confirmation
 **User type:** ​Owner
 **Description:** ​pricing confirmation
 **Use Case:** ​Shows the user how much they are going to be charged
+
 **Name:** ​Time Off Approval
 **User type:** ​Employee
 **Description:** ​Visual display of whether PTO request is approved, denied, or pending
@@ -366,28 +397,31 @@ Firebase for Authentication
 Relying on Google for security, and having a simplified JWT structure that plays nicely with
 the front and back end. Rely on openness of Firebase to allow users to authenticate via a
 number of options
+
 **Feature Name:** ​ Schedule Now Button
 **What services, APIs, or platforms will you use to implement this feature?:**
 React, a value in Redux as to whether the user is logged in, Firebase as described above
 **What are the costs and benefits of using this solution?**
 Requires no special functionality, aside from checking that the user is logged in.
+
 **Feature Name:** ​ Hours of Operation Modal
 **What services, APIs, or platforms will you use to implement this feature?:**
 TBD, need to talk to Brian
 **What are the costs and benefits of using this solution?**
 See above
+
 **Feature Name:** ​ Left Bar, Top Bar
 **What services, APIs, or platforms will you use to implement this feature?:**
 React Pose for animation, emotion for styling, flexbox to lay out elements
 **What are the costs and benefits of using this solution?**
 Animations for the left bar will improve UX for the users, and Pose is a developer-friendly
 animation library. Styling will proceed per best practices for navigational elements.
+
 **Name:** ​Calendar Display Presentation and CRUD
 **What services, APIs, or platforms will you use to implement this feature?:**
-
-
 Display will rely on the React Big Calendar library. Backend will be implemented using
 database.
+
 **What are the costs and benefits of using this solution?**
 Implementing a calendar has a myriad of specific implementation issues that are not directly
 tied to the problem we are trying to solve, so we seek to use prior open source art here. The
@@ -402,12 +436,14 @@ and require significant extra work molding our back end to play nicely with the 
 Google Calendar API. We also will avoid lock-in to a third party API that could be changed
 without any obligation to us. Once we have handled our own data persistence, a read-only
 export to Google Calendar could be considered.
+
 **Feature Name:** ​ Daily Summary
 **What services, APIs, or platforms will you use to implement this feature?:**
 react, emotion
 **What are the costs and benefits of using this solution?**
 We will display the count of employees working per day and the total count of hours
 scheduled. This can potentially be accomplished by array methods such as reduce.
+
 **Feature Name:** ​ Employee List
 **What services, APIs, or platforms will you use to implement this feature?:**
 react, emotion, knex
@@ -416,7 +452,6 @@ We will display a list of employees. For each employee, there is a box showing a
 a box showing requested time off. We will get this data from the database via SQL query
 involving joins with the relevant tables.
 
-
 **Feature Name:** ​ Time Off Dialogues
 **What services, APIs, or platforms will you use to implement this feature?:**
 Vanilla javascript + React. Possible but doubtful use of React Portal.
@@ -424,17 +459,20 @@ Vanilla javascript + React. Possible but doubtful use of React Portal.
 This is a straightforward prompt for the user to approve and decline time off requested. The
 only need is for modal and HTTP post requests, all of which we have with our basic
 framework and back end.
+
 **Feature Name:** ​ Employee Shift View
 **What services, APIs, or platforms will you use to implement this feature?:**
 Vanilla javascript + React.
 **What are the costs and benefits of using this solution?**
 This is the display of data in a structured way, and allowing for ajax requests as needed,
 which is directly in the React+Redux core competency. No further API/service is indicated.
+
 **Feature Name: Feature Name:** ​Requested time off
 **What services, APIs, or platforms will you use to implement this feature?:**
 Reusable react component that maps over data from the backend.
 **What are the costs and benefits of using this solution?**
 Reusable and not hard coded.
+
 **Feature Name:** ​ Time Off Dialogues
 **What services, APIs, or platforms will you use to implement this feature?:**
 Vanilla javascript + React. Possible but doubtful use of React Portal.
@@ -442,7 +480,6 @@ Vanilla javascript + React. Possible but doubtful use of React Portal.
 This is a straightforward prompt for the user to approve and decline time off requested. The
 only need is for modal and HTTP post requests, all of which we have with our basic
 framework and back end.
-
 
 **Feature Name:** ​ Add Employee
 **What services, APIs, or platforms will you use to implement this feature?:**
@@ -451,6 +488,7 @@ React/Redux, Axios, Express backend
 This is essentially an input form that makes a POST request on submit. This is provided by
 the core choices in our stack and further services would likely result in equal to worse
 implementation while increasing package size and muddying structure.
+
 **Feature Name:** ​ Input Email / Phone
 **What services, APIs, or platforms will you use to implement this feature?:**
 React/Redux, Axios, Express backend
@@ -459,6 +497,7 @@ This is essentially an input form that makes a PUT request on submit, allowing t
 update their phone number and email. This is provided by the core choices in our stack and
 further services would likely result in equal to worse implementation while increasing package
 size and muddying structure.
+
 **Feature Name:** ​ Select Emails / Text Preference
 **What services, APIs, or platforms will you use to implement this feature?:**
 React / Redux, Axios, Express
@@ -468,9 +507,8 @@ surface area of ajax calls and provide error handling support.
 A potential stretch related to this feature would use Nodemailer for emailing functionality. This
 is not trivial to implement, so a well proven library would be desirable. However, this is not
 indicated in the spec and at this point is not considered a MVP feature.
+
 **Feature Name:** ​ Edit Password
-
-
 **What services, APIs, or platforms will you use to implement this feature?:**
 React / Redux, Axios, Express. Potentially Firebase
 **What are the costs and benefits of using this solution?**
@@ -478,21 +516,25 @@ This uses tools already provided by React / Redux and Express. Axios will be use
 surface area of ajax calls and provide error handling support.
 Given that we are using Firebase, we will need to consider whether it is even possible to
 straightforwardly trigger password updates within our site.
+
 **Feature Name:** ​Time off request
 **What services, APIs, or platforms will you use to implement this feature?:**
 React reusable component that uses Axios to make a post request to the DB.
 **What are the costs and benefits of using this solution?**
 ​Reusable and not hard coded
+
 **Feature Name:** ​Time Off Approval
 **What services, APIs, or platforms will you use to implement this feature?:**
 This will GET a given user’s PTO from the database and display it
 **What are the costs and benefits of using this solution?**
 This relies on the core components of our tech stack.
+
 **Feature Name:** ​Pricing Confirmation /​ ​Payment Form / Checkbox for Recurring Payment
 **What services, APIs, or platforms will you use to implement this feature?:**
 Stripe API
 **What are the costs and benefits of using this solution?**
 Allows us to take payments from users with a widely used API
+
 **Feature Name:** ​Availability window
 **What services, APIs, or platforms will you use to implement this feature?:**
 
