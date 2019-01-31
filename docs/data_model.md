@@ -63,8 +63,8 @@
 {
   id: uuid
   user_id: UUID foreign key in USERS table
-  start: DATETIME
-  end: DATETIME
+  start: DATETIME STRING
+  end: DATETIME STRING
 }
 ```
 
@@ -75,8 +75,8 @@
   id: UUID
   organization_id: UUID foreign key in ORGANIZATIONS table
   day: INTEGER [ 0 -6 ]
-  open: FLOAT [ 0 - 23]
-  close: FLOAT [ 0 - 23]
+  open: TIME STRING [ 0 - 23]
+  close: TIME STRING [ 0 - 23]
   closed: BOOLEAN
 }
 ```
@@ -98,27 +98,27 @@
 
 `insertHoursForNewOrg()` -> used for seed generation
 
-`getOrgs()`
+`getOrgs()` -> Returns all organizations
 
-`getOrg(orgId)`
+`getOrg(orgId)` -> Returns a single organization by ID
 
 `addOrg(org)` -> Returns the created org
 
-`updateOrg(orgId)`
+`updateOrg(orgId)` -> Update an organization by ID
 
-`deleteOrg(orgId)`
+`deleteOrg(orgId)` -> Delete an organization by ID
 
 <br>
 
-`getUsers(orgId)` --> if no param all users
+`getUsers(orgId)` -> if no param all users
 
-`getUser(userId)`
+`getUser(userId)` -> Returns a single user by user ID
 
 `addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
 
-`updateUser(userId, changes object)`
+`updateUser(userId, changes object)` -> Updates a single user by ID.
 
-`deleteUser(userId)` --> deletes everything dependent on the user
+`deleteUser(userId)` -> deletes everything dependent on the user
 
 <br>
 
@@ -134,15 +134,15 @@
 
 <br>
 
-`getTimeOffRequests(userId)`
+`getTimeOffRequests(userId)` -> Return time off request by user ID
 
-`getTimeOffRequest(requestId)`
+`getTimeOffRequest(requestId)` -> Return a single request by request ID
 
-`addTimeOffRequest(request object)`
+`addTimeOffRequest(request object)` -> Add a time off request
 
-`updateTimeOffRequest(timeOffRequestId, changes object)`
+`updateTimeOffRequest(timeOffRequestId, changes object)` -> Update a time off request by request ID
 
-`deleteTimeOffRequest(timeOffRequestId)`
+`deleteTimeOffRequest(timeOffRequestId)` -> Delete a request by request ID
 
 <br>
 
@@ -150,15 +150,15 @@
 
 <br>
 
-`getEvents(userId)`
+`getEvents(userId)` -> Return all events by user ID
 
-`getEvent(eventId)`
+`getEvent(eventId)` -> Return an event by it's event ID
 
 `addEvent(event object)` --> returns created event object
 
 `updateEvent(eventId, changes object)` --> returns the updated event object
 
-`deleteEvent(eventId)`
+`deleteEvent(eventId)` -> Delete an event by event ID
 
 <br>
 
@@ -166,18 +166,18 @@
 
 <br>
 
-`getHoursOfOperation(orgId)`
+`getHoursOfOperation(orgId)` -> Returns hours of operation by organization ID
 
-`updateHoursOfOperation(hourId, updates)`
+`updateHoursOfOperation(hourId, updates)` -> Update a single hour of operation by it's ID
 
-`addHour(hour)`
+`addHour(hour)` -> add a new Hour of Operation
 
 <br>
 
-`getInvite(inviteId)`
+`getInvite(inviteId)` -> Return an invite by its ID
 
-`addInvite(invite object)`
+`addInvite(invite object)` -> Create a new invite
 
-`updateInvite(inviteId, updates object)`
+`updateInvite(inviteId, updates object)` -> Update an invite by its ID
 
-`deleteInvite(inviteId)`
+`deleteInvite(inviteId)` -> Delete an invite
