@@ -21,7 +21,7 @@ describe('App component', () => {
     const { getByText } = renderWithReduxAndRouter(<App />)
 
     // Assert
-    expect(getByText('Cadence')).toBeInTheDocument()
+    expect(getByText(/Cadence/i)).toBeInTheDocument()
   })
 
   // below commented out as components have changed
