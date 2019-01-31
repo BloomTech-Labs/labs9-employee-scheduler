@@ -199,19 +199,23 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // letting it be for now
   if (view === 'week') {
     totalHoursOpen = hours.reduce((acc, { open_time, close_time, closed }) => {
-      const convertTimeToObject = time => {
-        const [hour, minute] = time.split(':')
-        return { hour, minute, second: '00' }
+      if (!closed) {
+        const convertTimeToObject = time => {
+          const [hour, minute] = time.split(':')
+          return { hour, minute, second: '00' }
+        }
+
+        let open = moment().set(convertTimeToObject(open_time))
+        let close = moment().set(convertTimeToObject(close_time))
+
+        if (moment(close).isBefore(open)) {
+          close = close.add(1, 'days')
+        }
+
+        return acc + moment.duration(moment(close).diff(open)).asHours()
+      } else {
+        return acc
       }
-
-      let open = moment().set(convertTimeToObject(open_time))
-      let close = moment().set(convertTimeToObject(close_time))
-
-      if (moment(close).isBefore(open)) {
-        close = close.add(1, 'days')
-      }
-
-      return acc + moment.duration(moment(close).diff(open)).asHours()
     }, 0)
   }
 
