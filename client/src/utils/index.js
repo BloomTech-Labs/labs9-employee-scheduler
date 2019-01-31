@@ -47,11 +47,26 @@ export function getHoursOfOperationRange(hours) {
 }
 
 export const formatHours = hours => {
-  if (hours === 24) {
-  }
-  const hoursInt = hours === 24 ? 23 : Math.floor(hours)
-  const minutesInt = hours === 24 ? 59 : Math.floor((hours - hoursInt) * 60)
-  return moment({ hours: hoursInt, minutes: minutesInt }).format('h:mm a')
+  return moment
+    .utc(hours, 'HH:mm')
+    .local()
+    .format('h:mm a')
+}
+
+const inRolloverZone = startTime => {
+  const offset = Math.absolute(moment().offset())
+  const date = moment(startTime, 'HH:mm')
+  return date.hours() * 60 + date.minutes() < offset
+}
+
+// decrements a day by one, and wraps around to 6 for -1
+const decrementDay = day => {
+  const candidate = day - 1
+  return candidate < 0 ? candidate + 7 : candidate
+}
+
+export const localDay = ({ day, time }) => {
+  return inRolloverZone(time) ? decrementDay(day) : day
 }
 
 export const getRange = ({ date, view }) => {
