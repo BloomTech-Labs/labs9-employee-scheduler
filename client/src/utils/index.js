@@ -54,7 +54,7 @@ export const formatHours = hours => {
 }
 
 const inRolloverZone = startTime => {
-  const offset = Math.absolute(moment().offset())
+  const offset = Math.abs(moment().utcOffset())
   const date = moment(startTime, 'HH:mm')
   return date.hours() * 60 + date.minutes() < offset
 }
