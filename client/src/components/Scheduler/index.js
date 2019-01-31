@@ -60,10 +60,12 @@ class Scheduler extends React.Component {
     this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
+
     const { user } = this.props
-    if (user && user.cal_visit === true) {
-      this.setState({ steps, run: true })
-    } else return
+    // load the demo steps
+    if (steps) this.setState({ steps })
+    // check if the user has completed the demo before
+    if (user && user.cal_visit === true) this.setState({ run: true })
   }
 
   componentDidUpdate() {
