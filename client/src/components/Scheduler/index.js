@@ -27,6 +27,7 @@ import {
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
 import steps from './Demo/calendar'
 import WeekSummary from './WeekSummary'
+import axios from 'axios'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
@@ -46,6 +47,16 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
+    // LINES 50 to 58 should use REDUX!
+    const baseURL = process.env.REACT_APP_SERVER_URL
+    axios.post(
+      `${baseURL}/employees/${this.props.user.organization_id}`,
+      null,
+      {
+        headers: { authorization: this.props.token }
+      }
+    )
+
     this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
