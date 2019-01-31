@@ -28,10 +28,18 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 
 ### Motivation
 
-Why does this product exist? How does a user access it?
+Cadence was created to solve modern shift management problems. Maintaining absolute visibility over your companies schedule can be a difficult task, even with spreadsheets. Cadence is an intiuitive and easy to use application that will do all of the heavy lifting for you. Just register at [https://cadence.netlify.com], create your company and take our demo for a spin. Drag and drop demo employees and interact with their availabilities. Approve and deny their paid time off requests, change your hours of operations and much more. When you're done, feel free to remove them and begin adding your employees.
 
 ### Features
-What's it do?
+
+● Secure User Authentication using Google Firebase
+● Bill pay services utilizing Stripe payment
+● Drag & Drop Calendar for interactive and intuitive employee shifts management
+● Create your organization and add employees
+● Supervisor dashboard
+● Visibility and full control over your hours of operation
+● Seemlessly approve, deny and request PTO
+
 
 ### Installation
 To install the application in a local dev environment, you can run `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
@@ -59,7 +67,7 @@ Uers are structured as follows:
   phone: STRING
 
 - GET /users: Returns all users
-- GET /users/:id: Returns all users for an organization 
+- GET /users/:id: Returns all users for an organization
 - GET /users/current: Returns user information for currently authorized user
 - POST /users: Creates a new user. Must have permission to create a user for the given organization. Returns the id of the new resource.
 - PUT /users/:id: Receives a changes object on the body of the request, and merges into the user if possible. Returns the updated resource.
