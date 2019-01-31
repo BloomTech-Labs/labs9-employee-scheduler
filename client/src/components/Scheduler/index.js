@@ -146,21 +146,27 @@ class Scheduler extends React.Component {
     this.props.displayCoverage(coverage)
   }
 
-  validateEvent = ({ userId, eventTimes }) => {
+  validateEvent = ({ userId, eventTimes, eventId }) => {
     const { hours, employees } = this.props
     const employee = employees.filter(({ id }) => id === userId)[0]
 
     // checks whether event is in compliance with all shift requirements,
     // such as no conflicts with time_off_requests, availabilities, or hours_of_operation
-    return validateShift({ eventTimes, hours, employee })
+    return validateShift({ eventTimes, hours, employee, eventId })
   }
 
   moveEvent = drop => {
-    const { event, start, end } = drop
+    const {
+      event,
+      start,
+      end,
+      event: { id }
+    } = drop
     const { type, ...employee } = event
     const { verdict, message } = this.validateEvent({
       userId: employee.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: id
     })
     if (verdict) {
       this.props.changeEvent(
