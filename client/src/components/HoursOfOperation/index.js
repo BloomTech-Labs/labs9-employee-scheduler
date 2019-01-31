@@ -5,7 +5,7 @@ import system from '../../design/theme'
 import moment from 'moment'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { formatHours } from '../../utils'
+import { formatHours, utcDayToLocal } from '../../utils'
 import { editHours } from '../../actions/'
 import Button from '../common/Button'
 
@@ -26,7 +26,7 @@ const buildDay = HOO => {
     end: formatHours(HOO.close_time),
     closed: HOO.closed,
     id: HOO.id,
-    name: dayNameMap[HOO.day]
+    name: dayNameMap[utcDayToLocal({ day: HOO.day, start: HOO.open_time })]
   }
   return day
 }
@@ -65,8 +65,12 @@ class HoursOfOperation extends Component {
   submitHandler = () => {
     this.state.days.forEach(day => {
       if (day.updated) {
-        const start = parseFloat(moment(day.start, 'h:mm a').format('HH.MM'))
-        const end = parseFloat(moment(day.end, 'h:mm a').format('HH.MM'))
+        const start = moment(day.start, 'h:mm a')
+          .utc()
+          .format('HH:mm')
+        const end = moment(day.end, 'h:mm a')
+          .utc()
+          .format('HH:mm')
         const closed = day.closed
         this.props.editHours(
           day.id,
@@ -107,6 +111,7 @@ class HoursOfOperation extends Component {
     this.setState(prevState => {
       return {
         days: prevState.days.map(day => {
+          console.log(day.name)
           if (day.name === targetDay.name) {
             return { ...day, start: time.start, end: time.end }
           } else {

@@ -11,7 +11,8 @@ exports.up = knex =>
       .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
-    table.date('date').notNullable()
+    table.datetime('start').notNullable()
+    table.datetime('end').notNullable()
     table.string('reason', 1024)
     table.string('status').defaultTo('pending') // change this to enumerable?
   })

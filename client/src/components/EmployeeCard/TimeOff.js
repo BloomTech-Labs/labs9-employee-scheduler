@@ -67,7 +67,7 @@ class TimeOff extends Component {
         <h6>Requested Time Off</h6>
         {/* below, we want to check if the view is pool. If so, don't show denied requests. And get rid of the approve / deny buttons. There are props passed on PTO to enable styling */}
         {timeOffRequests &&
-          timeOffRequests.map(({ id, date, status }) =>
+          timeOffRequests.map(({ id, start, status }) =>
             this.props.view === 'pool' && status === 'denied' ? null : (
               <PTO
                 key={id}
@@ -75,7 +75,11 @@ class TimeOff extends Component {
                 status={status}
               >
                 <div className="text">
-                  <p>{moment(date).format('MM / DD')}</p>
+                  <p>
+                    {moment(start)
+                      .local()
+                      .format('MM / DD')}
+                  </p>
                   <p className="status" status={status}>
                     {status}
                   </p>

@@ -6,14 +6,18 @@ import styled from '@emotion/styled'
 const TimeOffApproved = ({
   id,
   status,
-  date,
+  start,
   reason,
   deleteExpiredRequest
 }) => {
   return (
     <PTO key={id} status={status}>
       <div className="text">
-        <p>{moment(date).format('MM / DD')}</p>
+        <p>
+          {moment(start)
+            .local()
+            .format('MM / DD')}
+        </p>
         <p className="status" status={status}>
           {status}
         </p>
