@@ -22,7 +22,7 @@ import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 import industryList from '../industryList'
 import styled from '@emotion/styled'
-import system from '../design/theme'
+import moment from 'moment'
 
 class RegisterOwner extends Component {
   state = {
@@ -70,6 +70,7 @@ class RegisterOwner extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    const offset = moment().utcOffset()
     const { email, phone, firstName, lastName, orgName, industry } = this.state
 
     if (!email || !phone || !firstName || !lastName || !orgName) {
@@ -81,7 +82,8 @@ class RegisterOwner extends Component {
         firstName,
         lastName,
         orgName,
-        industry
+        industry,
+        offset
       })
     }
   }
