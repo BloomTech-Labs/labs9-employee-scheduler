@@ -10,8 +10,8 @@ const insertHoursForNewOrg = org_id => {
       id: uuid(),
       organization_id: org_id,
       day: day[i],
-      open_time: 9,
-      close_time: 17,
+      open_time: '16:00',
+      close_time: '00:00',
       closed: false
     }
     hours.push(thisDay)
