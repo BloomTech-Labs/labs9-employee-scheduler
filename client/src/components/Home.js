@@ -429,6 +429,7 @@ const Container = styled('div')`
     #coming-soon {
       background: ${system.color.captiontext};
       box-shadow: none;
+      border: 1px solid ${system.color.captiontext};
       cursor: initial;
       :hover {
         box-shadow: none;

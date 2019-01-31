@@ -36,7 +36,7 @@ class Login extends Component {
       return <Redirect to="/register" />
     } else {
       return (
-        <EmptyScreen auth>
+        <EmptyScreen auth background>
           <Container>
             <StyledFirebaseAuth
               uiConfig={this.uiConfig}
@@ -63,7 +63,7 @@ export default connect(
 
 const Container = styled('div')`
   /* my custom styles applied to Container */
-  height: 81vh;
+  height: 60vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -79,7 +79,7 @@ const Container = styled('div')`
     background: ${system.color.white};
     padding: ${system.spacing.bigPadding};
     border-radius: ${system.borders.bigRadius};
-    box-shadow: ${system.shadows.otherLight};
+    /* box-shadow: ${system.shadows.otherLight}; */
     width: 100%;
     margin: 20px 0;
 

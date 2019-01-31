@@ -6,6 +6,16 @@ const getDashboard = async userId => {
     .where({ 'u.id': userId })
     .select('u.id', 'u.first_name', 'u.last_name')
 
+  const availabilities = await db('users as u')
+    .where({ 'u.id': userId })
+    .join('availabilities as a', { 'u.id': 'a.user_id' })
+    .select('a.id', 'a.day', 'a.off', 'a.start_time', 'a.end_time')
+    .reduce((acc, { id, day, off, start_time, end_time }) => {
+      // do a little clever formatting with the date formatting
+      // depending on calendar api this might change later
+      return [...acc, { id, day, off, start_time, end_time }]
+    }, [])
+
   const shifts = await db('users as u')
     .where({ 'u.id': userId })
     .join('events as e', { 'u.id': 'e.user_id' })
@@ -32,6 +42,7 @@ const getDashboard = async userId => {
 
   return {
     ...user[0],
+    availabilities: availabilities ? [...availabilities] : [],
     shifts: shifts ? [...shifts] : [],
     time_off: timeOff ? [...timeOff] : []
   }
