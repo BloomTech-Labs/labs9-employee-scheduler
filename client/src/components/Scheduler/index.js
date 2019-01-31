@@ -25,7 +25,7 @@ import {
   validateShift
 } from '../../utils'
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
-import steps from './Demo/calendar'
+import steps from '../Demo/calendar'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])

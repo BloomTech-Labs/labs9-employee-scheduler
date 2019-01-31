@@ -13,6 +13,8 @@ import AvailabilityForm from './Availability/AvailabilityForm'
 import Button from './common/Button'
 import Modal from './Modal'
 import { Input } from './common/FormContainer'
+import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import steps from './Demo/employees'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
@@ -66,7 +68,20 @@ class Employees extends Component {
         <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
-
+          <ReactJoyride
+            callback={this.handleJoyrideCallback}
+            continuous
+            run="true"
+            scrollToFirstStep
+            showProgress
+            showSkipButton
+            steps={steps}
+            styles={{
+              options: {
+                zIndex: 10000
+              }
+            }}
+          />
           <Input
             id="search"
             search
@@ -76,7 +91,9 @@ class Employees extends Component {
             onChange={this.updateSearch}
             value={this.state.searchTerm}
           />
-          <Button onClick={this.toggleShow}>Add Employee</Button>
+          <Button id="add-employee" onClick={this.toggleShow}>
+            Add Employee
+          </Button>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
             <AddEmployee />
           </Modal>

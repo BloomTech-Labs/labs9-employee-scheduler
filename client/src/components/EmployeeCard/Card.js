@@ -8,8 +8,6 @@ import TimeOff from './TimeOff'
 import Button from '../common/Button'
 import { connect } from 'react-redux'
 import { fetchEmployeesFromDB } from '../../actions'
-import { Link } from 'react-router-dom'
-import AvailabilityForm from '../Availability/AvailabilityForm'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -85,12 +83,13 @@ class Card extends Component {
 
           {time_off_requests ? (
             <TimeOff
+              className="timeoff"
               timeOffRequests={time_off_requests}
               view={this.props.view}
             />
           ) : null}
         </div>
-        <div id="row">
+        <div className="row">
           <WideButton onClick={this.props.updateAvail}>
             Edit Availability
           </WideButton>
@@ -133,11 +132,6 @@ const Container = styled('div')`
   flex-flow: column nowrap;
   min-width: 300px;
   width: 25%;
-
-  /* the below can be used to make the card orientation horizontal */
-  /* #row {
-    display: flex;
-  } */
 
   .x {
     width: 100%;
