@@ -52,7 +52,7 @@ class Card extends Component {
       <Container data-testid="employee-card">
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
-            <p className="delete" onClick={this.openModal}>
+            <p className="delete" id="delete" onClick={this.openModal}>
               ✕
             </p>
           )}
@@ -83,14 +83,13 @@ class Card extends Component {
 
           {time_off_requests ? (
             <TimeOff
-              className="timeoff"
               timeOffRequests={time_off_requests}
               view={this.props.view}
             />
           ) : null}
         </div>
         <div className="row">
-          <WideButton onClick={this.props.updateAvail}>
+          <WideButton id="edit" onClick={this.props.updateAvail}>
             Edit Availability
           </WideButton>
         </div>

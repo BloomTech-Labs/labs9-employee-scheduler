@@ -267,16 +267,16 @@ class Scheduler extends React.Component {
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       // Need to set our running state to false, so we can restart if we click start again.
       this.setState({ run: false, stepIndex: 0 })
-      axios
-        .put(
-          `${baseURL}/users/${user.id}`,
-          { cal_visit: false },
-          {
-            headers: { authorization: this.props.token }
-          }
-        )
-        .then(res => {})
-        .catch(err => console.log(err))
+      // axios
+      //   .put(
+      //     `${baseURL}/users/${user.id}`,
+      //     { cal_visit: false },
+      //     {
+      //       headers: { authorization: this.props.token }
+      //     }
+      //   )
+      //   .then(res => {})
+      //   .catch(err => console.log(err))
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
 

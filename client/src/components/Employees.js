@@ -24,7 +24,10 @@ class Employees extends Component {
       availTarget: null,
       show: false,
       searchTerm: '',
-      employees: props.employees
+      employees: props.employees,
+      //react joyride demo steps
+      steps: undefined, //check demo folder for steps
+      stepIndex: 0
     }
   }
   componentDidMount() {

@@ -21,7 +21,7 @@ class Availability extends Component {
     const { availabilities } = this.props
     // the below should not render if there is no data being pass to it. This is not working though...
     return availabilities === [] ? null : (
-      <CardContainer avail>
+      <CardContainer avail id="avails">
         {/* display the employee's weekly availability (e.g. Mon, weds. 8am to 5pm)
            in the employees directory, the supervisor should be able to select days and use a timepicker to alter this. */}
         <h6>Employee Availability</h6>
