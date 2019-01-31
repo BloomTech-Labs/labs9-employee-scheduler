@@ -35,7 +35,7 @@ const demoAvailabilities = users => {
     availabilities.push(
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 0,
         start_time: 9,
         end_time: 17,
@@ -43,7 +43,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 1,
         start_time: 9,
         end_time: 17,
@@ -51,7 +51,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 2,
         start_time: 9,
         end_time: 17,
@@ -59,7 +59,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 3,
         start_time: 9,
         end_time: 17,
@@ -67,7 +67,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 4,
         start_time: 9,
         end_time: 17,
@@ -75,7 +75,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 5,
         start_time: 9,
         end_time: 17,
@@ -83,7 +83,7 @@ const demoAvailabilities = users => {
       },
       {
         id: uuid(),
-        user_id: user.user_id,
+        user_id: user.id,
         day: 5,
         start_time: 9,
         end_time: 17,
@@ -99,7 +99,7 @@ const demoTimeOff = users => {
   users.forEach(user => {
     timeOffRequests.push({
       id: uuid(),
-      user_id: user.user_id,
+      user_id: user.id,
       date: moment()
         .add(parseInt(Math.random() * 4) + 1, 'days')
         .startOf('day'),
