@@ -5,7 +5,12 @@ import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-import { registerAsOwner, authenticate, registerReset } from '../actions' // for calling once all data is in
+import {
+  registerAsOwner,
+  authenticate,
+  registerReset,
+  logout
+} from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
 import Status from './Status'
@@ -16,6 +21,8 @@ import { Container, Input, Select } from './common/FormContainer'
 import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 import industryList from '../industryList'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
 class RegisterOwner extends Component {
   state = {
@@ -186,22 +193,28 @@ class RegisterOwner extends Component {
               <Select
                 name="industry"
                 type="text"
-                value={industry}
                 onChange={handleChange}
                 placeholder="ex. software"
                 ariaLabel="org-description"
+                defaultValue={' '}
               >
-                <option selected value="" />
                 {industryList.map((industry, i) => (
                   <option value={industry} key={i}>
                     {industry}
                   </option>
                 ))}
               </Select>
+              <ButtonContainer>
+                <div>
+                  <Button type="submit" className="register">
+                    Register
+                  </Button>
+                </div>
 
-              <Button type="submit" className="register">
-                Register
-              </Button>
+                <Button onClick={this.props.logout} cancel>
+                  Cancel
+                </Button>
+              </ButtonContainer>
             </form>
           </Container>
         </OuterContainer>
@@ -217,5 +230,14 @@ const mapStateToProps = ({ registration, auth }) => ({
 
 export default connect(
   mapStateToProps,
-  { registerAsOwner, authenticate, registerReset }
+  { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
+
+const ButtonContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+
+  div {
+    margin-right: 20px;
+  }
+`

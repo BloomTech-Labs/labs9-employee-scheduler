@@ -64,12 +64,16 @@ class Card extends Component {
           <P main>{`${first_name} ${last_name}`}</P>
           {/* Employee Email */}
           <P>
-            {email}
+            <a className="link" href={`mailto:${email}`}>
+              {email}
+            </a>
             {Boolean(emailpref) ? <span> (pref)</span> : null}
           </P>
           {/* Employee Phone */}
           <P>
-            {phone}
+            <a className="link" href={`tel:${phone}`}>
+              {phone}
+            </a>
             {Boolean(phonepref) ? <span> (pref)</span> : null}
           </P>
         </div>
@@ -162,6 +166,10 @@ const P = styled.p`
     props.main ? system.color.primary : system.color.captiontext};
   font-size: ${props => (props.main ? '1.8rem' : '1.5rem')};
   line-height: ${system.spacing.lineHeight};
+
+  a {
+    color: ${system.color.captiontext};
+  }
 
   span {
     font-size: ${system.fontSizing.s};

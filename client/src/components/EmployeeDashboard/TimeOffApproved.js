@@ -56,6 +56,7 @@ const PTO = styled.div`
 
   .reason {
     width: 60%;
+    text-align: left;
     @media ${system.breakpoints[0]} {
       width: 50%;
       font-size: ${system.fontSizing.s};
@@ -88,6 +89,7 @@ const PTO = styled.div`
     }
 
     .status {
+      text-align: left;
       color: ${props =>
         props.status === 'approved'
           ? system.color.success

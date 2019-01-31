@@ -7,8 +7,8 @@ const AssignedShifts = ({ id, start, end, time }) => {
   return (
     <Shifts key={id}>
       <p>{moment(start).format('MMM Do')}</p>
-      <span>{`${moment(start).format('h:mma')} - ${moment(end).format(
-        'h:mma'
+      <span>{`${moment(start).format('h:mm a')} - ${moment(end).format(
+        'h:mm a'
       )}`}</span>
     </Shifts>
   )
@@ -17,7 +17,7 @@ const AssignedShifts = ({ id, start, end, time }) => {
 export default AssignedShifts
 
 // The below code is the same as Avails in Availability.js
-const Shifts = styled.div`
+export const Shifts = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

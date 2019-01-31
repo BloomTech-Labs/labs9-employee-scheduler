@@ -12,12 +12,18 @@ import AddEmployee from './AddEmployee'
 import AvailabilityForm from './Availability/AvailabilityForm'
 import Button from './common/Button'
 import Modal from './Modal'
+import { Input } from './common/FormContainer'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
-  state = {
-    availTarget: null,
-    show: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      availTarget: null,
+      show: false,
+      searchTerm: '',
+      employees: props.employees
+    }
   }
   componentDidMount() {
     const { org_id, token, fetchEmployeesFromDB } = this.props
@@ -38,15 +44,38 @@ class Employees extends Component {
     })
   }
 
+  updateSearch = e => {
+    this.setState({ [e.target.name]: e.target.value.substr(0, 20) })
+  }
+
   render() {
     const { employees } = this.props
     const { availTarget } = this.state
+    let filteredEmployees = employees.filter(person => {
+      if (
+        person.first_name
+          .toLowerCase()
+          .indexOf(this.state.searchTerm.toLowerCase()) > -1
+      ) {
+        return person
+      }
+    })
     return (
       <OuterContainer location="Employees ">
         <BreadCrumb location="Employees" />
         <LeftSideBar fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
+
+          <Input
+            id="search"
+            search
+            type="text"
+            name="searchTerm"
+            placeholder="Search employees..."
+            onChange={this.updateSearch}
+            value={this.state.searchTerm}
+          />
           <Button onClick={this.toggleShow}>Add Employee</Button>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
             <AddEmployee />
@@ -68,9 +97,8 @@ class Employees extends Component {
                 ) : null
               }}
             </Modal>
-            {/* just grab the first 12 users for now because the db returns an array of 500*/}
             {employees &&
-              employees.slice(0, 12).map((employee, i) => (
+              filteredEmployees.map((employee, i) => (
                 <FlexSpacer key={i}>
                   <Card
                     {...employee}
