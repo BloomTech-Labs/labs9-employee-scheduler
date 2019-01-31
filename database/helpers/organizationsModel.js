@@ -11,13 +11,13 @@ const insertHoursForNewOrg = (org_id, offset) => {
       id: uuid(),
       organization_id: org_id,
       day: day[i],
-      open_time: moment({ hours: 9 })
-        .utc()
-        .add(offset, 'minutes')
+      open_time: moment
+        .utc({ hours: 9 })
+        .subtract(offset, 'minutes')
         .format('HH:mm'),
-      close_time: moment({ hours: 17 })
-        .utc()
-        .add(offset, 'minutes')
+      close_time: moment
+        .utc({ hours: 17 })
+        .subtract(offset, 'minutes')
         .format('HH:mm'),
       closed: false
     }
@@ -39,6 +39,7 @@ const getOrg = id =>
 
 const addOrg = (org, offset) => {
   const id = org.id ? org.id : uuid()
+  console.log(offset)
   return db('organizations')
     .insert({ id, ...org })
     .then(res => {
