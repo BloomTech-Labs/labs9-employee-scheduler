@@ -173,12 +173,13 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
   // initialize covered and open hours variables
   let totalHoursCovered = 0
+  let totalHoursOpen = 0
 
   // calc hours open
   // some bug is causing this to have some strange tiny aberations in the num
   // letting it be for now
-  const totalHoursOpen = hours.reduce(
-    (acc, { open_time, close_time, closed }) => {
+  if (view === 'week') {
+    totalHoursOpen = hours.reduce((acc, { open_time, close_time, closed }) => {
       const convertTimeToObject = time => {
         const [hour, minute] = time.split(':')
         return { hour, minute, second: '00' }
@@ -192,9 +193,8 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       }
 
       return acc + moment.duration(moment(close).diff(open)).asHours()
-    },
-    0
-  )
+    }, 0)
+  }
 
   // for each day add number of covered and open hours
   Object.keys(days).forEach(key => {
@@ -268,9 +268,10 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       // console.log(utcScheduleEnd.utc().format())
 
       // increment hours open appropriately
-      // hoursOpen = moment
-      //   .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
-      //   .asHours()
+      // calculating in case the view is for a day
+      hoursOpen = moment
+        .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
+        .asHours()
 
       // run discard options first, then mutation options to make sure discards happen
       // `!` (not sign) necessary in comparisons where it appears
@@ -335,7 +336,9 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
     // increment the weekly totals accordingly
     totalHoursCovered += hoursCovered
-    // totalHoursOpen += hoursOpen
+    if (view === 'day') {
+      totalHoursOpen += hoursOpen
+    }
   })
 
   // console.log(totalHoursCovered)
