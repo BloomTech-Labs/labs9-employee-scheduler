@@ -176,35 +176,35 @@ export default [
       }
     },
     title: <h3>Hours of Operation</h3>
-  },
-  {
-    title: 'Menu',
-    target: '#menu',
-    content: (
-      <div>
-        <p>
-          Navigate around the app using this menu. When you click 'Next', we'll
-          send you to the Employee List page. Click the "Tutorial" button there
-          to resume this guide.
-        </p>
-      </div>
-    ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
-    textAlign: 'center',
-    placement: 'bottom',
-    disableBeacon: true,
-    disableOverlayClose: true,
-    hideCloseButton: true,
-    hideFooter: false,
-    spotlightClicks: false,
-    styles: {
-      options: {
-        zIndex: 10000
-      }
-    }
-  },
-  {
-    target: 'body',
-    content: <Redirect to="/employees" />
   }
+  // {
+  //   title: 'Menu',
+  //   target: '#menu',
+  //   content: (
+  //     <div>
+  //       <p>
+  //         Navigate around the app using this menu. When you click 'Next', we'll
+  //         send you to the Employee List page. Click the "Tutorial" button there
+  //         to resume this guide.
+  //       </p>
+  //     </div>
+  //   ),
+  //   locale: { skip: <strong arial-label="skip">Skip</strong> },
+  //   textAlign: 'center',
+  //   placement: 'bottom',
+  //   disableBeacon: true,
+  //   disableOverlayClose: true,
+  //   hideCloseButton: true,
+  //   hideFooter: false,
+  //   spotlightClicks: false,
+  //   styles: {
+  //     options: {
+  //       zIndex: 10000
+  //     }
+  //   }
+  // },
+  // {
+  //   target: 'body',
+  //   content: <Redirect to="/employees" />
+  // }
 ]
