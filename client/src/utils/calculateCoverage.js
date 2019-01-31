@@ -161,7 +161,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
         .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
         .asHours()
 
-      // Step 7.4.1: run truncation logic
+      // Step 7.4.2: run truncation logic
 
       // if schedule end is before shift start, discard shift
       // if schedule start is after shift end, discard shift
