@@ -29,15 +29,15 @@ const getDashboard = async userId => {
   const timeOff = await db('users as u')
     .where({ 'u.id': userId })
     .join('time_off_requests as tor', { 'u.id': 'tor.user_id' })
-    .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
-    .reduce((acc, { id, date, status, reason }) => {
+    .select('tor.id', 'tor.start', 'tor.end', 'tor.status', 'tor.reason')
+    .reduce((acc, { id, start, end, status, reason }) => {
       // return only confirmed time off
       // TODO: this logic needs to be reworked to see denied requests for only 2 days.
 
       // let twoDays = moment(date).diff(Date.now(), 'day')
       // this will check if the denied request is older than two days
       // and hide it from employee view so that it doesn't build up
-      return date ? [...acc, { id, date, status, reason }] : acc
+      return start && end ? [...acc, { id, start, end, status, reason }] : acc
     }, [])
 
   return {

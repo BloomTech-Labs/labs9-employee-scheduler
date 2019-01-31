@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../../design/theme'
 
-import { formatHours, localDay } from '../../../utils'
+import { formatHours, utcDayToLocal } from '../../../utils'
 import CardContainer from '../../common/CardContainer'
 
 const weekdays = [
@@ -30,7 +30,7 @@ const Availability = ({ availabilities }) => {
           .map(({ id, day, start_time, end_time, off }) => (
             //temporarily adds ids tp the DOM for easy access for testing
             <Avails key={id}>
-              <p>{weekdays[localDay({ day, time: start_time })]}</p>
+              <p>{weekdays[utcDayToLocal({ day, time: start_time })]}</p>
               <span>
                 {off
                   ? 'unavailable'

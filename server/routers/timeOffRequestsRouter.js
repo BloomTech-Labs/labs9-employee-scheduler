@@ -23,11 +23,11 @@ router.get('/:userId', authorize(['all']), (req, res) => {
 //add time off request
 router.post('/:userId', authorize(['all']), (req, res) => {
   const { userId } = req.params
-  const { date, reason } = req.body
-  if (!date || !reason)
+  const { start, end, reason } = req.body
+  if (!start || !end || !reason)
     return res.status(400).json({ error: 'Missing required field(s)' })
 
-  addTimeOffRequest({ user_id: userId, date, reason, status: 'pending' })
+  addTimeOffRequest({ user_id: userId, start, end, reason, status: 'pending' })
     .then(id => {
       return getTimeOffRequest(id)
     })
