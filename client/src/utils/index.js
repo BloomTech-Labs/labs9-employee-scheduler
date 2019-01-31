@@ -65,8 +65,12 @@ const decrementDay = day => {
   return candidate < 0 ? candidate + 7 : candidate
 }
 
-export const localDay = ({ day, time }) => {
+export const utcDayToLocal = ({ day, time }) => {
   return inRolloverZone(time) ? decrementDay(day) : day
+}
+
+export const localDayToUTC = ({ day, utcTime }) => {
+  return inRolloverZone(utcTime) ? day + 1 : day
 }
 
 export const getRange = ({ date, view }) => {
