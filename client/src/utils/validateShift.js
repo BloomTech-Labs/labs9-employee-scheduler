@@ -22,15 +22,25 @@ export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
   }
 
   // step 2: check for the event falling inside an availability window
-  const availabilityForDay = employee.availabilities.find(
-    ({ day }) =>
+  console.log(eventTimes)
+  console.log(employee.availabilities)
+
+  const availabilityForDay = employee.availabilities.find(({ day }) => {
+    console.log(
+      day,
+      moment(eventTimes.start)
+        .utc()
+        .day()
+    )
+    return (
       day ===
       moment(eventTimes.start)
         .utc()
         .day()
-  )
-
-  if (!availabilityForDay.off) {
+    )
+  })
+  console.log(availabilityForDay)
+  if (availabilityForDay && !availabilityForDay.off) {
     const convertTimeToObject = time => {
       const [hour, minute] = time.split(':')
       return { hour, minute, second: '00' }
