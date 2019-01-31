@@ -12,6 +12,7 @@ import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
+import Loader from './Loader'
 
 class Join extends Component {
   state = {
@@ -19,7 +20,8 @@ class Join extends Component {
     firstName: '',
     lastName: '',
     phone: '',
-    email: ''
+    email: '',
+    forceLogout: true
   }
 
   componentDidMount() {
@@ -36,6 +38,9 @@ class Join extends Component {
         this.setState({ email, phone, firstName, lastName, oauthSuccess: true })
       }
     })
+    if (!this.props.token) {
+      this.setState({ forceLogout: false })
+    }
   }
 
   // Make sure we un-register Firebase observers when the component unmounts.
@@ -74,6 +79,16 @@ class Join extends Component {
 
     //checks to see if there is a current user logged in and forces a logout to enable registration.
     //this is a bug fix
+    if (this.props.fetchingAuth === undefined || this.props.fetchingAuth) {
+      return (
+        <OuterContainer height="true">
+          <BreadCrumb />
+          <Container className="wrapper">
+            <Loader />
+          </Container>
+        </OuterContainer>
+      )
+    }
     if (this.props.token) {
       return (
         <OuterContainer height="true">
@@ -170,7 +185,8 @@ class Join extends Component {
 
 const mapStateToProps = ({ registration, auth }) => ({
   registration,
-  token: auth.token
+  token: auth.token,
+  fetchingAuth: auth.fetchingAuth
 })
 
 export default connect(
