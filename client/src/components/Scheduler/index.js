@@ -53,7 +53,7 @@ class Scheduler extends React.Component {
       axios
         .post(
           `${baseURL}/employees/${this.props.user.organization_id}`,
-          offset,
+          { offset: offset },
           {
             headers: { authorization: this.props.token }
           }
