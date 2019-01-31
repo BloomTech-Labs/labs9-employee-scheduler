@@ -104,11 +104,17 @@ export const deleteTimeOffRequest = (torId, token) => async dispatch => {
   }
 }
 
-export const addTimeOffRequest = (userId, date, reason, token) => dispatch => {
+export const addTimeOffRequest = (
+  userId,
+  start,
+  end,
+  reason,
+  token
+) => dispatch => {
   axios
     .post(
       `${baseURL}/time-off-requests/${userId}`,
-      { date: date, reason: reason },
+      { start, end, reason: reason },
       {
         headers: { authorization: token }
       }

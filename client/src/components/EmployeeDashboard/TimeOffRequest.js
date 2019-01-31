@@ -46,6 +46,8 @@ class TimeOffRequest extends Component {
     const { requestDate, reason } = this.state
 
     const date = moment(requestDate)
+    const start = date.startOf('day')
+    const end = date.endOf('day')
     const now = moment()
 
     if (date._d < now._d) {
@@ -53,7 +55,7 @@ class TimeOffRequest extends Component {
     } else {
       const { token, user } = this.props.auth
       const formattedDate = date.format('YYYY-MM-DD')
-      this.props.addTimeOffRequest(user.id, formattedDate, reason, token)
+      this.props.addTimeOffRequest(user.id, start, end, reason, token)
       alert(
         `We put in your PTO request for ${formattedDate}. We hope you get it!`
       )

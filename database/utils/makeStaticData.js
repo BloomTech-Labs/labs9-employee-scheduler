@@ -132,15 +132,24 @@ const populateStaticOrg = (size = 10) => {
       ...seed
     }
   })
+  let HOO = generateHoursOfOperation(organization.id)
 
   let availabilities = []
   let events = []
   let timeOffRequests = []
 
   users.forEach(user => {
-    availabilities = [...availabilities, ...generateAvailabilities(user.id)]
-    events = [...events, ...generateEvents(user.id)]
-    timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
+    const userAvailabilities = generateAvailabilities(user.id, HOO)
+    const userTimeOffRequests = generateDayOffRequests(user.id)
+    const userEvents = generateEvents(
+      user.id,
+      userAvailabilities,
+      userTimeOffRequests
+    )
+
+    timeOffRequests = [...timeOffRequests, ...userTimeOffRequests]
+    events = [...events, ...userEvents]
+    availabilities = [...availabilities, ...userAvailabilities]
   })
 
   return {
@@ -149,12 +158,12 @@ const populateStaticOrg = (size = 10) => {
     availabilities,
     events,
     timeOffRequests,
-    hoursOfOperation: generateHoursOfOperation(organization.id)
+    hoursOfOperation: HOO
   }
 }
 
 fs.writeFile(
-  'static_seed.json',
+  '../static_seed.json',
   JSON.stringify(populateStaticOrg()),
   console.log
 )

@@ -27,7 +27,6 @@ import {
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
 import steps from './Demo/calendar'
 import WeekSummary from './WeekSummary'
-import axios from 'axios'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
@@ -142,7 +141,8 @@ class Scheduler extends React.Component {
 
   getScheduleCoverage = () => {
     const { hours, employees } = this.props
-    const coverage = calculateCoverage({ hours, employees })
+    const { view, date } = this.state
+    const coverage = calculateCoverage({ hours, employees, view, date })
     this.props.displayCoverage(coverage)
   }
 
