@@ -166,7 +166,7 @@ class Billing extends Component {
 
             <form onSubmit={this.deleteHandler}>
               <h6 id="instructions">
-                Here's what's included in the $20 / month SMB Plan:
+                Here's what's included in the $20 / month Pro Plan:
               </h6>
               <ul>
                 <li>A simple calendar interface to manage shifts.</li>
@@ -231,7 +231,7 @@ class Billing extends Component {
 
           <form onSubmit={this.submit}>
             <h6 id="instructions">
-              Here's what's included in the $20 / month SMB Plan:
+              Here's what's included in the $20 / month Pro Plan:
             </h6>
             <ul>
               <li>A 14-day free trial.</li>

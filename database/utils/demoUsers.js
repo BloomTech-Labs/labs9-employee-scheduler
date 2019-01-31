@@ -29,64 +29,72 @@ const demoUsers = org_id => {
   return users
 }
 
-const demoAvailabilities = users => {
+const demoAvailabilities = (users, offset) => {
   let availabilities = []
+  const start_time = moment({ hours: 9 })
+    .utc()
+    .add(offset, 'minutes')
+    .format('HH:mm')
+  const end_time = moment({ hours: 17 })
+    .utc()
+    .add(offset, 'minutes')
+    .format('HH:mm')
   users.forEach(user => {
     availabilities.push(
       {
         id: uuid(),
         user_id: user.id,
         day: 0,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 1,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 2,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 3,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 4,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 5,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       },
       {
         id: uuid(),
         user_id: user.id,
         day: 5,
-        start_time: 9,
-        end_time: 17,
+        start_time: start_time,
+        end_time: end_time,
         off: false
       }
     )
@@ -94,15 +102,25 @@ const demoAvailabilities = users => {
   return availabilities
 }
 
-const demoTimeOff = users => {
+const demoTimeOff = (users, offset) => {
   let timeOffRequests = []
+  const rand = Math.random() * 4 + 1
   users.forEach(user => {
     timeOffRequests.push({
       id: uuid(),
       user_id: user.id,
-      date: moment()
-        .add(parseInt(Math.random() * 4) + 1, 'days')
-        .startOf('day'),
+      start: moment()
+        .add(rand, 'd')
+        .startOf('day')
+        .utc()
+        .add(offset, 'minutes')
+        .format(),
+      end: moment()
+        .add(rand, 'd')
+        .endOf('day')
+        .utc()
+        .add(offset, 'minutes')
+        .format(),
       reason: 'Possimus occaecati blanditiis beatae sit id.',
       status: 'pending'
     })

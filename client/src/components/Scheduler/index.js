@@ -47,16 +47,23 @@ class Scheduler extends React.Component {
 
   componentDidMount() {
     // LINES 50 to 58 should use REDUX!
-    const baseURL = process.env.REACT_APP_SERVER_URL
-    axios.post(
-      `${baseURL}/employees/${this.props.user.organization_id}`,
-      null,
-      {
-        headers: { authorization: this.props.token }
-      }
-    )
+    if (this.props.user.cal_visit) {
+      const baseURL = process.env.REACT_APP_SERVER_URL
+      const offset = moment().utcOffset()
+      axios
+        .post(
+          `${baseURL}/employees/${this.props.user.organization_id}`,
+          offset,
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.fetchData())
+        .catch(err => console.log(err))
+    } else {
+      this.fetchData()
+    }
 
-    this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
 
@@ -268,9 +275,7 @@ class Scheduler extends React.Component {
             headers: { authorization: this.props.token }
           }
         )
-        .then(res => {
-          res.json(res.data)
-        })
+        .then(res => {})
         .catch(err => console.log(err))
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)

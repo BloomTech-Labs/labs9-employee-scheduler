@@ -28,18 +28,18 @@ router.get('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 // this post router creates fake demo employees
 router.post('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
+  const { offset } = req.body
   // id is org id
   const users = demoUsers(id)
-  const availabilities = demoAvailabilities(users)
-  const timeOffRequests = demoTimeOff(users)
+  const availabilities = demoAvailabilities(users, offset)
+  const timeOffRequests = demoTimeOff(users, offset)
 
-  // UNCOMMMENT THIS once first-time bools and redux are set up
-  // initDemo({ users, availabilities, timeOffRequests }, knex)
-  //   .then(users => res.status(201).json(users))
-  //   .catch(err => {
-  //     console.log(err)
-  //     res.status(400).json(err)
-  //   })
+  initDemo({ users, availabilities, timeOffRequests }, knex)
+    .then(users => res.status(201).json(users))
+    .catch(err => {
+      console.log(err)
+      res.status(400).json(err)
+    })
 })
 
 module.exports = router
