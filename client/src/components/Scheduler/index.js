@@ -9,7 +9,7 @@ import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-
+import axios from 'axios'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
@@ -24,12 +24,13 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-import ReactJoyride, { STATUS } from 'react-joyride'
-import stepData from './Demo/steps'
+import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import steps from './Demo/calendar'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
+const baseURL = process.env.REACT_APP_SERVER_URL
 
 class Scheduler extends React.Component {
   state = {
@@ -48,8 +49,9 @@ class Scheduler extends React.Component {
     this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
-    if (stepData) {
-      this.setState({ steps: stepData })
+    const { user } = this.props
+    if (user && user.cal_visit === true) {
+      this.setState({ steps, run: true })
     }
   }
 
@@ -234,15 +236,61 @@ class Scheduler extends React.Component {
 
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
-    const { status, type } = data
-
+    const { action, index, type, status } = data
+    const { user } = this.props
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      this.setState({ run: false })
-    }
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ run: false, stepIndex: 0 })
+      axios
+        .put(
+          `${baseURL}/user/${user.id}`,
+          { cal_visit: false },
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => {
+          res.json(res.data)
+        })
+        .catch(err => console.log(err))
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
 
-    console.groupCollapsed(type)
-    console.log(data) //eslint-disable-line no-console
-    console.groupEnd()
+      if (index === 0) {
+        setTimeout(() => {
+          this.setState({ run: true })
+        }, 400)
+      } else if (index === 1) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else if (index === 2 && action === ACTIONS.PREV) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else {
+        // Update state to advance the tour
+        this.setState({
+          stepIndex
+        })
+      }
+    }
   }
 
   updateDragState = (draggedEmployee = null) =>
@@ -251,7 +299,6 @@ class Scheduler extends React.Component {
   render() {
     const { employees, hours, coverage } = this.props
     const { width, range, view, date } = this.state
-
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
 
