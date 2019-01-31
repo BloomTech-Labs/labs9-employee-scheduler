@@ -24,6 +24,8 @@
   role: STRING [ 'owner', 'supervisor', 'employee' ]
   email: STRING
   phone: STRING
+  cal_visit: BOOLEAN
+  emp_visit: BOOLEAN
   emailpref: BOOLEAN
   phonepref: BOOLEAN
 }
@@ -36,8 +38,8 @@
   id: UUID
   user_id: UUID foreign key in USERS table
   day: INTEGER [ 0- 6 ]
-  start_time: FLOAT [ 0 - 23 ]
-  end_time: FLOAT [ 0 - 23 ]
+  start_time: TIME STRING [ 0 - 23 ] [HH:MM:SS]
+  end_time: STRING STRING [ 0 - 23 ] [HH:MM:SS]
   off: BOOLEAN
 }
 ```
@@ -48,7 +50,8 @@
 {
   id: UUID
   user_id: UUID foreign key in USERS table
-  date: DATE in YYYY-MM-DD format 
+  start: DATE & TIME STRING in YYYY-MM-DD [ 0 - 23 ] [HH:MM:SS]
+  end: DATETIME STRING in YYYY-MM-DD [ 0 - 23 ] [HH:MM:SS]
   reason: STRING
   status: STRING [ 'pending', 'confirmed', 'denied' ]
 }
@@ -61,7 +64,7 @@
   id: uuid
   user_id: UUID foreign key in USERS table
   start: DATETIME
-  end: DATETIME 
+  end: DATETIME
 }
 ```
 
@@ -73,7 +76,7 @@
   organization_id: UUID foreign key in ORGANIZATIONS table
   day: INTEGER [ 0 -6 ]
   open: FLOAT [ 0 - 23]
-  close: FLOAT [ 0 - 23] 
+  close: FLOAT [ 0 - 23]
   closed: BOOLEAN
 }
 ```
