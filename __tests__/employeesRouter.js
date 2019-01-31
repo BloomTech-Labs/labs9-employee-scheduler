@@ -33,7 +33,7 @@ describe('testing the employees router', () => {
         .set('authorization', 'testing')
 
       expect(response.status).toBe(200)
-      expect(response.body).toEqual(expected)
+      expect(response.body).toEqual(JSON.parse(JSON.stringify(expected)))
 
       await cleanup()
     })
