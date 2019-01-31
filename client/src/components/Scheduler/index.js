@@ -52,7 +52,7 @@ class Scheduler extends React.Component {
     const { user } = this.props
     if (user && user.cal_visit === true) {
       this.setState({ steps, run: true })
-    }
+    } else return
   }
 
   componentDidUpdate() {
@@ -243,7 +243,7 @@ class Scheduler extends React.Component {
       this.setState({ run: false, stepIndex: 0 })
       axios
         .put(
-          `${baseURL}/user/${user.id}`,
+          `${baseURL}/users/${user.id}`,
           { cal_visit: false },
           {
             headers: { authorization: this.props.token }
