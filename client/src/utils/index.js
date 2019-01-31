@@ -16,7 +16,7 @@ export function getHoursOfOperationRange(hours) {
         }
       : hours.reduce(
           (acc, day) => {
-            console.log(acc, day)
+            // console.log(acc, day)
             let returnVal = { ...acc }
             const dayStart = moment.utc(day.open_time, 'HH:mm')
             const dayEnd = moment.utc(day.close_time, 'HH:mm')
@@ -407,12 +407,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
       return { hour, minute, second: '00' }
     }
 
-    let start = moment(eventTimes.start).set(
-      convertTimeToObject(availabilityForDay.start_time)
-    )
-    let end = moment(eventTimes.start).set(
-      convertTimeToObject(availabilityForDay.end_time)
-    )
+    let start = moment(eventTimes.start)
+      .utc()
+      .set(convertTimeToObject(availabilityForDay.start_time))
+    let end = moment(eventTimes.start)
+      .utc()
+      .set(convertTimeToObject(availabilityForDay.end_time))
 
     if (moment(end).isBefore(start)) {
       end = end.add(1, 'days')
@@ -452,12 +452,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     return { hour, minute, second: '00' }
   }
 
-  let scheduleStart = moment(eventTimes.start).set(
-    convertTimeToObject(hours[day].open_time)
-  )
-  let scheduleEnd = moment(eventTimes.start).set(
-    convertTimeToObject(hours[day].close_time)
-  )
+  let scheduleStart = moment(eventTimes.start)
+    .utc()
+    .set(convertTimeToObject(hours[day].open_time))
+  let scheduleEnd = moment(eventTimes.start)
+    .utc()
+    .set(convertTimeToObject(hours[day].close_time))
 
   if (moment(scheduleEnd).isBefore(scheduleStart)) {
     scheduleEnd = scheduleEnd.add(1, 'days')
@@ -467,11 +467,13 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
     !moment(eventTimes.start).isBetween(
       scheduleStart,
       scheduleEnd,
+      'minute',
       [] /*inclusive*/
     ) ||
     !moment(eventTimes.end).isBetween(
       scheduleStart,
       scheduleEnd,
+      'minute',
       [] /*inclusive*/
     )
   ) {
@@ -483,17 +485,17 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // step 4
   // check for scheduling the same employee twice during the same block of time
-  employee.events.forEach(({ start, end }) => {
-    // possible collisions: if event start or end exists between start/end of existsing event
-    if (
-      (moment(eventTimes.start).isAfter(start) &&
-        moment(eventTimes.start).isBefore(end)) ||
-      (moment(eventTimes.end).isAfter(start) &&
-        moment(eventTimes.end).isBefore(end))
-    ) {
-      conflicts = true
-    }
-  })
+  // employee.events.forEach(({ start, end }) => {
+  //   // possible collisions: if event start or end exists between start/end of existsing event
+  //   if (
+  //     (moment(eventTimes.start).isAfter(start) &&
+  //       moment(eventTimes.start).isBefore(end)) ||
+  //     (moment(eventTimes.end).isAfter(start) &&
+  //       moment(eventTimes.end).isBefore(end))
+  //   ) {
+  //     conflicts = true
+  //   }
+  // })
 
   // need to keep this separate because returning from forEach doesn't escape the enclosing func
   if (conflicts) {

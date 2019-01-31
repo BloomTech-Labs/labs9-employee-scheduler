@@ -153,7 +153,6 @@ router.put('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
     const success = await updateUser(id, req.body)
     res.status(200).json(success)
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: 'Server error' })
   }
 })
