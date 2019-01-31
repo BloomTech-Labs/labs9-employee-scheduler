@@ -275,9 +275,15 @@ const populateOrg = ({ orgId = uuid(), size }) => {
   let timeOffRequests = []
 
   users.forEach(user => {
-    availabilities = [...availabilities, ...generateAvailabilities(user.id)]
-    events = [...events, ...generateEvents(user.id)]
+    availabilities = [
+      ...availabilities,
+      ...generateAvailabilities(user.id, hoursOfOperation)
+    ]
     timeOffRequests = [...timeOffRequests, ...generateDayOffRequests(user.id)]
+    events = [
+      ...events,
+      ...generateEvents(user.id, availabilities, timeOffRequests)
+    ]
   })
 
   return {
