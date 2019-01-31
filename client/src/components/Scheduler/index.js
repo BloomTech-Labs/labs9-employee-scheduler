@@ -188,7 +188,8 @@ class Scheduler extends React.Component {
   resizeEvent = ({ end, start, event }) => {
     const { verdict, message } = this.validateEvent({
       userId: event.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: event.id
     })
     if (verdict) {
       this.props.changeEvent(
