@@ -28,7 +28,7 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 
 ### Motivation
 
-Cadence was created to solve modern shift management problems. Maintaining absolute visibility over your companies schedule can be a difficult task, even with spreadsheets. Cadence is an intiuitive and easy to use application that will do all of the heavy lifting for you. Just register at [https://cadence.netlify.com], create your company and take our demo for a spin. Drag and drop demo employees and interact with their availabilities. Approve and deny their paid time off requests, change your hours of operations and much more. When you're done, feel free to remove them and begin adding your employees.
+Cadence was created to solve modern shift management problems. Maintaining absolute visibility over your companies schedule can be a difficult task, even with spreadsheets. Cadence is an intuitive and easy to use application that will do all of the heavy lifting for you. Just register [here](https://cadence.netlify.com), create your company and take our demo for a spin. Drag and drop demo employees and interact with their availabilities. Approve and deny their paid time off requests, change your hours of operations and much more. When you're done, feel free to remove them and begin adding your employees.
 
 ### Features
 
