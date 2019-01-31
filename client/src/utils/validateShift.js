@@ -1,8 +1,7 @@
 import moment from 'moment'
 
 export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
-  // step 1
-  // check for conflicts with approved day off requests
+  // step 1: check for conflicts with approved day off requests
   let conflicts = false
 
   employee.time_off_requests.forEach(({ start, end, status }) => {
@@ -22,8 +21,7 @@ export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
     }
   }
 
-  // step 2
-  // check for the event falling inside an availability window
+  // step 2: check for the event falling inside an availability window
   const availabilityForDay = employee.availabilities.find(
     ({ day }) =>
       day ===
@@ -65,8 +63,7 @@ export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
     }
   }
 
-  // step 3
-  // check for event falling outside hours of operation
+  // step 3: check for event falling outside hours of operation
   const day = moment(eventTimes.start)
     .utc()
     .day()
@@ -114,10 +111,10 @@ export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
     }
   }
 
-  // step 4
-  // check for scheduling the same employee twice during the same block of time
+  // step 4: check for scheduling the same employee twice during the same block of time
   employee.events.forEach(({ start, end, id }) => {
-    // possible collisions: if event start or end exists between start/end of existsing event
+    // make sure not to test for the event colliding with itself
+    // possible collisions: if event start or end exists between start/end of existing event
     if (
       eventId !== id &&
       ((moment(eventTimes.start).isAfter(start) &&
