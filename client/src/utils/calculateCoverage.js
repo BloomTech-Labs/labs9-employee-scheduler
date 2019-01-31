@@ -5,7 +5,6 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   const shifts = employees.reduce((acc, { events }) => [...acc, ...events], [])
 
   // Step 2: filter/truncate shifts by view range
-
   // compute the beginning and end of the view range
   const rangeStart = moment(date).startOf(view)
   const rangeEnd = moment(date).endOf(view)
@@ -72,9 +71,6 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // Step 4: populate days object with all corresponding shifts
   rangeFilteredShifts.forEach(shift => {
     const shiftDay = moment(shift.start).day()
-    // console.log('DAY INFO')
-    // console.log(moment(shift.start).day())
-    // console.log(`day of the week: ${shiftDay}`)
     if (days[shiftDay]) {
       days[shiftDay].push(shift)
     }
