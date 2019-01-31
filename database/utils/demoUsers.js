@@ -30,7 +30,7 @@ const demoUsers = org_id => {
 }
 
 const demoAvailabilities = users => {
-  const availabilities = []
+  let availabilities = []
   users.forEach(user => {
     availabilities.push(
       {
@@ -95,7 +95,7 @@ const demoAvailabilities = users => {
 }
 
 const demoTimeOff = users => {
-  const timeOffRequests = []
+  let timeOffRequests = []
   users.forEach(user => {
     timeOffRequests.push({
       id: uuid(),
