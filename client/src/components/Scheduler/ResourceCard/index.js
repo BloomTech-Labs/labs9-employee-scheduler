@@ -1,42 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../../design/theme'
 import Availability from './Availability'
 import TimeOff from './TimeOff'
+import drag from '../../../img/drag.svg'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
-class Card extends Component {
-  render() {
-    const {
-      first_name,
-      last_name,
-      availabilities,
-      time_off_requests,
-      width
-    } = this.props
-    return (
-      <Container data-testid="employee-card">
-        <div className="x" />
-        {/* Employee Name */}
+const Card = ({
+  first_name,
+  last_name,
+  availabilities,
+  time_off_requests,
+  view
+}) => {
+  return (
+    <Container id="employeePool">
+      <div className="x" />
+      {/* Employee Name */}
+      <Name>
         <P main>{`${first_name} ${last_name}`}</P>
-        <div>
-          {/* the below two things should conditionally render based on whether there is data or not */}
-          {availabilities && availabilities.length ? (
-            <Availability availabilities={availabilities} />
-          ) : null}
-
-          {time_off_requests && time_off_requests.length ? (
-            <TimeOff
-              timeOffRequests={time_off_requests}
-              view={this.props.view}
-            />
-          ) : null}
-        </div>
-      </Container>
-    )
-  }
+        <img src={drag} alt="this card is draggable" />
+      </Name>
+      <div>
+        {/* the below two things should conditionally render based on whether there is data or not */}
+        {availabilities && availabilities.length ? (
+          <Availability availabilities={availabilities} />
+        ) : null}
+        {time_off_requests && time_off_requests.length ? (
+          <TimeOff timeOffRequests={time_off_requests} view={view} />
+        ) : null}
+      </div>
+    </Container>
+  )
 }
 
 export default Card
@@ -83,5 +80,16 @@ const P = styled.p`
     font-size: ${system.fontSizing.s};
     color: ${system.color.bodytext};
     font-weight: bold;
+  }
+`
+const Name = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  img {
+    width: 28px;
+    height: 28px;
+    margin-top: 3px;
   }
 `

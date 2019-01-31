@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../Calendar'
-import propTypes from 'prop-types'
-import Button from '../common/Button'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
 import lines from '../../img/lines.svg'
 
 const DnDCal = withDragAndDrop(Calendar)
@@ -70,17 +67,15 @@ class DropCal extends Component {
       view,
       defaultView,
       date,
-      coverage,
       slotPropGetter
     } = this.props
     return connectDropTarget(
-      <div>
+      <div id="calendar">
         <StyledDndCal
           popup
           selectable
           resizable
           defaultDate={new Date()}
-          defaultView="week"
           startAccessor="start"
           endAccessor="end"
           events={events}

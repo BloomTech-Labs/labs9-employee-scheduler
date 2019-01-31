@@ -6,7 +6,7 @@ import Checkbox from './Checkbox'
 import TimeRangeSlider from './TimeRangeSlider'
 import Status from './Status'
 
-const Button = ({
+const HOOSlider = ({
   id,
   name,
   closedAllDay,
@@ -22,23 +22,6 @@ const Button = ({
 }) => {
   return (
     <Container>
-      <Zoom right>
-        <div className="buttons">
-          <TimeRangeSlider
-            onChangeStart={onChangeStart}
-            draggableTrack={draggableTrack}
-            onChange={onChange}
-            onChangeComplete={onChangeComplete}
-            disabled={disabled}
-            name={name}
-            start={start}
-            end={end}
-          />
-          <p>
-            {start} to {end}
-          </p>
-        </div>
-      </Zoom>
       <div>
         <p className="days" id={id}>
           {name}
@@ -50,31 +33,54 @@ const Button = ({
           <Status status={status} />
         </div>
       </Zoom>
+      <Zoom left>
+        <div className="buttons">
+          <TimeRangeSlider
+            onChangeStart={onChangeStart}
+            draggableTrack={draggableTrack}
+            onChange={onChange}
+            onChangeComplete={onChangeComplete}
+            disabled={disabled}
+            name={name}
+            start={start}
+            end={end}
+          />
+          <div className="row">
+            <p>{start}</p>
+            <p>{end}</p>
+          </div>
+        </div>
+      </Zoom>
     </Container>
   )
 }
 
-export default Button
+export default HOOSlider
 
 const Container = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: 0 auto;
-  margin-bottom: 15px;
+  margin-bottom: 7.5px;
+  padding-bottom: 7.5px;
+  border-bottom: 2px solid ${system.color.neutral};
+
+  :last-of-type {
+    border-bottom: none;
+  }
+
   .days {
-    border-radius: ${system.borders.bigRadius};
-    background: ${system.color.neutral};
     border: 0;
-    box-shadow: ${system.shadows.button};
     padding: ${system.spacing.standardPadding};
     width: 116px;
-    text-align: center;
-    margin: 0 10px 10px 11px;
+    text-align: left;
+    margin: 0 10px 10px;
     font-size: ${system.fontSizing.sm};
+    font-weight: bold;
   }
   .buttons {
-    width: 177px;
+    width: 500px;
     background: white;
     padding: 12px;
     margin-right: 15px;
@@ -84,6 +90,17 @@ const Container = styled('div')`
       margin: 5px;
       font-size: 1.8rem;
       border: transparent;
+    }
+    .row {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        font-family: 'Nunito', sans-serif;
+        margin-top: 5px;
+      }
     }
   }
   .closeToggle {

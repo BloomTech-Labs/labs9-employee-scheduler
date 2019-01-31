@@ -154,6 +154,9 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // console.log(hours)
   // console.log(days)
 
+  // console.log(hours)
+  // console.log(days)
+
   // populate days object with all corresponding shifts
   rangeFilteredShifts.forEach(shift => {
     const shiftDay = moment(shift.start).day()
@@ -171,6 +174,27 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   // initialize covered and open hours variables
   let totalHoursCovered = 0
   let totalHoursOpen = 0
+
+  // calc hours open
+  // some bug is causing this to have some strange tiny aberations in the num
+  // letting it be for now
+  if (view === 'week') {
+    totalHoursOpen = hours.reduce((acc, { open_time, close_time, closed }) => {
+      const convertTimeToObject = time => {
+        const [hour, minute] = time.split(':')
+        return { hour, minute, second: '00' }
+      }
+
+      let open = moment().set(convertTimeToObject(open_time))
+      let close = moment().set(convertTimeToObject(close_time))
+
+      if (moment(close).isBefore(open)) {
+        close = close.add(1, 'days')
+      }
+
+      return acc + moment.duration(moment(close).diff(open)).asHours()
+    }, 0)
+  }
 
   // for each day add number of covered and open hours
   Object.keys(days).forEach(key => {
@@ -244,6 +268,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
       // console.log(utcScheduleEnd.utc().format())
 
       // increment hours open appropriately
+      // calculating in case the view is for a day
       hoursOpen = moment
         .duration(moment(utcScheduleEnd).diff(utcScheduleStart))
         .asHours()
@@ -311,7 +336,9 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
 
     // increment the weekly totals accordingly
     totalHoursCovered += hoursCovered
-    totalHoursOpen += hoursOpen
+    if (view === 'day') {
+      totalHoursOpen += hoursOpen
+    }
   })
 
   // console.log(totalHoursCovered)
@@ -328,8 +355,12 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
   // check for conflicts with approved day off requests
   let conflicts = false
 
-  employee.time_off_requests.forEach(({ date, status }) => {
-    if (status === 'approved' && moment(eventTimes.start).isSame(date, 'day')) {
+  employee.time_off_requests.forEach(({ start, end, status }) => {
+    if (
+      status === 'approved' &&
+      (moment(start).isBetween(eventTimes.start, eventTimes.end) ||
+        moment(end).isBetween(eventTimes.start, eventTimes.end))
+    ) {
       conflicts = true
     }
   })
@@ -343,39 +374,87 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // step 2
   // check for the event falling inside an availability window
-  const availabilityForDay =
-    employee.availabilities.filter(
-      ({ day }) => day === moment(eventTimes.start).day()
-    )[0] || null
+  const availabilityForDay = employee.availabilities.find(
+    ({ day }) =>
+      day ===
+      moment(eventTimes.start)
+        .utc()
+        .day()
+  )
 
-  if (!availabilityForDay) {
+  if (!availabilityForDay.off) {
+    const convertTimeToObject = time => {
+      const [hour, minute] = time.split(':')
+      return { hour, minute, second: '00' }
+    }
+
+    let start = moment(eventTimes.start).set(
+      convertTimeToObject(availabilityForDay.start_time)
+    )
+    let end = moment(eventTimes.start).set(
+      convertTimeToObject(availabilityForDay.end_time)
+    )
+
+    if (moment(end).isBefore(start)) {
+      end = end.add(1, 'days')
+    }
+
+    if (
+      moment(start).isAfter(eventTimes.start) ||
+      moment(end).isBefore(eventTimes.end)
+    ) {
+      return {
+        verdict: false,
+        message: `Sorry, you can't schedule this employee outside their availability window.`
+      }
+    }
+  } else {
     return {
       verdict: false,
       message: `Sorry, the employee you're trying to schedule isn't available on this day.`
     }
   }
 
-  if (
-    // day cannot have an off property of true
-    availabilityForDay.off ||
-    // start time must be earlier than or the same as eventTimes.start
-    !(availabilityForDay.start_time <= moment(eventTimes.start).hour()) ||
-    // end_time must be later than or the same as eventTimes.end
-    !(availabilityForDay.end_time >= moment(eventTimes.end).hour())
-  ) {
+  // step 3
+  // check for event falling outside hours of operation
+  const day = moment(eventTimes.start)
+    .utc()
+    .day()
+
+  if (hours[day].closed) {
     return {
       verdict: false,
-      message: `Sorry, you can't schedule this employee outside their availability window.`
+      message: `Sorry, you can't schedule this employee outside the hours of operation.`
     }
   }
 
-  // step 3
-  // check for event falling outside hours of operation
-  const day = moment(eventTimes.start).day()
+  const convertTimeToObject = time => {
+    const [hour, minute] = time.split(':')
+    return { hour, minute, second: '00' }
+  }
+
+  let scheduleStart = moment(eventTimes.start).set(
+    convertTimeToObject(hours[day].open_time)
+  )
+  let scheduleEnd = moment(eventTimes.start).set(
+    convertTimeToObject(hours[day].close_time)
+  )
+
+  if (moment(scheduleEnd).isBefore(scheduleStart)) {
+    scheduleEnd = scheduleEnd.add(1, 'days')
+  }
 
   if (
-    convertMomentToFloat(eventTimes.start) < hours[day].open_time ||
-    convertMomentToFloat(eventTimes.end) > hours[day].close_time
+    !moment(eventTimes.start).isBetween(
+      scheduleStart,
+      scheduleEnd,
+      [] /*inclusive*/
+    ) ||
+    !moment(eventTimes.end).isBetween(
+      scheduleStart,
+      scheduleEnd,
+      [] /*inclusive*/
+    )
   ) {
     return {
       verdict: false,
@@ -415,10 +494,6 @@ export const minuteToTime = (value, format = 12) => {
   let hours = Math.floor(value / 60),
     minutes = value - hours * 60,
     ampm
-
-  // if (hours.length === 1) hours = '0' + hours
-  // if (minutes.length === 1) minutes = '0' + minutes
-  // if (minutes === 0) minutes = '00'
   if (format === 12) {
     ampm = 'AM'
     if (hours >= 12) {
