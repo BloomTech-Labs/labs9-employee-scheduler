@@ -373,7 +373,7 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
   return percentCoverage
 }
 
-export const validateShift = ({ eventTimes, hours, employee }) => {
+export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
   // step 1
   // check for conflicts with approved day off requests
   let conflicts = false
@@ -489,17 +489,18 @@ export const validateShift = ({ eventTimes, hours, employee }) => {
 
   // step 4
   // check for scheduling the same employee twice during the same block of time
-  // employee.events.forEach(({ start, end }) => {
-  //   // possible collisions: if event start or end exists between start/end of existsing event
-  //   if (
-  //     (moment(eventTimes.start).isAfter(start) &&
-  //       moment(eventTimes.start).isBefore(end)) ||
-  //     (moment(eventTimes.end).isAfter(start) &&
-  //       moment(eventTimes.end).isBefore(end))
-  //   ) {
-  //     conflicts = true
-  //   }
-  // })
+  employee.events.forEach(({ start, end, id }) => {
+    // possible collisions: if event start or end exists between start/end of existsing event
+    if (
+      eventId !== id &&
+      ((moment(eventTimes.start).isAfter(start) &&
+        moment(eventTimes.start).isBefore(end)) ||
+        (moment(eventTimes.end).isAfter(start) &&
+          moment(eventTimes.end).isBefore(end)))
+    ) {
+      conflicts = true
+    }
+  })
 
   // need to keep this separate because returning from forEach doesn't escape the enclosing func
   if (conflicts) {
