@@ -9,6 +9,7 @@ export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
 export const UNREGISTERED_ACCOUNT = 'UNREGISTERED_ACCOUNT'
+export const LOGOUT_IN_PLACE = 'LOGOUT_IN_PLACE'
 
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -81,3 +82,12 @@ export const logout = () => async dispatch => {
 export const resetAuthState = () => ({
   type: RESET_AUTH_STATE
 })
+
+export const logoutInPlace = () => async dispatch => {
+  try {
+    await firebase.auth().signOut()
+    dispatch({ type: LOGOUT_IN_PLACE })
+  } catch (error) {
+    console.log('error logging out')
+  }
+}

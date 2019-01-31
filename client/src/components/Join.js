@@ -5,7 +5,12 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
+import {
+  registerViaJoinOrg,
+  authenticate,
+  logoutInPlace,
+  logout
+} from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
 import BreadCrumb from './BreadCrumb'
@@ -21,7 +26,7 @@ class Join extends Component {
     lastName: '',
     phone: '',
     email: '',
-    forceLogout: true
+    loading: true
   }
 
   componentDidMount() {
@@ -38,8 +43,8 @@ class Join extends Component {
         this.setState({ email, phone, firstName, lastName, oauthSuccess: true })
       }
     })
-    if (!this.props.token) {
-      this.setState({ forceLogout: false })
+    if (this.props.token) {
+      this.setState({ loading: true })
     }
   }
 
@@ -51,6 +56,15 @@ class Join extends Component {
   handleChange = e => {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  checkToken = token => {
+    console.log('checkToken fired')
+    if (token) {
+      this.props.logout()
+    } else {
+      this.setState({ loading: false })
+    }
   }
 
   handleSubmit = e => {
@@ -79,7 +93,8 @@ class Join extends Component {
 
     //checks to see if there is a current user logged in and forces a logout to enable registration.
     //this is a bug fix
-    if (this.props.fetchingAuth === undefined || this.props.fetchingAuth) {
+    if (this.state.loading) {
+      this.checkToken(this.props.token)
       return (
         <OuterContainer height="true">
           <BreadCrumb />
@@ -90,6 +105,7 @@ class Join extends Component {
       )
     }
     if (this.props.token) {
+      this.checkToken(this.props.token)
       return (
         <OuterContainer height="true">
           <BreadCrumb />
@@ -103,7 +119,7 @@ class Join extends Component {
       )
     }
 
-    if (!oauthSuccess) {
+    if (oauthSuccess) {
       return <Login />
     } else if (outcome) {
       return (
@@ -191,5 +207,5 @@ const mapStateToProps = ({ registration, auth }) => ({
 
 export default connect(
   mapStateToProps,
-  { registerViaJoinOrg, authenticate, logout }
+  { registerViaJoinOrg, authenticate, logoutInPlace, logout }
 )(Join)
