@@ -133,7 +133,7 @@ const Home = () => {
                 </Button>
               </div>
               <div className="card">
-                <h2>SMB Plan</h2>
+                <h2>Pro Plan</h2>
                 <h3>$20 / month</h3>
                 <ul>
                   <li>Up to 20 total users</li>
