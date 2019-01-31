@@ -89,7 +89,7 @@ router.post('/register/owner', async (req, res) => {
   const { id } = req.user
 
   // grab all req'd info from body obj
-  const { email, phone, firstName, lastName, orgName, industry } = req.body
+  const { email, phone, firstName, lastName, orgName, offset } = req.body
 
   // check possible error states
   // First, some necessary field is missing
@@ -108,10 +108,13 @@ router.post('/register/owner', async (req, res) => {
     const newId = uuid()
 
     // Second, add new org
-    const orgSuccess = await addOrg({
-      id: newId,
-      name: orgName
-    })
+    const orgSuccess = await addOrg(
+      {
+        id: newId,
+        name: orgName
+      },
+      offset
+    )
     // Third, add new user as owner
     const userSuccess = await addUser({
       id,

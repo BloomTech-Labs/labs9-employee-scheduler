@@ -47,16 +47,23 @@ class Scheduler extends React.Component {
 
   componentDidMount() {
     // LINES 50 to 58 should use REDUX!
-    const baseURL = process.env.REACT_APP_SERVER_URL
-    axios.post(
-      `${baseURL}/employees/${this.props.user.organization_id}`,
-      null,
-      {
-        headers: { authorization: this.props.token }
-      }
-    )
+    if (this.props.user.cal_visit) {
+      const baseURL = process.env.REACT_APP_SERVER_URL
+      const offset = moment().utcOffset()
+      axios
+        .post(
+          `${baseURL}/employees/${this.props.user.organization_id}`,
+          offset,
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.fetchData())
+        .catch(err => console.log(err))
+    } else {
+      this.fetchData()
+    }
 
-    this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
 
@@ -146,21 +153,27 @@ class Scheduler extends React.Component {
     this.props.displayCoverage(coverage)
   }
 
-  validateEvent = ({ userId, eventTimes }) => {
+  validateEvent = ({ userId, eventTimes, eventId }) => {
     const { hours, employees } = this.props
     const employee = employees.filter(({ id }) => id === userId)[0]
 
     // checks whether event is in compliance with all shift requirements,
     // such as no conflicts with time_off_requests, availabilities, or hours_of_operation
-    return validateShift({ eventTimes, hours, employee })
+    return validateShift({ eventTimes, hours, employee, eventId })
   }
 
   moveEvent = drop => {
-    const { event, start, end } = drop
+    const {
+      event,
+      start,
+      end,
+      event: { id }
+    } = drop
     const { type, ...employee } = event
     const { verdict, message } = this.validateEvent({
       userId: employee.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: id
     })
     if (verdict) {
       this.props.changeEvent(
@@ -262,9 +275,7 @@ class Scheduler extends React.Component {
             headers: { authorization: this.props.token }
           }
         )
-        .then(res => {
-          res.json(res.data)
-        })
+        .then(res => {})
         .catch(err => console.log(err))
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
