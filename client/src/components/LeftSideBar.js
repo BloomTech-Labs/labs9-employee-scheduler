@@ -31,8 +31,8 @@ class LeftSideBar extends Component {
   }
 
   render() {
-    const { toggleShow } = this
     const { role } = this.props.auth.user
+    const { toggleShow } = this
     return (
       <Container fixed={this.props.fixed ? true : false}>
         <Hamburger classname="hamburger" id="menu" onClick={() => toggleShow()}>

@@ -3,7 +3,7 @@ import { fireEvent } from 'react-testing-library'
 import { renderWithReduxAndRouter } from '../../testing/utils'
 import Register from '../components/Register'
 
-const setup = () => {
+const w = () => {
   const utils = renderWithReduxAndRouter(<Register />)
   const firstName = utils.getByLabelText('first-name')
   const lastName = utils.getByLabelText('last-name')
