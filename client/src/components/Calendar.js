@@ -65,6 +65,7 @@ const StyledCalendar = styled(BigCalendar)`
   .rbc-toolbar-label {
     font-family: 'Lato', sans-serif;
     font-size: ${system.fontSizing.m};
+    margin-bottom: 10px;
   }
 
   .rbc-event-label {
@@ -88,6 +89,12 @@ const StyledCalendar = styled(BigCalendar)`
   }
   .rbc-time-view .rbc-header {
     border-bottom: none;
+  }
+
+  .rbc-time-view {
+    background: ${system.color.white};
+    margin: 1px;
+    border-radius: ${system.borders.bigRadius};
   }
 
   /* the below makes the Agenda view normally colored instead of the same color as events */
