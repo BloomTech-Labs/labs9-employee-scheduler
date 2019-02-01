@@ -90,7 +90,6 @@ router.post('/register/owner', async (req, res) => {
 
   // grab all req'd info from body obj
   const { email, phone, firstName, lastName, orgName, offset } = req.body
-
   // check possible error states
   // First, some necessary field is missing
   if (!id || !firstName || !lastName || !orgName) {
