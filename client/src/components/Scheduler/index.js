@@ -340,7 +340,6 @@ class Scheduler extends React.Component {
 
   clearEventDrag = () => {
     const { draggedEvent } = this.state
-    console.log('clear', draggedEvent)
     if (draggedEvent) {
       this.updateDragState()
     }
@@ -349,7 +348,6 @@ class Scheduler extends React.Component {
   render() {
     const { employees, hours, coverage } = this.props
     const { width, range, view, date, draggedEvent } = this.state
-    console.log('rerender', draggedEvent)
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
     const events = employees.reduce((acc, employee) => {
