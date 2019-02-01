@@ -320,6 +320,11 @@ class Scheduler extends React.Component {
 
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
+
+  calendarInteractionStart = ({ event }) => {
+    console.log(event)
+  }
+
   render() {
     console.log(this.props.user.cal_visit)
     const { employees, hours, coverage } = this.props
@@ -400,6 +405,7 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
+            onDragStart={this.calendarInteractionStart}
             min={hourRange.min}
             max={hourRange.max}
             view={view}
