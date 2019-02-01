@@ -8,8 +8,9 @@ import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest,
-  fetchHoursFromDB
-} from '../actions/employeesActions'
+  fetchHoursFromDB,
+  fetchEmployeesFromDB
+} from '../actions'
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
@@ -34,6 +35,7 @@ class EmployeeDashboard extends Component {
   componentDidMount() {
     const { id } = this.props.auth.user
     this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
+    this.fetchData()
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -61,6 +63,7 @@ class EmployeeDashboard extends Component {
   fetchData() {
     const { organization_id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
+    this.props.fetchEmployeesFromDB(organization_id, this.props.token)
   }
 
   toggleView = () => {
@@ -212,7 +215,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     employees: state.employees.employees,
     hours: state.hours.hours,
-    user: state.auth.user
+    user: state.auth.user,
+    token: state.auth.token
   }
 }
 
@@ -221,7 +225,8 @@ export default connect(
   {
     fetchSingleEmployeeFromDB,
     deleteTimeOffRequest,
-    fetchHoursFromDB
+    fetchHoursFromDB,
+    fetchEmployeesFromDB
   }
 )(EmployeeDashboard)
 
