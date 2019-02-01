@@ -60,37 +60,6 @@ describe('testing the organizations router', () => {
     })
   })
 
-  describe('POST', () => {
-    it('can create a new organization', async () => {
-      const org = { name: 'Test Organization' }
-      const response = await request
-        .post('/organizations')
-        .send(org)
-        .set('authorization', 'testing')
-
-      // check to see if target is in database
-      const target = await knex('organizations').where(org)
-
-      // clean target out of database if created
-      await knex('organizations')
-        .delete()
-        .where(org)
-      expect(response.body.length).toEqual(1)
-      expect(response.status).toBe(201)
-      expect(target.length).toEqual(1)
-    })
-
-    it('can reject an empty organization', async () => {
-      const org = {}
-      const response = await request
-        .post('/organizations')
-        .send(org)
-        .set('authorization', 'testing')
-      expect(response.status).toBe(400)
-      expect(response.body).toEqual({ error: 'Missing required field "name"' })
-    })
-  })
-
   describe('PUT', () => {
     it('can edit an organization', async () => {
       const { team, cleanup } = await generateTeamData(knex)
