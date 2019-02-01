@@ -85,6 +85,7 @@ class EmployeeDashboard extends Component {
     const { employees, hours, employee } = this.props
     const { view, date, width } = this.state
     const names = []
+    employees.map(employee => names.push(`${employee.first_name}`))
 
     const events = employees.reduce((acc, employee) => {
       return [
@@ -126,6 +127,9 @@ class EmployeeDashboard extends Component {
               min={hourRange.min}
               max={hourRange.max}
               view={view}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
             />
           </div>
 
