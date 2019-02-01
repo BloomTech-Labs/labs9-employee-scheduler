@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import { fetchEmployeesFromDB } from '../actions'
+import { fetchEmployeesFromDB, updateUserSettings } from '../actions'
 import { connect } from 'react-redux'
 import Card from './EmployeeCard/Card'
 import LeftSideBar from './LeftSideBar'
@@ -15,6 +15,7 @@ import Modal from './Modal'
 import { Input } from './common/FormContainer'
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
 import steps from './Demo/employees'
+import axios from 'axios'
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
@@ -31,8 +32,13 @@ class Employees extends Component {
     }
   }
   componentDidMount() {
-    const { org_id, token, fetchEmployeesFromDB } = this.props
+    const { user, org_id, token, fetchEmployeesFromDB } = this.props
     fetchEmployeesFromDB(org_id, token)
+
+    // load the demo steps
+    if (steps) this.setState({ steps })
+    // check if the user has completed the demo before
+    if (user && user.emp_visit === true) this.setState({ run: true })
   }
 
   updateAvail = user => {
@@ -53,9 +59,76 @@ class Employees extends Component {
     this.setState({ [e.target.name]: e.target.value.substr(0, 20) })
   }
 
+  // for joyride demo
+  handleClickStart = e => {
+    e.preventDefault()
+    this.setState({
+      run: true,
+      stepIndex: 0
+    })
+  }
+
+  // joyride event handling, step index controls the position of the event
+  handleJoyrideCallback = data => {
+    const { action, index, type, status } = data
+    const { user } = this.props
+    const baseURL = process.env.REACT_APP_SERVER_URL
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ run: false, stepIndex: 0 })
+      axios
+        .put(
+          `${baseURL}/users/${user.id}`,
+          { emp_visit: false },
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.props.updateUserSettings(this.props.token))
+        .catch(err => console.log(err))
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
+
+      if (index === 0) {
+        setTimeout(() => {
+          this.setState({ run: true })
+        }, 400)
+      } else if (index === 1) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else if (index === 2 && action === ACTIONS.PREV) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else {
+        // Update state to advance the tour
+        this.setState({
+          stepIndex
+        })
+      }
+    }
+  }
+
   render() {
     const { employees } = this.props
-    const { availTarget } = this.state
+    const { availTarget, run, steps } = this.state
     let filteredEmployees = employees.filter(person => {
       if (
         person.first_name
@@ -74,7 +147,7 @@ class Employees extends Component {
           <ReactJoyride
             callback={this.handleJoyrideCallback}
             continuous
-            run="true"
+            run={run}
             scrollToFirstStep
             showProgress
             showSkipButton
@@ -135,6 +208,10 @@ class Employees extends Component {
 
 Employees.propTypes = {
   // add propTypes here
+  user: propTypes.object,
+  org_id: propTypes.string.isRequired,
+  employees: propTypes.array.isRequired,
+  token: propTypes.string.isRequired
 }
 
 const MidContainer = styled('div')`
@@ -159,6 +236,7 @@ const InnerContainer = styled('div')`
 
 const mapStateToProps = state => {
   return {
+    user: state.auth.user,
     org_id: state.auth.user.organization_id,
     employees: state.employees.employees,
     token: state.auth.token
@@ -167,5 +245,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchEmployeesFromDB }
+  { fetchEmployeesFromDB, updateUserSettings }
 )(Employees)

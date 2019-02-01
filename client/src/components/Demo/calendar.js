@@ -153,7 +153,7 @@ export default [
         zIndex: 10000
       }
     },
-    title: <h3>Calendar</h3>
+    title: 'Calendar'
   },
   {
     target: '#HOO',
@@ -175,7 +175,7 @@ export default [
         zIndex: 10000
       }
     },
-    title: <h3>Hours of Operation</h3>
+    title: 'Hours of Operation'
   },
   {
     title: 'Menu',
