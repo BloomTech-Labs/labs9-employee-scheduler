@@ -92,61 +92,6 @@ describe('/users route', () => {
     })
   })
 
-  describe('POST', () => {
-    const userTemplate = {
-      first_name: 'Joop',
-      last_name: 'Jorgenson',
-      role: 'employee',
-      email: 'Jorp@jorp.com',
-      phone: '555-555-5555'
-    }
-    it('creates a new user when valid input is sent', async () => {
-      const { team, cleanup } = await generateTeamData(knex)
-
-      const { organization } = team
-
-      const newUser = { ...userTemplate, organization_id: organization.id }
-
-      const response = await request
-        .post('/users')
-        .send(newUser)
-        .set('authorization', 'testing')
-
-      // expectation on response
-      expect(response.status).toEqual(201)
-      expect(response.body).toMatchObject(newUser)
-
-      // expect new data to be in database
-      const dbUser = await knex('users')
-        .where('id', response.body.id)
-        .first()
-      expect(dbUser).toMatchObject(newUser)
-      const dates = await knex('availabilities')
-        .where('user_id', response.body.id)
-        .orderBy('day')
-      expect(dates.length).toEqual(7)
-      const hours = await knex('hours_of_operation')
-        .where('organization_id', organization.id)
-        .orderBy('day')
-      expect(hours.length).toEqual(7)
-      hours.map(({ day, close_time, open_time, closed }, i) => {
-        expect(day).toEqual(dates[i].day)
-        expect(open_time).toEqual(dates[i].start_time)
-        expect(close_time).toEqual(dates[i].end_time)
-        expect(closed).toEqual(dates[i].off)
-      })
-
-      // cleans up unneeded team data after tests
-      await knex('users')
-        .del()
-        .where('id', response.body.id)
-      await knex('availabilities')
-        .del()
-        .where('user_id', response.body.id)
-      await cleanup()
-    })
-  })
-
   describe('PUT /:id', () => {
     it('edits a user with id', async () => {
       // populates database with team data
