@@ -58,7 +58,9 @@ describe('/users route', () => {
       body = {
         ...body,
         emailpref: Boolean(body.emailpref),
-        phonepref: Boolean(body.phonepref)
+        phonepref: Boolean(body.phonepref),
+        cal_visit: true,
+        emp_visit: true
       }
 
       expect(body).toEqual(user)
@@ -149,7 +151,9 @@ describe('/users route', () => {
       const { team, cleanup } = await generateTeamData(knex)
 
       const { users } = team
-      const target = users[0]
+      // need to add cal_visit and emp_visit because they are not added by
+      // generateTeamData but instead are default values in the db model
+      const target = { ...users[0], cal_visit: 'true', emp_visit: 'true' }
       const changes = { first_name: 'Henry' }
       const response = await request
         .put(`/users/${target.id}`)
