@@ -15,6 +15,7 @@ import OuterContainer from './common/OuterContainer'
 import Availability from './EmployeeDashboard/Availability'
 import DropCal from './Scheduler/DropCal'
 import { getHoursOfOperationRange } from '../utils'
+import DashCal from './EmployeeDashboard/DashCal'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -89,7 +90,25 @@ class EmployeeDashboard extends Component {
             </h1>
           </div>
           <div>
-            <DropCal
+            {/* <DropCal
+              popover
+              events={events}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              updateDragState={this.updateDragState}
+              // onEventDrop={this.moveEvent}
+              // onEventResize={this.resizeEvent}
+              // onSelectSlot={this.createEvent}
+              // onSelectEvent={this.deleteEvent}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              date={date}
+              slotPropGetter={this.validateDrop}
+            /> */}
+            <DashCal
               popover
               events={events}
               eventPropGetter={event => ({
