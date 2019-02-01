@@ -155,6 +155,7 @@ class EmployeeDashboard extends Component {
               eventPropGetter={event => ({
                 className: event.title.split(' ')[0]
               })}
+              date={date}
             />
           </div>
 

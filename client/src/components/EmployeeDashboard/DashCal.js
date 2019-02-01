@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import lines from '../../img/lines.svg'
 
 export default function DashCal(props) {
-  const { events, names, min, max, view, eventPropGetter } = props
+  const { events, names, min, max, view, eventPropGetter, date } = props
 
   const colors = [
     '#E91E63',
@@ -44,6 +44,7 @@ export default function DashCal(props) {
         max={max}
         view={view}
         eventPropGetter={eventPropGetter}
+        date={date}
       />
     </div>
   )
