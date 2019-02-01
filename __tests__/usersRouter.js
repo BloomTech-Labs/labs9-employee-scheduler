@@ -8,19 +8,6 @@ const { generateTeamData } = require('../database/utils/generateData')
 const request = supertest(server)
 
 describe('/users route', () => {
-  describe('GET /', () => {
-    it('returns all users', async () => {
-      const expected = await knex('users')
-
-      const response = await request
-        .get('/users')
-        .set('authorization', 'testing')
-
-      expect(response.status).toEqual(200)
-      expect(response.body.length).toEqual(expected.length)
-    })
-  })
-
   describe('GET /id', () => {
     it('returns all users for an org', async () => {
       // populates database with team data
