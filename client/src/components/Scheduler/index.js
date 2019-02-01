@@ -72,6 +72,7 @@ class Scheduler extends React.Component {
 
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
+    // this makes sure any unfinished resizes/moves still clear out colorization
     window.addEventListener('pointerup', this.clearEventDrag)
   }
 
@@ -82,6 +83,7 @@ class Scheduler extends React.Component {
   }
 
   componentWillUnmount() {
+    // cleanup
     window.removeEventListener('resize', this.updateWidth)
     window.removeEventListener('pointerup', this.clearEventDrag)
   }
@@ -270,6 +272,24 @@ class Scheduler extends React.Component {
     })
   }
 
+  updateDragState = (draggedEmployee = null, draggedEvent = null) => {
+    this.setState({ draggedEmployee, draggedEvent })
+  }
+
+  calendarInteractionStart = ({ event }) => {
+    const { user_id, id: event_id, start, end } = event
+    const { employees } = this.props
+    const employee = employees.find(candidate => candidate.id === user_id)
+    this.updateDragState(employee, { id: event_id, start, end })
+  }
+
+  clearEventDrag = () => {
+    const { draggedEvent } = this.state
+    if (draggedEvent) {
+      this.updateDragState()
+    }
+  }
+
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
     const { action, index, type, status } = data
@@ -324,24 +344,6 @@ class Scheduler extends React.Component {
           stepIndex
         })
       }
-    }
-  }
-
-  updateDragState = (draggedEmployee = null, draggedEvent = null) => {
-    this.setState({ draggedEmployee, draggedEvent })
-  }
-
-  calendarInteractionStart = ({ event }) => {
-    const { user_id, id: event_id, start, end } = event
-    const { employees } = this.props
-    const employee = employees.find(candidate => candidate.id === user_id)
-    this.updateDragState(employee, { id: event_id, start, end })
-  }
-
-  clearEventDrag = () => {
-    const { draggedEvent } = this.state
-    if (draggedEvent) {
-      this.updateDragState()
     }
   }
 
