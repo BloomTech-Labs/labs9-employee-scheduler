@@ -70,5 +70,5 @@ As you implement tests, please ensure you are running tests in both the server a
 
 Once your feature has been finished, please use `git push -u origin *feature-name*` to create the branch on the remote repository, then create the Pull request in github. As part of the Pull request, please fill out the [pull request template](pull_request_template.md) (this should auto-populate in your pull request). Once completed, you may create your Pull request. A review from a contributor and ultimate merge approval by an admin will be required. If there are requests raised in the review, please address them.
 
-Thanks for your interest in Cadence; we look forward to your feedback & participation!
+Thanks for your interest in Cadence; we look forward to your feedback & participation! <br/>
 —Kam, Rahul, Adam, Carlos, & Samuel
