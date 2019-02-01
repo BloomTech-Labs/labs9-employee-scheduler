@@ -13,6 +13,8 @@ import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 import Availability from './EmployeeDashboard/Availability'
+import DropCal from './Scheduler/DropCal'
+import { getHoursOfOperationRange } from '../utils'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -20,7 +22,9 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: ''
+      errors: '',
+      view: 'week',
+      date: new Date()
     }
   }
 
@@ -52,7 +56,25 @@ class EmployeeDashboard extends Component {
   // }
 
   render() {
-    const { employee } = this.props.employee
+    // const { employee, hours } = this.props.employee
+    const { employees, hours, employee } = this.props
+    const { view, date } = this.state
+    const names = []
+
+    const events = employees.reduce((acc, employee) => {
+      return [
+        ...acc,
+        ...employee.events.map(event => {
+          return {
+            ...event,
+            start: new Date(event.start),
+            end: new Date(event.end),
+            title: `${employee.first_name} ${employee.last_name}`
+          }
+        })
+      ]
+    }, [])
+    let hourRange = getHoursOfOperationRange(hours)
 
     return (
       <OuterContainer>
@@ -65,6 +87,26 @@ class EmployeeDashboard extends Component {
               Hi there, {this.props.auth.user.first_name}. Hope you're having a
               lovely day!
             </h1>
+          </div>
+          <div>
+            <DropCal
+              popover
+              events={events}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              updateDragState={this.updateDragState}
+              // onEventDrop={this.moveEvent}
+              // onEventResize={this.resizeEvent}
+              // onSelectSlot={this.createEvent}
+              // onSelectEvent={this.deleteEvent}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              date={date}
+              slotPropGetter={this.validateDrop}
+            />
           </div>
 
           <div className="wrapper">
@@ -140,9 +182,11 @@ class EmployeeDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    employee: state.employee,
+    employee: state.employee.employee,
     error: state.error,
-    auth: state.auth
+    auth: state.auth,
+    employees: state.employees.employees,
+    hours: state.hours.hours
   }
 }
 

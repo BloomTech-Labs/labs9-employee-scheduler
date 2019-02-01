@@ -51,6 +51,7 @@ class DropCal extends Component {
   }
 
   render() {
+    console.log('dropcal')
     const {
       connectDropTarget,
       events,
