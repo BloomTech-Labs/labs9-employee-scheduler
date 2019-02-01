@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import withDragAndDrop from 'cadence-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../Calendar'
 import styled from '@emotion/styled'
 import lines from '../../img/lines.svg'
@@ -67,7 +67,8 @@ class DropCal extends Component {
       view,
       defaultView,
       date,
-      slotPropGetter
+      slotPropGetter,
+      onDragStart
     } = this.props
     return connectDropTarget(
       <div id="calendar">
@@ -86,6 +87,7 @@ class DropCal extends Component {
           onSelectSlot={onSelectSlot}
           onSelectEvent={onSelectEvent}
           onRangeChange={onRangeChange}
+          onDragStart={onDragStart}
           min={min}
           max={max}
           views={views}

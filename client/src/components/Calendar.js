@@ -1,11 +1,11 @@
 import React from 'react'
-import BigCalendar from 'react-big-calendar'
+import BigCalendar from 'cadence-big-calendar'
 import moment from 'moment'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
+import 'cadence-big-calendar/lib/css/react-big-calendar.css'
+import 'cadence-big-calendar/lib/addons/dragAndDrop/styles.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
