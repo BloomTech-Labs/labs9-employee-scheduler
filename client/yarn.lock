@@ -2042,7 +2042,7 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-cadence-big-calendar@^0.20.5:
+cadence-big-calendar@^0.20.9:
   version "0.20.9"
   resolved "https://registry.yarnpkg.com/cadence-big-calendar/-/cadence-big-calendar-0.20.9.tgz#4f9b9ae25f93af22cc63e9c38dbc957406b833d1"
   integrity sha512-c24R9XZsFW2vamy57x5wUkwIw6adX8VTf7B0najftB6/OkfxKsNOveIwhtm8AmXKqL44jhs+dVSmCo0zq7vWnQ==
