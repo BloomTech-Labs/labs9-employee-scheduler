@@ -326,7 +326,7 @@ class Scheduler extends React.Component {
     const { width, range, view, date } = this.state
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
-
+    console.log(employees)
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
