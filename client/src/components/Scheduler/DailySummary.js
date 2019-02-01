@@ -31,6 +31,7 @@ const Div = styled.div`
     text-transform: uppercase;
     margin-bottom: 1rem;
     color: ${system.color.primary};
+    cursor: default;
   }
 
   p {
@@ -38,6 +39,7 @@ const Div = styled.div`
     margin-bottom: 0.5rem;
     text-align: center;
     padding-bottom: 10px;
+    cursor: default;
 
     &.big {
       font-size: ${system.fontSizing.sm};
