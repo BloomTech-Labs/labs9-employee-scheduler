@@ -87,7 +87,6 @@ class EmployeeDashboard extends Component {
     const names = []
 
     const events = employees.reduce((acc, employee) => {
-      console.log(employee)
       return [
         ...acc,
         ...employee.events.map(event => {
@@ -101,7 +100,6 @@ class EmployeeDashboard extends Component {
       ]
     }, [])
     let hourRange = getHoursOfOperationRange(hours)
-    console.log(this.props.user.organization_id)
     return (
       <OuterContainer>
         <LeftSideBar />
