@@ -48,7 +48,9 @@ describe('/users route', () => {
       // populates database with team data
       const { team, cleanup } = await generateTeamData(knex)
 
-      const user = team.users[0]
+      // need to add cal_visit and emp_visit because they are not added by
+      // generateTeamData but instead are default values in the db model
+      const user = { ...team.users[0], cal_visit: true, emp_visit: true }
 
       const response = await request
         .get(`/users/${user.id}`)
