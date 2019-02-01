@@ -72,6 +72,7 @@ class Scheduler extends React.Component {
 
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
+    window.addEventListener('pointerup', this.clearEventDrag)
   }
 
   componentDidUpdate() {
@@ -82,6 +83,7 @@ class Scheduler extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWidth)
+    window.removeEventListener('pointerup', this.clearEventDrag)
   }
 
   fetchData() {
@@ -183,6 +185,7 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   resizeEvent = ({ end, start, event }) => {
@@ -199,6 +202,7 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   createEvent = ({ start, end }) => {
@@ -235,7 +239,7 @@ class Scheduler extends React.Component {
     }
   }
 
-  validateDrop = (date, more) => {
+  validateDrop = (date, event) => {
     const { draggedEmployee: employee } = this.state
     if (employee) {
       const { hours } = this.props
@@ -243,7 +247,12 @@ class Scheduler extends React.Component {
         start: date,
         end: new Date(date.getTime() + 60 * 1000 * 60)
       }
-      const { verdict } = validateShift({ eventTimes, hours, employee })
+      const { verdict } = validateShift({
+        eventTimes,
+        hours,
+        employee,
+        eventId: event && event.id
+      })
       if (verdict === false) {
         return {
           style: { boxShadow: `inset 0 0 15px ${system.color.hoverDanger}` }
@@ -318,20 +327,31 @@ class Scheduler extends React.Component {
     }
   }
 
-  updateDragState = (draggedEmployee = null) =>
-    this.setState({ draggedEmployee })
+  updateDragState = (draggedEmployee = null, draggedEvent = null) => {
+    this.setState({ draggedEmployee, draggedEvent })
+  }
 
   calendarInteractionStart = ({ event }) => {
-    console.log(event)
+    const { user_id, id: event_id, start, end } = event
+    const { employees } = this.props
+    const employee = employees.find(candidate => candidate.id === user_id)
+    this.updateDragState(employee, { id: event_id, start, end })
+  }
+
+  clearEventDrag = () => {
+    const { draggedEvent } = this.state
+    console.log('clear', draggedEvent)
+    if (draggedEvent) {
+      this.updateDragState()
+    }
   }
 
   render() {
-    console.log(this.props.user.cal_visit)
     const { employees, hours, coverage } = this.props
-    const { width, range, view, date } = this.state
+    const { width, range, view, date, draggedEvent } = this.state
+    console.log('rerender', draggedEvent)
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
-    console.log(employees)
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
@@ -410,7 +430,7 @@ class Scheduler extends React.Component {
             max={hourRange.max}
             view={view}
             date={date}
-            slotPropGetter={this.validateDrop}
+            slotPropGetter={date => this.validateDrop(date, draggedEvent)}
           />
           <WeekSummary range={range} events={events} />
         </CalendarContainer>
