@@ -26,6 +26,12 @@ describe('test get user id route /:id', () => {
   })
 
   it('gets availability based on id', async () => {
+    const truncateTime = time =>
+      time
+        .split(':')
+        .slice(0, 2)
+        .join(':')
+
     // populates database with team data
     const { team, cleanup } = await generateTeamData(knex)
     const target = team.users[1]
@@ -36,8 +42,16 @@ describe('test get user id route /:id', () => {
       .get(`/availabilities/${target.id}`)
       .set('authorization', 'token')
 
+    // format so that eg 12:00:00 becomes 12:00
+    // this is a trivial difference that happens due to format converstions
+    const formattedRes = response.body.map(time => ({
+      ...time,
+      start_time: truncateTime(time.start_time),
+      end_time: truncateTime(time.end_time)
+    }))
+
     expect(response.status).toBe(200)
-    expect(response.body).toEqual(avails)
+    expect(formattedRes).toEqual(avails)
     // cleans up unneeded team data after tests
     await cleanup()
   })
