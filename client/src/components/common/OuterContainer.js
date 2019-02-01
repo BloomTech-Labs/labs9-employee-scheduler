@@ -12,6 +12,8 @@ const OuterContainer = styled('div')`
       rgba(83,95,215, 0.6)
     ), url(${doodles})`
       : system.color.neutral};
+  background-repeat: repeat;
+  background-size: auto;
   height: 100%;
   min-height: 100vh;
 

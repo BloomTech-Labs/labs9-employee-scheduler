@@ -8,8 +8,6 @@ import TimeOff from './TimeOff'
 import Button from '../common/Button'
 import { connect } from 'react-redux'
 import { fetchEmployeesFromDB } from '../../actions'
-import { Link } from 'react-router-dom'
-import AvailabilityForm from '../Availability/AvailabilityForm'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -54,7 +52,7 @@ class Card extends Component {
       <Container data-testid="employee-card">
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
-            <p className="delete" onClick={this.openModal}>
+            <p className="delete" id="delete" onClick={this.openModal}>
               ✕
             </p>
           )}
@@ -90,8 +88,8 @@ class Card extends Component {
             />
           ) : null}
         </div>
-        <div id="row">
-          <WideButton onClick={this.props.updateAvail}>
+        <div className="row">
+          <WideButton id="edit" onClick={this.props.updateAvail}>
             Edit Availability
           </WideButton>
         </div>
@@ -133,11 +131,6 @@ const Container = styled('div')`
   flex-flow: column nowrap;
   min-width: 300px;
   width: 25%;
-
-  /* the below can be used to make the card orientation horizontal */
-  /* #row {
-    display: flex;
-  } */
 
   .x {
     width: 100%;
