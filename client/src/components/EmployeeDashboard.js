@@ -7,15 +7,16 @@ import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
 import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
-  deleteTimeOffRequest
+  deleteTimeOffRequest,
+  fetchHoursFromDB
 } from '../actions/employeesActions'
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 import Availability from './EmployeeDashboard/Availability'
-import DropCal from './Scheduler/DropCal'
-import { getHoursOfOperationRange } from '../utils'
+import { getHoursOfOperationRange, getRange } from '../utils'
 import DashCal from './EmployeeDashboard/DashCal'
+import Button from './common/Button'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -25,7 +26,8 @@ class EmployeeDashboard extends Component {
     this.state = {
       errors: '',
       view: 'week',
-      date: new Date()
+      date: new Date(),
+      width: 'desktop'
     }
   }
 
@@ -56,13 +58,33 @@ class EmployeeDashboard extends Component {
   //   }
   // }
 
+  fetchData() {
+    const { organization_id } = this.props.user
+    this.props.fetchHoursFromDB(organization_id, this.props.token)
+  }
+
+  toggleView = () => {
+    if (this.state.view === 'week') {
+      return this.setState({
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
+    } else {
+      return this.setState({
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
+    }
+  }
+
   render() {
     // const { employee, hours } = this.props.employee
     const { employees, hours, employee } = this.props
-    const { view, date } = this.state
+    const { view, date, width } = this.state
     const names = []
 
     const events = employees.reduce((acc, employee) => {
+      console.log(employee)
       return [
         ...acc,
         ...employee.events.map(event => {
@@ -76,7 +98,7 @@ class EmployeeDashboard extends Component {
       ]
     }, [])
     let hourRange = getHoursOfOperationRange(hours)
-
+    console.log(this.props.user.organization_id)
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -90,24 +112,13 @@ class EmployeeDashboard extends Component {
             </h1>
           </div>
           <div>
-            {/* <DropCal
-              popover
-              events={events}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
-              names={names}
-              updateDragState={this.updateDragState}
-              // onEventDrop={this.moveEvent}
-              // onEventResize={this.resizeEvent}
-              // onSelectSlot={this.createEvent}
-              // onSelectEvent={this.deleteEvent}
-              min={hourRange.min}
-              max={hourRange.max}
-              view={view}
-              date={date}
-              slotPropGetter={this.validateDrop}
-            /> */}
+            {width === 'desktop' ? (
+              <Button onClick={this.toggleView}>
+                {this.state.view === 'week' ? 'Day View' : 'Week View'}
+              </Button>
+            ) : null}
+          </div>
+          <div>
             <DashCal
               popover
               events={events}
@@ -115,11 +126,6 @@ class EmployeeDashboard extends Component {
                 className: event.title.split(' ')[0]
               })}
               names={names}
-              updateDragState={this.updateDragState}
-              // onEventDrop={this.moveEvent}
-              // onEventResize={this.resizeEvent}
-              // onSelectSlot={this.createEvent}
-              // onSelectEvent={this.deleteEvent}
               min={hourRange.min}
               max={hourRange.max}
               view={view}
@@ -205,13 +211,18 @@ const mapStateToProps = state => {
     error: state.error,
     auth: state.auth,
     employees: state.employees.employees,
-    hours: state.hours.hours
+    hours: state.hours.hours,
+    user: state.auth.user
   }
 }
 
 export default connect(
   mapStateToProps,
-  { fetchSingleEmployeeFromDB, deleteTimeOffRequest }
+  {
+    fetchSingleEmployeeFromDB,
+    deleteTimeOffRequest,
+    fetchHoursFromDB
+  }
 )(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
