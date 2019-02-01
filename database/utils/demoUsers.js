@@ -17,10 +17,10 @@ const demoUsers = org_id => {
     {
       id: uuid(),
       organization_id: org_id,
-      first_name: 'Demo',
-      last_name: 'Danny',
+      first_name: 'Aaron',
+      last_name: 'Demo',
       role: 'employee',
-      email: 'danny@example.com',
+      email: 'aaron@example.com',
       phone: '222-222-2222',
       emailpref: false,
       phonepref: true
@@ -31,13 +31,13 @@ const demoUsers = org_id => {
 
 const demoAvailabilities = (users, offset) => {
   let availabilities = []
-  const start_time = moment({ hours: 9 })
-    .utc()
-    .add(offset, 'minutes')
+  const start_time = moment
+    .utc({ hours: 9 })
+    .subtract(offset, 'minutes')
     .format('HH:mm')
-  const end_time = moment({ hours: 17 })
-    .utc()
-    .add(offset, 'minutes')
+  const end_time = moment
+    .utc({ hours: 17 })
+    .subtract(offset, 'minutes')
     .format('HH:mm')
   users.forEach(user => {
     availabilities.push(
@@ -92,7 +92,7 @@ const demoAvailabilities = (users, offset) => {
       {
         id: uuid(),
         user_id: user.id,
-        day: 5,
+        day: 6,
         start_time: start_time,
         end_time: end_time,
         off: false
@@ -109,16 +109,16 @@ const demoTimeOff = (users, offset) => {
     timeOffRequests.push({
       id: uuid(),
       user_id: user.id,
-      start: moment()
+      start: moment
+        .utc()
         .add(rand, 'd')
         .startOf('day')
-        .utc()
-        .add(offset, 'minutes')
+        .subtract(offset, 'minutes')
         .format(),
-      end: moment()
-        .add(rand, 'd')
-        .endOf('day')
+      end: moment
         .utc()
+        .subtract(rand, 'd')
+        .endOf('day')
         .add(offset, 'minutes')
         .format(),
       reason: 'Possimus occaecati blanditiis beatae sit id.',

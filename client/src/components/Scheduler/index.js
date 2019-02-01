@@ -16,7 +16,8 @@ import {
   createEvent,
   changeEvent,
   deleteEvent,
-  displayCoverage
+  displayCoverage,
+  updateUserSettings
 } from '../../actions'
 import {
   getHoursOfOperationRange,
@@ -25,7 +26,7 @@ import {
   validateShift
 } from '../../utils'
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
-import steps from './Demo/calendar'
+import steps from '../Demo/calendar'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
@@ -46,14 +47,17 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
-    // LINES 50 to 58 should use REDUX!
-    if (this.props.user.cal_visit) {
+    // if redux shows that this state is true, create dummy employees
+    const { user } = this.props
+    if (user && user.cal_visit === true) {
       const baseURL = process.env.REACT_APP_SERVER_URL
       const offset = moment().utcOffset()
+      // load the demo steps
+      this.setState({ steps, run: true })
       axios
         .post(
           `${baseURL}/employees/${this.props.user.organization_id}`,
-          offset,
+          { offset: offset },
           {
             headers: { authorization: this.props.token }
           }
@@ -61,17 +65,13 @@ class Scheduler extends React.Component {
         .then(res => this.fetchData())
         .catch(err => console.log(err))
     } else {
+      // else, fetch original data?
+      this.setState({ steps, run: false })
       this.fetchData()
     }
 
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
-
-    const { user } = this.props
-    // load the demo steps
-    if (steps) this.setState({ steps })
-    // check if the user has completed the demo before
-    if (user && user.cal_visit === true) this.setState({ run: true })
   }
 
   componentDidUpdate() {
@@ -271,12 +271,12 @@ class Scheduler extends React.Component {
       axios
         .put(
           `${baseURL}/users/${user.id}`,
-          { cal_visit: false },
+          { cal_visit: false, emp_visit: false },
           {
             headers: { authorization: this.props.token }
           }
         )
-        .then(res => {})
+        .then(res => this.props.updateUserSettings(this.props.token))
         .catch(err => console.log(err))
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
@@ -320,13 +320,13 @@ class Scheduler extends React.Component {
 
   updateDragState = (draggedEmployee = null) =>
     this.setState({ draggedEmployee })
-
   render() {
+    console.log(this.props.user.cal_visit)
     const { employees, hours, coverage } = this.props
     const { width, range, view, date } = this.state
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
-
+    console.log(employees)
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
@@ -430,7 +430,8 @@ export default connect(
     createEvent,
     changeEvent,
     deleteEvent,
-    displayCoverage
+    displayCoverage,
+    updateUserSettings
   }
 )(DragSched)
 

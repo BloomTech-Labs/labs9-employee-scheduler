@@ -18,6 +18,7 @@ import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
 import { authenticate, resetAuthState, setRedirectFlagToFalse } from './actions' // for initial call
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
@@ -37,6 +38,16 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
+
+// google analytics
+
+ReactGA.initialize('UA-133547587-1', {
+  debug: false, // sends feedback to the console
+  titleCase: false,
+  userId: 133547587,
+  siteSpeedSampleRate: 100 // rate at which data is sent, default is 1
+})
+ReactGA.pageview(`${window.location.pathname}`)
 
 class App extends Component {
   constructor() {

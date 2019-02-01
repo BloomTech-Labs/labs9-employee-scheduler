@@ -200,6 +200,7 @@ class RegisterOwner extends Component {
                 ariaLabel="org-description"
                 defaultValue={industry}
               >
+                <option value="" />
                 {industryList.map((industry, i) => (
                   <option value={industry} key={i}>
                     {industry}
