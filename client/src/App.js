@@ -42,7 +42,7 @@ if (!firebase.apps.length) {
 // google analytics
 
 ReactGA.initialize('UA-133547587-1', {
-  debug: true, // sends feedback to the console
+  debug: false, // sends feedback to the console
   titleCase: false,
   userId: 133547587,
   siteSpeedSampleRate: 100 // rate at which data is sent, default is 1
