@@ -48,7 +48,7 @@ ReactGA.initialize('UA-133547587-1', {
   siteSpeedSampleRate: 100 // rate at which data is sent, default is 1
 })
 ReactGA.pageview(`${window.location.pathname}`)
-console.log(`${window.location.pathname}`)
+
 class App extends Component {
   constructor() {
     super()

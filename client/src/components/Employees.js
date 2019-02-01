@@ -38,7 +38,11 @@ class Employees extends Component {
     // load the demo steps
     if (steps) this.setState({ steps })
     // check if the user has completed the demo before
-    if (user && user.emp_visit === true) this.setState({ run: true })
+    if (user && user.emp_visit === true) {
+      return this.setState({ run: true })
+    } else {
+      return this.setState({ run: false })
+    }
   }
 
   updateAvail = user => {
@@ -79,7 +83,7 @@ class Employees extends Component {
       axios
         .put(
           `${baseURL}/users/${user.id}`,
-          { emp_visit: false },
+          { emp_visit: false, cal_visit: false },
           {
             headers: { authorization: this.props.token }
           }
