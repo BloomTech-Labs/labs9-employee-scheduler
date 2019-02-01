@@ -7,25 +7,6 @@ const { generateTeamData } = require('../database/utils/generateData')
 const request = supertest(server)
 
 describe('testing the organizations router', () => {
-  describe('GET', () => {
-    it('should return all organizations - GET /', async () => {
-      const expected = await knex('organizations')
-      const response = await request
-        .get('/organizations')
-        .set('authorization', 'testing')
-
-      expect(response.status).toEqual(200)
-      expect(response.body.length).toEqual(expected.length)
-    })
-
-    it('should return a JSON response', async () => {
-      const response = await request
-        .get('/organizations')
-        .set('authorization', 'testing')
-      expect(response.type).toEqual('application/json')
-    })
-  })
-
   describe('GET /:id', () => {
     it('returns the correct organization by ID - GET /:id', async () => {
       const { team, cleanup } = await generateTeamData(knex)
@@ -57,37 +38,6 @@ describe('testing the organizations router', () => {
         .set('authorization', 'testing')
 
       expect(response.status).toEqual(404)
-    })
-  })
-
-  describe('POST', () => {
-    it('can create a new organization', async () => {
-      const org = { name: 'Test Organization' }
-      const response = await request
-        .post('/organizations')
-        .send(org)
-        .set('authorization', 'testing')
-
-      // check to see if target is in database
-      const target = await knex('organizations').where(org)
-
-      // clean target out of database if created
-      await knex('organizations')
-        .delete()
-        .where(org)
-      expect(response.body.length).toEqual(1)
-      expect(response.status).toBe(201)
-      expect(target.length).toEqual(1)
-    })
-
-    it('can reject an empty organization', async () => {
-      const org = {}
-      const response = await request
-        .post('/organizations')
-        .send(org)
-        .set('authorization', 'testing')
-      expect(response.status).toBe(400)
-      expect(response.body).toEqual({ error: 'Missing required field "name"' })
     })
   })
 
