@@ -121,17 +121,11 @@ class EmployeeDashboard extends Component {
           </div>
           <div>
             <DashCal
-              popover
               events={events}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
               names={names}
               min={hourRange.min}
               max={hourRange.max}
               view={view}
-              date={date}
-              slotPropGetter={this.validateDrop}
             />
           </div>
 

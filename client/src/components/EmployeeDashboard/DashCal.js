@@ -5,37 +5,15 @@ import lines from '../../img/lines.svg'
 
 class DashCal extends Component {
   render() {
-    const {
-      events,
-      names,
-      min,
-      max,
-      views,
-      view,
-      defaultView,
-      date,
-      slotPropGetter
-    } = this.props
+    const { events, names, min, max, view } = this.props
     return (
       <div id="calendar">
         <StyledCal
-          popup
-          selectable
-          resizable
-          defaultDate={new Date()}
-          startAccessor="start"
-          endAccessor="end"
           events={events}
-          // eventPropGetter={eventPropGetter}
           names={names}
-          onEventResize
-          // onRangeChange={onRangeChange}
           min={min}
           max={max}
           view={view}
-          date={date}
-          onView={() => {}}
-          onNavigate={() => {}}
         />
       </div>
     )
