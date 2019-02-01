@@ -67,7 +67,8 @@ class DropCal extends Component {
       view,
       defaultView,
       date,
-      slotPropGetter
+      slotPropGetter,
+      onDragStart
     } = this.props
     return connectDropTarget(
       <div id="calendar">
@@ -86,6 +87,7 @@ class DropCal extends Component {
           onSelectSlot={onSelectSlot}
           onSelectEvent={onSelectEvent}
           onRangeChange={onRangeChange}
+          onDragStart={onDragStart}
           min={min}
           max={max}
           views={views}
