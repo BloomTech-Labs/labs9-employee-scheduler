@@ -44,7 +44,7 @@ describe('test get user id route /:id', () => {
 
     // format so that eg 12:00:00 becomes 12:00
     // this is a trivial difference that happens due to format converstions
-    formattedRes = response.body.map(time => ({
+    const formattedRes = response.body.map(time => ({
       ...time,
       start_time: truncateTime(time.start_time),
       end_time: truncateTime(time.end_time)
