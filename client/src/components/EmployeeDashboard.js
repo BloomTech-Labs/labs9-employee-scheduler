@@ -18,6 +18,8 @@ import Availability from './EmployeeDashboard/Availability'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import DashCal from './EmployeeDashboard/DashCal'
 import Button from './common/Button'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -59,6 +61,21 @@ class EmployeeDashboard extends Component {
   //     this.props.history.push('/not-found')
   //   }
   // }
+
+  changeDate = direction => {
+    this.setState(({ date, view }) => {
+      let returnVal = new Date()
+      let day = 1000 * 60 * 60 * 24
+      const inc = view === 'week' ? 7 * day : day
+      if (direction === 'left') {
+        returnVal = new Date(date.getTime() - inc)
+      } else if (direction === 'right') {
+        returnVal = new Date(date.getTime() + inc)
+      }
+      const range = getRange({ view, date: returnVal })
+      return { date: returnVal, range }
+    })
+  }
 
   fetchData() {
     const { organization_id } = this.props.user
