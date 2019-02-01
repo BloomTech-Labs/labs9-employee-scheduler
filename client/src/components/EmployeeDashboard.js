@@ -232,3 +232,15 @@ EmployeeDashboard.propTypes = {
   fetchSingleEmployeeFromDB: propTypes.func.isRequired,
   error: propTypes.string
 }
+
+const CalendarButtons = styled.div`
+  padding: 20px 40px 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media ${system.breakpoints[1]} {
+    justify-content: center;
+    padding: 20px 0 0;
+  }
+`
