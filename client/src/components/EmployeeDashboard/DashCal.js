@@ -1,26 +1,57 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Calendar from '../Calendar'
 import styled from '@emotion/styled'
 import lines from '../../img/lines.svg'
 
-class DashCal extends Component {
-  render() {
-    const { events, names, min, max, view } = this.props
-    return (
-      <div id="calendar">
-        <StyledCal
-          events={events}
-          names={names}
-          min={min}
-          max={max}
-          view={view}
-        />
-      </div>
-    )
-  }
-}
+export default function DashCal(props) {
+  const { events, names, min, max, view, eventPropGetter } = props
+  console.log(names)
 
-export default DashCal
+  const colors = [
+    '#E91E63',
+    '#3F51B5',
+    '#ff7473',
+    '#79bd9a',
+    '#8F2D56',
+    '#C89EC4',
+    '#2196F3',
+    '#03A9F4',
+    '#00BCD4',
+    '#009688',
+    '#00695C',
+    '#D84315',
+    '#FFC107',
+    '#FF5722',
+    '#AD1457',
+    '#6200EA',
+    '#2962FF',
+    '#00838F',
+    '#FF8F00',
+    '#558B2F'
+  ]
+  console.log(colors)
+
+  let style = []
+  for (let i = 0; i < names.length; i++) {
+    style.push(`.${names[i]} {background: ${colors[i]};}`)
+  }
+
+  console.log(style)
+
+  return (
+    <div id="calendar">
+      <StyledCal
+        colors={style.join(' ')}
+        events={events}
+        names={names}
+        min={min}
+        max={max}
+        view={view}
+        eventPropGetter={eventPropGetter}
+      />
+    </div>
+  )
+}
 
 const StyledCal = styled(Calendar)`
   .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
