@@ -156,6 +156,9 @@ class AddEmployee extends Component {
             {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
             {this.props.role === 'owner' ? (
               <>
+                <Close
+                  style={{ position: 'absolute', top: '25px', right: '25px' }}
+                />
                 <h6 id="instructions">
                   You have reached the limit for the number of employees on a
                   free account.
@@ -167,7 +170,7 @@ class AddEmployee extends Component {
             ) : (
               <h6 id="instructions">
                 You have reached the limit for the number of employees on a free
-                account. Contact the owner about upgrading.
+                account. Contact your business' owner about upgrading.
               </h6>
             )}
           </form>
