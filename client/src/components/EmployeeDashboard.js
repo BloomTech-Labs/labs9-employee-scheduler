@@ -107,7 +107,7 @@ class EmployeeDashboard extends Component {
                         <TimeOffApproved
                           key={item.id}
                           status={item.status}
-                          date={item.date}
+                          start={item.start}
                           reason={item.reason}
                           deleteExpiredRequest={() =>
                             this.deleteExpiredRequest(
