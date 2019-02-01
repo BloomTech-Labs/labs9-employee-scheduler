@@ -5,7 +5,6 @@ import lines from '../../img/lines.svg'
 
 export default function DashCal(props) {
   const { events, names, min, max, view, eventPropGetter } = props
-  console.log(names)
 
   const colors = [
     '#E91E63',
@@ -29,14 +28,11 @@ export default function DashCal(props) {
     '#FF8F00',
     '#558B2F'
   ]
-  console.log(colors)
 
   let style = []
   for (let i = 0; i < names.length; i++) {
     style.push(`.${names[i]} {background: ${colors[i]};}`)
   }
-
-  console.log(style)
 
   return (
     <div id="calendar">
