@@ -18,6 +18,8 @@ import Availability from './EmployeeDashboard/Availability'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import DashCal from './EmployeeDashboard/DashCal'
 import Button from './common/Button'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -59,6 +61,21 @@ class EmployeeDashboard extends Component {
   //     this.props.history.push('/not-found')
   //   }
   // }
+
+  changeDate = direction => {
+    this.setState(({ date, view }) => {
+      let returnVal = new Date()
+      let day = 1000 * 60 * 60 * 24
+      const inc = view === 'week' ? 7 * day : day
+      if (direction === 'left') {
+        returnVal = new Date(date.getTime() - inc)
+      } else if (direction === 'right') {
+        returnVal = new Date(date.getTime() + inc)
+      }
+      const range = getRange({ view, date: returnVal })
+      return { date: returnVal, range }
+    })
+  }
 
   fetchData() {
     const { organization_id } = this.props.user
@@ -113,13 +130,21 @@ class EmployeeDashboard extends Component {
               lovely day!
             </h1>
           </div>
-          <div>
-            {width === 'desktop' ? (
-              <Button onClick={this.toggleView}>
-                {this.state.view === 'week' ? 'Day View' : 'Week View'}
-              </Button>
-            ) : null}
-          </div>
+          <CalendarButtons>
+            <NavButtons>
+              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
+              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+            </NavButtons>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleView}>
+                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                </Button>
+              ) : null}
+            </div>
+          </CalendarButtons>
+
           <div>
             <DashCal
               events={events}
@@ -130,6 +155,7 @@ class EmployeeDashboard extends Component {
               eventPropGetter={event => ({
                 className: event.title.split(' ')[0]
               })}
+              date={date}
             />
           </div>
 
@@ -231,3 +257,21 @@ EmployeeDashboard.propTypes = {
   fetchSingleEmployeeFromDB: propTypes.func.isRequired,
   error: propTypes.string
 }
+
+const CalendarButtons = styled.div`
+  padding: 20px 40px 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media ${system.breakpoints[1]} {
+    justify-content: center;
+    padding: 20px 0 0;
+  }
+`
+const NavButtons = styled.div`
+  /* this creates internal margins between immediate children */
+  & > * + * {
+    margin-left: 10px;
+  }
+`
