@@ -3,7 +3,7 @@ const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { getEmployees } = require('../database/helpers/employeesHelper')
 const { generateTeamData } = require('../database/utils/generateData')
-const { processDateTime, processDate } = require('../database/utils/dbUtils')
+const { processDateTime } = require('../database/utils/dbUtils')
 
 const request = supertest(server)
 
@@ -23,8 +23,7 @@ describe('testing the employees router', () => {
           end: processDateTime(event.end)
         })),
         time_off_requests: employee.time_off_requests.map(req => ({
-          ...req,
-          date: processDate(req.date)
+          ...req
         }))
       }))
 
