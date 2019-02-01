@@ -112,18 +112,21 @@ class EmployeeDashboard extends Component {
               lovely day!
             </h1>
           </div>
-          <NavButtons>
-            <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-            <Button onClick={() => this.changeDate('today')}>Today</Button>
-            <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
-          </NavButtons>
-          <div>
-            {width === 'desktop' ? (
-              <Button onClick={this.toggleView}>
-                {this.state.view === 'week' ? 'Day View' : 'Week View'}
-              </Button>
-            ) : null}
-          </div>
+          <CalendarButtons>
+            <NavButtons>
+              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
+              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+            </NavButtons>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleView}>
+                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                </Button>
+              ) : null}
+            </div>
+          </CalendarButtons>
+
           <div>
             <DashCal
               events={events}
@@ -242,5 +245,11 @@ const CalendarButtons = styled.div`
   @media ${system.breakpoints[1]} {
     justify-content: center;
     padding: 20px 0 0;
+  }
+`
+const NavButtons = styled.div`
+  /* this creates internal margins between immediate children */
+  & > * + * {
+    margin-left: 10px;
   }
 `
