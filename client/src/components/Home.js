@@ -5,8 +5,8 @@ import system from '../design/theme'
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
-import headerImg from '../img/header.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
-import heroImg from '../img/hero.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import headerImg from '../img/header.svg'
+import heroImg from '../img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
 
@@ -363,8 +363,13 @@ const Container = styled('div')`
 
   #features {
     .card {
+      min-height: 350px;
       h2 {
         color: ${system.color.primary};
+      }
+
+      @media ${system.breakpoints[2]} {
+        min-height: 0;
       }
     }
   }
@@ -373,6 +378,12 @@ const Container = styled('div')`
     .card {
       background: #333;
       position: relative;
+      min-height: 240px;
+
+      @media ${system.breakpoints[2]} {
+        min-height: 0;
+      }
+
       .stripe {
         position: absolute;
         top: 0;
@@ -392,10 +403,12 @@ const Container = styled('div')`
   #pricing {
     .card {
       background: ${system.color.neutral};
+      min-height: 375px;
 
       @media ${system.breakpoints[2]} {
         background: #dedcee;
         width: 60%;
+        min-height: 0;
       }
 
       @media ${system.breakpoints[0]} {
