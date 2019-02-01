@@ -396,9 +396,9 @@ class Scheduler extends React.Component {
             })}
             names={names}
             updateDragState={this.updateDragState}
-            // onEventDrop={this.moveEvent}
-            // onEventResize={this.resizeEvent}
-            // onSelectSlot={this.createEvent}
+            onEventDrop={this.moveEvent}
+            onEventResize={this.resizeEvent}
+            onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
             min={hourRange.min}
             max={hourRange.max}
