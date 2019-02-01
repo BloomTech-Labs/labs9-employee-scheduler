@@ -112,6 +112,11 @@ class EmployeeDashboard extends Component {
               lovely day!
             </h1>
           </div>
+          <NavButtons>
+            <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
+            <Button onClick={() => this.changeDate('today')}>Today</Button>
+            <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+          </NavButtons>
           <div>
             {width === 'desktop' ? (
               <Button onClick={this.toggleView}>
