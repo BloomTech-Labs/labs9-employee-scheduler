@@ -12,13 +12,6 @@ const uuid = require('uuid/v4') // need here for optimizing creation of org with
 
 const authorize = require('../config/customMiddleware/authorize')
 
-// this should only be accessable by db admins, not even owners
-// router.get('/', authorize(['all']), (req, res) => {
-//   getUsers()
-//     .then(users => res.status(200).json(users))
-//     .catch(err => res.status(404).json(err))
-// })
-
 // return info for the authenticated user
 router.post('/current', authorize(['all']), async (req, res) => {
   const { id } = req.user
@@ -61,27 +54,6 @@ router.get('/:id', authorize(['owner', 'supervisor']), async (req, res) => {
   }
 })
 
-// we need two separate post routes here:
-// one for employees (incl supervisors) and one for owners
-// i'll leave the generic post here for now
-
-// generic post leaving for now
-// router.post('/', authorize(['owner', 'supervisor']), async (req, res) => {
-//   const { organization_id, first_name, last_name, role } = req.body
-
-//   if (!organization_id || !first_name || !last_name || !role) {
-//     res.status(400).json({ error: 'Missing required field(s)' })
-//   }
-
-//   try {
-//     const success = await addUser(req.body)
-//     res.status(201).json(success)
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500).json({ error: 'Server error' })
-//   }
-// })
-
 // post owner and org
 // no authorization required to create new account
 router.post('/register/owner', async (req, res) => {
@@ -89,8 +61,7 @@ router.post('/register/owner', async (req, res) => {
   const { id } = req.user
 
   // grab all req'd info from body obj
-  const { email, phone, firstName, lastName, orgName, industry } = req.body
-
+  const { email, phone, firstName, lastName, orgName, offset } = req.body
   // check possible error states
   // First, some necessary field is missing
   if (!id || !firstName || !lastName || !orgName) {
@@ -108,10 +79,13 @@ router.post('/register/owner', async (req, res) => {
     const newId = uuid()
 
     // Second, add new org
-    const orgSuccess = await addOrg({
-      id: newId,
-      name: orgName
-    })
+    const orgSuccess = await addOrg(
+      {
+        id: newId,
+        name: orgName
+      },
+      offset
+    )
     // Third, add new user as owner
     const userSuccess = await addUser({
       id,

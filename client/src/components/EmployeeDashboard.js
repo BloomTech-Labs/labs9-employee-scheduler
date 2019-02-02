@@ -7,12 +7,19 @@ import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
 import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 import {
   fetchSingleEmployeeFromDB,
-  deleteTimeOffRequest
-} from '../actions/employeesActions'
+  deleteTimeOffRequest,
+  fetchHoursFromDB,
+  fetchEmployeesFromDB
+} from '../actions'
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
 import Availability from './EmployeeDashboard/Availability'
+import { getHoursOfOperationRange, getRange } from '../utils'
+import DashCal from './EmployeeDashboard/DashCal'
+import Button from './common/Button'
+import styled from '@emotion/styled'
+import system from '../design/theme'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -20,13 +27,17 @@ class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: ''
+      errors: '',
+      view: 'week',
+      date: new Date(),
+      width: 'desktop'
     }
   }
 
   componentDidMount() {
     const { id } = this.props.auth.user
     this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
+    this.fetchData()
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -51,9 +62,62 @@ class EmployeeDashboard extends Component {
   //   }
   // }
 
-  render() {
-    const { employee } = this.props.employee
+  changeDate = direction => {
+    this.setState(({ date, view }) => {
+      let returnVal = new Date()
+      let day = 1000 * 60 * 60 * 24
+      const inc = view === 'week' ? 7 * day : day
+      if (direction === 'left') {
+        returnVal = new Date(date.getTime() - inc)
+      } else if (direction === 'right') {
+        returnVal = new Date(date.getTime() + inc)
+      }
+      const range = getRange({ view, date: returnVal })
+      return { date: returnVal, range }
+    })
+  }
 
+  fetchData() {
+    const { organization_id } = this.props.user
+    this.props.fetchHoursFromDB(organization_id, this.props.token)
+    this.props.fetchEmployeesFromDB(organization_id, this.props.token)
+  }
+
+  toggleView = () => {
+    if (this.state.view === 'week') {
+      return this.setState({
+        view: 'day',
+        range: getRange({ view: 'day', date: this.state.date })
+      })
+    } else {
+      return this.setState({
+        view: 'week',
+        range: getRange({ view: 'week', date: this.state.date })
+      })
+    }
+  }
+
+  render() {
+    // const { employee, hours } = this.props.employee
+    const { employees, hours, employee } = this.props
+    const { view, date, width } = this.state
+    const names = []
+    employees.map(employee => names.push(`${employee.first_name}`))
+
+    const events = employees.reduce((acc, employee) => {
+      return [
+        ...acc,
+        ...employee.events.map(event => {
+          return {
+            ...event,
+            start: new Date(event.start),
+            end: new Date(event.end),
+            title: `${employee.first_name} ${employee.last_name}`
+          }
+        })
+      ]
+    }, [])
+    let hourRange = getHoursOfOperationRange(hours, false)
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -65,6 +129,34 @@ class EmployeeDashboard extends Component {
               Hi there, {this.props.auth.user.first_name}. Hope you're having a
               lovely day!
             </h1>
+          </div>
+          <CalendarButtons>
+            <NavButtons>
+              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
+              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+            </NavButtons>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleView}>
+                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                </Button>
+              ) : null}
+            </div>
+          </CalendarButtons>
+
+          <div>
+            <DashCal
+              events={events}
+              names={names}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              date={date}
+            />
           </div>
 
           <div className="wrapper">
@@ -107,7 +199,7 @@ class EmployeeDashboard extends Component {
                         <TimeOffApproved
                           key={item.id}
                           status={item.status}
-                          date={item.date}
+                          start={item.start}
                           reason={item.reason}
                           deleteExpiredRequest={() =>
                             this.deleteExpiredRequest(
@@ -140,15 +232,24 @@ class EmployeeDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    employee: state.employee,
+    employee: state.employee.employee,
     error: state.error,
-    auth: state.auth
+    auth: state.auth,
+    employees: state.employees.employees,
+    hours: state.hours.hours,
+    user: state.auth.user,
+    token: state.auth.token
   }
 }
 
 export default connect(
   mapStateToProps,
-  { fetchSingleEmployeeFromDB, deleteTimeOffRequest }
+  {
+    fetchSingleEmployeeFromDB,
+    deleteTimeOffRequest,
+    fetchHoursFromDB,
+    fetchEmployeesFromDB
+  }
 )(EmployeeDashboard)
 
 EmployeeDashboard.propTypes = {
@@ -156,3 +257,21 @@ EmployeeDashboard.propTypes = {
   fetchSingleEmployeeFromDB: propTypes.func.isRequired,
   error: propTypes.string
 }
+
+const CalendarButtons = styled.div`
+  padding: 20px 40px 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media ${system.breakpoints[1]} {
+    justify-content: center;
+    padding: 20px 0 0;
+  }
+`
+const NavButtons = styled.div`
+  /* this creates internal margins between immediate children */
+  & > * + * {
+    margin-left: 10px;
+  }
+`

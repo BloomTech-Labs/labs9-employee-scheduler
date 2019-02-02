@@ -1,11 +1,11 @@
 import React from 'react'
-import BigCalendar from 'react-big-calendar'
+import BigCalendar from 'cadence-big-calendar'
 import moment from 'moment'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
+import 'cadence-big-calendar/lib/css/react-big-calendar.css'
+import 'cadence-big-calendar/lib/addons/dragAndDrop/styles.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
@@ -65,6 +65,7 @@ const StyledCalendar = styled(BigCalendar)`
   .rbc-toolbar-label {
     font-family: 'Lato', sans-serif;
     font-size: ${system.fontSizing.m};
+    margin-bottom: 10px;
   }
 
   .rbc-event-label {
@@ -88,6 +89,12 @@ const StyledCalendar = styled(BigCalendar)`
   }
   .rbc-time-view .rbc-header {
     border-bottom: none;
+  }
+
+  .rbc-time-view {
+    background: ${system.color.white};
+    margin: 1px;
+    border-radius: ${system.borders.bigRadius};
   }
 
   /* the below makes the Agenda view normally colored instead of the same color as events */

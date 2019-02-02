@@ -25,7 +25,7 @@ const authenticate = (req, res, next) => {
 
     // for testing authorize middleware
     if (req.headers.user === 'owner' || !req.headers.user) {
-      req.user = { id: 'yJgErAY0haNm0zdLSvzLUed6UXK2' } // owner
+      req.user = { id: 'saSV8fdc3ThHNCwlpvgJt2F70Qu1' } // owner
     } else if (req.headers.user === 'supervisor') {
       req.user = { id: 'OsdZPBFJICgfyThBytBZhHSDtf82' } // supervisor
     } else if (req.headers.user === 'employee') {

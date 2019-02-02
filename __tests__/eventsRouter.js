@@ -1,4 +1,5 @@
 const supertest = require('supertest')
+const moment = require('moment')
 const server = require('../server/server')
 const knex = require('../database/dbConfig')
 const { generateTeamData } = require('../database/utils/generateData')
@@ -34,13 +35,10 @@ describe('eventsRouter', () => {
 
     const targetUser = team.users[0]
 
-    // response is still coming back undefined
-    // therefore test is not passing
-
     const newEvent = {
       user_id: targetUser.id,
-      start: 1547388000000,
-      end: 1547416800000
+      start: moment({ hours: 9 }).utc(),
+      end: moment({ hours: 17 }).utc()
     }
 
     const response = await request
@@ -52,15 +50,10 @@ describe('eventsRouter', () => {
       .where(newEvent)
       .first()
 
-    createdEvent = {
-      ...createdEvent,
-      start: processDateTime(createdEvent.start),
-      end: processDateTime(createdEvent.end)
-    }
-
     expect(response.status).toEqual(201)
-    expect(response.body).toMatchObject(createdEvent)
-    expect(createdEvent).toMatchObject(newEvent)
+    expect(response.body).toMatchObject(
+      JSON.parse(JSON.stringify(createdEvent))
+    )
 
     await cleanup()
   })

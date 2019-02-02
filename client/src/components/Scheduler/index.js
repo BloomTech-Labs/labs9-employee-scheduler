@@ -16,7 +16,8 @@ import {
   createEvent,
   changeEvent,
   deleteEvent,
-  displayCoverage
+  displayCoverage,
+  updateUserSettings
 } from '../../actions'
 import {
   getHoursOfOperationRange,
@@ -25,7 +26,7 @@ import {
   validateShift
 } from '../../utils'
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
-import steps from './Demo/calendar'
+import steps from '../Demo/calendar'
 import WeekSummary from './WeekSummary'
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
@@ -46,25 +47,33 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
-    // LINES 50 to 58 should use REDUX!
-    const baseURL = process.env.REACT_APP_SERVER_URL
-    axios.post(
-      `${baseURL}/employees/${this.props.user.organization_id}`,
-      null,
-      {
-        headers: { authorization: this.props.token }
-      }
-    )
+    // if redux shows that this state is true, create dummy employees
+    const { user } = this.props
+    if (user && user.cal_visit === true) {
+      const baseURL = process.env.REACT_APP_SERVER_URL
+      const offset = moment().utcOffset()
+      // load the demo steps
+      this.setState({ steps, run: true })
+      axios
+        .post(
+          `${baseURL}/employees/${this.props.user.organization_id}`,
+          { offset: offset },
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.fetchData())
+        .catch(err => console.log(err))
+    } else {
+      // else, fetch original data?
+      this.setState({ steps, run: false })
+      this.fetchData()
+    }
 
-    this.fetchData()
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
-
-    const { user } = this.props
-    // load the demo steps
-    if (steps) this.setState({ steps })
-    // check if the user has completed the demo before
-    if (user && user.cal_visit === true) this.setState({ run: true })
+    // this makes sure any unfinished resizes/moves still clear out colorization
+    window.addEventListener('pointerup', this.clearEventDrag)
   }
 
   componentDidUpdate() {
@@ -74,7 +83,9 @@ class Scheduler extends React.Component {
   }
 
   componentWillUnmount() {
+    // cleanup
     window.removeEventListener('resize', this.updateWidth)
+    window.removeEventListener('pointerup', this.clearEventDrag)
   }
 
   fetchData() {
@@ -176,12 +187,14 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   resizeEvent = ({ end, start, event }) => {
     const { verdict, message } = this.validateEvent({
       userId: event.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: event.id
     })
     if (verdict) {
       this.props.changeEvent(
@@ -191,6 +204,7 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   createEvent = ({ start, end }) => {
@@ -227,7 +241,7 @@ class Scheduler extends React.Component {
     }
   }
 
-  validateDrop = (date, more) => {
+  validateDrop = (date, event) => {
     const { draggedEmployee: employee } = this.state
     if (employee) {
       const { hours } = this.props
@@ -235,7 +249,12 @@ class Scheduler extends React.Component {
         start: date,
         end: new Date(date.getTime() + 60 * 1000 * 60)
       }
-      const { verdict } = validateShift({ eventTimes, hours, employee })
+      const { verdict } = validateShift({
+        eventTimes,
+        hours,
+        employee,
+        eventId: event && event.id
+      })
       if (verdict === false) {
         return {
           style: { boxShadow: `inset 0 0 15px ${system.color.hoverDanger}` }
@@ -253,6 +272,24 @@ class Scheduler extends React.Component {
     })
   }
 
+  updateDragState = (draggedEmployee = null, draggedEvent = null) => {
+    this.setState({ draggedEmployee, draggedEvent })
+  }
+
+  calendarInteractionStart = ({ event }) => {
+    const { user_id, id: event_id, start, end } = event
+    const { employees } = this.props
+    const employee = employees.find(candidate => candidate.id === user_id)
+    this.updateDragState(employee, { id: event_id, start, end })
+  }
+
+  clearEventDrag = () => {
+    const { draggedEvent } = this.state
+    if (draggedEvent) {
+      this.updateDragState()
+    }
+  }
+
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
     const { action, index, type, status } = data
@@ -263,14 +300,12 @@ class Scheduler extends React.Component {
       axios
         .put(
           `${baseURL}/users/${user.id}`,
-          { cal_visit: false },
+          { cal_visit: false, emp_visit: false },
           {
             headers: { authorization: this.props.token }
           }
         )
-        .then(res => {
-          res.json(res.data)
-        })
+        .then(res => this.props.updateUserSettings(this.props.token))
         .catch(err => console.log(err))
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
@@ -312,15 +347,11 @@ class Scheduler extends React.Component {
     }
   }
 
-  updateDragState = (draggedEmployee = null) =>
-    this.setState({ draggedEmployee })
-
   render() {
     const { employees, hours, coverage } = this.props
-    const { width, range, view, date } = this.state
+    const { width, range, view, date, draggedEvent } = this.state
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
-
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
@@ -394,11 +425,12 @@ class Scheduler extends React.Component {
             onEventResize={this.resizeEvent}
             onSelectSlot={this.createEvent}
             onSelectEvent={this.deleteEvent}
+            onDragStart={this.calendarInteractionStart}
             min={hourRange.min}
             max={hourRange.max}
             view={view}
             date={date}
-            slotPropGetter={this.validateDrop}
+            slotPropGetter={date => this.validateDrop(date, draggedEvent)}
           />
           <WeekSummary range={range} events={events} />
         </CalendarContainer>
@@ -424,7 +456,8 @@ export default connect(
     createEvent,
     changeEvent,
     deleteEvent,
-    displayCoverage
+    displayCoverage,
+    updateUserSettings
   }
 )(DragSched)
 
