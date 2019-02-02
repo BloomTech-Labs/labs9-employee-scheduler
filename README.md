@@ -50,28 +50,28 @@ in the `./client` you will a `.env.development` file
 
 #### Instructions for .env Variables:
 
-#### -Client:
+##### Client:
 The client will need two environment variables. You can copy-paste the first. You will need to create your own for the latter. 
-<br/>
+<br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
 REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
 ```
 
-#### -Server:
-The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/>
-`GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en).
-<br/>
-For your `FIREBASE_SECRET`, you need to ___.
-<br/>
-For your `FIREBASE_EMAIL`, go to your Firebase project settings. Go to the tab for "Service Accounts" and copy your "Firebase service account". It will be a url ending in "gserviceaccount.com"; this value (as a string) is your `FIREBASE_EMAIL`.
+##### Server:
+The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+`GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en). It is inadvisable to use your personal Gmail for this.
+<br/><br/>
+For your `FIREBASE_SECRET`, go to your Firebase project settings. Go to the tab for "Service Accounts" and click the "Generate new private key" button. This will auto-download a JSON object. Open it up in your text editor; copy the value for the key "private_key"; it (as a string) is your `FIREBASE_SECRET`. 
+<br/><br/>
+For your `FIREBASE_EMAIL`, open the JSON object mentioned in the previous step in your text editor. Copy the value for the key "client_email". It will be a url ending in "gserviceaccount.com"; this is your `FIREBASE_EMAIL`.
 ```
 CLIENT_URL=http://localhost:3000
-GMAIL_USERNAME="example@example.com"
-GMAIL_PASSWORD="password"
-FIREBASE_SECRET=""
-FIREBASE_EMAIL=""
+GMAIL_USERNAME="{insert your Gmail address here}"
+GMAIL_PASSWORD="{insert your Gmail password here}"
+FIREBASE_SECRET={copy paste your "private_key" here}
+FIREBASE_EMAIL="{insert Firebase service account here}"
 ```
 
 ### Using the App
