@@ -34,9 +34,6 @@ export function getHoursOfOperationRange(hours) {
         )
   return {
     min: range.min.toDate(),
-    max: range.max
-      .subtract(1, 'minute')
-      .endOf('hour')
-      .toDate()
+    max: range.max.toDate()
   }
 }
