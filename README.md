@@ -29,7 +29,7 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 
 ### Motivation
 
-Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business' hours of operations, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md).
+Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business' hours of operations, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md). It outlines the rationale for our tech stack as well as our architectural decisions.
 
 ### Features
 
@@ -48,7 +48,29 @@ To install, you will need two environment files:
 in the `./` you will need a `.env` file
 in the `./client` you will a `.env.development` file
 
-#### To spin up your own .env variables, you will need to do the following:
+#### Instructions for .env Variables
+
+##### Client:
+The client will need two environment variables. You can copy-paste the first. You will need to create your own for the latter. 
+<br/><br/>
+Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
+```
+REACT_APP_SERVER_URL=http://localhost:9000
+REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
+```
+
+##### Server:
+The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+`GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en).
+<br/><br/>
+
+```
+CLIENT_URL=http://localhost:3000
+GMAIL_USERNAME="example@example.com"
+GMAIL_PASSWORD="password"
+FIREBASE_SECRET=""
+FIREBASE_EMAIL=""
+```
 
 ### Using the App
 To start our app locally after completing the above installation, just run `yarn dev`. This will spin up the client on localhost:3000 and the server on localhost:9000. 
