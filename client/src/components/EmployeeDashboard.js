@@ -117,7 +117,7 @@ class EmployeeDashboard extends Component {
         })
       ]
     }, [])
-    let hourRange = getHoursOfOperationRange(hours)
+    let hourRange = getHoursOfOperationRange(hours, false)
     return (
       <OuterContainer>
         <LeftSideBar />

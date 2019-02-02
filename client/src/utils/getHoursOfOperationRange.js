@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export function getHoursOfOperationRange(hours) {
+export function getHoursOfOperationRange(hours, includeExtraHour = true) {
   let firstDay = hours.find(day => !day.closed)
   let range =
     !hours.length || !firstDay
@@ -34,6 +34,11 @@ export function getHoursOfOperationRange(hours) {
         )
   return {
     min: range.min.toDate(),
-    max: range.max.toDate()
+    max: includeExtraHour
+      ? range.max.toDate()
+      : range.max
+          .subtract(1, 'minute')
+          .endOf('hour')
+          .toDate()
   }
 }
