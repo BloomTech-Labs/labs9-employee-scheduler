@@ -48,22 +48,24 @@ To install, you will need two environment files:
 in the `./` you will need a `.env` file
 in the `./client` you will a `.env.development` file
 
-#### Instructions for .env Variables
+#### Instructions for .env Variables:
 
-##### Client:
+#### -Client:
 The client will need two environment variables. You can copy-paste the first. You will need to create your own for the latter. 
-<br/><br/>
+<br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
 REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
 ```
 
-##### Server:
-The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+#### -Server:
+The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/>
 `GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en).
-<br/><br/>
-
+<br/>
+For your `FIREBASE_SECRET`, you need to ___.
+<br/>
+For your `FIREBASE_EMAIL`, go to your Firebase project settings. Go to the tab for "Service Accounts" and copy your "Firebase service account". It will be a url ending in "gserviceaccount.com"; this value (as a string) is your `FIREBASE_EMAIL`.
 ```
 CLIENT_URL=http://localhost:3000
 GMAIL_USERNAME="example@example.com"
