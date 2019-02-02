@@ -51,7 +51,7 @@ in the `./client` you will a `.env.development` file
 #### Instructions for .env Variables:
 
 ##### Client:
-The client will need two environment variables. You can copy-paste the first. You will need to create your own for the latter. 
+The client will need 2 environment variables. You can copy-paste the first. You will need to create your own for the latter. 
 <br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 ```
@@ -60,7 +60,7 @@ REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
 ```
 
 ##### Server:
-The server will need __ environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+The server will need 5 environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
 `GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en). It is inadvisable to use your personal Gmail for this.
 <br/><br/>
 For your `FIREBASE_SECRET`, go to your Firebase project settings. Go to the tab for "Service Accounts" and click the "Generate new private key" button. This will auto-download a JSON object. Open it up in your text editor; copy the value for the key "private_key"; it (as a string) is your `FIREBASE_SECRET`. 
@@ -71,7 +71,7 @@ CLIENT_URL=http://localhost:3000
 GMAIL_USERNAME="{insert your Gmail address here}"
 GMAIL_PASSWORD="{insert your Gmail password here}"
 FIREBASE_SECRET={copy paste your "private_key" here}
-FIREBASE_EMAIL="{insert Firebase service account here}"
+FIREBASE_EMAIL={copy paste your "client_email" here}
 ```
 
 ### Using the App
