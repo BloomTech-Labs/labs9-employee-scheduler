@@ -1,5 +1,7 @@
 const supertest = require('supertest')
 const server = require('../server/server')
+const knex = require('../database/dbConfig')
+const { generateUser } = require('../database/utils/generateData')
 const request = supertest(server)
 
 describe('Time off Request', () => {
@@ -20,5 +22,23 @@ describe('Time off Request', () => {
       })
       .set('authorization', 'testing')
     expect(response.status).toEqual(404)
+  })
+
+  it('returns requests on user id', async () => {
+    const { user, cleanup } = await generateUser(knex)
+    console.log(user)
+    const { id } = user
+    const expected = await knex('time_off_requests').where({
+      user_id: id
+    })
+
+    const response = await request
+      .get(`/time_off_requests/${id}`)
+      .set('authorization', 'testing')
+
+    expect(response.status).toEqual(200)
+    expect(response.body.length).toEqual(expected.length)
+
+    await cleanup()
   })
 })
