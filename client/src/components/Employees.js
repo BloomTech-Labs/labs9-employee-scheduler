@@ -131,6 +131,7 @@ class Employees extends Component {
   }
 
   render() {
+    const width = window.innerWidth
     const { employees } = this.props
     const { availTarget, run, steps } = this.state
     let filteredEmployees = employees.filter(person => {
@@ -162,18 +163,23 @@ class Employees extends Component {
               }
             }}
           />
-          <Input
-            id="search"
-            search
-            type="text"
-            name="searchTerm"
-            placeholder="Search employees..."
-            onChange={this.updateSearch}
-            value={this.state.searchTerm}
-          />
-          <Button id="add-employee" onClick={this.toggleShow}>
-            Add Employee
-          </Button>
+          <TopButtons>
+            <Button id="add-employee" onClick={this.toggleShow}>
+              Add Employee
+            </Button>
+            <Input
+              id="search"
+              search
+              type="text"
+              name="searchTerm"
+              placeholder="Search employees..."
+              onChange={this.updateSearch}
+              value={this.state.searchTerm}
+            />
+            <Button id="tut" onClick={this.handleClickStart}>
+              Start Tutorial
+            </Button>
+          </TopButtons>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
             <AddEmployee />
           </Modal>
@@ -236,6 +242,26 @@ const InnerContainer = styled('div')`
   justify-content: space-between;
   align-items: baseline;
   margin: ${system.spacing.standardPadding};
+`
+
+const TopButtons = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 40px 0;
+  @media ${system.breakpoints[1]} {
+    padding: 10px 0 0;
+    flex-flow: column nowrap;
+
+    #search {
+      margin-bottom: 20px;
+      order: -1;
+    }
+
+    #tut {
+      display: none;
+    }
+  }
 `
 
 const mapStateToProps = state => {
