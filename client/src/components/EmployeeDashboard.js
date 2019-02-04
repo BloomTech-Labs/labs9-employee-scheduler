@@ -174,11 +174,17 @@ class EmployeeDashboard extends Component {
       ]
     }, [])
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     let hourRange = getHoursOfOperationRange(hours)
 =======
     let hourRange = getHoursOfOperationRange(hours, false)
 >>>>>>> master
+=======
+
+    let hourRange = getHoursOfOperationRange(hours, false)
+
+>>>>>>> 324b151a8bd0659cc3cfda7ead964305ec24b25e
     return (
       <OuterContainer>
         <LeftSideBar />
