@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import { connect } from 'react-redux'
@@ -58,7 +58,7 @@ class AddEmployee extends Component {
           })
           .catch(err => {
             alert(`Something has gone wrong. Try again!`)
-            console.log(err)
+            console.error(err)
           })
       } else {
         if (!this.state.newUser.role) {
@@ -190,7 +190,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(AddEmployee)
 
 AddEmployee.propTypes = {
-  // add propTypes here
+  role: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  paid: PropTypes.bool,
+  employees: PropTypes.array,
+  addEmployee: PropTypes.func
 }
 
 const ModalContainer = styled(Container)`

@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-const baseURL = process.env.REACT_APP_SERVER_URL
-
 export const StatusContent = ({ id, status, handleTimeOff }) => {
   if (status === 'approved') {
     return (

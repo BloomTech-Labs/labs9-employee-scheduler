@@ -66,7 +66,7 @@ export const updateUserSettings = token => async dispatch => {
         payload: { user: res.data }
       })
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 }
 
 export const logout = () => async dispatch => {
@@ -74,7 +74,7 @@ export const logout = () => async dispatch => {
     await firebase.auth().signOut()
     dispatch({ type: LOGOUT })
   } catch (error) {
-    console.log('error logging out')
+    console.error('error logging out')
   }
 }
 

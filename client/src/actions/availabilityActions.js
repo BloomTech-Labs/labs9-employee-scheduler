@@ -10,7 +10,6 @@ export const editAvailability = ({
   availability,
   token
 }) => async dispatch => {
-  console.log(changes)
   const { id: availabilityId } = availability
 
   try {
