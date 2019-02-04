@@ -1,6 +1,6 @@
 const supertest = require('supertest')
 const server = require('../server/server')
-// const knex = require('../database/dbConfig')
+const db = require('../database/dbConfig')
 // const uuid = require('uuid/v4')
 // const {} = require('../database/utils/generateData')
 
@@ -37,6 +37,34 @@ describe('testing the invites router', () => {
 
       expect(response.status).toEqual(403)
     })
+  })
+
+  describe('POST /register/:inviteId', async () => {
+    it('succeeds with correct body and id', async () => {
+      // grab some invite id
+      const { id } = await db('invites').first()
+
+      const response = await request
+        .post(`/register/${id}`)
+        .send({
+          firstName: 'Testy',
+          lastName: 'McTestyface',
+          email: 'test@testymctestyface.com',
+          phone: '987098703295832'
+        })
+        .set('authorization', 'testing')
+        .set('user', 'new_id')
+
+      expect(response.status).toBe(201)
+    })
+
+    // it('fails with incorrect body', async () => {
+    //   // logic
+    // })
+
+    // it('fails with incorrect id', async () => {
+    //   // logic
+    // })
   })
 
   describe('POST /invite-supervisor', () => {
@@ -77,20 +105,6 @@ describe('testing the invites router', () => {
         .set('user', 'owner')
 
       expect(response.status).toEqual(400)
-    })
-  })
-
-  describe('POST /register/:inviteId', () => {
-    it('succeeds with correct body and id', async () => {
-      // logc
-    })
-
-    it('fails with incorrect body', async () => {
-      // logic
-    })
-
-    it('fails with incorrect id', async () => {
-      // logic
     })
   })
 })

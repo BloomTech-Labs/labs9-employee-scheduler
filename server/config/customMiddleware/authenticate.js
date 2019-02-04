@@ -1,4 +1,5 @@
 const admin = require('firebase-admin')
+const uuid = require('uuid/v4')
 
 // replace is needed because process.env escapes \n with \\n
 const privateKey = process.env.FIREBASE_SECRET.replace(/\\n/g, '\n')
@@ -24,7 +25,9 @@ const authenticate = (req, res, next) => {
     )
 
     // for testing authorize middleware
-    if (req.headers.user === 'owner' || !req.headers.user) {
+    if (req.headers.user === 'new_id') {
+      req.user = { id: uuid() }
+    } else if (req.headers.user === 'owner' || !req.headers.user) {
       req.user = { id: 'saSV8fdc3ThHNCwlpvgJt2F70Qu1' } // owner
     } else if (req.headers.user === 'supervisor') {
       req.user = { id: 'v8tNYGQe1XdzZlrPerWW5Ujvfro1' } // supervisor
