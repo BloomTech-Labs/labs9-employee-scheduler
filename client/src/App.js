@@ -24,7 +24,7 @@ import ReactGA from 'react-ga'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-
+import PropTypes from 'prop-types'
 import './reset.css'
 
 const firebaseConfig = {
@@ -108,6 +108,9 @@ class App extends Component {
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver()
+    setRedirectFlagToFalse()
+    resetAuthState()
+    window.stripe()
   }
 
   render() {
@@ -245,3 +248,14 @@ export default withRouter(
     { authenticate, resetAuthState, setRedirectFlagToFalse }
   )(App)
 )
+
+App.propTypes = {
+  auth: PropTypes.object,
+  registration: PropTypes.func,
+  user: PropTypes.object,
+  authenticate: PropTypes.func.isRequired,
+  resetAuthState: PropTypes.func.isRequired,
+  setRedirectFlagToFalse: PropTypes.func.isRequired,
+  userDidLogout: PropTypes.bool.isRequired,
+  redirect: PropTypes.bool.isRequired
+}

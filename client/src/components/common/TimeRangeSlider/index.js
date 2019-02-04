@@ -3,6 +3,7 @@ import InputRange from 'react-input-range'
 import './styles.css'
 import { minuteToTime, timeToMinute } from '../../../utils'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
 const formatHours = minutes => {
   let clearMinutes = minutes < 0 ? 0 : minutes
@@ -51,7 +52,6 @@ class TimeRangeSlider extends Component {
         onChangeStart={this.onChangeStart}
         onChange={this.onChange}
         onChangeComplete={this.onChangeComplete}
-        format
         step={15}
         value={{ min, max }}
         name={this.props.name}
@@ -73,3 +73,17 @@ TimeRangeSlider.defaultProps = {
 }
 
 export default TimeRangeSlider
+
+TimeRangeSlider.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  draggableTrack: PropTypes.bool.isRequired,
+  minValue: PropTypes.string.isRequired,
+  maxValue: PropTypes.string.isRequired,
+  onChangeStart: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onChangeComplete: PropTypes.func.isRequired,
+  format: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.object,
+  step: PropTypes.number.isRequired
+}

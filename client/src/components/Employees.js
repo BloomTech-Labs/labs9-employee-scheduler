@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -140,6 +140,8 @@ class Employees extends Component {
           .indexOf(this.state.searchTerm.toLowerCase()) > -1
       ) {
         return person
+      } else {
+        return null
       }
     })
     return (
@@ -217,10 +219,11 @@ class Employees extends Component {
 
 Employees.propTypes = {
   // add propTypes here
-  user: propTypes.object,
-  org_id: propTypes.string.isRequired,
-  employees: propTypes.array.isRequired,
-  token: propTypes.string.isRequired
+  user: PropTypes.object,
+  org_id: PropTypes.string.isRequired,
+  employees: PropTypes.arrayOf(PropTypes.object).isRequired,
+  token: PropTypes.string.isRequired,
+  filterdEmployees: PropTypes.arrayOf(PropTypes.string)
 }
 
 const mapStateToProps = state => {

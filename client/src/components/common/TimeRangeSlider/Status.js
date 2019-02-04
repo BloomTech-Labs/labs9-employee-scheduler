@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../../design/theme'
+import PropTypes from 'prop-types'
 
-const Status = ({ status }) => {
-  return (
-    <Container>
-      <p>{status}</p>
-    </Container>
-  )
-}
+const Status = ({ status }) => (
+  <Container>
+    <p>{status}</p>
+  </Container>
+)
 
 export default Status
+
+Status.propTypes = {
+  status: PropTypes.string.isRequired
+}
 
 const Container = styled.div`
   z-index: -2;

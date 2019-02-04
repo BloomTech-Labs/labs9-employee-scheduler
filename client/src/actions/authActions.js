@@ -2,7 +2,7 @@ import axios from 'axios'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-
+import PropTypes from 'prop-types'
 export const AUTH_INIT = 'AUTH_INIT'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
@@ -66,7 +66,7 @@ export const updateUserSettings = token => async dispatch => {
         payload: { user: res.data }
       })
     })
-    .catch(err => console.log(err))
+    .catch(err => alert('Error updating your settings, please try again'))
 }
 
 export const logout = () => async dispatch => {
@@ -74,10 +74,29 @@ export const logout = () => async dispatch => {
     await firebase.auth().signOut()
     dispatch({ type: LOGOUT })
   } catch (error) {
-    console.log('error logging out')
+    alert('There was an error while logging out, please try again')
   }
 }
 
 export const resetAuthState = () => ({
   type: RESET_AUTH_STATE
 })
+
+authenticate.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  type: PropTypes.string,
+  header: PropTypes.object.isRequired,
+  error: PropTypes.string
+}
+
+updateUserSettings.propTypes = {
+  type: PropTypes.string,
+  header: PropTypes.object.isRequired,
+  error: PropTypes.string
+}
+
+logout.propTypes = {
+  auth: PropTypes.func,
+  signOut: PropTypes.func,
+  error: PropTypes.string
+}

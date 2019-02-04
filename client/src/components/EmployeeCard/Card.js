@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import axios from 'axios'
@@ -45,8 +45,7 @@ class Card extends Component {
       availabilities,
       time_off_requests,
       role,
-      view,
-      id
+      view
     } = this.props
     return (
       <Container data-testid="employee-card">
@@ -112,13 +111,13 @@ export default connect(
 
 Card.propTypes = {
   // adding propTypes here
-  first_name: propTypes.string,
-  last_name: propTypes.string,
-  email: propTypes.string,
-  phone: propTypes.string,
-  availabilities: propTypes.array,
-  time_off_requests: propTypes.array,
-  token: propTypes.string.isRequired
+  first_name: PropTypes.string.isRequired,
+  last_name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  availabilities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  time_off_requests: PropTypes.arrayOf(PropTypes.object).isRequired,
+  token: PropTypes.string.isRequired
 }
 
 const Container = styled('div')`

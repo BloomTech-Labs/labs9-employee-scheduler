@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
-import { formatHours, utcDayToLocal, localDayToUTC } from '../../utils'
+import { formatHours, utcDayToLocal } from '../../utils'
 
 const weekdays = [
   'Sunday',
@@ -48,7 +48,9 @@ export default Availability
 
 Availability.propTypes = {
   // adding propTypes here
-  availabilities: propTypes.array
+  availabilities: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object])
+  )
 }
 
 const Avails = styled.div`

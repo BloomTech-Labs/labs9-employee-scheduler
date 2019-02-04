@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
@@ -66,7 +66,6 @@ class Billing extends Component {
         )
       })
       .catch(err => {
-        console.log(err)
         this.setState({
           loading: false,
           signupSuccess: false,
@@ -116,7 +115,6 @@ class Billing extends Component {
         })
       })
       .catch(err => {
-        console.log(err)
         this.setState({
           loading: false,
           signupSuccess: false,
@@ -270,9 +268,9 @@ export default connect(
 )(injectStripe(Billing))
 
 Billing.propTypes = {
-  // adding propTypes here
-  user: propTypes.object,
-  fetchOrgFromDB: propTypes.func.isRequired,
-  token: propTypes.string.isRequired,
-  error: propTypes.string
+  user: PropTypes.object,
+  organization: PropTypes.object,
+  fetchOrgFromDB: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  error: PropTypes.string
 }

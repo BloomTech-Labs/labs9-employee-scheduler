@@ -5,6 +5,7 @@ import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
 import TimeRangeSlider from '.'
 import Status from './Status'
+import PropTypes from 'prop-types'
 
 const HOOSlider = ({
   id,
@@ -56,6 +57,18 @@ const HOOSlider = ({
 }
 
 export default HOOSlider
+
+HOOSlider.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  closedAllDay: PropTypes.func.isRequired,
+  toggled: PropTypes.bool.isRequired,
+  onChangeStart: PropTypes.func.isRequired,
+  onChangeComplete: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  start: PropTypes.string.isRequired,
+  end: PropTypes.string.isRequired
+}
 
 const Container = styled('div')`
   display: flex;

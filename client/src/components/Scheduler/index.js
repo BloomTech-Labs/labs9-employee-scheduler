@@ -63,7 +63,7 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.fetchData())
-        .catch(err => console.log(err))
+        .catch(err => err)
     } else {
       // else, fetch original data?
       this.setState({ steps, run: false })
@@ -306,7 +306,7 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.props.updateUserSettings(this.props.token))
-        .catch(err => console.log(err))
+        .catch(err => err)
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
 

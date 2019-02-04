@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import EmptyScreen from './EmptyScreen'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Loader from './Loader'
 import Status from './Status'
@@ -94,7 +94,9 @@ class PrivateRoute extends React.Component {
 }
 
 PrivateRoute.propTypes = {
-  // props types go here
+  user: PropTypes.object,
+  error: PropTypes.string,
+  errorTimeOut: PropTypes.bool
 }
 
 const mapStateToProps = ({ auth: { user, error } }) => ({

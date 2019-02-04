@@ -144,7 +144,6 @@ class EmployeeDashboard extends Component {
     const { id } = this.props.user
     const names = []
 
-    console.log()
     employees.map(employee => names.push(`${employee.first_name}`))
 
     //events for all employees
@@ -152,23 +151,22 @@ class EmployeeDashboard extends Component {
       return [
         ...acc,
         ...employee.events.map(event => {
-          if (this.state.employeeView === 'all') {
+          if (employeeView === 'all') {
             return {
               ...event,
               start: new Date(event.start),
               end: new Date(event.end),
               title: `${employee.first_name} ${employee.last_name}`
             }
-          } else if (
-            event.user_id === id &&
-            this.state.employeeView === 'single'
-          ) {
+          } else if (event.user_id === id && employeeView === 'single') {
             return {
               ...event,
               start: new Date(event.start),
               end: new Date(event.end),
               title: `${employee.first_name} ${employee.last_name}`
             }
+          } else {
+            return null
           }
         })
       ]
@@ -197,25 +195,21 @@ class EmployeeDashboard extends Component {
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
               {width === 'mobile' || width === 'tablet' ? (
                 <ToggleButton onClick={this.toggleEmployeeView}>
-                  {this.state.employeeView === 'all'
-                    ? 'My Shift'
-                    : 'All Shifts'}
+                  {employeeView === 'all' ? 'My Shift' : 'All Shifts'}
                 </ToggleButton>
               ) : null}
             </NavButtons>
             <div>
               {width === 'desktop' ? (
                 <Button onClick={this.toggleEmployeeView}>
-                  {this.state.employeeView === 'all'
-                    ? 'My Shifts'
-                    : 'All Shifts'}
+                  {employeeView === 'all' ? 'My Shifts' : 'All Shifts'}
                 </Button>
               ) : null}
             </div>
             <div>
               {width === 'desktop' ? (
                 <Button onClick={this.toggleCalView}>
-                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                  {view === 'week' ? 'Day View' : 'Week View'}
                 </Button>
               ) : null}
             </div>
