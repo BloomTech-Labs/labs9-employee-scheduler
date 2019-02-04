@@ -27,7 +27,7 @@ const authenticate = (req, res, next) => {
     if (req.headers.user === 'owner' || !req.headers.user) {
       req.user = { id: 'saSV8fdc3ThHNCwlpvgJt2F70Qu1' } // owner
     } else if (req.headers.user === 'supervisor') {
-      req.user = { id: 'OsdZPBFJICgfyThBytBZhHSDtf82' } // supervisor
+      req.user = { id: 'v8tNYGQe1XdzZlrPerWW5Ujvfro1' } // supervisor
     } else if (req.headers.user === 'employee') {
       req.user = { id: 'xsc44X6okFgw3V2OPIIcGIMXkkz1' } // employee
     }
