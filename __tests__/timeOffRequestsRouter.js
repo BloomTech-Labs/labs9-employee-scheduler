@@ -41,6 +41,7 @@ describe('Time off Request', () => {
       expect(response.type).toEqual('application/json')
       expect(response.body.length).toEqual(expected.length)
       expect(response.body.type).toEqual(expected.type)
+
       await cleanup()
     })
   })
@@ -76,16 +77,19 @@ describe('Time off Request', () => {
       await cleanup()
     })
   })
-  describe('DELETE /:id TimeOffRequest', async () => {
-    const { team, cleanup } = await generateTeamData(knex)
-    const { id } = await team.timeOffRequests[0]
-    const response = await request
-      .delete(`/time-off-requests/${id}`)
-      .set('authorization', 'testing')
 
-    expect(response.status).toEqual(200)
-    expect(response.type).toEqual('application/json')
-    expect(response.body).toEqual(1)
-    await cleanup()
+  describe('DELETE /:id TimeOffRequest', () => {
+    it('deletes request when id is provided', async () => {
+      const { team, cleanup } = await generateTeamData(knex)
+      const { id } = await team.timeOffRequests[0]
+      const response = await request
+        .delete(`/time-off-requests/${id}`)
+        .set('authorization', 'testing')
+
+      expect(response.status).toEqual(200)
+      expect(response.type).toEqual('application/json')
+      expect(response.body).toEqual(1)
+      await cleanup()
+    })
   })
 })
