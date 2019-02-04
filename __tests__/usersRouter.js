@@ -87,7 +87,7 @@ describe('/users route', () => {
       const { users } = team
       // need to add cal_visit and emp_visit because they are not added by
       // generateTeamData but instead are default values in the db model
-      const target = { ...users[0], cal_visit: 'true', emp_visit: 'true' }
+      const target = { ...users[0], cal_visit: true, emp_visit: true }
       const changes = { first_name: 'Henry' }
       const response = await request
         .put(`/users/${target.id}`)
@@ -106,6 +106,7 @@ describe('/users route', () => {
       expect(response.status).toBe(200)
       expect(response.body).toEqual(1)
       expect(updatedUser).toEqual({ ...target, ...changes })
+      )
 
       // cleans up unneeded team data after tests
       await cleanup()
