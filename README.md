@@ -2,6 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
 
+[![Build Status](https://travis-ci.com/Lambda-School-Labs/labs9-employee-scheduler.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/labs9-employee-scheduler)
+
 Cadence is an employee shift scheduling SaaS for small-to-medium businesses. In this document, you will find everything you need to know about this open-source software project. <br><br>
 
 Front-end Deployment: https://getcadence.co/<br>
