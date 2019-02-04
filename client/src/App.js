@@ -110,7 +110,7 @@ class App extends Component {
     this.unregisterAuthObserver()
     setRedirectFlagToFalse()
     resetAuthState()
-    window.stripe()
+    window.Stripe()
   }
 
   render() {
