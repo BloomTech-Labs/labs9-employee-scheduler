@@ -21,7 +21,11 @@ import Button from './common/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
+
 // This page will house all of the information that will be visible to the employees when they log in to the site
+
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 
 class EmployeeDashboard extends Component {
   constructor(props) {
@@ -38,6 +42,10 @@ class EmployeeDashboard extends Component {
     const { id } = this.props.auth.user
     this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
     this.fetchData()
+
+    // handle responsiveness for calendar
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
   }
 
   componentDidUpdate(prevProps, nextProps) {
@@ -45,6 +53,31 @@ class EmployeeDashboard extends Component {
       return this.setState({ error: this.props.error })
     }
   }
+
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({
+        width: 'mobile',
+        view: 'day',
+      })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({
+        width: 'tablet',
+        view: 'day',
+      })
+    } else {
+      return this.setState({
+        width: 'desktop',
+        view: 'week',
+      })
+    }
+  }
+
 
   deleteExpiredRequest = (torId, token) => {
     const r = window.confirm(
