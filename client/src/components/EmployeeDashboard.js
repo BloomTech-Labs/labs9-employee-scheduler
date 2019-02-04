@@ -122,7 +122,6 @@ class EmployeeDashboard extends Component {
         ...acc,
         ...employee.events.map(event => {
           if (this.state.employeeView === 'all') {
-            console.log(event)
             return {
               ...event,
               start: new Date(event.start),
@@ -164,11 +163,9 @@ class EmployeeDashboard extends Component {
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
             </NavButtons>
             <div>
-              {employeeView === 'all' ? (
-                <Button onClick={this.toggleEmployeeView}>
-                  {this.state.employeeView === 'all' ? 'Just Me' : 'Everyone'}
-                </Button>
-              ) : null}
+              <Button onClick={this.toggleEmployeeView}>
+                {this.state.employeeView === 'all' ? 'Just Me' : 'Everyone'}
+              </Button>
             </div>
             <div>
               {width === 'desktop' ? (
