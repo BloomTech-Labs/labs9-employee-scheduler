@@ -64,7 +64,7 @@ class App extends Component {
       //checks to see if there is a user logged in.
       this.props.authenticate()
     })
-    const stripePKey = process.env.STRIPE_PKEY
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
 
     if (window.Stripe) {
       this.setState({
