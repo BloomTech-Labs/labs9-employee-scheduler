@@ -158,6 +158,12 @@ class App extends Component {
               font-family: 'Nunito', sans-serif;
               outline: none;
             }
+
+            .demo-bold {
+              font-family: 'Lato', sans-serif;
+              font-weight: bold;
+              color: ${system.color.primary};
+            }
           `}
         />
 
