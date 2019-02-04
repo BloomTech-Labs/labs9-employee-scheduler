@@ -247,7 +247,7 @@ class Scheduler extends React.Component {
       const { hours } = this.props
       const eventTimes = {
         start: date,
-        end: new Date(date.getTime() + 60 * 1000 * 60)
+        end: new Date(date.getTime() + 30 * 1000 * 60)
       }
       const { verdict } = validateShift({
         eventTimes,
