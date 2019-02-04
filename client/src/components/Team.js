@@ -8,6 +8,7 @@ import Kam from '../img/Kam.jpg'
 import Rahul from '../img/Rahul.jpg'
 import Carlos from '../img/Carlos.jpg'
 import Samuel from '../img/Samuel.jpg'
+import Adam from '../img/Adam.jpg'
 
 const Team = () => {
   return (
@@ -52,11 +53,18 @@ const Team = () => {
         </div>
 
         <div className="teammate">
-          <img src="" alt="Adam picture" />
+          <img src={Adam} alt="Adam picture" />
           <div className="details">
             <h2>Adam Hinckley</h2>
             <p className="location">Boise, ID</p>
-            <p className="bio">A Bio</p>
+            <p className="bio">
+              Adam is a Full Stack Developer and a family man with an amazing
+              wife and four kids. He has a background in the life insurance
+              business where he found a love for programming when he created
+              software solutions that solved underwriting problems for over
+              2,000 agents. When he's not busy coding, Adam loves to enjoy the
+              great outdoors with his family.
+            </p>
           </div>
         </div>
 
