@@ -164,7 +164,7 @@ class EmployeeDashboard extends Component {
             </NavButtons>
             <div>
               <Button onClick={this.toggleEmployeeView}>
-                {this.state.employeeView === 'all' ? 'Just Me' : 'Everyone'}
+                {this.state.employeeView === 'all' ? 'My Shifts' : 'All Shifts'}
               </Button>
             </div>
             <div>
