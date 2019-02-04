@@ -463,6 +463,7 @@ export default connect(
 
 const Container = styled.div`
   display: flex;
+  min-height: 100vh;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;

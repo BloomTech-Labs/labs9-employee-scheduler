@@ -27,7 +27,7 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 | Adam Hinckley   | https://github.com/adamhinckley |    https://www.linkedin.com/in/adamhinckley/ |
 | Carlos Lantigua | https://github.com/CLantigua2 |   https://www.linkedin.com/in/carlos-lantigua/ |
 | Samuel Machat   | https://github.com/axolotl |    https://www.linkedin.com/in/samuel-machat/ |
- 
+
 
 ### Motivation
 
@@ -45,10 +45,10 @@ Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maint
 
 
 ### Installation
-To install the application in a local dev environment, you can run `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
+To install the application in a local dev environment, you can run the terminal command, `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
 To install, you will need two environment files:
 in the `./` you will need a `.env` file
-in the `./client` you will a `.env.development` file
+in the `./client` you will need a `.env.development` file
 
 #### Instructions for .env Variables:
 
@@ -77,13 +77,13 @@ FIREBASE_EMAIL={copy paste your "client_email" here}
 ```
 
 ### Using the App
-To start our app locally after completing the above installation, just run `yarn dev`. This will spin up the client on localhost:3000 and the server on localhost:9000. 
+To start our app locally after completing the above installation, just run the terminal command, `yarn dev`. This will spin up the client on localhost:3000 and the server on localhost:9000.
 
 ### API
 Our API is protected by Firebase authentication. A valid JWT must be included on a request header under the 'authorization' key in order for a request to be accepted. In our Redux store, this is `auth.token` for a currently validated user. You can learn more about our API [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/API.md). You can learn more about our data model [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/data_model.md).
 
 ### Testing
-This library uses Jest for testing. For the server side, we make use of Supertest, and for the client side, we make use of the React-Testing-Library.
+This library uses [Jest](https://jestjs.io/) for testing. For the server side, we make use of [Supertest](https://github.com/visionmedia/supertest), and for the client side, we make use of the [React-Testing-Library](https://testing-library.com/react).
 
 Tests can be run in the server by moving into the root, and using `yarn test`. Tests can be run in the client by moving into `/client` and running `yarn test`.
 

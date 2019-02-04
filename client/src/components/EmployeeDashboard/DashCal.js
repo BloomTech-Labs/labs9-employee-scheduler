@@ -45,6 +45,8 @@ export default function DashCal(props) {
         view={view}
         eventPropGetter={eventPropGetter}
         date={date}
+        onView={() => {}}
+        onNavigate={() => {}}
       />
     </div>
   )
