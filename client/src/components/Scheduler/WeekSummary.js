@@ -22,7 +22,6 @@ class WeekSummary extends React.Component {
     const dayValues = filtered
       // compose events consumable structures
       .map(event => {
-        console.log(event.start)
         return {
           employee: event.title,
           day: moment
