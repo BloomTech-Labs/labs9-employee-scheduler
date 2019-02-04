@@ -64,16 +64,17 @@ class App extends Component {
       //checks to see if there is a user logged in.
       this.props.authenticate()
     })
+    const stripePKey = process.env.STRIPE_PKEY
 
     if (window.Stripe) {
       this.setState({
-        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+        stripe: window.Stripe(stripePKey)
       })
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
         this.setState({
-          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+          stripe: window.Stripe(stripePKey)
         })
       })
     }
@@ -110,7 +111,7 @@ class App extends Component {
     this.unregisterAuthObserver()
     setRedirectFlagToFalse()
     resetAuthState()
-    window.stripe()
+    window.Stripe()
   }
 
   render() {

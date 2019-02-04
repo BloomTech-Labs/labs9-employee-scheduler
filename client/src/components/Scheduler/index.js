@@ -375,7 +375,7 @@ class Scheduler extends React.Component {
           run={run}
           scrollToFirstStep
           showProgress
-          showSkipButton={!this.props.user.cal_visit}
+          showSkipButton
           steps={steps}
           styles={{
             options: {
