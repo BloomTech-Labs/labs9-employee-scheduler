@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import EmptyScreen from './EmptyScreen'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Loader from './Loader'
 import Status from './Status'
@@ -16,6 +16,16 @@ const loadingInterval = 8000
 
 class PrivateRoute extends React.Component {
   state = { errorTimeout: false, loadingTimeout: false }
+
+  // componentWillUnmount() {
+  //   const { errorTimeout, loadingTimeout } = this.state
+  //   if (errorTimeout) {
+  //     clearTimeout(errorTimeout)
+  //   }
+  //   if (loadingTimeout) {
+  //     clearTimeout(loadingTimeout)
+  //   }
+  // }
 
   render() {
     const { user, error, component: Component, access, ...rest } = this.props
@@ -84,7 +94,9 @@ class PrivateRoute extends React.Component {
 }
 
 PrivateRoute.propTypes = {
-  // props types go here
+  user: PropTypes.object,
+  error: PropTypes.string,
+  errorTimeOut: PropTypes.bool
 }
 
 const mapStateToProps = ({ auth: { user, error } }) => ({
