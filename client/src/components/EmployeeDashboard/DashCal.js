@@ -76,4 +76,8 @@ const StyledCal = styled(Calendar)`
     width: 20px;
     border: none;
   }
+
+  .rbc-event {
+    cursor: default;
+  }
 `

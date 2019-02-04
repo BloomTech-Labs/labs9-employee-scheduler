@@ -247,7 +247,7 @@ class Scheduler extends React.Component {
       const { hours } = this.props
       const eventTimes = {
         start: date,
-        end: new Date(date.getTime() + 60 * 1000 * 60)
+        end: new Date(date.getTime() + 30 * 1000 * 60)
       }
       const { verdict } = validateShift({
         eventTimes,
@@ -375,7 +375,7 @@ class Scheduler extends React.Component {
           run={run}
           scrollToFirstStep
           showProgress
-          showSkipButton
+          showSkipButton={!this.props.user.cal_visit}
           steps={steps}
           styles={{
             options: {
@@ -392,12 +392,12 @@ class Scheduler extends React.Component {
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
-            {width === 'desktop' ? (
-              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
-            ) : null}
             <ModalButton onClick={this.props.toggleModal} id="HOO">
               Edit Hours of Operation
             </ModalButton>
+            {width === 'desktop' ? (
+              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
+            ) : null}
           </TopButtons>
           <CalendarButtons>
             <NavButtons>
@@ -463,6 +463,7 @@ export default connect(
 
 const Container = styled.div`
   display: flex;
+  min-height: 100vh;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;

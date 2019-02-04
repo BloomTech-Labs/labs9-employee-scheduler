@@ -11,6 +11,8 @@ import Settings from './components/Settings'
 import Login from './components/Login'
 import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
+import Legal from './components/Legal'
+import Team from './components/Team'
 import system from './design/theme'
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -219,6 +221,9 @@ class App extends Component {
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
               <Route path="/join/:id" component={Join} />
+              <Route path="/privacy" component={Legal} />
+              <Route path="/terms" component={Legal} />
+              <Route path="/team" component={Team} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>

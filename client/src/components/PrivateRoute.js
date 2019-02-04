@@ -17,15 +17,15 @@ const loadingInterval = 8000
 class PrivateRoute extends React.Component {
   state = { errorTimeout: false, loadingTimeout: false }
 
-  // componentWillUnmount() {
-  //   const { errorTimeout, loadingTimeout } = this.state
-  //   if (errorTimeout) {
-  //     clearTimeout(errorTimeout)
-  //   }
-  //   if (loadingTimeout) {
-  //     clearTimeout(loadingTimeout)
-  //   }
-  // }
+  componentWillUnmount() {
+    const { errorTimeout, loadingTimeout } = this.state
+    if (errorTimeout) {
+      clearTimeout(errorTimeout)
+    }
+    if (loadingTimeout) {
+      clearTimeout(loadingTimeout)
+    }
+  }
 
   render() {
     const { user, error, component: Component, access, ...rest } = this.props

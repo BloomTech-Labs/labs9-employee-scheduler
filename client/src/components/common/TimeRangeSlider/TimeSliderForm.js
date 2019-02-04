@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../../../design/theme'
 import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
-import TimeRangeSlider from './TimeRangeSlider'
+import TimeRangeSlider from '.'
 import Status from './Status'
 import PropTypes from 'prop-types'
 
@@ -73,6 +73,7 @@ HOOSlider.propTypes = {
 const Container = styled('div')`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
   margin-bottom: 7.5px;
@@ -98,6 +99,11 @@ const Container = styled('div')`
     padding: 12px;
     margin-right: 15px;
     border-radius: 0 25px 25px 0;
+    @media ${system.breakpoints[1]} {
+      width: 100%;
+      border-radius: 0;
+    }
+
     button {
       cursor: pointer;
       margin: 5px;

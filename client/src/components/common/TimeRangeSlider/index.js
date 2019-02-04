@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import InputRange from 'react-input-range'
 import './styles.css'
-import { minuteToTime, timeToMinute } from '../../utils'
+import { minuteToTime, timeToMinute } from '../../../utils'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 

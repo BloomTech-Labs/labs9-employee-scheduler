@@ -168,10 +168,15 @@ class AddEmployee extends Component {
                 </Link>
               </>
             ) : (
-              <h6 id="instructions">
-                You have reached the limit for the number of employees on a free
-                account. Contact your business' owner about upgrading.
-              </h6>
+              <>
+                <Close
+                  style={{ position: 'absolute', top: '25px', right: '25px' }}
+                />
+                <h6 id="instructions">
+                  You have reached the limit for the number of employees on a
+                  free account. Contact your business' owner about upgrading.
+                </h6>
+              </>
             )}
           </form>
         )}

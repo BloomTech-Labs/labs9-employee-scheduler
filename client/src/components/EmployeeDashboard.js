@@ -23,6 +23,9 @@ import system from '../design/theme'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
+
 class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
@@ -30,7 +33,8 @@ class EmployeeDashboard extends Component {
       errors: '',
       view: 'week',
       date: new Date(),
-      width: 'desktop'
+      width: 'desktop',
+      employeeView: 'all'
     }
   }
 
@@ -38,11 +42,39 @@ class EmployeeDashboard extends Component {
     const { id } = this.props.auth.user
     this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
     this.fetchData()
+
+    // handle responsiveness for calendar
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
   }
 
   componentDidUpdate(prevProps, nextProps) {
     if (prevProps.error !== this.props.error) {
       return this.setState({ error: this.props.error })
+    }
+  }
+
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({
+        width: 'mobile',
+        view: 'day'
+      })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({
+        width: 'tablet',
+        view: 'day'
+      })
+    } else {
+      return this.setState({
+        width: 'desktop',
+        view: 'week'
+      })
     }
   }
 
@@ -78,12 +110,13 @@ class EmployeeDashboard extends Component {
   }
 
   fetchData() {
-    const { organization_id } = this.props.user
+    const { organization_id, id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
+    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
   }
 
-  toggleView = () => {
+  toggleCalView = () => {
     if (this.state.view === 'week') {
       return this.setState({
         view: 'day',
@@ -97,27 +130,52 @@ class EmployeeDashboard extends Component {
     }
   }
 
+  toggleEmployeeView = () => {
+    if (this.state.employeeView === 'all') {
+      this.setState({ employeeView: 'single' })
+    } else {
+      this.setState({ employeeView: 'all' })
+    }
+  }
+
   render() {
-    // const { employee, hours } = this.props.employee
     const { employees, hours, employee } = this.props
-    const { view, date, width } = this.state
+    const { view, date, width, employeeView } = this.state
+    const { id } = this.props.user
     const names = []
+
+    console.log()
     employees.map(employee => names.push(`${employee.first_name}`))
 
+    //events for all employees
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
         ...employee.events.map(event => {
-          return {
-            ...event,
-            start: new Date(event.start),
-            end: new Date(event.end),
-            title: `${employee.first_name} ${employee.last_name}`
+          if (this.state.employeeView === 'all') {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else if (
+            event.user_id === id &&
+            this.state.employeeView === 'single'
+          ) {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
           }
         })
       ]
     }, [])
+
     let hourRange = getHoursOfOperationRange(hours, false)
+
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -133,12 +191,30 @@ class EmployeeDashboard extends Component {
           <CalendarButtons>
             <NavButtons>
               <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <MiddleButton onClick={() => this.changeDate('today')}>
+                Today
+              </MiddleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+              {width === 'mobile' || width === 'tablet' ? (
+                <ToggleButton onClick={this.toggleEmployeeView}>
+                  {this.state.employeeView === 'all'
+                    ? 'My Shift'
+                    : 'All Shifts'}
+                </ToggleButton>
+              ) : null}
             </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>
+                <Button onClick={this.toggleEmployeeView}>
+                  {this.state.employeeView === 'all'
+                    ? 'My Shifts'
+                    : 'All Shifts'}
+                </Button>
+              ) : null}
+            </div>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleCalView}>
                   {this.state.view === 'week' ? 'Day View' : 'Week View'}
                 </Button>
               ) : null}
@@ -273,5 +349,32 @@ const NavButtons = styled.div`
   /* this creates internal margins between immediate children */
   & > * + * {
     margin-left: 10px;
+
+    @media ${system.breakpoints[0]} {
+      margin-left: 0;
+    }
+  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media ${system.breakpoints[0]} {
+    justify-content: space-around;
+  }
+`
+
+const MiddleButton = styled(Button)`
+  @media ${system.breakpoints[0]} {
+    margin-bottom: ${system.spacing.bigPadding};
+    order: -1;
+    width: 100%;
+  }
+`
+
+const ToggleButton = styled(Button)`
+  @media ${system.breakpoints[0]} {
+    margin-top: ${system.spacing.bigPadding};
+    /* order: -1; */
+    /* width: 100%; */
   }
 `

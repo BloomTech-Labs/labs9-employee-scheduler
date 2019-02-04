@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import HOOSlider from './HOOSlider'
+import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../design/theme'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { formatHours, utcDayToLocal } from '../../utils'
-import { editHours } from '../../actions/'
-import Button from '../common/Button'
+import { formatHours, utcDayToLocal } from '../utils'
+import { editHours } from '../actions'
+import Button from './common/Button'
 
 const dayNameMap = [
   'Sunday',
@@ -207,6 +207,12 @@ export const Modal = styled.div`
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};
   opacity: 1;
+
+  @media ${system.breakpoints[0]} {
+    border-radius: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   .days-container {
     display: flex;
     flex-direction: column;
@@ -220,5 +226,10 @@ export const Modal = styled.div`
   button {
     width: 30%;
     margin: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[0]} {
+      width: 96%;
+      margin: 2%;
+    }
   }
 `

@@ -156,7 +156,7 @@ class Employees extends Component {
             run={run}
             scrollToFirstStep
             showProgress
-            showSkipButton
+            showSkipButton={!this.props.user.emp_visit}
             steps={steps}
             styles={{
               options: {
@@ -164,18 +164,23 @@ class Employees extends Component {
               }
             }}
           />
-          <Input
-            id="search"
-            search
-            type="text"
-            name="searchTerm"
-            placeholder="Search employees..."
-            onChange={this.updateSearch}
-            value={this.state.searchTerm}
-          />
-          <Button id="add-employee" onClick={this.toggleShow}>
-            Add Employee
-          </Button>
+          <TopButtons>
+            <Button id="add-employee" onClick={this.toggleShow}>
+              Add Employee
+            </Button>
+            <Input
+              id="search"
+              search
+              type="text"
+              name="searchTerm"
+              placeholder="Search employees..."
+              onChange={this.updateSearch}
+              value={this.state.searchTerm}
+            />
+            <Button id="tut" onClick={this.handleClickStart}>
+              Start Tutorial
+            </Button>
+          </TopButtons>
           <Modal show={this.state.show} toggleShow={this.toggleShow}>
             <AddEmployee />
           </Modal>
@@ -221,6 +226,20 @@ Employees.propTypes = {
   filterdEmployees: PropTypes.arrayOf(PropTypes.string)
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    org_id: state.auth.user.organization_id,
+    employees: state.employees.employees,
+    token: state.auth.token
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchEmployeesFromDB, updateUserSettings }
+)(Employees)
+
 const MidContainer = styled('div')`
   display: flex;
   flex-direction: column;
@@ -241,16 +260,22 @@ const InnerContainer = styled('div')`
   margin: ${system.spacing.standardPadding};
 `
 
-const mapStateToProps = state => {
-  return {
-    user: state.auth.user,
-    org_id: state.auth.user.organization_id,
-    employees: state.employees.employees,
-    token: state.auth.token
-  }
-}
+const TopButtons = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 40px 0;
+  @media ${system.breakpoints[1]} {
+    padding: 10px 0 0;
+    flex-flow: column nowrap;
 
-export default connect(
-  mapStateToProps,
-  { fetchEmployeesFromDB, updateUserSettings }
-)(Employees)
+    #search {
+      margin-bottom: 20px;
+      order: -1;
+    }
+
+    #tut {
+      display: none;
+    }
+  }
+`

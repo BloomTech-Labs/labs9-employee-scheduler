@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Scheduler from './Scheduler'
 import Modal from './Modal'
-import HoursOfOperation from './HoursOfOperation'
+import HoursOfOperationForm from './HoursOfOperationForm'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
@@ -34,7 +34,7 @@ class CreateSchedule extends Component {
           </MobileOnly>
           <div>
             <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
-              <HoursOfOperation />
+              <HoursOfOperationForm />
             </Modal>
             <Scheduler toggleModal={this.toggleModal} />
           </div>
