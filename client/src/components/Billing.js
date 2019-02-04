@@ -66,7 +66,6 @@ class Billing extends Component {
         )
       })
       .catch(err => {
-        console.error(err)
         this.setState({
           loading: false,
           signupSuccess: false,
@@ -116,7 +115,6 @@ class Billing extends Component {
         })
       })
       .catch(err => {
-        console.error(err)
         this.setState({
           loading: false,
           signupSuccess: false,

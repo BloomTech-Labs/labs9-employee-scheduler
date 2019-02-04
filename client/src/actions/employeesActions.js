@@ -38,7 +38,7 @@ export const fetchEmployeesFromDB = (orgId, token) => dispatch => {
         })
       })
       .catch(error => {
-        console.error(error)
+        alert('There was an error retrieving your employees')
         dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL })
       })
   }
@@ -100,7 +100,7 @@ export const deleteTimeOffRequest = (torId, token) => async dispatch => {
         })
       )
   } catch (err) {
-    console.error(err)
+    alert('There was an error deleting that request, please try again.')
   }
 }
 
@@ -125,5 +125,7 @@ export const addTimeOffRequest = (
         payload: res.data
       })
     )
-    .catch(err => console.error(err))
+    .catch(err =>
+      alert('There was an error adding that request, please try again.')
+    )
 }

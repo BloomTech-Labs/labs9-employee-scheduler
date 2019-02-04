@@ -58,7 +58,6 @@ class AddEmployee extends Component {
           })
           .catch(err => {
             alert(`Something has gone wrong. Try again!`)
-            console.error(err)
           })
       } else {
         if (!this.state.newUser.role) {
