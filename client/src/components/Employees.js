@@ -155,7 +155,7 @@ class Employees extends Component {
             run={run}
             scrollToFirstStep
             showProgress
-            showSkipButton
+            showSkipButton={!this.props.user.emp_visit}
             steps={steps}
             styles={{
               options: {
@@ -224,6 +224,20 @@ Employees.propTypes = {
   token: propTypes.string.isRequired
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    org_id: state.auth.user.organization_id,
+    employees: state.employees.employees,
+    token: state.auth.token
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchEmployeesFromDB, updateUserSettings }
+)(Employees)
+
 const MidContainer = styled('div')`
   display: flex;
   flex-direction: column;
@@ -263,17 +277,3 @@ const TopButtons = styled.div`
     }
   }
 `
-
-const mapStateToProps = state => {
-  return {
-    user: state.auth.user,
-    org_id: state.auth.user.organization_id,
-    employees: state.employees.employees,
-    token: state.auth.token
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { fetchEmployeesFromDB, updateUserSettings }
-)(Employees)
