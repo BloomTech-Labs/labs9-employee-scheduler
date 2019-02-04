@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 const axios = require('axios')
 
 export const HOURS_FETCHED = 'HOURS_FETCHED'
@@ -23,6 +24,16 @@ export const editHours = (hourId, changes, token) => async dispatch => {
   }
 }
 
+editHours.propTypes = {
+  type: PropTypes.string.isRequired,
+  hourId: PropTypes.string.isRequired,
+  baseUrl: PropTypes.string.isRequired,
+  changes: PropTypes.objectOf(PropTypes.string).isRequired,
+  headers: PropTypes.objectOf(PropTypes.string).isRequired,
+  payload: PropTypes.objectOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired
+}
+
 // gets hours data from db
 export const fetchHoursFromDB = (orgID, token) => async dispatch => {
   try {
@@ -34,6 +45,15 @@ export const fetchHoursFromDB = (orgID, token) => async dispatch => {
   } catch (err) {
     dispatch({ type: HOURS_FETCHING_FAILED })
   }
+}
+
+fetchHoursFromDB.propTypes = {
+  type: PropTypes.string.isRequired,
+  orgID: PropTypes.string.isRequired,
+  baseUrl: PropTypes.string.isRequired,
+  headers: PropTypes.objectOf(PropTypes.string).isRequired,
+  payload: PropTypes.objectOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 // sets a day to closed all day or not
@@ -48,6 +68,16 @@ export const closeAndOpenHours = (hourId, changes, token) => async dispatch => {
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }
+}
+
+closeAndOpenHours.propTypes = {
+  type: PropTypes.string.isRequired,
+  hourId: PropTypes.string.isRequired,
+  baseUrl: PropTypes.string.isRequired,
+  changes: PropTypes.object.isRequired,
+  headers: PropTypes.objectOf(PropTypes.string).isRequired,
+  payload: PropTypes.objectOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 const Loading = () => ({

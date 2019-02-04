@@ -111,7 +111,6 @@ class HoursOfOperation extends Component {
     this.setState(prevState => {
       return {
         days: prevState.days.map(day => {
-          console.log(day.name)
           if (day.name === targetDay.name) {
             return { ...day, start: time.start, end: time.end }
           } else {
