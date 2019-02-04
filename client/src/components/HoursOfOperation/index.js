@@ -3,7 +3,7 @@ import HOOSlider from './HOOSlider'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import moment from 'moment'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formatHours, utcDayToLocal } from '../../utils'
 import { editHours } from '../../actions/'
@@ -182,12 +182,15 @@ export default connect(
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {
-  editHours: propTypes.func.isRequired,
-  showHandleHours: propTypes.func,
-  closeAllDay: propTypes.func,
-  handleHours: propTypes.func,
-  saveCloseTime: propTypes.func,
-  saveOpenTime: propTypes.func
+  token: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  hours: PropTypes.object.isRequired,
+  editHours: PropTypes.func.isRequired,
+  showHandleHours: PropTypes.func,
+  closeAllDay: PropTypes.func,
+  handleHours: PropTypes.func,
+  saveCloseTime: PropTypes.func,
+  saveOpenTime: PropTypes.func
 }
 
 export const Modal = styled.div`
