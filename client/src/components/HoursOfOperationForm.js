@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import HOOSlider from './HOOSlider'
+import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../design/theme'
 import moment from 'moment'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { formatHours, utcDayToLocal } from '../../utils'
-import { editHours } from '../../actions/'
-import Button from '../common/Button'
+import { formatHours, utcDayToLocal } from '../utils'
+import { editHours } from '../actions'
+import Button from './common/Button'
 
 const dayNameMap = [
   'Sunday',

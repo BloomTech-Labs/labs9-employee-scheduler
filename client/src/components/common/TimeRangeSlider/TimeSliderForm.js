@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../../../design/theme'
 import Zoom from 'react-reveal'
 import Checkbox from './Checkbox'
-import TimeRangeSlider from './TimeRangeSlider'
+import TimeRangeSlider from '.'
 import Status from './Status'
 
 const HOOSlider = ({

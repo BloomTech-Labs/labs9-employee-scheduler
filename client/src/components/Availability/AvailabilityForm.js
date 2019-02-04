@@ -4,8 +4,8 @@ import { editAvailability } from '../../actions'
 import Button from '../common/Button'
 import { formatHours, utcDayToLocal } from '../../utils'
 import moment from 'moment'
-import HOOSlider from '../HoursOfOperation/HOOSlider'
-import { Modal } from '../HoursOfOperation'
+import HOOSlider from '../common/TimeRangeSlider/TimeSliderForm'
+import { Modal } from '../HoursOfOperationForm'
 
 const dayNameMap = [
   'Sunday',
