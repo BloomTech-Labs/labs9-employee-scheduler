@@ -44,7 +44,7 @@ export const closeAndOpenHours = (hourId, changes, token) => async dispatch => {
       { closed: changes },
       { headers: { authorization: token } }
     )
-    dispatch({ type: HOURS_UPDATED, payload: { hourId, changes } })
+    dispatch({ type: HOURS_UPDATED, payload: { hourId, changes, req } })
   } catch (err) {
     dispatch({ type: HOURS_UPDATE_FAILED })
   }
