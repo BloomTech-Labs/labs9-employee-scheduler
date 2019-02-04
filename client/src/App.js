@@ -64,20 +64,21 @@ class App extends Component {
       //checks to see if there is a user logged in.
       this.props.authenticate()
     })
-    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
 
     if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(stripePKey)
-      })
+      this.establishStripe()
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(stripePKey)
-        })
-      })
+      document
+        .querySelector('#stripe-js')
+        .addEventListener('load', this.establishStripe)
     }
+  }
+
+  establishStripe = () => {
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    this.setState({
+      stripe: window.Stripe(stripePKey)
+    })
   }
 
   componentDidUpdate() {
@@ -111,7 +112,7 @@ class App extends Component {
     this.unregisterAuthObserver()
     setRedirectFlagToFalse()
     resetAuthState()
-    window.Stripe()
+    window.removeEventListener('load', this.establishStripe)
   }
 
   render() {
