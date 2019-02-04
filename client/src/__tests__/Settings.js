@@ -1,26 +1,20 @@
 import React from 'react'
 import App from '../App'
+import { populateOrg } from '../../../database/utils/generateData'
 import { fireEvent, waitForElement } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import Settings from '../components/Settings'
 
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
+import * as ReactGA from 'react-ga'
 jest.mock('axios')
 jest.mock('firebase/app')
 jest.mock('firebase/auth')
+jest.mock('react-ga')
 
-const user = {
-  id: 'xsc44X6okFgw3V2OPIIcGIMXkkz1',
-  organization_id: '9126df31-2607-4166-9c0c-d0a300c59c62',
-  first_name: 'Chasity',
-  last_name: 'Gerhold',
-  role: 'employee',
-  email: 'test2@test.com',
-  phone: '325-317-5476 x405',
-  emailpref: true,
-  phonepref: false
-}
+const { organization, users } = populateOrg({ size: 6 })
+const user = users[0]
 
 describe('Settings Component', () => {
   let email, phone, emailpref, phonepref, utils
@@ -46,7 +40,13 @@ describe('Settings Component', () => {
         }
       }
     )
-
+    axios.get.mockImplementation((path, { headers: { authorization } }) => {
+      if (authorization === 'token') {
+        if (path.match(new RegExp(`/organizations/${organization.id}`))) {
+          return Promise.resolve({ data: organization })
+        }
+      }
+    })
     // setup of document to play nice with Striple component
     setupStripeNode()
 
@@ -61,7 +61,7 @@ describe('Settings Component', () => {
     const settings = await waitForElement(() => {
       return getByTestId('settings')
     })
-    expect(settings.textContent).toBe('Settings')
+    expect(settings.textContent).toMatch(user.first_name)
   })
   it('should take in an email input value', async () => {
     const email = await waitForElement(() => {

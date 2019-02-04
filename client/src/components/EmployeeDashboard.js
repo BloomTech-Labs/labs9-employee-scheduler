@@ -23,6 +23,9 @@ import system from '../design/theme'
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
+
 class EmployeeDashboard extends Component {
   constructor(props) {
     super(props)
@@ -39,11 +42,39 @@ class EmployeeDashboard extends Component {
     const { id } = this.props.auth.user
     this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
     this.fetchData()
+
+    // handle responsiveness for calendar
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
   }
 
   componentDidUpdate(prevProps, nextProps) {
     if (prevProps.error !== this.props.error) {
       return this.setState({ error: this.props.error })
+    }
+  }
+
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({
+        width: 'mobile',
+        view: 'day'
+      })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({
+        width: 'tablet',
+        view: 'day'
+      })
+    } else {
+      return this.setState({
+        width: 'desktop',
+        view: 'week'
+      })
     }
   }
 
@@ -142,8 +173,12 @@ class EmployeeDashboard extends Component {
         })
       ]
     }, [])
+<<<<<<< HEAD
 
     let hourRange = getHoursOfOperationRange(hours)
+=======
+    let hourRange = getHoursOfOperationRange(hours, false)
+>>>>>>> master
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -159,7 +194,9 @@ class EmployeeDashboard extends Component {
           <CalendarButtons>
             <NavButtons>
               <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <Button onClick={() => this.changeDate('today')}>Today</Button>
+              <MiddleButton onClick={() => this.changeDate('today')}>
+                Today
+              </MiddleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
             </NavButtons>
             <div>
@@ -220,7 +257,7 @@ class EmployeeDashboard extends Component {
               )}
             </Card>
 
-            <Card className="tof-wrapper">
+            <Card className="tof-wrapper" data-testid="time_off">
               <div className="title">
                 <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
@@ -304,5 +341,24 @@ const NavButtons = styled.div`
   /* this creates internal margins between immediate children */
   & > * + * {
     margin-left: 10px;
+
+    @media ${system.breakpoints[0]} {
+      margin-left: 0;
+    }
+  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media ${system.breakpoints[0]} {
+    justify-content: space-around;
+  }
+`
+
+const MiddleButton = styled(Button)`
+  @media ${system.breakpoints[0]} {
+    margin-bottom : ${system.spacing.bigPadding};
+    order: -1;
+    width: 100%;
   }
 `

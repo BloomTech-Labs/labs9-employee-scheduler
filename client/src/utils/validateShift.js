@@ -3,7 +3,6 @@ import moment from 'moment'
 export const validateShift = ({ eventTimes, hours, employee, eventId }) => {
   // step 1: check for conflicts with approved day off requests
   let conflicts = false
-
   employee.time_off_requests.forEach(({ start, end, status }) => {
     if (
       status === 'approved' &&
