@@ -95,6 +95,10 @@ const Container = styled('div')`
 
   @media ${system.breakpoints[1]} {
     padding: 8rem 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
   }
 
   .teammate {
@@ -104,12 +108,25 @@ const Container = styled('div')`
     align-items: flex-start;
     margin: 8rem 4rem;
 
+    @media ${system.breakpoints[1]} {
+      margin: 6rem 2rem;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
     img {
       width: 220px;
       height: 220px;
       border-radius: 5px;
       box-shadow: ${system.shadows.button};
       margin-right: 4rem;
+
+      @media ${system.breakpoints[1]} {
+        margin-right: 0;
+        margin-bottom: 4rem;
+      }
     }
 
     .details {
@@ -118,6 +135,12 @@ const Container = styled('div')`
       justify-content: flex-start;
       align-items: flex-start;
       width: 60%;
+
+      @media ${system.breakpoints[1]} {
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+      }
 
       h2 {
         margin: 1rem 0 0;
