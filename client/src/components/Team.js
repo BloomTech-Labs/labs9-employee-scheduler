@@ -18,7 +18,7 @@ const Team = () => {
         <h1>Meet the Team</h1>
 
         <div className="teammate">
-          <img src={Kam} alt="Kamry picture" />
+          <img src={Kam} alt="Kamry headshot" />
           <div className="details">
             <h2>Kamry Bowman</h2>
             <p className="location">Denver, CO</p>
@@ -36,7 +36,7 @@ const Team = () => {
         </div>
 
         <div className="teammate">
-          <img src={Rahul} alt="Rahul picture" />
+          <img src={Rahul} alt="Rahul headshot" />
           <div className="details">
             <h2>Rahul Desai</h2>
             <p className="location">New York, NY</p>
@@ -69,7 +69,7 @@ const Team = () => {
         </div>
 
         <div className="teammate">
-          <img src={Carlos} alt="Carlos picture" />
+          <img src={Carlos} alt="Carlos headshot" />
           <div className="details">
             <h2>Carlos Lantigua</h2>
             <p className="location">Greenville, NC</p>
@@ -88,7 +88,7 @@ const Team = () => {
         </div>
 
         <div className="teammate">
-          <img src={Samuel} alt="Samuel picture" />
+          <img src={Samuel} alt="Samuel headshot" />
           <div className="details">
             <h2>Samuel Machat</h2>
             <p className="location">Charlottesville, VA</p>
