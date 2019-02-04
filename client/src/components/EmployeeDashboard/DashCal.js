@@ -2,6 +2,7 @@ import React from 'react'
 import Calendar from '../Calendar'
 import styled from '@emotion/styled'
 import lines from '../../img/lines.svg'
+import PropTypes from 'prop-types'
 
 export default function DashCal(props) {
   const { events, names, min, max, view, eventPropGetter, date } = props
@@ -50,6 +51,18 @@ export default function DashCal(props) {
       />
     </div>
   )
+}
+
+DashCal.propTypes = {
+  color: PropTypes.arrayOf(PropTypes.string),
+  event: PropTypes.object,
+  names: PropTypes.array.isRequired,
+  min: PropTypes.instanceOf(Date).isRequired,
+  max: PropTypes.instanceOf(Date).isRequired,
+  eventPropGetter: PropTypes.func.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  onView: PropTypes.func,
+  onNavigate: PropTypes.func
 }
 
 const StyledCal = styled(Calendar)`

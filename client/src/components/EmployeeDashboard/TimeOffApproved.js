@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import system from '../../design/theme'
 import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
 
 const TimeOffApproved = ({
   id,
@@ -29,6 +30,14 @@ const TimeOffApproved = ({
 }
 
 export default TimeOffApproved
+
+TimeOffApproved.propTypes = {
+  id: PropTypes.number,
+  status: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  reason: PropTypes.string.isRequired,
+  deleteExpiredRequiest: PropTypes.func
+}
 
 const PTO = styled.div`
   display: flex;
