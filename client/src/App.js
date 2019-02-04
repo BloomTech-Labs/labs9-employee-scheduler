@@ -66,16 +66,17 @@ class App extends Component {
     })
 
     if (window.Stripe) {
-      this.establishStripe()
+      this.setState({
+        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+      })
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', this.establishStripe)
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({
+          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
+        })
+      })
     }
-  }
-
-  establishStripe = () => {
-    this.setState({
-      stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-    })
   }
 
   componentDidUpdate() {
