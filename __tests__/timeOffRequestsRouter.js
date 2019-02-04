@@ -85,7 +85,6 @@ describe('Time off Request', () => {
   describe('DELETE /:id TimeOffRequest', async () => {
     const { team, cleanup } = await generateTeamData(knex)
     const { id } = await team.timeOffRequests[0]
-    console.log(id)
     const response = await request
       .delete(`/time-off-requests/${id}`)
       .set('authorization', 'testing')
