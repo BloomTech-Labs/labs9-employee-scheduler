@@ -195,7 +195,7 @@ class EmployeeDashboard extends Component {
                 Today
               </MiddleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
-              {width === 'mobile' ? (
+              {width === 'mobile' || width === 'tablet' ? (
                 <ToggleButton onClick={this.toggleEmployeeView}>
                   {this.state.employeeView === 'all'
                     ? 'My Shift'
