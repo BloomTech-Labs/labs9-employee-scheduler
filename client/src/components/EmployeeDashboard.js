@@ -113,13 +113,11 @@ class EmployeeDashboard extends Component {
     const { id } = this.props.user
     const names = []
 
-    // console.log('props id', id)
     console.log()
     employees.map(employee => names.push(`${employee.first_name}`))
 
     //events for all employees
     const events = employees.reduce((acc, employee) => {
-      // console.log(employee)
       return [
         ...acc,
         ...employee.events.map(event => {
@@ -146,17 +144,6 @@ class EmployeeDashboard extends Component {
       ]
     }, [])
 
-    // const event = employee.shifts.map(shift => {
-    //   if (this.state.employeeView === 'single') {
-    //     console.log(shift)
-    //     return {
-    //       ...shift,
-    //       start: new Date(shift.start),
-    //       end: new Date(shift.end),
-    //       title: `${employee.first_name} ${employee.last_name}`
-    //     }
-    //   }
-    // })
     let hourRange = getHoursOfOperationRange(hours)
     return (
       <OuterContainer>
