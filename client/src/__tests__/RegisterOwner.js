@@ -1,6 +1,7 @@
 import React from 'react'
 import { fireEvent, waitForElement } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { populateOrg } from '../../../database/utils/generateData'
 import App from '../App'
 import axios from 'axios'
 import * as firebase from 'firebase/app'
@@ -37,7 +38,7 @@ firebase.auth.EmailAuthProvider = {
 // mock out axios authenticaton call to our server
 axios.post.mockImplementation((path, body, { headers: { authorization } }) => {
   if (authorization === 'token') {
-    return Promise.resolve({ data: user })
+    return Promise.reject({ status: 404 })
   }
 })
 
