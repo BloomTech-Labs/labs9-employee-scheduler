@@ -191,9 +191,9 @@ class EmployeeDashboard extends Component {
           <CalendarButtons>
             <NavButtons>
               <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <MiddleButton onClick={() => this.changeDate('today')}>
+              <ToggleButton onClick={() => this.changeDate('today')}>
                 Today
-              </MiddleButton>
+              </ToggleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
               {width === 'mobile' || width === 'tablet' ? (
                 <ToggleButton onClick={this.toggleEmployeeView}>
@@ -362,19 +362,10 @@ const NavButtons = styled.div`
     justify-content: space-around;
   }
 `
-
-const MiddleButton = styled(Button)`
-  @media ${system.breakpoints[0]} {
+const ToggleButton = styled(Button)`
+  @media ${system.breakpoints[1]} {
     margin-bottom: ${system.spacing.bigPadding};
     order: -1;
     width: 100%;
-  }
-`
-
-const ToggleButton = styled(Button)`
-  @media ${system.breakpoints[0]} {
-    margin-top: ${system.spacing.bigPadding};
-    /* order: -1; */
-    /* width: 100%; */
   }
 `
