@@ -29,8 +29,6 @@ describe('Time off Request', () => {
       // populates database with team data
       const { team, cleanup } = await generateTeamData(knex)
 
-      // need to add cal_visit and emp_visit because they are not added by
-      // generateTeamData but instead are default values in the db model
       const { id } = await team.users[0]
       const expected = await knex('time_off_requests').where({
         user_id: id
@@ -50,11 +48,7 @@ describe('Time off Request', () => {
   describe('PUT /:id TimeOffRequest', () => {
     it('responds with 200 when a new put request goes through', async () => {
       const { team, cleanup } = await generateTeamData(knex)
-
-      // const { id } = await team.users[0]
       const { users } = team
-      // need to add cal_visit and emp_visit because they are not added by
-      // generateTeamData but instead are default values in the db model
       const target = { ...users[0], cal_visit: true, emp_visit: true }
       const changes = {
         start: '2019-02-20 01:00:00-05',
@@ -68,7 +62,7 @@ describe('Time off Request', () => {
       let updatedUser = await knex('users')
         .where({ id: target.id })
         .first()
-
+      // document the changes to the user
       updatedUser = {
         ...updatedUser,
         start: changes.start,
