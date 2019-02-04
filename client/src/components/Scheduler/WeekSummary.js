@@ -22,9 +22,13 @@ class WeekSummary extends React.Component {
     const dayValues = filtered
       // compose events consumable structures
       .map(event => {
+        console.log(event.start)
         return {
           employee: event.title,
-          day: event.start.toLocaleDateString('en-US', 'numeric'),
+          day: moment
+            .utc(event.start)
+            .local()
+            .format('YYYY-MM-DD'),
           hours: Math.abs(event.end - event.start) / 3600000
         }
       })
@@ -47,7 +51,7 @@ class WeekSummary extends React.Component {
 
     // use the dayValues to build up the range into usable stats objects
     let rangeStats = range.map(day => {
-      const dayName = day.toLocaleDateString('en-US', 'numeric')
+      const dayName = moment(day).format('YYYY-MM-DD')
       const dayStats = dayValues[dayName]
       if (dayStats) {
         return {

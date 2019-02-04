@@ -5,6 +5,7 @@ import moment from 'moment'
 
 export default function DailySummary(props) {
   const { hours, day, employees } = props.summary
+  console.log(day)
   return (
     <Div>
       <h6>{moment(day).format('M/D')}</h6>

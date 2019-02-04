@@ -142,12 +142,18 @@ export const calculateCoverage = ({ hours, employees, view, date }) => {
     // Step 7.4: truncate merged shifts to only open hours
     const truncatedShifts = mergedShifts.reduce((acc, { start, end }) => {
       // Step 7.4.1: calculate the hours open for the day that a shift takes place
-      const startDate = moment(start)
-        .utc()
-        .format('YYYY-MM-DD')
+      const startDate = moment.utc(start)
+      const open = moment.utc(hours[key].open_time, 'HH:mm')
+      const close = moment.utc(hours[key].close_time, 'HH:mm')
 
-      let utcScheduleStart = moment(`${startDate}Z ${hours[key].open_time}:00`)
-      let utcScheduleEnd = moment(`${startDate}Z ${hours[key].close_time}:00`)
+      let utcScheduleStart = startDate
+        .clone()
+        .hours(open.hours())
+        .minutes(open.minutes())
+      let utcScheduleEnd = startDate
+        .clone()
+        .hours(close.hours())
+        .minutes(close.minutes())
 
       if (moment(utcScheduleEnd).isBefore(utcScheduleStart)) {
         utcScheduleEnd = utcScheduleEnd.add(1, 'days')
