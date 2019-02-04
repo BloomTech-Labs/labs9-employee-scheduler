@@ -15,7 +15,7 @@ const Footer = () => {
         <Link to="/terms">Terms</Link>
         <Link to="/privacy">Privacy</Link>
       </div>
-      <p>&copy; 2019 Cadence Inc.</p>
+      <p id="copy">&copy; 2019 Cadence Inc.</p>
     </StyledFooter>
   )
 }
@@ -46,5 +46,17 @@ const StyledFooter = styled.footer`
   a {
     color: ${system.color.white};
     font-size: ${system.fontSizing.s};
+  }
+
+  @media ${system.breakpoints[1]} {
+    div {
+      width: 30%;
+    }
+  }
+
+  @media ${system.breakpoints[0]} {
+    #copy {
+      display: none;
+    }
   }
 `
