@@ -21,7 +21,16 @@ const Team = () => {
           <div className="details">
             <h2>Kamry Bowman</h2>
             <p className="location">Denver, CO</p>
-            <p className="bio">A Bio</p>
+            <p className="bio">
+              Kam is a web developer with a love for all things JavaScript:
+              React and Node.js especially! He was previously a loan officer and
+              underwriter for SBA loans to small businesses. Today, he strives
+              to bring simplicity to the process of building complex web
+              applications. Solving problems by thinking them through clearly is
+              what makes him happiest, and he strives to help people get the
+              information they need and experiences they want. He loves working
+              on teams that feel the same way.
+            </p>
           </div>
         </div>
 
