@@ -375,7 +375,7 @@ class Scheduler extends React.Component {
           run={run}
           scrollToFirstStep
           showProgress
-          showSkipButton
+          showSkipButton={!this.props.user.cal_visit}
           steps={steps}
           styles={{
             options: {
@@ -392,12 +392,12 @@ class Scheduler extends React.Component {
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
-            {width === 'desktop' ? (
-              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
-            ) : null}
             <ModalButton onClick={this.props.toggleModal} id="HOO">
               Edit Hours of Operation
             </ModalButton>
+            {width === 'desktop' ? (
+              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
+            ) : null}
           </TopButtons>
           <CalendarButtons>
             <NavButtons>

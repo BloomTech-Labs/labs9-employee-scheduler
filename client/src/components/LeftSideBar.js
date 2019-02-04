@@ -44,12 +44,6 @@ class LeftSideBar extends Component {
             {role === 'employee' ? (
               <>
                 <NavItem
-                  to="/calendar"
-                  activeStyle={{ color: system.color.primary }}
-                >
-                  Shift Calendar
-                </NavItem>
-                <NavItem
                   to="/dashboard"
                   activeStyle={{ color: system.color.primary }}
                 >
