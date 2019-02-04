@@ -86,7 +86,7 @@ class AddEmployee extends Component {
   }
 
   render() {
-    const { role, Close, toggleShow } = this.props
+    const { role, Close } = this.props
     return (
       <ModalContainer>
         {/* ternary checks to see if they have a paid account or less than three employees  */}
