@@ -9,6 +9,7 @@ import headerImg from '../img/header.svg'
 import heroImg from '../img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
+import Video from '../img/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
@@ -36,7 +37,9 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          <div id="video">Video Placeholder</div>
+          <video id="video" autoPlay loop>
+            <source src={Video} type="video/mp4" />
+          </video>
         </section>
 
         <section id="features">
@@ -234,10 +237,6 @@ const Container = styled('div')`
     align-items: center;
     padding: 18rem 0 10rem;
 
-    /* @media ${system.breakpoints[2]} {
-      padding-top: 5rem;
-    } */
-
     #wrapper {
       h1 {
         padding: 0;
@@ -266,16 +265,17 @@ const Container = styled('div')`
       }
     }
 
-    #video {
+    #video,
+    source {
       position: absolute;
       color: white;
       text-align: center;
       top: 21rem;
       right: 6%;
       width: 480px;
-      height: 270px;
+      height: auto;
       z-index: 50;
-      background: black;
+      border: 0.75px solid black;
       box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
 
@@ -284,7 +284,8 @@ const Container = styled('div')`
       }
     }
 
-    #login, #schedule {
+    #login,
+    #schedule {
       margin-left: 2.5rem;
 
       a {
@@ -352,14 +353,16 @@ const Container = styled('div')`
     }
   }
 
-  #features, #social-proof, #pricing {
+  #features,
+  #social-proof,
+  #pricing {
     @media ${system.breakpoints[2]} {
-        padding-bottom: 5rem;
-      }
+      padding-bottom: 5rem;
+    }
 
-      @media ${system.breakpoints[0]} {
-        padding-bottom: 2rem;
-      }
+    @media ${system.breakpoints[0]} {
+      padding-bottom: 2rem;
+    }
   }
 
   #features {
@@ -435,7 +438,8 @@ const Container = styled('div')`
       margin-bottom: 1.5rem;
     }
 
-    button, a {
+    button,
+    a {
       margin: 25px 0;
       color: ${system.color.white};
     }
