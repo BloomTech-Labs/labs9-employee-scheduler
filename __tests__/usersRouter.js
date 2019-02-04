@@ -106,7 +106,6 @@ describe('/users route', () => {
       expect(response.status).toBe(200)
       expect(response.body).toEqual(1)
       expect(updatedUser).toEqual({ ...target, ...changes })
-      )
 
       // cleans up unneeded team data after tests
       await cleanup()
