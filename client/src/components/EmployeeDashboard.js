@@ -1,10 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
-import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
-import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+// import LeftSideBar from './LeftSideBar'
+// import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
+// import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
+// import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+// import Availability from './EmployeeDashboard/Availability'
+// import DashCal from './EmployeeDashboard/DashCal'
+import Loader from './Loader'
+import Button from './common/Button'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest,
@@ -14,12 +18,23 @@ import {
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
-import Availability from './EmployeeDashboard/Availability'
 import { getHoursOfOperationRange, getRange } from '../utils'
-import DashCal from './EmployeeDashboard/DashCal'
-import Button from './common/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+const TimeOffApproved = React.lazy(() =>
+  import('./EmployeeDashboard/TimeOffApproved')
+)
+const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
+const TimeOffRequest = React.lazy(() =>
+  import('./EmployeeDashboard/TimeOffRequest')
+)
+const AssignedShifts = React.lazy(() =>
+  import('./EmployeeDashboard/AssignedShifts')
+)
+const Availability = React.lazy(() =>
+  import('./EmployeeDashboard/Availability')
+)
+const DashCal = React.lazy(() => import('./EmployeeDashboard/DashCal'))
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -176,7 +191,9 @@ class EmployeeDashboard extends Component {
 
     return (
       <OuterContainer>
-        <LeftSideBar />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LeftSideBar />
+        </Suspense>
         <BreadCrumb location="Employee Dashboard" />
 
         <Container>
@@ -216,17 +233,19 @@ class EmployeeDashboard extends Component {
           </CalendarButtons>
 
           <div>
-            <DashCal
-              events={events}
-              names={names}
-              min={hourRange.min}
-              max={hourRange.max}
-              view={view}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
-              date={date}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <DashCal
+                events={events}
+                names={names}
+                min={hourRange.min}
+                max={hourRange.max}
+                view={view}
+                eventPropGetter={event => ({
+                  className: event.title.split(' ')[0]
+                })}
+                date={date}
+              />
+            </Suspense>
           </div>
 
           <div className="wrapper">
@@ -238,7 +257,11 @@ class EmployeeDashboard extends Component {
               {employee && employee.shifts ? (
                 <>
                   {employee.shifts.map(item => {
-                    return <AssignedShifts key={item.id} {...item} />
+                    return (
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <AssignedShifts key={item.id} {...item} />
+                      </Suspense>
+                    )
                   })}
                 </>
               ) : (
@@ -252,11 +275,13 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>
-              {employee && employee.availabilities.length ? (
-                <Availability availabilities={employee.availabilities} />
-              ) : (
-                <Message>You have no availabilities to display.</Message>
-              )}
+              <Suspense fallback={<div>Loading...</div>}>
+                {employee && employee.availabilities.length ? (
+                  <Availability availabilities={employee.availabilities} />
+                ) : (
+                  <Message>You have no availabilities to display.</Message>
+                )}
+              </Suspense>
             </Card>
 
             <Card className="tof-wrapper" data-testid="time_off">
@@ -264,7 +289,7 @@ class EmployeeDashboard extends Component {
                 <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
                   <Message>
-                    <>
+                    <Suspense fallback={<div>Loading...</div>}>
                       {employee.time_off.map(item => (
                         <TimeOffApproved
                           key={item.id}
@@ -279,7 +304,7 @@ class EmployeeDashboard extends Component {
                           }
                         />
                       ))}
-                    </>
+                    </Suspense>
                   </Message>
                 ) : (
                   <Message>No requests to display.</Message>
@@ -291,7 +316,9 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Request Time Off</h5>
               </div>
-              <TimeOffRequest />
+              <Suspense fallback={<div>Loading...</div>}>
+                <TimeOffRequest />
+              </Suspense>
             </Card>
           </div>
         </Container>
