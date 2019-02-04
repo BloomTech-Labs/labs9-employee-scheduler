@@ -173,18 +173,9 @@ class EmployeeDashboard extends Component {
         })
       ]
     }, [])
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-    let hourRange = getHoursOfOperationRange(hours)
-=======
-    let hourRange = getHoursOfOperationRange(hours, false)
->>>>>>> master
-=======
 
     let hourRange = getHoursOfOperationRange(hours, false)
 
->>>>>>> 324b151a8bd0659cc3cfda7ead964305ec24b25e
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -204,11 +195,22 @@ class EmployeeDashboard extends Component {
                 Today
               </MiddleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+              {width === 'mobile' ? (
+                <ToggleButton onClick={this.toggleEmployeeView}>
+                  {this.state.employeeView === 'all'
+                    ? 'My Shift'
+                    : 'All Shifts'}
+                </ToggleButton>
+              ) : null}
             </NavButtons>
             <div>
-              <Button onClick={this.toggleEmployeeView}>
-                {this.state.employeeView === 'all' ? 'My Shifts' : 'All Shifts'}
-              </Button>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleEmployeeView}>
+                  {this.state.employeeView === 'all'
+                    ? 'My Shifts'
+                    : 'All Shifts'}
+                </Button>
+              ) : null}
             </div>
             <div>
               {width === 'desktop' ? (
@@ -363,8 +365,16 @@ const NavButtons = styled.div`
 
 const MiddleButton = styled(Button)`
   @media ${system.breakpoints[0]} {
-    margin-bottom : ${system.spacing.bigPadding};
+    margin-bottom: ${system.spacing.bigPadding};
     order: -1;
     width: 100%;
+  }
+`
+
+const ToggleButton = styled(Button)`
+  @media ${system.breakpoints[0]} {
+    margin-top: ${system.spacing.bigPadding};
+    /* order: -1; */
+    /* width: 100%; */
   }
 `
