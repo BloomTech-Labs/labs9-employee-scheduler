@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import PropTypes from 'prop-types'
 
 const Wrapper = styled('div')`
   display: flex;
@@ -86,3 +87,9 @@ function Checkbox(props) {
 }
 
 export default Checkbox
+Checkbox.propTypes = {
+  toggled: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired
+}
