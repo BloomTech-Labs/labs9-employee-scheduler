@@ -26,7 +26,8 @@
     "react-stripe-elements": "^2.0.1",
     "react-timekeeper": "^1.0.9",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",
