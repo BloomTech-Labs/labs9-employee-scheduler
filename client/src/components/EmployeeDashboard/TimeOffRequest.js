@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 // import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import axios from 'axios'
-import styled from '@emotion/styled'
-import system from '../../design/theme'
 import { connect } from 'react-redux'
 import { addTimeOffRequest } from '../../actions'
-
+import PropTypes from 'prop-types'
 import { Form, Input } from '../common/FormContainer'
 import Button from '../common/Button'
 
-// import 'react-datepicker/dist/react-datepicker.css'
-
-const api = process.env.REACT_APP_SERVER_URL
-
-// const user = '77b6afd5-38cb-4304-9c0f-bb55ac496342'
 class TimeOffRequest extends Component {
   constructor(props) {
     super(props)
@@ -23,12 +15,6 @@ class TimeOffRequest extends Component {
       reason: ''
     }
   }
-  // //this comes directly from the datePicker docs, I think 'date' is happening under the hood.
-  // handleChange = date => {
-  //   this.setState({
-  //     startDate: date
-  //   })
-  // }
 
   changeHandler = event => {
     event.preventDefault()
@@ -102,6 +88,10 @@ export default connect(
   { addTimeOffRequest }
 )(TimeOffRequest)
 
-// TimeOffRequest.propTypes = {
-// adding propTypes here
-// }
+TimeOffRequest.propTypes = {
+  addTimeOffRequest: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  changeHandler: PropTypes.func,
+  value: PropTypes.string,
+  submitTimeOffRequest: PropTypes.func
+}
