@@ -140,6 +140,7 @@ class RegisterOwner extends Component {
               <Input
                 name="firstName"
                 type="text"
+                id="firstName"
                 value={firstName}
                 onChange={handleChange}
                 placeholder="ex. Samuel"
@@ -150,6 +151,7 @@ class RegisterOwner extends Component {
               <label htmlFor="lastName">Last Name *</label>
               <Input
                 name="lastName"
+                id="lastName"
                 type="text"
                 value={lastName}
                 onChange={handleChange}
@@ -161,6 +163,7 @@ class RegisterOwner extends Component {
               <label htmlFor="email">Contact Email *</label>
               <Input
                 name="email"
+                id="email"
                 type="text"
                 value={email}
                 onChange={handleChange}
@@ -172,6 +175,7 @@ class RegisterOwner extends Component {
               <label htmlFor="phone">Contact Number *</label>
               <Input
                 name="phone"
+                id="phone"
                 type="tel"
                 value={phone}
                 onChange={handleChange}
@@ -183,6 +187,7 @@ class RegisterOwner extends Component {
               <label htmlFor="orgName">Organization Name *</label>
               <Input
                 name="orgName"
+                id="orgName"
                 type="text"
                 value={orgName}
                 onChange={handleChange}

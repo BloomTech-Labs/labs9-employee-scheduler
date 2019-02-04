@@ -189,7 +189,7 @@ class EmployeeDashboard extends Component {
               )}
             </Card>
 
-            <Card className="tof-wrapper">
+            <Card className="tof-wrapper" data-testid="time_off">
               <div className="title">
                 <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
