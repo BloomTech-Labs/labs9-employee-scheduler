@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker'
 
 import Store from './reducers/index.js'
 import App from './App'
+import ScrollToTop from './components/ScrollToTop'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(Store, composeEnhancers(applyMiddleware(thunk)))
@@ -15,7 +16,9 @@ const store = createStore(Store, composeEnhancers(applyMiddleware(thunk)))
 render(
   <Provider store={store}>
     <Router>
-      <App />
+      <ScrollToTop>
+        <App />
+      </ScrollToTop>
     </Router>
   </Provider>,
   document.getElementById('root')

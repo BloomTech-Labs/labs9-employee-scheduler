@@ -29,7 +29,7 @@ class BreadCrumb extends React.Component {
         ? `${organization.details.name}`
         : null
 
-    if (location !== 'Home') {
+    if (location !== 'Home' || location !== 'terms' || location !== 'privacy') {
       breadContent = (
         <Nav fixed={location === 'Employees' ? true : false}>
           <Container logo>
@@ -49,7 +49,7 @@ class BreadCrumb extends React.Component {
         </Nav>
       )
     }
-    if (location === 'Home') {
+    if (location === 'Home' || location === 'terms' || location === 'privacy') {
       breadContent = (
         <Nav fixed={true}>
           <Container logo>
@@ -138,6 +138,10 @@ const Container = styled('div')`
     font-size: ${system.fontSizing.s};
     color: ${system.color.white};
     margin: 5px 15px 0;
+  }
+
+  #crumb {
+    text-transform: capitalize;
   }
 
   @media ${system.breakpoints[0]} {

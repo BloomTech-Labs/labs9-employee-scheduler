@@ -317,6 +317,7 @@ const Container = styled('div')`
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
+      justify-content: center;
       width: 25%;
       background: ${system.color.white};
       padding: ${system.spacing.bigPadding};

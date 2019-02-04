@@ -1,5 +1,7 @@
 const db = require('../dbConfig')
-const moment = require('moment')
+const { sortByStartDate, trimOldEvents } = require('../utils/formattingUtils')
+
+const format = list => sortByStartDate(trimOldEvents(list))
 
 const getDashboard = async userId => {
   const user = await db('users as u')
@@ -23,6 +25,7 @@ const getDashboard = async userId => {
     .reduce((acc, { id, start, end }) => {
       // do a little clever formatting with the date formatting
       // depending on calendar api this might change later
+
       return [...acc, { id, start, end }]
     }, [])
 
@@ -43,8 +46,8 @@ const getDashboard = async userId => {
   return {
     ...user[0],
     availabilities: availabilities ? [...availabilities] : [],
-    shifts: shifts ? [...shifts] : [],
-    time_off: timeOff ? [...timeOff] : []
+    shifts: shifts ? [...format(shifts)] : [],
+    time_off: timeOff ? [...format(timeOff)] : []
   }
 }
 

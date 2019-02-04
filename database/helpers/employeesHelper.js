@@ -1,4 +1,7 @@
 const db = require('../dbConfig')
+const { sortByStartDate, trimOldEvents } = require('../utils/formattingUtils')
+
+const format = list => sortByStartDate(trimOldEvents(list))
 
 const getEmployees = async orgId => {
   // For the get employees route, we need to return all users for a given org
@@ -126,7 +129,9 @@ const getEmployees = async orgId => {
     return {
       ...employee,
       availabilities: availabilities[id] ? [...availabilities[id]] : [],
-      time_off_requests: timeOffRequests[id] ? [...timeOffRequests[id]] : [],
+      time_off_requests: timeOffRequests[id]
+        ? [...format(timeOffRequests[id])]
+        : [],
       events: events[id] ? [...events[id]] : []
     }
   })

@@ -9,10 +9,12 @@ import {
 } from '../../../database/utils/generateData'
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
+import { formatHours } from '../utils'
 
 jest.mock('axios')
 jest.mock('firebase/app')
 jest.mock('firebase/auth')
+jest.mock('react-ga')
 
 // generates test data
 const org = populateOrg({ size: 6 })
@@ -77,7 +79,11 @@ describe('employee dashboard with redux', () => {
     const timeR = employees.find(
       employee => employee.time_off_requests.length > 0
     ).time_off_requests
-    expect(container.textContent).toMatch(moment(timeR[0].date).format('MM/DD'))
+    expect(container.textContent).toMatch(
+      moment(timeR[0].start)
+        .local()
+        .format('MM / DD')
+    )
 
     const avails = employees.find(
       employee => employee.availabilities.length > 0

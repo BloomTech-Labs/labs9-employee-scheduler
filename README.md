@@ -2,6 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
 
+[![Build Status](https://travis-ci.com/Lambda-School-Labs/labs9-employee-scheduler.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/labs9-employee-scheduler)
+
 Cadence is an employee shift scheduling SaaS for small-to-medium businesses. In this document, you will find everything you need to know about this open-source software project. <br><br>
 
 Front-end Deployment: https://getcadence.co/<br>
@@ -25,11 +27,11 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 | Adam Hinckley   | https://github.com/adamhinckley |    https://www.linkedin.com/in/adamhinckley/ |
 | Carlos Lantigua | https://github.com/CLantigua2 |   https://www.linkedin.com/in/carlos-lantigua/ |
 | Samuel Machat   | https://github.com/axolotl |    https://www.linkedin.com/in/samuel-machat/ |
- 
+
 
 ### Motivation
 
-Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business' hours of operations, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md).
+Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business' hours of operations, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md). It outlines the rationale for our tech stack as well as our architectural decisions.
 
 ### Features
 
@@ -43,21 +45,45 @@ Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maint
 
 
 ### Installation
-To install the application in a local dev environment, you can run `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
+To install the application in a local dev environment, you can run the terminal command, `yarn local` from the root of the folder. This will install all dependencies and run migrations and seeds for local database.
 To install, you will need two environment files:
 in the `./` you will need a `.env` file
-in the `./client` you will a `.env.development` file
+in the `./client` you will need a `.env.development` file
 
-#### To spin up your own .env variables, you will need to do the following:
+#### Instructions for .env Variables:
+
+##### Client:
+The client will need 2 environment variables. You can copy-paste the first. You will need to create your own for the latter. 
+<br/><br/>
+Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
+```
+REACT_APP_SERVER_URL=http://localhost:9000
+REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
+```
+
+##### Server:
+The server will need 5 environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+`GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en). It is inadvisable to use your personal Gmail for this.
+<br/><br/>
+For your `FIREBASE_SECRET`, go to your Firebase project settings. Go to the tab for "Service Accounts" and click the "Generate new private key" button. This will auto-download a JSON object. Open it up in your text editor; copy the value for the key "private_key"; it (as a string) is your `FIREBASE_SECRET`. 
+<br/><br/>
+For your `FIREBASE_EMAIL`, open the JSON object mentioned in the previous step in your text editor. Copy the value for the key "client_email". It will be a url ending in "gserviceaccount.com"; this is your `FIREBASE_EMAIL`.
+```
+CLIENT_URL=http://localhost:3000
+GMAIL_USERNAME="{insert your Gmail address here}"
+GMAIL_PASSWORD="{insert your Gmail password here}"
+FIREBASE_SECRET={copy paste your "private_key" here}
+FIREBASE_EMAIL={copy paste your "client_email" here}
+```
 
 ### Using the App
-To start our app locally after completing the above installation, just run `yarn dev`. This will spin up the client on localhost:3000 and the server on localhost:9000. 
+To start our app locally after completing the above installation, just run the terminal command, `yarn dev`. This will spin up the client on localhost:3000 and the server on localhost:9000.
 
 ### API
 Our API is protected by Firebase authentication. A valid JWT must be included on a request header under the 'authorization' key in order for a request to be accepted. In our Redux store, this is `auth.token` for a currently validated user. You can learn more about our API [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/API.md). You can learn more about our data model [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/data_model.md).
 
 ### Testing
-This library uses Jest for testing. For the server side, we make use of Supertest, and for the client side, we make use of the React-Testing-Library.
+This library uses [Jest](https://jestjs.io/) for testing. For the server side, we make use of [Supertest](https://github.com/visionmedia/supertest), and for the client side, we make use of the [React-Testing-Library](https://testing-library.com/react).
 
 Tests can be run in the server by moving into the root, and using `yarn test`. Tests can be run in the client by moving into `/client` and running `yarn test`.
 

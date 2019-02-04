@@ -70,12 +70,4 @@ router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
     })
 })
 
-// router.get('/', authorize(['owner', 'supervisor']), (req, res) => {
-//   getTimeOffRequestsForOrg()
-//     .then(res => res.status(200).json(res))
-//     .catch(err =>
-//       res.status(404).json({ error: 'Error getting time off requests', err })
-//     )
-// })
-
 module.exports = router

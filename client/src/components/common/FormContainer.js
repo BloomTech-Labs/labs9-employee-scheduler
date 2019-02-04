@@ -146,7 +146,8 @@ export const Input = styled.input`
   font-size: ${system.fontSizing.m};
   color: ${system.color.bodytext};
   padding: 2.5px 5px;
-  margin: 0.5rem 0 ${system.spacing.hugePadding};
+  margin: ${props =>
+    props.search ? 0 : `0.5rem 0 ${system.spacing.hugePadding}`};
   background: transparent;
   border: none;
   border-bottom: 2px solid

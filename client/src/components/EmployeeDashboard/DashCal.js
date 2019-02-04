@@ -45,6 +45,8 @@ export default function DashCal(props) {
         view={view}
         eventPropGetter={eventPropGetter}
         date={date}
+        onView={() => {}}
+        onNavigate={() => {}}
       />
     </div>
   )
@@ -60,5 +62,9 @@ const StyledCal = styled(Calendar)`
     background-position: center;
     width: 20px;
     border: none;
+  }
+
+  .rbc-event {
+    cursor: default;
   }
 `
