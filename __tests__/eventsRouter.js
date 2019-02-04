@@ -46,14 +46,8 @@ describe('eventsRouter', () => {
       .send(newEvent)
       .set('authorization', 'testing')
 
-    let createdEvent = await knex('events')
-      .where(newEvent)
-      .first()
-
     expect(response.status).toEqual(201)
-    expect(response.body).toMatchObject(
-      JSON.parse(JSON.stringify(createdEvent))
-    )
+    expect(response.body).toMatchObject(JSON.parse(JSON.stringify(newEvent)))
 
     await cleanup()
   })

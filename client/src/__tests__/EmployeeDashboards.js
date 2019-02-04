@@ -20,9 +20,15 @@ jest.mock('react-ga')
 // this is the mocked data to be returned
 const org = populateOrg({ size: 4 })
 const { users } = org
-const user = users.find(user => user.role !== 'owner')
 const employees = structureEmployees(org)
-const employee = employees.find(employee => employee.id === user.id)
+const employeeCandidates = users.filter(user => user.role !== 'owner')
+// find an employee who is not an owner and has time off requests
+const employee = employees.find(
+  candidate =>
+    candidate.time_off_requests.length > 0 &&
+    employeeCandidates.find(nonOwner => nonOwner.id === candidate.id)
+)
+const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
 
 describe('employee dashboard with redux', () => {
   it('can render with initial state', async () => {
@@ -75,7 +81,8 @@ describe('employee dashboard with redux', () => {
 
     // uses test ids to assert expectations
     expect(testElement.textContent).toMatch(
-      moment(employee.time_off_requests[0].start)
+      moment
+        .utc(employee.time_off_requests[0].start)
         .local()
         .format('MM / DD')
     )
