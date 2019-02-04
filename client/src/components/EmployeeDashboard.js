@@ -30,7 +30,8 @@ class EmployeeDashboard extends Component {
       errors: '',
       view: 'week',
       date: new Date(),
-      width: 'desktop'
+      width: 'desktop',
+      employeeView: 'all'
     }
   }
 
@@ -78,9 +79,10 @@ class EmployeeDashboard extends Component {
   }
 
   fetchData() {
-    const { organization_id } = this.props.user
+    const { organization_id, id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
+    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
   }
 
   toggleView = () => {
@@ -97,26 +99,64 @@ class EmployeeDashboard extends Component {
     }
   }
 
+  toggleEmployeeView = () => {
+    if (this.state.employeeView === 'all') {
+      this.setState({ employeeView: 'single' })
+    } else {
+      this.setState({ employeeView: 'all' })
+    }
+  }
+
   render() {
-    // const { employee, hours } = this.props.employee
     const { employees, hours, employee } = this.props
-    const { view, date, width } = this.state
+    const { view, date, width, employeeView } = this.state
+    const { id } = this.props.user
     const names = []
+
+    // console.log('props id', id)
+    console.log()
     employees.map(employee => names.push(`${employee.first_name}`))
 
+    //events for all employees
     const events = employees.reduce((acc, employee) => {
+      // console.log(employee)
       return [
         ...acc,
         ...employee.events.map(event => {
-          return {
-            ...event,
-            start: new Date(event.start),
-            end: new Date(event.end),
-            title: `${employee.first_name} ${employee.last_name}`
+          if (this.state.employeeView === 'all') {
+            console.log(event)
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else if (
+            event.user_id === id &&
+            this.state.employeeView === 'single'
+          ) {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
           }
         })
       ]
     }, [])
+
+    // const event = employee.shifts.map(shift => {
+    //   if (this.state.employeeView === 'single') {
+    //     console.log(shift)
+    //     return {
+    //       ...shift,
+    //       start: new Date(shift.start),
+    //       end: new Date(shift.end),
+    //       title: `${employee.first_name} ${employee.last_name}`
+    //     }
+    //   }
+    // })
     let hourRange = getHoursOfOperationRange(hours)
     return (
       <OuterContainer>
@@ -136,6 +176,13 @@ class EmployeeDashboard extends Component {
               <Button onClick={() => this.changeDate('today')}>Today</Button>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
             </NavButtons>
+            <div>
+              {employeeView === 'all' ? (
+                <Button onClick={this.toggleEmployeeView}>
+                  {this.state.employeeView === 'all' ? 'Just Me' : 'Everyone'}
+                </Button>
+              ) : null}
+            </div>
             <div>
               {width === 'desktop' ? (
                 <Button onClick={this.toggleView}>
