@@ -35,7 +35,7 @@ const invite = role => async (req, res) => {
 
   if (success) {
     // so we're not sending tons of email in testing
-    if (!req.headers.authorization === 'testing') {
+    if (req.headers.authorization !== 'testing') {
       sendInvite(email, inviteId)
     }
     res.status(201).json({ message: 'Added invite' })
