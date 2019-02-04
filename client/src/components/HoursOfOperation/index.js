@@ -205,6 +205,12 @@ export const Modal = styled.div`
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};
   opacity: 1;
+
+  @media ${system.breakpoints[0]} {
+    border-radius: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   .days-container {
     display: flex;
     flex-direction: column;
@@ -218,5 +224,10 @@ export const Modal = styled.div`
   button {
     width: 30%;
     margin: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[0]} {
+      width: 96%;
+      margin: 2%;
+    }
   }
 `
