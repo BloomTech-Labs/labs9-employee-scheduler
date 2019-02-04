@@ -32,7 +32,8 @@ class RegisterOwner extends Component {
     firstName: '',
     lastName: '',
     orgName: '',
-    industry: ''
+    industry: '',
+    terms: false
   }
   // ideall we'd start by checking that the user is not already logged in
   // we're not doing that now
@@ -68,12 +69,28 @@ class RegisterOwner extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     const offset = moment().utcOffset()
-    const { email, phone, firstName, lastName, orgName, industry } = this.state
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      industry,
+      terms
+    } = this.state
 
-    if (!email || !phone || !firstName || !lastName || !orgName) {
+    if (!email || !phone || !firstName || !lastName || !orgName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
@@ -83,7 +100,8 @@ class RegisterOwner extends Component {
         lastName,
         orgName,
         industry,
-        offset
+        offset,
+        terms
       })
     }
   }
@@ -96,9 +114,10 @@ class RegisterOwner extends Component {
       firstName,
       lastName,
       orgName,
-      industry
+      industry,
+      terms
     } = this.state
-    const { handleChange, handleSubmit } = this
+    const { handleChange, handleSubmit, toggleTerms } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (this.props.user) {
@@ -212,6 +231,15 @@ class RegisterOwner extends Component {
                   </option>
                 ))}
               </Select>
+              <label htmlFor="terms">Do you agree with the terms? *</label>
+              <Input
+                name="terms"
+                id="terms"
+                type="checkbox"
+                // value={orgName}
+                onChange={toggleTerms}
+                required
+              />
               <ButtonContainer>
                 <div>
                   <Button type="submit" className="register">
