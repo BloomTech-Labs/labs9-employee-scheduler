@@ -190,11 +190,6 @@ class EmployeeDashboard extends Component {
           </div>
           <CalendarButtons>
             <NavButtons>
-              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <MiddleButton onClick={() => this.changeDate('today')}>
-                Today
-              </MiddleButton>
-              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
               {width === 'mobile' || width === 'tablet' ? (
                 <ToggleButton onClick={this.toggleEmployeeView}>
                   {this.state.employeeView === 'all'
@@ -202,6 +197,11 @@ class EmployeeDashboard extends Component {
                     : 'All Shifts'}
                 </ToggleButton>
               ) : null}
+              <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
+              <MiddleButton onClick={() => this.changeDate('today')}>
+                Today
+              </MiddleButton>
+              <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
             </NavButtons>
             <div>
               {width === 'desktop' ? (
@@ -373,8 +373,8 @@ const MiddleButton = styled(Button)`
 
 const ToggleButton = styled(Button)`
   @media ${system.breakpoints[0]} {
-    margin-top: ${system.spacing.bigPadding};
-    /* order: -1; */
-    /* width: 100%; */
+    margin-bottom: ${system.spacing.bigPadding};
+    order: 0;
+    width: 100%;
   }
 `
