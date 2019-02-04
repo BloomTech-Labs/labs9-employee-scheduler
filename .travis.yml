@@ -8,6 +8,6 @@ before_script:
   - psql -c "create user \"cadence-team\" with password 'cadence-rocks!';" -U postgres -d cadence
   - npx knex migrate:latest --env development
 script:
-  - yarn test:once
+  - yarn test:once --forceExit
   - cd client
   - yarn test:CI
