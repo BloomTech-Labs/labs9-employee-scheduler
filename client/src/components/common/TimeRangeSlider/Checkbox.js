@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../../../design/theme'
 
 const Wrapper = styled('div')`
   display: flex;
