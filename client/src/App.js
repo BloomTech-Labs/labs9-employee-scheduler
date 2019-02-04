@@ -66,17 +66,19 @@ class App extends Component {
     })
 
     if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-      })
+      this.establishStripe()
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-        })
-      })
+      document
+        .querySelector('#stripe-js')
+        .addEventListener('load', this.establishStripe)
     }
+  }
+
+  establishStripe = () => {
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    this.setState({
+      stripe: window.Stripe(stripePKey)
+    })
   }
 
   componentDidUpdate() {
@@ -110,7 +112,7 @@ class App extends Component {
     this.unregisterAuthObserver()
     setRedirectFlagToFalse()
     resetAuthState()
-    window.stripe()
+    window.removeEventListener('load', this.establishStripe)
   }
 
   render() {

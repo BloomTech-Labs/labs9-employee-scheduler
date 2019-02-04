@@ -4,8 +4,9 @@ import { Elements, StripeProvider } from 'react-stripe-elements'
 
 class CheckoutCard extends React.Component {
   render() {
+    const stripePKey = process.env.STRIPE_PKEY
     return (
-      <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+      <StripeProvider apiKey={stripePKey}>
         <div className="example">
           <h1>React Stripe Elements Example</h1>
           <Elements>
