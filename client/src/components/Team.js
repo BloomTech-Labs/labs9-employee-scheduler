@@ -5,10 +5,10 @@ import Footer from './Footer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
-const About = () => {
+const Team = () => {
   return (
     <OuterContainer>
-      <BreadCrumb location="About" />
+      <BreadCrumb location="Team" />
       <Container>
         <h1>Meet the Team</h1>
       </Container>
@@ -17,7 +17,7 @@ const About = () => {
   )
 }
 
-export default About
+export default Team
 
 const Container = styled('div')`
   margin: 0 5rem;

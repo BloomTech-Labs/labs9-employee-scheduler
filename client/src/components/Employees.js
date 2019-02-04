@@ -131,7 +131,6 @@ class Employees extends Component {
   }
 
   render() {
-    const width = window.innerWidth
     const { employees } = this.props
     const { availTarget, run, steps } = this.state
     let filteredEmployees = employees.filter(person => {

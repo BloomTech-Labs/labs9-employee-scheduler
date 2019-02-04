@@ -12,7 +12,7 @@ import Login from './components/Login'
 import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
 import Legal from './components/Legal'
-import About from './components/About'
+import Team from './components/Team'
 import system from './design/theme'
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -220,7 +220,7 @@ class App extends Component {
               <Route path="/join/:id" component={Join} />
               <Route path="/privacy" component={Legal} />
               <Route path="/terms" component={Legal} />
-              <Route path="/about" component={About} />
+              <Route path="/team" component={Team} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>

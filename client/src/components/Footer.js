@@ -11,7 +11,7 @@ const Footer = () => {
         <img src={logo2} alt="logo" />
       </Link>
       <div>
-        <Link to="/about">About</Link>
+        <Link to="/team">Team</Link>
         <Link to="/terms">Terms</Link>
         <Link to="/privacy">Privacy</Link>
       </div>
