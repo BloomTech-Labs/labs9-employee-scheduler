@@ -140,6 +140,8 @@ class Employees extends Component {
           .indexOf(this.state.searchTerm.toLowerCase()) > -1
       ) {
         return person
+      } else {
+        return null
       }
     })
     return (

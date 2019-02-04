@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
@@ -109,7 +109,11 @@ export default connect(
 )(TimeOff)
 
 TimeOff.propTypes = {
-  timeOffRequests: propTypes.array
+  timeOffRequests: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+    .isRequired,
+  dispoTimeOffRequests: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  handleTimeOff: PropTypes.func
 }
 
 const Div = styled.div`
