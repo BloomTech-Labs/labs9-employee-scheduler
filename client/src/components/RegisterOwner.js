@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
+
 import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
@@ -140,7 +140,8 @@ class RegisterOwner extends Component {
               <Input
                 name="firstName"
                 type="text"
-                value={firstName}
+                id="firstName"
+                defaultValue={firstName}
                 onChange={handleChange}
                 placeholder="ex. Samuel"
                 ariaLabel="first-name"
@@ -150,8 +151,9 @@ class RegisterOwner extends Component {
               <label htmlFor="lastName">Last Name *</label>
               <Input
                 name="lastName"
+                id="lastName"
                 type="text"
-                value={lastName}
+                defaultValue={lastName}
                 onChange={handleChange}
                 placeholder="ex. Machat"
                 ariaLabel="last-name"
@@ -161,6 +163,7 @@ class RegisterOwner extends Component {
               <label htmlFor="email">Contact Email *</label>
               <Input
                 name="email"
+                id="email"
                 type="text"
                 value={email}
                 onChange={handleChange}
@@ -172,6 +175,7 @@ class RegisterOwner extends Component {
               <label htmlFor="phone">Contact Number *</label>
               <Input
                 name="phone"
+                id="phone"
                 type="tel"
                 value={phone}
                 onChange={handleChange}
@@ -183,6 +187,7 @@ class RegisterOwner extends Component {
               <label htmlFor="orgName">Organization Name *</label>
               <Input
                 name="orgName"
+                id="orgName"
                 type="text"
                 value={orgName}
                 onChange={handleChange}
@@ -235,6 +240,14 @@ export default connect(
   mapStateToProps,
   { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
+
+RegisterOwner.propTypes = {
+  registration: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  registerAsOwner: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  registerReset: PropTypes.func.isRequired
+}
 
 const ButtonContainer = styled('div')`
   display: flex;

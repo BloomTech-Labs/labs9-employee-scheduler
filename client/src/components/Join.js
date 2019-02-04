@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
@@ -177,3 +176,13 @@ export default connect(
   mapStateToProps,
   { registerViaJoinOrg, authenticate, logout }
 )(Join)
+
+Join.propTypes = {
+  registration: PropTypes.object.isRequired,
+  token: PropTypes.object.isRequired,
+  registerViaJoinOrg: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+}

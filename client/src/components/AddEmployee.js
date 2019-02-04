@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import { connect } from 'react-redux'
@@ -58,7 +58,6 @@ class AddEmployee extends Component {
           })
           .catch(err => {
             alert(`Something has gone wrong. Try again!`)
-            console.log(err)
           })
       } else {
         if (!this.state.newUser.role) {
@@ -86,7 +85,7 @@ class AddEmployee extends Component {
   }
 
   render() {
-    const { role, Close, toggleShow } = this.props
+    const { role, Close } = this.props
     return (
       <ModalContainer>
         {/* ternary checks to see if they have a paid account or less than three employees  */}
@@ -195,7 +194,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(AddEmployee)
 
 AddEmployee.propTypes = {
-  // add propTypes here
+  role: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  paid: PropTypes.bool,
+  employees: PropTypes.array,
+  addEmployee: PropTypes.func
 }
 
 const ModalContainer = styled(Container)`

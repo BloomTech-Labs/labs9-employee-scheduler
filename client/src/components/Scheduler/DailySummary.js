@@ -7,7 +7,7 @@ export default function DailySummary(props) {
   const { hours, day, employees } = props.summary
   return (
     <Div>
-      <h6>{moment(day).format('M/D')}</h6>
+      <h6>{moment(day, 'YYYY-MM-DD').format('M/D')}</h6>
       <p>People Working</p>
       <p className="line big">{employees}</p>
       <p>Total Hours</p>

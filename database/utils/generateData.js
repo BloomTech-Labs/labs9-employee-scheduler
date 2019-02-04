@@ -380,20 +380,13 @@ const structureEmployees = org => {
   // is an array of the availabilities for that user
   availabilities = availabilities.reduce((acc, current) => {
     // to display the date nicely for the front end to consume
-    const weekdays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
-    ]
-    const { user_id, id, day, start_time, end_time } = current
+    const { user_id, id, day, start_time, end_time, off } = current
     const newItem = {
       id,
-      day: weekdays[day],
-      time: `${start_time}am-${end_time - 12}pm`
+      day,
+      start_time,
+      end_time,
+      off
     }
 
     if (acc[user_id]) {

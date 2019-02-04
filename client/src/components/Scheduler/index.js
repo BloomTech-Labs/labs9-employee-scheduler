@@ -63,7 +63,7 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.fetchData())
-        .catch(err => console.log(err))
+        .catch(err => err)
     } else {
       // else, fetch original data?
       this.setState({ steps, run: false })
@@ -247,7 +247,7 @@ class Scheduler extends React.Component {
       const { hours } = this.props
       const eventTimes = {
         start: date,
-        end: new Date(date.getTime() + 60 * 1000 * 60)
+        end: new Date(date.getTime() + 30 * 1000 * 60)
       }
       const { verdict } = validateShift({
         eventTimes,
@@ -306,7 +306,7 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.props.updateUserSettings(this.props.token))
-        .catch(err => console.log(err))
+        .catch(err => err)
     } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
 
@@ -375,7 +375,7 @@ class Scheduler extends React.Component {
           run={run}
           scrollToFirstStep
           showProgress
-          showSkipButton={!this.props.user.cal_visit}
+          showSkipButton
           steps={steps}
           styles={{
             options: {
@@ -463,6 +463,7 @@ export default connect(
 
 const Container = styled.div`
   display: flex;
+  min-height: 100vh;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;
