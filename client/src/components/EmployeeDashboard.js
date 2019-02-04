@@ -85,7 +85,7 @@ class EmployeeDashboard extends Component {
     this.props.fetchSingleEmployeeFromDB(id, this.props.token)
   }
 
-  toggleView = () => {
+  toggleCalView = () => {
     if (this.state.view === 'week') {
       return this.setState({
         view: 'day',
@@ -169,7 +169,7 @@ class EmployeeDashboard extends Component {
             </div>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>
+                <Button onClick={this.toggleCalView}>
                   {this.state.view === 'week' ? 'Day View' : 'Week View'}
                 </Button>
               ) : null}
