@@ -132,7 +132,7 @@ class Employees extends Component {
             callback={this.handleJoyrideCallback}
             continuous
             run={run}
-            scrollToFirstStep
+            scrollToFirstStep={false}
             showProgress
             showSkipButton
             steps={steps}

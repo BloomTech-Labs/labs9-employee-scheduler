@@ -47,7 +47,7 @@ export default [
     locale: {
       skip: <strong arial-label="skip">Skip</strong>
     },
-    textAlign: 'left',
+    textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
     disableOverlayClose: true,

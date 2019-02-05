@@ -347,7 +347,7 @@ class Scheduler extends React.Component {
           callback={this.handleJoyrideCallback}
           continuous
           run={run}
-          scrollToFirstStep
+          scrollToFirstSteps={false}
           showProgress
           showSkipButton
           steps={steps}
