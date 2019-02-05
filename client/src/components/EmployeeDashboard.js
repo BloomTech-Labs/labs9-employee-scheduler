@@ -233,7 +233,21 @@ class EmployeeDashboard extends Component {
           </CalendarButtons>
 
           <div>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    display: 'flex',
+                    flexFlow: 'column nowrap',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '4rem'
+                  }}
+                >
+                  <Loader />
+                </div>
+              }
+            >
               <DashCal
                 events={events}
                 names={names}
@@ -258,8 +272,11 @@ class EmployeeDashboard extends Component {
                 <>
                   {employee.shifts.map(item => {
                     return (
-                      <Suspense fallback={<div>Loading...</div>}>
-                        <AssignedShifts key={item.id} {...item} />
+                      <Suspense
+                        key={item.id}
+                        fallback={<Message>Fetching your shifts...</Message>}
+                      >
+                        <AssignedShifts {...item} />
                       </Suspense>
                     )
                   })}
@@ -275,7 +292,9 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense
+                fallback={<Message>Fetching your availabilities...</Message>}
+              >
                 {employee && employee.availabilities.length ? (
                   <Availability availabilities={employee.availabilities} />
                 ) : (
@@ -289,7 +308,9 @@ class EmployeeDashboard extends Component {
                 <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
                   <Message>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense
+                      fallback={<Message>Fetching your PTO...</Message>}
+                    >
                       {employee.time_off.map(item => (
                         <TimeOffApproved
                           key={item.id}
@@ -316,7 +337,7 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Request Time Off</h5>
               </div>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Message>Loading...</Message>}>
                 <TimeOffRequest />
               </Suspense>
             </Card>
