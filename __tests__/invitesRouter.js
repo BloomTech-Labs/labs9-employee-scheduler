@@ -1,8 +1,7 @@
 const supertest = require('supertest')
 const server = require('../server/server')
 const db = require('../database/dbConfig')
-// const uuid = require('uuid/v4')
-// const {} = require('../database/utils/generateData')
+const uuid = require('uuid/v4')
 
 const request = supertest(server)
 
@@ -86,7 +85,7 @@ describe('testing the invites router', () => {
       const { id } = await db('invites').first()
 
       const response = await request
-        .post(`/register/${id}`)
+        .post(`/invites/register/${id}`)
         .send({
           firstName: 'Testy',
           lastName: 'McTestyface',
@@ -99,12 +98,36 @@ describe('testing the invites router', () => {
       expect(response.status).toBe(201)
     })
 
-    // it('fails with incorrect body', async () => {
-    //   // logic
-    // })
+    it('fails with incorrect body', async () => {
+      // grab some invite id
+      const { id } = await db('invites').first()
 
-    // it('fails with incorrect id', async () => {
-    //   // logic
-    // })
+      const response = await request
+        .post(`/invites/register/${id}`)
+        .send({
+          badData: true
+        })
+        .set('authorization', 'testing')
+        .set('user', 'new_id')
+
+      expect(response.status).toBe(400)
+    })
+
+    it('fails with incorrect id', async () => {
+      const id = uuid()
+
+      const response = await request
+        .post(`/invites/register/${id}`)
+        .send({
+          firstName: 'Testy',
+          lastName: 'McTestyface',
+          email: 'test@testymctestyface.com',
+          phone: '987098703295832'
+        })
+        .set('authorization', 'testing')
+        .set('user', 'new_id')
+
+      expect(response.status).toBe(500)
+    })
   })
 })
