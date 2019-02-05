@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import system from '../design/theme'
 
 import firebase from 'firebase/app'
 
@@ -116,8 +115,7 @@ class RegisterOwner extends Component {
       firstName,
       lastName,
       orgName,
-      industry,
-      terms
+      industry
     } = this.state
     const { handleChange, handleSubmit, toggleTerms } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request

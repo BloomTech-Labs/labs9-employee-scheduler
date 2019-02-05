@@ -18,12 +18,8 @@ class PrivateRoute extends React.Component {
   state = { errorTimeout: false, loadingTimeout: false }
 
   componentWillUnmount() {
-    const { errorTimeout, loadingTimeout } = this.state
-    if (errorTimeout) {
-      clearTimeout(errorTimeout)
-    }
-    if (loadingTimeout) {
-      clearTimeout(loadingTimeout)
+    if (this.timeout) {
+      clearTimeout(this.timeout)
     }
   }
 
@@ -42,10 +38,10 @@ class PrivateRoute extends React.Component {
               // checks to see if an message has already been displayed
               if (!this.state.errorTimeout) {
                 // if so, displays error message and starts timeout
-                setTimeout(
-                  () => this.setState({ errorTimeout: true }),
-                  errorInterval
-                )
+                this.timeout = setTimeout(() => {
+                  this.timeout = null
+                  this.setState({ errorTimeout: true })
+                }, errorInterval)
                 return (
                   <EmptyScreen>
                     <Status>{`Ruh-roh, something's wrong: ${error}`}</Status>
@@ -59,10 +55,10 @@ class PrivateRoute extends React.Component {
             // otherwise App is still going through auth process, but has not errored,
             // so show loading screen.
             if (!this.state.loadingTimeout) {
-              setTimeout(
-                () => this.setState({ loadingTimeout: true }),
-                loadingInterval
-              )
+              this.timeout = setTimeout(() => {
+                this.timeout = null
+                this.setState({ loadingTimeout: true })
+              }, loadingInterval)
               return (
                 <EmptyScreen>
                   <Loader />
@@ -96,7 +92,8 @@ class PrivateRoute extends React.Component {
 PrivateRoute.propTypes = {
   user: PropTypes.object,
   error: PropTypes.string,
-  errorTimeOut: PropTypes.bool
+  component: PropTypes.func,
+  access: PropTypes.string
 }
 
 const mapStateToProps = ({ auth: { user, error } }) => ({
