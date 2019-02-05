@@ -32,6 +32,34 @@ const Team = () => {
               get the information they need and experiences they want. He loves
               working on teams that feel the same way.
             </p>
+            <p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/kamry-bowman"
+                alt="Kam's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/kamry-bowman/"
+                alt="Kam's LinkedIn"
+              >
+                LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/MispelledToyota"
+                alt="Kam's Twitter"
+              >
+                Twitter
+              </a>
+            </p>
           </div>
         </div>
 
@@ -49,6 +77,34 @@ const Team = () => {
               fun, he reads every book he can get his hands on and cheers on the
               Georgetown Hoyas (no matter how disappointing they are).
             </p>
+            <p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/rd825"
+                alt="Rahul's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/rdesai01/"
+                alt="Rahul's LinkedIn"
+              >
+                LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/RDesai01"
+                alt="Rahul's Twitter"
+              >
+                Twitter
+              </a>
+            </p>
           </div>
         </div>
 
@@ -58,12 +114,40 @@ const Team = () => {
             <h2>Adam Hinckley</h2>
             <p className="location">Boise, ID</p>
             <p className="bio">
-              Adam is a Full Stack Developer and a family man with an amazing
-              wife and four kids. He has a background in the life insurance
-              business where he found a love for programming when he created
-              software solutions that solved underwriting problems for over
-              2,000 agents. When he's not busy coding, Adam loves to enjoy the
-              great outdoors with his family.
+              Adam is a full-stack web developer and a family man with an
+              amazing wife and four kids. He has a background in the life
+              insurance business where he found a love for programming when he
+              created software solutions that solved underwriting problems for
+              over 2,000 agents. When he's not busy coding, Adam loves to enjoy
+              the great outdoors with his family.
+            </p>
+            <p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/adamhinckley"
+                alt="Adam's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/adamhinckley/"
+                alt="Adam's LinkedIn"
+              >
+                LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/HinckleyAdam"
+                alt="Adam's Twitter"
+              >
+                Twitter
+              </a>
             </p>
           </div>
         </div>
@@ -84,6 +168,34 @@ const Team = () => {
               learn. His wife and daughter provide him with inspiration and
               support.
             </p>
+            <p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/CLantigua2"
+                alt="Carlos' GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/carlos-lantigua/"
+                alt="Carlos' LinkedIn"
+              >
+                LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/CodeLantigua"
+                alt="Carlos' Twitter"
+              >
+                Twitter
+              </a>
+            </p>
           </div>
         </div>
 
@@ -92,7 +204,43 @@ const Team = () => {
           <div className="details">
             <h2>Samuel Machat</h2>
             <p className="location">Charlottesville, VA</p>
-            <p className="bio">A Bio</p>
+            <p className="bio">
+              Samuel is a full-stack web developer with a passion for solving
+              complex problems with clean, simple code. Previously he worked in
+              the specialty coffee world, where he cultivated an interest in
+              product excellence and clear, friendly customer relations. He
+              enjoys working on teams that value communication, quality, and
+              continual learning. In his life away from the computer, he enjoys
+              time with family, good books, and yoga.
+            </p>
+            <p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/axolotl"
+                alt="Samuel's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/samuel-machat/"
+                alt="Samuel's LinkedIn"
+              >
+                LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/samuelmachat"
+                alt="Samuel's Twitter"
+              >
+                Twitter
+              </a>
+            </p>
           </div>
         </div>
       </Container>
@@ -175,11 +323,15 @@ const Container = styled('div')`
         color: ${system.color.bodytext};
         font-size: ${system.fontSizing.sm};
         line-height: ${system.spacing.lineHeight};
+
+        a {
+          color: ${system.color.primary};
+        }
       }
 
       .location {
         font-weight: bold;
-        margin-bottom: 1rem;
+        margin: 0.5rem 0 1rem;
       }
     }
   }
