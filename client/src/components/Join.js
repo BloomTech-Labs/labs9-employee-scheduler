@@ -11,6 +11,8 @@ import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
+import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
 
 class Join extends Component {
   state = {
@@ -18,7 +20,8 @@ class Join extends Component {
     firstName: '',
     lastName: '',
     phone: '',
-    email: ''
+    email: '',
+    terms: false
   }
 
   componentDidMount() {
@@ -47,11 +50,19 @@ class Join extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
-    const { email, phone, firstName, lastName } = this.state
+    const { email, phone, firstName, lastName, terms } = this.state
 
-    if (!email || !phone || !firstName || !lastName) {
+    if (!email || !phone || !firstName || !lastName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerViaJoinOrg(
@@ -155,6 +166,23 @@ class Join extends Component {
                 ariaLabel="phone"
                 required
               />
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={this.toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
 
               <Button type="submit" className="register">
                 Register
@@ -186,3 +214,11 @@ Join.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
 }
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+`
