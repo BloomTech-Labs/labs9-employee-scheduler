@@ -16,8 +16,7 @@ class TimeOffRequest extends Component {
     super(props)
     this.state = {
       requestDate: '',
-      reason: '',
-      selectedDay: undefined
+      reason: ''
     }
   }
   handleDayClick = day => {
