@@ -53,12 +53,15 @@ in the `./client` you will need a `.env.development` file
 #### Instructions for .env Variables:
 
 ##### Client:
-The client will need 2 environment variables. You can copy-paste the first. You will need to create your own for the latter. 
+The client will need 3 environment variables. You can copy-paste the first. You will need to create your own for the latter 2. 
 <br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
+<br/><br/>
+Create an account at [Stripe](https://stripe.com) to work with our Billing page. Once you have an account, go to your [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Publishable key" as your `STRIPE_PKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
 REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
+STRIPE_PKEY='{insert Stripe publishable key here}'
 ```
 
 ##### Server:
@@ -68,12 +71,15 @@ The server will need 5 environment variables. You can copy-paste the first. You 
 For your `FIREBASE_SECRET`, go to your Firebase project settings. Go to the tab for "Service Accounts" and click the "Generate new private key" button. This will auto-download a JSON object. Open it up in your text editor; copy the value for the key "private_key"; it (as a string) is your `FIREBASE_SECRET`. 
 <br/><br/>
 For your `FIREBASE_EMAIL`, open the JSON object mentioned in the previous step in your text editor. Copy the value for the key "client_email". It will be a url ending in "gserviceaccount.com"; this is your `FIREBASE_EMAIL`.
+<br/><br/>
+Go to your Stripe [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Secret key" as your `STRIPE_SKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 CLIENT_URL=http://localhost:3000
 GMAIL_USERNAME="{insert your Gmail address here}"
 GMAIL_PASSWORD="{insert your Gmail password here}"
 FIREBASE_SECRET={copy paste your "private_key" here}
 FIREBASE_EMAIL={copy paste your "client_email" here}
+STRIPE_SKEY='{insert Stripe secret key here}'
 ```
 
 ### Using the App

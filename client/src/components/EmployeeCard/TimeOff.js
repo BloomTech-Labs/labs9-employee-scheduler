@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-const baseURL = process.env.REACT_APP_SERVER_URL
-
 export const StatusContent = ({ id, status, handleTimeOff }) => {
   if (status === 'approved') {
     return (
@@ -111,7 +109,11 @@ export default connect(
 )(TimeOff)
 
 TimeOff.propTypes = {
-  timeOffRequests: propTypes.array
+  timeOffRequests: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+    .isRequired,
+  dispoTimeOffRequests: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  handleTimeOff: PropTypes.func
 }
 
 const Div = styled.div`

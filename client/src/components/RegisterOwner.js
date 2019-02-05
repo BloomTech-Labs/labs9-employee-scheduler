@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
+
 import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
@@ -141,7 +141,7 @@ class RegisterOwner extends Component {
                 name="firstName"
                 type="text"
                 id="firstName"
-                value={firstName}
+                defaultValue={firstName}
                 onChange={handleChange}
                 placeholder="ex. Samuel"
                 ariaLabel="first-name"
@@ -153,7 +153,7 @@ class RegisterOwner extends Component {
                 name="lastName"
                 id="lastName"
                 type="text"
-                value={lastName}
+                defaultValue={lastName}
                 onChange={handleChange}
                 placeholder="ex. Machat"
                 ariaLabel="last-name"
@@ -240,6 +240,14 @@ export default connect(
   mapStateToProps,
   { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
+
+RegisterOwner.propTypes = {
+  registration: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  registerAsOwner: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  registerReset: PropTypes.func.isRequired
+}
 
 const ButtonContainer = styled('div')`
   display: flex;

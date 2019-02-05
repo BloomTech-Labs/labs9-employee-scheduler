@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import system from '../../design/theme'
 import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
 
 const TimeOffApproved = ({
   id,
@@ -23,12 +24,20 @@ const TimeOffApproved = ({
         </p>
       </div>
       <p className="reason">{reason}</p>
-      <i className="fas fa-backspace" onClick={deleteExpiredRequest} />
+      <Action onClick={deleteExpiredRequest}>&#x2716;</Action>
     </PTO>
   )
 }
 
 export default TimeOffApproved
+
+TimeOffApproved.propTypes = {
+  id: PropTypes.number,
+  status: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  reason: PropTypes.string.isRequired,
+  deleteExpiredRequiest: PropTypes.func
+}
 
 const PTO = styled.div`
   display: flex;
@@ -51,10 +60,10 @@ const PTO = styled.div`
       transform: translateX(0);
     }
     40% {
-      transform: translateX(10px);
+      transform: translateX(2px);
     }
     60% {
-      transform: translateX(5px);
+      transform: translateX(1px);
     }
   }
 
@@ -64,17 +73,6 @@ const PTO = styled.div`
     @media ${system.breakpoints[0]} {
       width: 50%;
       font-size: ${system.fontSizing.s};
-    }
-  }
-
-  i {
-    cursor: pointer;
-    color: ${system.color.danger};
-    font-size: ${system.fontSizing.m};
-    transition: 0.5ms ease-in-out;
-    &:hover {
-      color: rgb(255, 100, 100);
-      animation: bounce 0.5s linear infinite;
     }
   }
 
@@ -104,5 +102,30 @@ const PTO = styled.div`
         props.pool ? system.fontSizing.sm : system.fontSizing.s};
       font-weight: ${props => (props.pool ? 'bold' : 'normal')};
     }
+  }
+`
+const Action = styled.button`
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+  color: ${system.color.danger};
+  font-size: ${system.fontSizing.l};
+  cursor: pointer;
+  transition: 0.5ms ease-in-out;
+  &:hover {
+    animation: bounce 0.5s linear infinite;
   }
 `

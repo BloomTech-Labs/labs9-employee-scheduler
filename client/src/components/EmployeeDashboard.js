@@ -33,7 +33,8 @@ class EmployeeDashboard extends Component {
       errors: '',
       view: 'week',
       date: new Date(),
-      width: 'desktop'
+      width: 'desktop',
+      employeeView: 'all'
     }
   }
 
@@ -109,12 +110,13 @@ class EmployeeDashboard extends Component {
   }
 
   fetchData() {
-    const { organization_id } = this.props.user
+    const { organization_id, id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
+    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
   }
 
-  toggleView = () => {
+  toggleCalView = () => {
     if (this.state.view === 'week') {
       return this.setState({
         view: 'day',
@@ -128,27 +130,50 @@ class EmployeeDashboard extends Component {
     }
   }
 
+  toggleEmployeeView = () => {
+    if (this.state.employeeView === 'all') {
+      this.setState({ employeeView: 'single' })
+    } else {
+      this.setState({ employeeView: 'all' })
+    }
+  }
+
   render() {
-    // const { employee, hours } = this.props.employee
     const { employees, hours, employee } = this.props
-    const { view, date, width } = this.state
+    const { view, date, width, employeeView } = this.state
+    const { id } = this.props.user
     const names = []
+
     employees.map(employee => names.push(`${employee.first_name}`))
 
+    //events for all employees
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
         ...employee.events.map(event => {
-          return {
-            ...event,
-            start: new Date(event.start),
-            end: new Date(event.end),
-            title: `${employee.first_name} ${employee.last_name}`
+          if (employeeView === 'all') {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else if (event.user_id === id && employeeView === 'single') {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else {
+            return null
           }
         })
       ]
     }, [])
+
     let hourRange = getHoursOfOperationRange(hours, false)
+
     return (
       <OuterContainer>
         <LeftSideBar />
@@ -164,15 +189,27 @@ class EmployeeDashboard extends Component {
           <CalendarButtons>
             <NavButtons>
               <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <MiddleButton onClick={() => this.changeDate('today')}>
+              <ToggleButton onClick={() => this.changeDate('today')}>
                 Today
-              </MiddleButton>
+              </ToggleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+              {width === 'mobile' || width === 'tablet' ? (
+                <ToggleButton onClick={this.toggleEmployeeView}>
+                  {employeeView === 'all' ? 'My Shift' : 'All Shifts'}
+                </ToggleButton>
+              ) : null}
             </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>
-                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                <Button onClick={this.toggleEmployeeView}>
+                  {employeeView === 'all' ? 'My Shifts' : 'All Shifts'}
+                </Button>
+              ) : null}
+            </div>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleCalView}>
+                  {view === 'week' ? 'Day View' : 'Week View'}
                 </Button>
               ) : null}
             </div>
@@ -319,10 +356,9 @@ const NavButtons = styled.div`
     justify-content: space-around;
   }
 `
-
-const MiddleButton = styled(Button)`
-  @media ${system.breakpoints[0]} {
-    margin-bottom : ${system.spacing.bigPadding};
+const ToggleButton = styled(Button)`
+  @media ${system.breakpoints[1]} {
+    margin-bottom: ${system.spacing.bigPadding};
     order: -1;
     width: 100%;
   }

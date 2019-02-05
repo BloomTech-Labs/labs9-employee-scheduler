@@ -19,7 +19,7 @@ class EmployeePool extends React.Component {
   }
 
   render() {
-    const { employees, updateDragState, width } = this.props
+    const { employees, updateDragState } = this.props
     let filteredEmployees = employees.filter(person => {
       if (
         person.first_name
@@ -27,6 +27,8 @@ class EmployeePool extends React.Component {
           .indexOf(this.state.searchTerm.toLowerCase()) > -1
       ) {
         return person
+      } else {
+        return null
       }
     })
     return (
