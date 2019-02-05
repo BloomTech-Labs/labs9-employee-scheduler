@@ -63,14 +63,14 @@ class TimeOffRequest extends Component {
       <Form onSubmit={this.submitTimeOffRequest}>
         <TimeOffContainer>
           <div>
-            <label>PTO Date</label>
+            {/* <label>PTO Date</label> */}
             <DatePicker>
-              <DayPicker onDayClick={this.handleDayClick} />
               {this.state.requestDate ? (
-                <p>You chose {this.state.requestDate.toLocaleDateString()}</p>
+                <label>{this.state.requestDate.toLocaleDateString()}</label>
               ) : (
-                <p>Please select a day.</p>
+                <label>Please select a day</label>
               )}
+              <DayPicker onDayClick={this.handleDayClick} />
             </DatePicker>
           </div>
           {/* <Input
@@ -141,4 +141,5 @@ const TimeOffContainer = styled('div')`
 const ReasonContainer = styled('div')`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `
