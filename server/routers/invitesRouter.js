@@ -17,7 +17,7 @@ const invite = role => async (req, res) => {
   const { organization_id } = await getUser(id)
 
   if (!email || !name) {
-    res.status(400).json({ error: 'Missing required field(s)' })
+    return res.status(400).json({ error: 'Missing required field(s)' })
   }
 
   const inviteId = uuid()
@@ -61,7 +61,7 @@ router.post('/register/:inviteId', async (req, res) => {
   const { organization_id, role } = await getInvite(inviteId) // grab info from the invite
 
   if (!email || !firstName || !lastName) {
-    res.status(400).json({ error: 'Missing required field(s)' })
+    return res.status(400).json({ error: 'Missing required field(s)' })
   }
 
   const newUser = {

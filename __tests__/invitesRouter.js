@@ -11,6 +11,47 @@ describe('testing the invites router', () => {
   // instad of needing pass a token to get the user id,
   // the testin middleware allows you to specify user type
   // without never needing to worry about generating a token
+  describe('POST /invite-supervisor', () => {
+    it('posts with correct auth and body', async () => {
+      const response = await request
+        .post('/invites/invite-supervisor')
+        .send({
+          name: 'Testing McTestyFace',
+          email: 'test@testymctestyface.com'
+        })
+        .set('authorization', 'testing')
+        .set('user', 'owner')
+
+      expect(response.status).toEqual(201)
+    })
+
+    it('fails with incorrect auth', async () => {
+      const response = await request
+        .post('/invites/invite-supervisor')
+        .send({
+          name: 'Testing McTestyFace',
+          email: 'test@testymctestyface.com'
+        })
+        .set('authorization', 'testing')
+        .set('user', 'supervisor')
+
+      expect(response.status).toEqual(403)
+    })
+
+    it('fails with incorrect body', async () => {
+      const response = await request
+        .post('/invites/invite-supervisor')
+        .send({
+          name: 'Testing McTestyFace',
+          email2: 'test@testymctestyface.com'
+        })
+        .set('authorization', 'testing')
+        .set('user', 'owner')
+
+      expect(response.status).toEqual(400)
+    })
+  })
+
   describe('POST /invite-employee', () => {
     it('posts with correct auth and body', async () => {
       const response = await request
@@ -65,46 +106,5 @@ describe('testing the invites router', () => {
     // it('fails with incorrect id', async () => {
     //   // logic
     // })
-  })
-
-  describe('POST /invite-supervisor', () => {
-    it('posts with correct auth and body', async () => {
-      const response = await request
-        .post('/invites/invite-supervisor')
-        .send({
-          name: 'Testing McTestyFace',
-          email: 'test@testymctestyface.com'
-        })
-        .set('authorization', 'testing')
-        .set('user', 'owner')
-
-      expect(response.status).toEqual(201)
-    })
-
-    it('fails with incorrect auth', async () => {
-      const response = await request
-        .post('/invites/invite-supervisor')
-        .send({
-          name: 'Testing McTestyFace',
-          email: 'test@testymctestyface.com'
-        })
-        .set('authorization', 'testing')
-        .set('user', 'supervisor')
-
-      expect(response.status).toEqual(403)
-    })
-
-    it('fails with incorrect body', async () => {
-      const response = await request
-        .post('/invites/invite-supervisor')
-        .send({
-          name: 'Testing McTestyFace',
-          email2: 'test@testymctestyface.com'
-        })
-        .set('authorization', 'testing')
-        .set('user', 'owner')
-
-      expect(response.status).toEqual(400)
-    })
   })
 })
