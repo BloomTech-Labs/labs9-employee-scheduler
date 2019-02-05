@@ -25,7 +25,7 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
 import steps from '../Demo/calendar'
 // import WeekSummary from './WeekSummary'
 // import EmployeePool from './EmployeePool'
@@ -296,7 +296,8 @@ class Scheduler extends React.Component {
 
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
-    const { action, index, type, status } = data
+    const { action, index, status } = data
+
     const { user } = this.props
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       // Need to set our running state to false, so we can restart if we click start again.
@@ -311,43 +312,12 @@ class Scheduler extends React.Component {
         )
         .then(res => this.props.updateUserSettings(this.props.token))
         .catch(err => err)
-    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+    } else {
+      // Update state to advance the tour
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
-
-      if (index === 0) {
-        setTimeout(() => {
-          this.setState({ run: true })
-        }, 400)
-      } else if (index === 1) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else if (index === 2 && action === ACTIONS.PREV) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else {
-        // Update state to advance the tour
-        this.setState({
-          stepIndex
-        })
-      }
+      this.setState({
+        stepIndex
+      })
     }
   }
 
