@@ -25,7 +25,7 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
 import steps from '../Demo/calendar'
 // import WeekSummary from './WeekSummary'
 // import EmployeePool from './EmployeePool'
@@ -296,7 +296,7 @@ class Scheduler extends React.Component {
 
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
-    const { action, index, type, status } = data
+    const { action, index, status } = data
 
     const { user } = this.props
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {

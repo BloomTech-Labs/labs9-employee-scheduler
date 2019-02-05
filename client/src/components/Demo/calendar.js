@@ -17,7 +17,9 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'left',
     placement: 'center',
     disableBeacon: true,
@@ -42,7 +44,9 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'left',
     placement: 'right',
     disableBeacon: true,
@@ -68,7 +72,9 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'right',
     placement: 'right',
     disableBeacon: true,
@@ -96,7 +102,9 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
@@ -135,7 +143,9 @@ export default [
         </Suspense>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'center',
     placement: 'right',
     disableBeacon: true,
@@ -181,7 +191,9 @@ export default [
         </p>
       </div>
     ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    locale: {
+      skip: <strong arial-label="skip">Skip</strong>
+    },
     textAlign: 'left',
     placement: 'bottom',
     disableBeacon: true,
