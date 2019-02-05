@@ -6,6 +6,10 @@ import { addTimeOffRequest } from '../../actions'
 import PropTypes from 'prop-types'
 import { Form, Input } from '../common/FormContainer'
 import Button from '../common/Button'
+import styled from '@emotion/styled'
+import system from '../../design/theme'
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 
 class TimeOffRequest extends Component {
   constructor(props) {
@@ -14,6 +18,9 @@ class TimeOffRequest extends Component {
       requestDate: '',
       reason: ''
     }
+  }
+  handleDayClick = day => {
+    this.setState({ requestDate: day })
   }
 
   changeHandler = event => {
@@ -52,26 +59,43 @@ class TimeOffRequest extends Component {
   render() {
     return (
       <Form onSubmit={this.submitTimeOffRequest}>
-        <label>PTO Date</label>
-        <Input
+        <TimeOffContainer>
+          <div>
+            {/* <label>PTO Date</label> */}
+            <DatePicker>
+              <label>Select a day</label>
+              <DayPicker onDayClick={this.handleDayClick} />
+              {this.state.requestDate ? (
+                <label>
+                  Selected: {this.state.requestDate.toLocaleDateString()}
+                </label>
+              ) : (
+                <label />
+              )}
+            </DatePicker>
+          </div>
+          {/* <Input
           type="date"
           name="requestDate"
           value={this.props.value}
           onChange={this.changeHandler}
-        />
-
-        <label htmlFor="reason">Reason</label>
-        <Input
-          type="text"
-          name="reason"
-          placeholder="ex. Doctor's Appt."
-          onChange={this.changeHandler}
-          value={this.props.value}
-          aria-label="text"
-        />
-        <Button type="submit" data-test="submit">
-          Submit
-        </Button>
+        /> */}
+          <ReasonContainer>
+            <label htmlFor="reason">Reason</label>
+            <Input
+              type="text"
+              name="reason"
+              placeholder="ex. Doctor's Appt."
+              onChange={this.changeHandler}
+              value={this.props.value}
+              aria-label="text"
+              required
+            />
+            <Button type="submit" data-test="submit">
+              Submit
+            </Button>
+          </ReasonContainer>
+        </TimeOffContainer>
       </Form>
     )
   }
@@ -95,3 +119,28 @@ TimeOffRequest.propTypes = {
   value: PropTypes.string,
   submitTimeOffRequest: PropTypes.func
 }
+
+const DatePicker = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+`
+const TimeOffContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  @media ${system.breakpoints[1]} {
+    flex-direction: column;
+  }
+
+  @media ${system.breakpoints[1]} {
+    padding: 10px 0 0;
+  }
+`
+const ReasonContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
