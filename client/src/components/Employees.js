@@ -156,7 +156,7 @@ class Employees extends Component {
             run={run}
             scrollToFirstStep
             showProgress
-            showSkipButton={!this.props.user.emp_visit}
+            showSkipButton
             steps={steps}
             styles={{
               options: {

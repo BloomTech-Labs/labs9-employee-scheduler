@@ -131,7 +131,7 @@ const PTO = styled.div`
           : props.status === 'pending'
           ? system.color.lightgrey
           : system.color.bodytext};
-      font-size: system.fontSizing.sm;
+      font-size: ${system.fontSizing.sm};
       font-weight: 'bold';
       padding-left: 0.5rem;
     }

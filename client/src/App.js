@@ -66,17 +66,19 @@ class App extends Component {
     })
 
     if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-      })
+      this.establishStripe()
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-        })
-      })
+      document
+        .querySelector('#stripe-js')
+        .addEventListener('load', this.establishStripe)
     }
+  }
+
+  establishStripe = () => {
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    this.setState({
+      stripe: window.Stripe(stripePKey)
+    })
   }
 
   componentDidUpdate() {
@@ -110,14 +112,14 @@ class App extends Component {
     this.unregisterAuthObserver()
     setRedirectFlagToFalse()
     resetAuthState()
-    window.Stripe()
+    window.removeEventListener('load', this.establishStripe)
   }
 
   render() {
     const { user } = this.props
 
     return (
-      <div>
+      <React.Fragment>
         <Global
           styles={css`
             html {
@@ -134,10 +136,16 @@ class App extends Component {
               }
             }
 
-            body.no-scroll {
+            body {
               height: 100vh;
-              width: 100vw;
-              overflow: hidden;
+              &.no-scroll {
+                overflow: hidden;
+              }
+            }
+
+            #root {
+              height: 100%;
+              width: 100%;
             }
 
             * {
@@ -160,6 +168,18 @@ class App extends Component {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
               outline: none;
+            }
+
+            .demo-bold {
+              font-family: 'Lato', sans-serif;
+              font-weight: bold;
+              color: ${system.color.primary};
+            }
+
+            .demo-video {
+              margin-top: 20px;
+              width: 100%;
+              height: auto;
             }
           `}
         />
@@ -228,7 +248,7 @@ class App extends Component {
             </Switch>
           </Elements>
         </StripeProvider>
-      </div>
+      </React.Fragment>
     )
   }
 }

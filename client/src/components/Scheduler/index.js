@@ -379,7 +379,7 @@ class Scheduler extends React.Component {
           run={run}
           scrollToFirstStep
           showProgress
-          showSkipButton={!this.props.user.cal_visit}
+          showSkipButton
           steps={steps}
           styles={{
             options: {
@@ -471,7 +471,7 @@ export default connect(
 
 const Container = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: 100%;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;

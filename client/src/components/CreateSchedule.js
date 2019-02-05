@@ -54,7 +54,6 @@ CreateSchedule.propTypes = {
 const MainContentHolder = styled.div`
   padding-top: 20px;
   padding-right: 20px;
-  position: relative;
 
   @media ${system.breakpoints[0]} {
     padding: 20px;

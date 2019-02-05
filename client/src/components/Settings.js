@@ -127,7 +127,7 @@ class Settings extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.success ? (
             <Status success={this.state.success}>
-              We've successfully edited your profile. Now get back to work
+              We've successfully edited your profile. Now get back to work{' '}
               <span role="img" aria-label="wink emoji">
                 &#x1F609;
               </span>
@@ -135,7 +135,7 @@ class Settings extends Component {
           ) : null}
           {this.state.error ? (
             <Status>
-              Hmm, something's wrong. Give it another shot.
+              Hmm, something's wrong. Give it another shot.{' '}
               <span role="img" aria-label="fingers crossed emoji">
                 &#x1f91e;
               </span>

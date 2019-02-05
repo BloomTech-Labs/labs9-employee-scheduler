@@ -9,7 +9,7 @@ import headerImg from '../img/header.svg'
 import heroImg from '../img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
-import Video from '../img/frontpage.mp4'
+import frontpage from '../img/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
@@ -38,7 +38,7 @@ const Home = () => {
             </div>
           </Fade>
           <video id="video" autoPlay loop>
-            <source src={Video} type="video/mp4" />
+            <source src={frontpage} type="video/mp4" />
           </video>
         </section>
 
