@@ -140,11 +140,10 @@ class HoursOfOperation extends Component {
           {/* maps over the days and places a pair of edit buttons for each one */}
           {this.state.days.map((day, i) => {
             return (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div>Loading...</div>} key={day.id}>
                 <HOOSlider
                   // props to days and close/open button
                   id={i}
-                  key={day.id}
                   handleHours={this.handleHours}
                   day={day}
                   name={day.name}

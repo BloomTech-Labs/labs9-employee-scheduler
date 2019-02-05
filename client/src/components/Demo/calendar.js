@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Redirect } from 'react-router-dom'
 import drag from '../../img/drag.mp4'
 import resize from '../../img/resize.mp4'
 import hoo from '../../img/hoo.mp4'
+// const drag = React.lazy('../../img/drag.mp4')
+// const resize = React.lazy('../../img/resize.mp4')
+// const hoo = React.lazy('../../img/hoo.mp4')
 
 export default [
   {
@@ -69,7 +72,7 @@ export default [
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
-    textAlign: 'center',
+    textAlign: 'right',
     placement: 'right',
     disableBeacon: true,
     disableOverlayClose: true,
@@ -121,9 +124,17 @@ export default [
         to create a shift. <br /> <br />
         <span className="demo-bold">You can expand the video below</span> (and
         any video in this guide) if you need more help.
-        <video className="demo-video" muted controls autoPlay loop>
-          <source src={drag} type="video/mp4" />
-        </video>
+        <Suspense
+          fallback={
+            <div>
+              <p>Loading...</p>
+            </div>
+          }
+        >
+          <video className="demo-video" muted controls autoPlay loop>
+            <source src={drag} type="video/mp4" />
+          </video>
+        </Suspense>
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
@@ -158,9 +169,17 @@ export default [
           <br />
           <br />
           <span className="demo-bold">Click on a shift to delete it</span>.
-          <video className="demo-video" muted controls autoPlay loop>
-            <source src={resize} type="video/mp4" />
-          </video>
+          <Suspense
+            fallback={
+              <div>
+                <p>Loading...</p>
+              </div>
+            }
+          >
+            <video className="demo-video" muted controls autoPlay loop>
+              <source src={resize} type="video/mp4" />
+            </video>
+          </Suspense>
         </p>
       </div>
     ),
@@ -190,10 +209,17 @@ export default [
           by clicking this button. You can also set your business to be closed
           on any day if you want.
         </p>
-
-        <video className="demo-video" controls muted autoPlay loop>
-          <source src={hoo} type="video/mp4" />
-        </video>
+        <Suspense
+          fallback={
+            <div>
+              <p>Loading...</p>
+            </div>
+          }
+        >
+          <video className="demo-video" controls muted autoPlay loop>
+            <source src={hoo} type="video/mp4" />
+          </video>
+        </Suspense>
       </div>
     ),
     disableBeacon: true,
