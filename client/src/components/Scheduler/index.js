@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import DropCal from './DropCal'
-import EmployeePool from './EmployeePool'
+// import DropCal from './DropCal'
 import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import axios from 'axios'
+import Loader from '../Loader'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
@@ -27,7 +27,11 @@ import {
 } from '../../utils'
 import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
 import steps from '../Demo/calendar'
-import WeekSummary from './WeekSummary'
+// import WeekSummary from './WeekSummary'
+// import EmployeePool from './EmployeePool'
+const EmployeePool = React.lazy(() => import('./EmployeePool'))
+const DropCal = React.lazy(() => import('./DropCal'))
+const WeekSummary = React.lazy(() => import('./WeekSummary'))
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
@@ -384,10 +388,12 @@ class Scheduler extends React.Component {
           }}
         />
         {width !== 'mobile' ? (
-          <EmployeePool
-            employees={employees}
-            updateDragState={this.updateDragState}
-          />
+          <Suspense fallback={<p>Fetching your employees...</p>}>
+            <EmployeePool
+              employees={employees}
+              updateDragState={this.updateDragState}
+            />
+          </Suspense>
         ) : null}
         <CalendarContainer>
           <TopButtons>
@@ -413,26 +419,42 @@ class Scheduler extends React.Component {
               ) : null}
             </div>
           </CalendarButtons>
-          <DropCal
-            popover
-            events={events}
-            eventPropGetter={event => ({
-              className: event.title.split(' ')[0]
-            })}
-            names={names}
-            updateDragState={this.updateDragState}
-            onEventDrop={this.moveEvent}
-            onEventResize={this.resizeEvent}
-            onSelectSlot={this.createEvent}
-            onSelectEvent={this.deleteEvent}
-            onDragStart={this.calendarInteractionStart}
-            min={hourRange.min}
-            max={hourRange.max}
-            view={view}
-            date={date}
-            slotPropGetter={date => this.validateDrop(date, draggedEvent)}
-          />
-          <WeekSummary range={range} events={events} />
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: 'flex',
+                  flexFlow: 'column nowrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '4rem'
+                }}
+              >
+                <Loader />
+              </div>
+            }
+          >
+            <DropCal
+              popover
+              events={events}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              updateDragState={this.updateDragState}
+              onEventDrop={this.moveEvent}
+              onEventResize={this.resizeEvent}
+              onSelectSlot={this.createEvent}
+              onSelectEvent={this.deleteEvent}
+              onDragStart={this.calendarInteractionStart}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              date={date}
+              slotPropGetter={date => this.validateDrop(date, draggedEvent)}
+            />
+            <WeekSummary range={range} events={events} />
+          </Suspense>
         </CalendarContainer>
       </Container>
     )

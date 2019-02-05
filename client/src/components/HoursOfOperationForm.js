@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
+import React, { Component, Suspense } from 'react'
+// import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import moment from 'moment'
@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 import { formatHours, utcDayToLocal } from '../utils'
 import { editHours } from '../actions'
 import Button from './common/Button'
+const HOOSlider = React.lazy(() =>
+  import('./common/TimeRangeSlider/TimeSliderForm')
+)
 
 const dayNameMap = [
   'Sunday',
@@ -137,28 +140,30 @@ class HoursOfOperation extends Component {
           {/* maps over the days and places a pair of edit buttons for each one */}
           {this.state.days.map((day, i) => {
             return (
-              <HOOSlider
-                // props to days and close/open button
-                id={i}
-                key={day.id}
-                handleHours={this.handleHours}
-                day={day}
-                name={day.name}
-                closedAllDay={() => this.toggle(day)}
-                toggled={day.closed}
-                status={day.closed === false ? 'Open' : 'Closed'}
-                // slider props //
-                disabled={day.closed} //disabled if day is closed
-                draggableTrack={true} //slide by touching the bar
-                start={day.start} //start of each day
-                end={day.end} //end of each day
-                // functions //
-                onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
-                onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
-                onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
-              >
-                {this.props.children}
-              </HOOSlider>
+              <Suspense fallback={<div>Loading...</div>}>
+                <HOOSlider
+                  // props to days and close/open button
+                  id={i}
+                  key={day.id}
+                  handleHours={this.handleHours}
+                  day={day}
+                  name={day.name}
+                  closedAllDay={() => this.toggle(day)}
+                  toggled={day.closed}
+                  status={day.closed === false ? 'Open' : 'Closed'}
+                  // slider props //
+                  disabled={day.closed} //disabled if day is closed
+                  draggableTrack={true} //slide by touching the bar
+                  start={day.start} //start of each day
+                  end={day.end} //end of each day
+                  // functions //
+                  onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+                  onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
+                  onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
+                >
+                  {this.props.children}
+                </HOOSlider>
+              </Suspense>
             )
           })}
           <Button onClick={this.submitHandler}>

@@ -1,5 +1,8 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import drag from '../../img/drag.mp4'
+import resize from '../../img/resize.mp4'
+import hoo from '../../img/hoo.mp4'
 
 export default [
   {
@@ -116,6 +119,11 @@ export default [
           Click and drag a card to the calendar
         </span>{' '}
         to create a shift. <br /> <br />
+        <span className="demo-bold">You can expand the video below</span> (and
+        any video in this guide) if you need more help.
+        <video className="demo-video" muted controls autoPlay loop>
+          <source src={drag} type="video/mp4" />
+        </video>
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
@@ -150,6 +158,9 @@ export default [
           <br />
           <br />
           <span className="demo-bold">Click on a shift to delete it</span>.
+          <video className="demo-video" muted controls autoPlay loop>
+            <source src={resize} type="video/mp4" />
+          </video>
         </p>
       </div>
     ),
@@ -179,13 +190,17 @@ export default [
           by clicking this button. You can also set your business to be closed
           on any day if you want.
         </p>
+
+        <video className="demo-video" controls muted autoPlay loop>
+          <source src={hoo} type="video/mp4" />
+        </video>
       </div>
     ),
     disableBeacon: true,
     disableOverlayClose: true,
     hideCloseButton: true,
     textAlign: 'center',
-    placement: 'left',
+    placement: 'bottom',
     styles: {
       options: {
         zIndex: 10000
