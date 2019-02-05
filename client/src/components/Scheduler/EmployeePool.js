@@ -75,6 +75,7 @@ const Container = styled('div')`
   align-items: center;
   overflow-y: scroll;
   background-color: ${system.color.neutralDark};
+  padding-top: ${system.spacing.breadCrumb};
 
   ::-webkit-scrollbar {
     width: 4px;
