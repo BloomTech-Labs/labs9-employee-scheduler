@@ -20,8 +20,7 @@ const baseURL = process.env.REACT_APP_SERVER_URL
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
-  _isMounted = false
-
+  mounted = true
   constructor(props) {
     super(props)
     this.state = {
@@ -36,18 +35,23 @@ class Employees extends Component {
     }
   }
   componentDidMount() {
-    this._isMounted = true
-    const { user, org_id, token, fetchEmployeesFromDB } = this.props
-    fetchEmployeesFromDB(org_id, token)
+    if (this.mounted) {
+      const { user, org_id, token, fetchEmployeesFromDB } = this.props
+      fetchEmployeesFromDB(org_id, token)
 
-    // load the demo steps
-    this.setState({ steps })
-    // check if the user has completed the demo before
-    if (user && user.emp_visit === true) {
-      return this.setState({ run: true })
-    } else {
-      return this.setState({ run: false })
+      // load the demo steps
+      this.setState({ steps })
+      // check if the user has completed the demo before
+      if (user && user.emp_visit === true) {
+        return this.setState({ run: true })
+      } else {
+        return this.setState({ run: false })
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   updateAvail = user => {
