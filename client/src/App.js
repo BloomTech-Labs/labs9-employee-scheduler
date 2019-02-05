@@ -119,7 +119,7 @@ class App extends Component {
     const { user } = this.props
 
     return (
-      <div>
+      <React.Fragment>
         <Global
           styles={css`
             html {
@@ -136,10 +136,16 @@ class App extends Component {
               }
             }
 
-            body.no-scroll {
+            body {
               height: 100vh;
-              width: 100vw;
-              overflow: hidden;
+              &.no-scroll {
+                overflow: hidden;
+              }
+            }
+
+            #root {
+              height: 100%;
+              width: 100%;
             }
 
             * {
@@ -236,7 +242,7 @@ class App extends Component {
             </Switch>
           </Elements>
         </StripeProvider>
-      </div>
+      </React.Fragment>
     )
   }
 }
