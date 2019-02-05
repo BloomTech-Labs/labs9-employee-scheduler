@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import axios from 'axios'
@@ -8,8 +8,6 @@ import TimeOff from './TimeOff'
 import Button from '../common/Button'
 import { connect } from 'react-redux'
 import { fetchEmployeesFromDB } from '../../actions'
-import { Link } from 'react-router-dom'
-import AvailabilityForm from '../Availability/AvailabilityForm'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)
@@ -47,14 +45,13 @@ class Card extends Component {
       availabilities,
       time_off_requests,
       role,
-      view,
-      id
+      view
     } = this.props
     return (
       <Container data-testid="employee-card">
         <div className="x">
           {view === 'pool' || role === 'owner' ? null : (
-            <p className="delete" onClick={this.openModal}>
+            <p className="delete" id="delete" onClick={this.openModal}>
               ✕
             </p>
           )}
@@ -90,8 +87,8 @@ class Card extends Component {
             />
           ) : null}
         </div>
-        <div id="row">
-          <WideButton onClick={this.props.updateAvail}>
+        <div className="row">
+          <WideButton id="edit" onClick={this.props.updateAvail}>
             Edit Availability
           </WideButton>
         </div>
@@ -114,13 +111,13 @@ export default connect(
 
 Card.propTypes = {
   // adding propTypes here
-  first_name: propTypes.string,
-  last_name: propTypes.string,
-  email: propTypes.string,
-  phone: propTypes.string,
-  availabilities: propTypes.array,
-  time_off_requests: propTypes.array,
-  token: propTypes.string.isRequired
+  first_name: PropTypes.string.isRequired,
+  last_name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  availabilities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  time_off_requests: PropTypes.arrayOf(PropTypes.object).isRequired,
+  token: PropTypes.string.isRequired
 }
 
 const Container = styled('div')`
@@ -133,11 +130,6 @@ const Container = styled('div')`
   flex-flow: column nowrap;
   min-width: 300px;
   width: 25%;
-
-  /* the below can be used to make the card orientation horizontal */
-  /* #row {
-    display: flex;
-  } */
 
   .x {
     width: 100%;

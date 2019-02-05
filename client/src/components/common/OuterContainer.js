@@ -1,12 +1,22 @@
 import styled from '@emotion/styled'
 import system from '../../design/theme'
+import doodles from '../../img/doodles.png'
 
 // this component should wrap every page of the app
 const OuterContainer = styled('div')`
   position: relative;
-  background: ${system.color.neutral};
-  height: 100%;
-  min-height: 100vh;
+  background: ${props =>
+    props.background
+      ? `linear-gradient(
+      rgba(83,95,215, 0.6), 
+      rgba(83,95,215, 0.6)
+    ), url(${doodles})`
+      : system.color.neutral};
+  background-repeat: repeat;
+  background-size: auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     padding: ${system.spacing.standardPadding};
@@ -16,7 +26,8 @@ const OuterContainer = styled('div')`
 
     @media ${system.breakpoints[1]} {
       margin: ${system.spacing.bigPadding} 0;
-      padding: 0;
+      padding: 1%;
+      text-align: center;
       font-size: ${system.fontSizing.ml};
     }
   }

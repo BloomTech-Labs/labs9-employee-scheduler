@@ -11,6 +11,8 @@ import Settings from './components/Settings'
 import Login from './components/Login'
 import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
+import Legal from './components/Legal'
+import Team from './components/Team'
 import system from './design/theme'
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
@@ -18,10 +20,11 @@ import { Elements, StripeProvider } from 'react-stripe-elements'
 import RegisterOwner from './components/RegisterOwner'
 import { authenticate, resetAuthState, setRedirectFlagToFalse } from './actions' // for initial call
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-
+import PropTypes from 'prop-types'
 import './reset.css'
 
 const firebaseConfig = {
@@ -38,6 +41,16 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
+// google analytics
+
+ReactGA.initialize('UA-133547587-1', {
+  debug: false, // sends feedback to the console
+  titleCase: false,
+  userId: 133547587,
+  siteSpeedSampleRate: 100 // rate at which data is sent, default is 1
+})
+ReactGA.pageview(`${window.location.pathname}`)
+
 class App extends Component {
   constructor() {
     super()
@@ -53,17 +66,19 @@ class App extends Component {
     })
 
     if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-      })
+      this.establishStripe()
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-        })
-      })
+      document
+        .querySelector('#stripe-js')
+        .addEventListener('load', this.establishStripe)
     }
+  }
+
+  establishStripe = () => {
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    this.setState({
+      stripe: window.Stripe(stripePKey)
+    })
   }
 
   componentDidUpdate() {
@@ -95,13 +110,16 @@ class App extends Component {
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver()
+    setRedirectFlagToFalse()
+    resetAuthState()
+    window.removeEventListener('load', this.establishStripe)
   }
 
   render() {
     const { user } = this.props
 
     return (
-      <div>
+      <React.Fragment>
         <Global
           styles={css`
             html {
@@ -118,10 +136,16 @@ class App extends Component {
               }
             }
 
-            body.no-scroll {
+            body {
               height: 100vh;
-              width: 100vw;
-              overflow: hidden;
+              &.no-scroll {
+                overflow: hidden;
+              }
+            }
+
+            #root {
+              height: 100%;
+              width: 100%;
             }
 
             * {
@@ -144,6 +168,18 @@ class App extends Component {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
               outline: none;
+            }
+
+            .demo-bold {
+              font-family: 'Lato', sans-serif;
+              font-weight: bold;
+              color: ${system.color.primary};
+            }
+
+            .demo-video {
+              margin-top: 20px;
+              width: 100%;
+              height: auto;
             }
           `}
         />
@@ -205,11 +241,14 @@ class App extends Component {
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
               <Route path="/join/:id" component={Join} />
+              <Route path="/privacy" component={Legal} />
+              <Route path="/terms" component={Legal} />
+              <Route path="/team" component={Team} />
               <Route path="*" exact={true} component={FourOhFour} />
             </Switch>
           </Elements>
         </StripeProvider>
-      </div>
+      </React.Fragment>
     )
   }
 }
@@ -229,3 +268,14 @@ export default withRouter(
     { authenticate, resetAuthState, setRedirectFlagToFalse }
   )(App)
 )
+
+App.propTypes = {
+  auth: PropTypes.object,
+  registration: PropTypes.func,
+  user: PropTypes.object,
+  authenticate: PropTypes.func.isRequired,
+  resetAuthState: PropTypes.func.isRequired,
+  setRedirectFlagToFalse: PropTypes.func.isRequired,
+  userDidLogout: PropTypes.bool.isRequired,
+  redirect: PropTypes.bool.isRequired
+}

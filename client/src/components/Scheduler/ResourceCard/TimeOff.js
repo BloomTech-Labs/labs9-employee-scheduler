@@ -6,7 +6,6 @@ import CardContainer from '../../common/CardContainer'
 import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-const baseURL = process.env.REACT_APP_SERVER_URL
 
 export const StatusContent = ({ id, status, handleTimeOff }) => {
   if (status === 'approved') {
@@ -50,11 +49,15 @@ class TimeOff extends Component {
         <Heading>Requested Time Off</Heading>
         {/* below, we want to check if the view is pool. If so, don't show denied requests. And get rid of the approve / deny buttons. There are props passed on PTO to enable styling */}
         {timeOffRequests &&
-          timeOffRequests.map(({ id, date, status }) =>
+          timeOffRequests.map(({ id, start, status }) =>
             status === 'denied' ? null : (
               <PTO key={id} status={status}>
                 <div className="text">
-                  <p className="date">{moment(date).format('MM / DD')}</p>
+                  <p className="date">
+                    {moment(start)
+                      .local()
+                      .format('MM / DD')}
+                  </p>
                   <p className="status" status={status}>
                     {status}
                   </p>
@@ -128,7 +131,7 @@ const PTO = styled.div`
           : props.status === 'pending'
           ? system.color.lightgrey
           : system.color.bodytext};
-      font-size: system.fontSizing.sm;
+      font-size: ${system.fontSizing.sm};
       font-weight: 'bold';
       padding-left: 0.5rem;
     }

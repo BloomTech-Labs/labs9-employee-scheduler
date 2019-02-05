@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
@@ -12,6 +11,8 @@ import BreadCrumb from './BreadCrumb'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
+import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
 
 class Join extends Component {
   state = {
@@ -19,7 +20,8 @@ class Join extends Component {
     firstName: '',
     lastName: '',
     phone: '',
-    email: ''
+    email: '',
+    terms: false
   }
 
   componentDidMount() {
@@ -48,11 +50,19 @@ class Join extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
-    const { email, phone, firstName, lastName } = this.state
+    const { email, phone, firstName, lastName, terms } = this.state
 
-    if (!email || !phone || !firstName || !lastName) {
+    if (!email || !phone || !firstName || !lastName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerViaJoinOrg(
@@ -156,6 +166,23 @@ class Join extends Component {
                 ariaLabel="phone"
                 required
               />
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={this.toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
 
               <Button type="submit" className="register">
                 Register
@@ -177,3 +204,21 @@ export default connect(
   mapStateToProps,
   { registerViaJoinOrg, authenticate, logout }
 )(Join)
+
+Join.propTypes = {
+  registration: PropTypes.object.isRequired,
+  token: PropTypes.object.isRequired,
+  registerViaJoinOrg: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+}
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+`

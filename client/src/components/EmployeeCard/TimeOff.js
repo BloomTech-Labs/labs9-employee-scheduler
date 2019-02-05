@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import CardContainer from '../common/CardContainer'
@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-const baseURL = process.env.REACT_APP_SERVER_URL
-
 export const StatusContent = ({ id, status, handleTimeOff }) => {
   if (status === 'approved') {
     return (
@@ -60,14 +58,14 @@ class TimeOff extends Component {
   render() {
     const { timeOffRequests } = this.props
     return (
-      <CardContainer PTO>
+      <CardContainer PTO id="pto">
         {/* Employee's Time Off */}
         {/* When this component is being rendered on the calendar page employee sidebar, it should show approved PTO
           When it's on the employees directory page, it should show pending PTO */}
         <h6>Requested Time Off</h6>
         {/* below, we want to check if the view is pool. If so, don't show denied requests. And get rid of the approve / deny buttons. There are props passed on PTO to enable styling */}
         {timeOffRequests &&
-          timeOffRequests.map(({ id, date, status }) =>
+          timeOffRequests.map(({ id, start, status }) =>
             this.props.view === 'pool' && status === 'denied' ? null : (
               <PTO
                 key={id}
@@ -75,7 +73,11 @@ class TimeOff extends Component {
                 status={status}
               >
                 <div className="text">
-                  <p>{moment(date).format('MM / DD')}</p>
+                  <p>
+                    {moment(start)
+                      .local()
+                      .format('MM / DD')}
+                  </p>
                   <p className="status" status={status}>
                     {status}
                   </p>
@@ -107,7 +109,11 @@ export default connect(
 )(TimeOff)
 
 TimeOff.propTypes = {
-  timeOffRequests: propTypes.array
+  timeOffRequests: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+    .isRequired,
+  dispoTimeOffRequests: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  handleTimeOff: PropTypes.func
 }
 
 const Div = styled.div`

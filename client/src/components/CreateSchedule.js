@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import Scheduler from './Scheduler'
 import Modal from './Modal'
-import HoursOfOperation from './HoursOfOperation'
-import Fade from 'react-reveal/Fade'
+import HoursOfOperationForm from './HoursOfOperationForm'
 import BreadCrumb from './BreadCrumb'
-import Button from './common/Button'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
@@ -13,7 +11,7 @@ import Alert from './common/Alert'
 import system from '../design/theme'
 
 // this component will house all of the main features for the create schedule page.
-class CreateSchedule extends React.Component {
+class CreateSchedule extends Component {
   state = { hoursModal: false }
 
   toggleModal = e => {
@@ -36,7 +34,7 @@ class CreateSchedule extends React.Component {
           </MobileOnly>
           <div>
             <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
-              <HoursOfOperation />
+              <HoursOfOperationForm />
             </Modal>
             <Scheduler toggleModal={this.toggleModal} />
           </div>
@@ -49,13 +47,13 @@ class CreateSchedule extends React.Component {
 export default CreateSchedule
 
 CreateSchedule.propTypes = {
-  // add propTypes here
+  toggleModal: PropTypes.func,
+  hoursModal: PropTypes.bool
 }
 
 const MainContentHolder = styled.div`
   padding-top: 20px;
   padding-right: 20px;
-  position: relative;
 
   @media ${system.breakpoints[0]} {
     padding: 20px;

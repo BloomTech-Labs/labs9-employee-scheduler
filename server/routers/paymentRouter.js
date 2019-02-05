@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const stripe = require('stripe')('sk_test_JWY0VJM5YF1tYThn0Z1rMk2N')
+const stripeSKey = process.env.STRIPE_SKEY
+const stripe = require('stripe')(stripeSKey)
 const authorize = require('../config/customMiddleware/authorize')
 const { updateOrg } = require('../../database/helpers')
 

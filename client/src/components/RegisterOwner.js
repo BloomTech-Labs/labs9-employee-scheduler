@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
 import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
@@ -22,7 +23,7 @@ import { Redirect } from 'react-router-dom'
 import Button from './common/Button'
 import industryList from '../industryList'
 import styled from '@emotion/styled'
-import system from '../design/theme'
+import moment from 'moment'
 
 class RegisterOwner extends Component {
   state = {
@@ -32,7 +33,8 @@ class RegisterOwner extends Component {
     firstName: '',
     lastName: '',
     orgName: '',
-    industry: ''
+    industry: '',
+    terms: false
   }
   // ideall we'd start by checking that the user is not already logged in
   // we're not doing that now
@@ -68,11 +70,28 @@ class RegisterOwner extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
-    const { email, phone, firstName, lastName, orgName, industry } = this.state
+    const offset = moment().utcOffset()
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      industry,
+      terms
+    } = this.state
 
-    if (!email || !phone || !firstName || !lastName || !orgName) {
+    if (!email || !phone || !firstName || !lastName || !orgName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
@@ -81,7 +100,9 @@ class RegisterOwner extends Component {
         firstName,
         lastName,
         orgName,
-        industry
+        industry,
+        offset,
+        terms
       })
     }
   }
@@ -96,7 +117,7 @@ class RegisterOwner extends Component {
       orgName,
       industry
     } = this.state
-    const { handleChange, handleSubmit } = this
+    const { handleChange, handleSubmit, toggleTerms } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (this.props.user) {
@@ -138,7 +159,8 @@ class RegisterOwner extends Component {
               <Input
                 name="firstName"
                 type="text"
-                value={firstName}
+                id="firstName"
+                defaultValue={firstName}
                 onChange={handleChange}
                 placeholder="ex. Samuel"
                 ariaLabel="first-name"
@@ -148,8 +170,9 @@ class RegisterOwner extends Component {
               <label htmlFor="lastName">Last Name *</label>
               <Input
                 name="lastName"
+                id="lastName"
                 type="text"
-                value={lastName}
+                defaultValue={lastName}
                 onChange={handleChange}
                 placeholder="ex. Machat"
                 ariaLabel="last-name"
@@ -159,6 +182,7 @@ class RegisterOwner extends Component {
               <label htmlFor="email">Contact Email *</label>
               <Input
                 name="email"
+                id="email"
                 type="text"
                 value={email}
                 onChange={handleChange}
@@ -170,6 +194,7 @@ class RegisterOwner extends Component {
               <label htmlFor="phone">Contact Number *</label>
               <Input
                 name="phone"
+                id="phone"
                 type="tel"
                 value={phone}
                 onChange={handleChange}
@@ -181,6 +206,7 @@ class RegisterOwner extends Component {
               <label htmlFor="orgName">Organization Name *</label>
               <Input
                 name="orgName"
+                id="orgName"
                 type="text"
                 value={orgName}
                 onChange={handleChange}
@@ -196,16 +222,34 @@ class RegisterOwner extends Component {
                 onChange={handleChange}
                 placeholder="ex. software"
                 ariaLabel="org-description"
-                defaultValue={' '}
+                defaultValue={industry}
               >
+                <option value="" />
                 {industryList.map((industry, i) => (
                   <option value={industry} key={i}>
                     {industry}
                   </option>
                 ))}
               </Select>
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
               <ButtonContainer>
-                <div>
+                <div className="button">
                   <Button type="submit" className="register">
                     Register
                   </Button>
@@ -233,11 +277,27 @@ export default connect(
   { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
 
+RegisterOwner.propTypes = {
+  registration: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  registerAsOwner: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  registerReset: PropTypes.func.isRequired
+}
+
 const ButtonContainer = styled('div')`
   display: flex;
   flex-direction: row;
 
-  div {
+  .button {
     margin-right: 20px;
+  }
+`
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 `

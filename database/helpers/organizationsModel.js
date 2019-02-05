@@ -1,8 +1,9 @@
 const db = require('../dbConfig')
 const uuid = require('uuid/v4')
+const moment = require('moment')
 
 // creates hours for 7 days for a new org
-const insertHoursForNewOrg = org_id => {
+const insertHoursForNewOrg = (org_id, offset) => {
   let hours = []
   let day = [0, 1, 2, 3, 4, 5, 6]
   for (let i = 0; i < 7; i++) {
@@ -10,8 +11,14 @@ const insertHoursForNewOrg = org_id => {
       id: uuid(),
       organization_id: org_id,
       day: day[i],
-      open_time: 9,
-      close_time: 17,
+      open_time: moment
+        .utc({ hours: 9 })
+        .subtract(offset, 'minutes')
+        .format('HH:mm'),
+      close_time: moment
+        .utc({ hours: 17 })
+        .subtract(offset, 'minutes')
+        .format('HH:mm'),
       closed: false
     }
     hours.push(thisDay)
@@ -30,12 +37,13 @@ const getOrg = id =>
     .where('id', id)
     .first()
 
-const addOrg = org => {
+const addOrg = (org, offset) => {
   const id = org.id ? org.id : uuid()
+  console.log(offset)
   return db('organizations')
     .insert({ id, ...org })
     .then(res => {
-      return insertHoursForNewOrg(id)
+      return insertHoursForNewOrg(id, offset)
     })
     .then(res => {
       return id

@@ -138,6 +138,8 @@ export const Container = styled('div')`
       width: ${props => (props.danger ? '250px' : '150px')};
       margin-top: ${props => (props.billing ? '4rem' : 'inherit')};
       background: ${props => (props.danger ? system.color.danger : null)};
+      border: ${props =>
+        props.danger ? `1px solid ${system.color.danger}` : null};
     }
   }
 `
@@ -146,7 +148,8 @@ export const Input = styled.input`
   font-size: ${system.fontSizing.m};
   color: ${system.color.bodytext};
   padding: 2.5px 5px;
-  margin: 0.5rem 0 ${system.spacing.hugePadding};
+  margin: ${props =>
+    props.search ? 0 : `0.5rem 0 ${system.spacing.hugePadding}`};
   background: transparent;
   border: none;
   border-bottom: 2px solid

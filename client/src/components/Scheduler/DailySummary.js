@@ -7,7 +7,7 @@ export default function DailySummary(props) {
   const { hours, day, employees } = props.summary
   return (
     <Div>
-      <h6>{moment(day).format('M/D')}</h6>
+      <h6>{moment(day, 'YYYY-MM-DD').format('M/D')}</h6>
       <p>People Working</p>
       <p className="line big">{employees}</p>
       <p>Total Hours</p>
@@ -31,6 +31,7 @@ const Div = styled.div`
     text-transform: uppercase;
     margin-bottom: 1rem;
     color: ${system.color.primary};
+    cursor: default;
   }
 
   p {
@@ -38,6 +39,7 @@ const Div = styled.div`
     margin-bottom: 0.5rem;
     text-align: center;
     padding-bottom: 10px;
+    cursor: default;
 
     &.big {
       font-size: ${system.fontSizing.sm};

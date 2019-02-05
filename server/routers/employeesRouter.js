@@ -1,6 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const { getEmployees } = require('../../database/helpers')
+const {
+  demoUsers,
+  demoAvailabilities,
+  demoTimeOff,
+  initDemo
+} = require('../../database/utils/demoUsers')
+const knex = require('../../database/dbConfig')
 
 const authorize = require('../config/customMiddleware/authorize')
 
@@ -15,6 +22,23 @@ router.get('/:id', authorize(['owner', 'supervisor']), (req, res) => {
     .catch(err => {
       console.log(err)
       res.status(404).json(err)
+    })
+})
+
+// this post router creates fake demo employees
+router.post('/:id', authorize(['owner', 'supervisor']), (req, res) => {
+  const { id } = req.params
+  const { offset } = req.body
+  // id is org id
+  const users = demoUsers(id)
+  const availabilities = demoAvailabilities(users, offset)
+  const timeOffRequests = demoTimeOff(users, offset)
+
+  initDemo({ users, availabilities, timeOffRequests }, knex)
+    .then(users => res.status(201).json(users))
+    .catch(err => {
+      console.log(err)
+      res.status(400).json(err)
     })
 })
 

@@ -1,22 +1,23 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import DropCal from './DropCal'
-import EmployeePool from './EmployeePool'
+// import DropCal from './DropCal'
 import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-
+import axios from 'axios'
+import Loader from '../Loader'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
   createEvent,
   changeEvent,
   deleteEvent,
-  displayCoverage
+  displayCoverage,
+  updateUserSettings
 } from '../../actions'
 import {
   getHoursOfOperationRange,
@@ -24,12 +25,17 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-import ReactJoyride, { STATUS } from 'react-joyride'
-import stepData from './Demo/steps'
-import WeekSummary from './WeekSummary'
+import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import steps from '../Demo/calendar'
+// import WeekSummary from './WeekSummary'
+// import EmployeePool from './EmployeePool'
+const EmployeePool = React.lazy(() => import('./EmployeePool'))
+const DropCal = React.lazy(() => import('./DropCal'))
+const WeekSummary = React.lazy(() => import('./WeekSummary'))
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
+const baseURL = process.env.REACT_APP_SERVER_URL
 
 class Scheduler extends React.Component {
   state = {
@@ -45,12 +51,33 @@ class Scheduler extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData()
+    // if redux shows that this state is true, create dummy employees
+    const { user } = this.props
+    if (user && user.cal_visit === true) {
+      const baseURL = process.env.REACT_APP_SERVER_URL
+      const offset = moment().utcOffset()
+      // load the demo steps
+      this.setState({ steps, run: true })
+      axios
+        .post(
+          `${baseURL}/employees/${this.props.user.organization_id}`,
+          { offset: offset },
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.fetchData())
+        .catch(err => err)
+    } else {
+      // else, fetch original data?
+      this.setState({ steps, run: false })
+      this.fetchData()
+    }
+
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
-    if (stepData) {
-      this.setState({ steps: stepData })
-    }
+    // this makes sure any unfinished resizes/moves still clear out colorization
+    window.addEventListener('pointerup', this.clearEventDrag)
   }
 
   componentDidUpdate() {
@@ -60,7 +87,9 @@ class Scheduler extends React.Component {
   }
 
   componentWillUnmount() {
+    // cleanup
     window.removeEventListener('resize', this.updateWidth)
+    window.removeEventListener('pointerup', this.clearEventDrag)
   }
 
   fetchData() {
@@ -127,25 +156,32 @@ class Scheduler extends React.Component {
 
   getScheduleCoverage = () => {
     const { hours, employees } = this.props
-    const coverage = calculateCoverage({ hours, employees })
+    const { view, date } = this.state
+    const coverage = calculateCoverage({ hours, employees, view, date })
     this.props.displayCoverage(coverage)
   }
 
-  validateEvent = ({ userId, eventTimes }) => {
+  validateEvent = ({ userId, eventTimes, eventId }) => {
     const { hours, employees } = this.props
     const employee = employees.filter(({ id }) => id === userId)[0]
 
     // checks whether event is in compliance with all shift requirements,
     // such as no conflicts with time_off_requests, availabilities, or hours_of_operation
-    return validateShift({ eventTimes, hours, employee })
+    return validateShift({ eventTimes, hours, employee, eventId })
   }
 
   moveEvent = drop => {
-    const { event, start, end } = drop
+    const {
+      event,
+      start,
+      end,
+      event: { id }
+    } = drop
     const { type, ...employee } = event
     const { verdict, message } = this.validateEvent({
       userId: employee.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: id
     })
     if (verdict) {
       this.props.changeEvent(
@@ -155,12 +191,14 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   resizeEvent = ({ end, start, event }) => {
     const { verdict, message } = this.validateEvent({
       userId: event.user_id,
-      eventTimes: { start, end }
+      eventTimes: { start, end },
+      eventId: event.id
     })
     if (verdict) {
       this.props.changeEvent(
@@ -170,6 +208,7 @@ class Scheduler extends React.Component {
     } else {
       window.alert(message)
     }
+    this.updateDragState()
   }
 
   createEvent = ({ start, end }) => {
@@ -206,15 +245,20 @@ class Scheduler extends React.Component {
     }
   }
 
-  validateDrop = (date, more) => {
+  validateDrop = (date, event) => {
     const { draggedEmployee: employee } = this.state
     if (employee) {
       const { hours } = this.props
       const eventTimes = {
         start: date,
-        end: new Date(date.getTime() + 60 * 1000 * 60)
+        end: new Date(date.getTime() + 30 * 1000 * 60)
       }
-      const { verdict } = validateShift({ eventTimes, hours, employee })
+      const { verdict } = validateShift({
+        eventTimes,
+        hours,
+        employee,
+        eventId: event && event.id
+      })
       if (verdict === false) {
         return {
           style: { boxShadow: `inset 0 0 15px ${system.color.hoverDanger}` }
@@ -232,29 +276,86 @@ class Scheduler extends React.Component {
     })
   }
 
-  // joyride event handling, step index controls the position of the event
-  handleJoyrideCallback = data => {
-    const { status, type } = data
-
-    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      this.setState({ run: false })
-    }
-
-    console.groupCollapsed(type)
-    console.log(data) //eslint-disable-line no-console
-    console.groupEnd()
+  updateDragState = (draggedEmployee = null, draggedEvent = null) => {
+    this.setState({ draggedEmployee, draggedEvent })
   }
 
-  updateDragState = (draggedEmployee = null) =>
-    this.setState({ draggedEmployee })
+  calendarInteractionStart = ({ event }) => {
+    const { user_id, id: event_id, start, end } = event
+    const { employees } = this.props
+    const employee = employees.find(candidate => candidate.id === user_id)
+    this.updateDragState(employee, { id: event_id, start, end })
+  }
+
+  clearEventDrag = () => {
+    const { draggedEvent } = this.state
+    if (draggedEvent) {
+      this.updateDragState()
+    }
+  }
+
+  // joyride event handling, step index controls the position of the event
+  handleJoyrideCallback = data => {
+    const { action, index, type, status } = data
+    const { user } = this.props
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ run: false, stepIndex: 0 })
+      axios
+        .put(
+          `${baseURL}/users/${user.id}`,
+          { cal_visit: false, emp_visit: false },
+          {
+            headers: { authorization: this.props.token }
+          }
+        )
+        .then(res => this.props.updateUserSettings(this.props.token))
+        .catch(err => err)
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
+
+      if (index === 0) {
+        setTimeout(() => {
+          this.setState({ run: true })
+        }, 400)
+      } else if (index === 1) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else if (index === 2 && action === ACTIONS.PREV) {
+        this.setState(
+          {
+            run: false,
+            stepIndex
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ run: true })
+            }, 400)
+          }
+        )
+      } else {
+        // Update state to advance the tour
+        this.setState({
+          stepIndex
+        })
+      }
+    }
+  }
 
   render() {
     const { employees, hours, coverage } = this.props
-    const { width, range, view, date } = this.state
-
+    const { width, range, view, date, draggedEvent } = this.state
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
-
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
@@ -287,20 +388,22 @@ class Scheduler extends React.Component {
           }}
         />
         {width !== 'mobile' ? (
-          <EmployeePool
-            employees={employees}
-            updateDragState={this.updateDragState}
-          />
+          <Suspense fallback={<p>Fetching your employees...</p>}>
+            <EmployeePool
+              employees={employees}
+              updateDragState={this.updateDragState}
+            />
+          </Suspense>
         ) : null}
         <CalendarContainer>
           <TopButtons>
             <CoverageBadge coverage={coverage} />
-            {width === 'desktop' ? (
-              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
-            ) : null}
             <ModalButton onClick={this.props.toggleModal} id="HOO">
               Edit Hours of Operation
             </ModalButton>
+            {width === 'desktop' ? (
+              <Button onClick={this.handleClickStart}>Start Tutorial </Button>
+            ) : null}
           </TopButtons>
           <CalendarButtons>
             <NavButtons>
@@ -316,25 +419,42 @@ class Scheduler extends React.Component {
               ) : null}
             </div>
           </CalendarButtons>
-          <DropCal
-            popover
-            events={events}
-            eventPropGetter={event => ({
-              className: event.title.split(' ')[0]
-            })}
-            names={names}
-            updateDragState={this.updateDragState}
-            onEventDrop={this.moveEvent}
-            onEventResize={this.resizeEvent}
-            onSelectSlot={this.createEvent}
-            onSelectEvent={this.deleteEvent}
-            min={hourRange.min}
-            max={hourRange.max}
-            view={view}
-            date={date}
-            slotPropGetter={this.validateDrop}
-          />
-          <WeekSummary range={range} events={events} />
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: 'flex',
+                  flexFlow: 'column nowrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '4rem'
+                }}
+              >
+                <Loader />
+              </div>
+            }
+          >
+            <DropCal
+              popover
+              events={events}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              updateDragState={this.updateDragState}
+              onEventDrop={this.moveEvent}
+              onEventResize={this.resizeEvent}
+              onSelectSlot={this.createEvent}
+              onSelectEvent={this.deleteEvent}
+              onDragStart={this.calendarInteractionStart}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              date={date}
+              slotPropGetter={date => this.validateDrop(date, draggedEvent)}
+            />
+            <WeekSummary range={range} events={events} />
+          </Suspense>
         </CalendarContainer>
       </Container>
     )
@@ -358,12 +478,14 @@ export default connect(
     createEvent,
     changeEvent,
     deleteEvent,
-    displayCoverage
+    displayCoverage,
+    updateUserSettings
   }
 )(DragSched)
 
 const Container = styled.div`
   display: flex;
+  min-height: 100%;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;

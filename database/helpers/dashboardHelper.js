@@ -1,5 +1,7 @@
 const db = require('../dbConfig')
-const moment = require('moment')
+const { sortByStartDate, trimOldEvents } = require('../utils/formattingUtils')
+
+const format = list => sortByStartDate(trimOldEvents(list))
 
 const getDashboard = async userId => {
   const user = await db('users as u')
@@ -23,28 +25,29 @@ const getDashboard = async userId => {
     .reduce((acc, { id, start, end }) => {
       // do a little clever formatting with the date formatting
       // depending on calendar api this might change later
+
       return [...acc, { id, start, end }]
     }, [])
 
   const timeOff = await db('users as u')
     .where({ 'u.id': userId })
     .join('time_off_requests as tor', { 'u.id': 'tor.user_id' })
-    .select('tor.id', 'tor.date', 'tor.status', 'tor.reason')
-    .reduce((acc, { id, date, status, reason }) => {
+    .select('tor.id', 'tor.start', 'tor.end', 'tor.status', 'tor.reason')
+    .reduce((acc, { id, start, end, status, reason }) => {
       // return only confirmed time off
       // TODO: this logic needs to be reworked to see denied requests for only 2 days.
 
       // let twoDays = moment(date).diff(Date.now(), 'day')
       // this will check if the denied request is older than two days
       // and hide it from employee view so that it doesn't build up
-      return date ? [...acc, { id, date, status, reason }] : acc
+      return start && end ? [...acc, { id, start, end, status, reason }] : acc
     }, [])
 
   return {
     ...user[0],
     availabilities: availabilities ? [...availabilities] : [],
-    shifts: shifts ? [...shifts] : [],
-    time_off: timeOff ? [...timeOff] : []
+    shifts: shifts ? [...format(shifts)] : [],
+    time_off: timeOff ? [...format(timeOff)] : []
   }
 }
 

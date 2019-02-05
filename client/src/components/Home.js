@@ -5,10 +5,11 @@ import system from '../design/theme'
 import Button from './common/Button'
 import LinkItem from './common/LinkItem'
 import OuterContainer from './common/OuterContainer'
-import headerImg from '../img/header.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
-import heroImg from '../img/hero.svg' // img by Pasquale Vitiello & David Pacilio (cruip.com)
+import headerImg from '../img/header.svg'
+import heroImg from '../img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
+import frontpage from '../img/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
@@ -36,7 +37,9 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          <div id="video">Video Placeholder</div>
+          <video id="video" autoPlay loop>
+            <source src={frontpage} type="video/mp4" />
+          </video>
         </section>
 
         <section id="features">
@@ -133,7 +136,7 @@ const Home = () => {
                 </Button>
               </div>
               <div className="card">
-                <h2>SMB Plan</h2>
+                <h2>Pro Plan</h2>
                 <h3>$20 / month</h3>
                 <ul>
                   <li>Up to 20 total users</li>
@@ -234,10 +237,6 @@ const Container = styled('div')`
     align-items: center;
     padding: 18rem 0 10rem;
 
-    /* @media ${system.breakpoints[2]} {
-      padding-top: 5rem;
-    } */
-
     #wrapper {
       h1 {
         padding: 0;
@@ -266,16 +265,17 @@ const Container = styled('div')`
       }
     }
 
-    #video {
+    #video,
+    source {
       position: absolute;
       color: white;
       text-align: center;
       top: 21rem;
       right: 6%;
       width: 480px;
-      height: 270px;
+      height: auto;
       z-index: 50;
-      background: black;
+      border: 0.75px solid black;
       box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
 
@@ -284,7 +284,8 @@ const Container = styled('div')`
       }
     }
 
-    #login, #schedule {
+    #login,
+    #schedule {
       margin-left: 2.5rem;
 
       a {
@@ -317,6 +318,7 @@ const Container = styled('div')`
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
+      justify-content: center;
       width: 25%;
       background: ${system.color.white};
       padding: ${system.spacing.bigPadding};
@@ -351,20 +353,27 @@ const Container = styled('div')`
     }
   }
 
-  #features, #social-proof, #pricing {
+  #features,
+  #social-proof,
+  #pricing {
     @media ${system.breakpoints[2]} {
-        padding-bottom: 5rem;
-      }
+      padding-bottom: 5rem;
+    }
 
-      @media ${system.breakpoints[0]} {
-        padding-bottom: 2rem;
-      }
+    @media ${system.breakpoints[0]} {
+      padding-bottom: 2rem;
+    }
   }
 
   #features {
     .card {
+      min-height: 350px;
       h2 {
         color: ${system.color.primary};
+      }
+
+      @media ${system.breakpoints[2]} {
+        min-height: 0;
       }
     }
   }
@@ -373,6 +382,12 @@ const Container = styled('div')`
     .card {
       background: #333;
       position: relative;
+      min-height: 240px;
+
+      @media ${system.breakpoints[2]} {
+        min-height: 0;
+      }
+
       .stripe {
         position: absolute;
         top: 0;
@@ -392,10 +407,12 @@ const Container = styled('div')`
   #pricing {
     .card {
       background: ${system.color.neutral};
+      min-height: 375px;
 
       @media ${system.breakpoints[2]} {
         background: #dedcee;
         width: 60%;
+        min-height: 0;
       }
 
       @media ${system.breakpoints[0]} {
@@ -421,7 +438,8 @@ const Container = styled('div')`
       margin-bottom: 1.5rem;
     }
 
-    button, a {
+    button,
+    a {
       margin: 25px 0;
       color: ${system.color.white};
     }
@@ -429,6 +447,7 @@ const Container = styled('div')`
     #coming-soon {
       background: ${system.color.captiontext};
       box-shadow: none;
+      border: 1px solid ${system.color.captiontext};
       cursor: initial;
       :hover {
         box-shadow: none;

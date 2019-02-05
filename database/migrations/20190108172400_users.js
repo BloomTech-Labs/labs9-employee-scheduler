@@ -15,6 +15,8 @@ exports.up = knex =>
     table.string('role', 128).notNullable() // enumerable datatype? foreigh key to table with all user roles?
     table.string('email')
     table.string('phone')
+    table.boolean('cal_visit').defaultTo(true)
+    table.boolean('emp_visit').defaultTo(true)
   })
 
 exports.down = knex => knex.schema.dropTableIfExists('users')
