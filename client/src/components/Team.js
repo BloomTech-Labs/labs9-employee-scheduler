@@ -35,18 +35,29 @@ const Team = () => {
             <p>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kamry-bowman"
-                alt="GitHub"
+                alt="Kam's GitHub"
               >
                 GitHub
               </a>{' '}
-              &{' '}
+              |{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/kamry-bowman/"
-                alt="LinkedIn"
+                alt="Kam's LinkedIn"
               >
                 LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/MispelledToyota"
+                alt="Kam's Twitter"
+              >
+                Twitter
               </a>
             </p>
           </div>
@@ -67,16 +78,31 @@ const Team = () => {
               Georgetown Hoyas (no matter how disappointing they are).
             </p>
             <p>
-              <a target="_blank" href="https://github.com/rd825" alt="GitHub">
-                GitHub
-              </a>{' '}
-              &{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/rd825"
+                alt="Rahul's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/rdesai01/"
-                alt="LinkedIn"
+                alt="Rahul's LinkedIn"
               >
                 LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/RDesai01"
+                alt="Rahul's Twitter"
+              >
+                Twitter
               </a>
             </p>
           </div>
@@ -98,18 +124,29 @@ const Team = () => {
             <p>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/adamhinckley"
-                alt="GitHub"
+                alt="Adam's GitHub"
               >
                 GitHub
               </a>{' '}
-              &{' '}
+              |{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/adamhinckley/"
-                alt="LinkedIn"
+                alt="Adam's LinkedIn"
               >
                 LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/HinckleyAdam"
+                alt="Adam's Twitter"
+              >
+                Twitter
               </a>
             </p>
           </div>
@@ -134,18 +171,29 @@ const Team = () => {
             <p>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/CLantigua2"
-                alt="GitHub"
+                alt="Carlos' GitHub"
               >
                 GitHub
               </a>{' '}
-              &{' '}
+              |{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/carlos-lantigua/"
-                alt="LinkedIn"
+                alt="Carlos' LinkedIn"
               >
                 LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/CodeLantigua"
+                alt="Carlos' Twitter"
+              >
+                Twitter
               </a>
             </p>
           </div>
@@ -166,16 +214,31 @@ const Team = () => {
               time with family, good books, and yoga.
             </p>
             <p>
-              <a target="_blank" href="https://github.com/axolotl" alt="GitHub">
-                GitHub
-              </a>{' '}
-              &{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/axolotl"
+                alt="Samuel's GitHub"
+              >
+                GitHub
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/samuel-machat/"
-                alt="LinkedIn"
+                alt="Samuel's LinkedIn"
               >
                 LinkedIn
+              </a>{' '}
+              |{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/samuelmachat"
+                alt="Samuel's Twitter"
+              >
+                Twitter
               </a>
             </p>
           </div>
