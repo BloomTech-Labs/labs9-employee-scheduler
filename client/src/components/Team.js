@@ -53,7 +53,7 @@ const Team = () => {
         </div>
 
         <div className="teammate">
-          <img src={Adam} alt="Adam picture" />
+          <img src={Adam} alt="Adam headshot" />
           <div className="details">
             <h2>Adam Hinckley</h2>
             <p className="location">Boise, ID</p>
