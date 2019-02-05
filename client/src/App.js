@@ -138,7 +138,6 @@ class App extends Component {
 
             body {
               height: 100vh;
-              width: 100vw;
               &.no-scroll {
                 overflow: hidden;
               }

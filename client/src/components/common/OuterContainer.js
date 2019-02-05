@@ -14,8 +14,9 @@ const OuterContainer = styled('div')`
       : system.color.neutral};
   background-repeat: repeat;
   background-size: auto;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     padding: ${system.spacing.standardPadding};
