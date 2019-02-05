@@ -15,7 +15,7 @@ const OuterContainer = styled('div')`
   background-repeat: repeat;
   background-size: auto;
   height: 100%;
-  min-height: 100vh;
+  width: 100%;
 
   h1 {
     padding: ${system.spacing.standardPadding};
