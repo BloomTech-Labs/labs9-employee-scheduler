@@ -19,7 +19,7 @@ jest.mock('react-ga')
 
 // this is the mocked data to be returned
 const org = populateOrg({ size: 4 })
-const { users } = org
+const { users, hoursOfOperation, organization } = org
 const employees = structureEmployees(org)
 const employeeCandidates = users.filter(user => user.role !== 'owner')
 // find an employee who is not an owner and has time off requests
@@ -29,6 +29,8 @@ const employee = employees.find(
     employeeCandidates.find(nonOwner => nonOwner.id === candidate.id)
 )
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
+user.cal_visit = true
+user.emp_visit = true
 
 describe('employee dashboard with redux', () => {
   it('can render with initial state', async () => {
@@ -56,10 +58,25 @@ describe('employee dashboard with redux', () => {
 
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
-        const { time_off_requests, ...rest } = employee
-        return Promise.resolve({
-          data: { ...rest, time_off: time_off_requests }
-        })
+        if (path.match(new RegExp(`/dashboard/${user.id}`))) {
+          const { time_off_requests, ...rest } = employee
+          return Promise.resolve({
+            data: { ...rest, time_off: time_off_requests }
+          })
+        }
+        if (path.match(new RegExp(`/employees/${user.organization_id}`))) {
+          console.log('employees hits')
+          return Promise.resolve({ data: employees })
+        }
+        if (
+          path.match(new RegExp(`/hours-of-operation/${user.organization_id}`))
+        ) {
+          return Promise.resolve({ data: hoursOfOperation })
+        }
+        if (path.match(new RegExp(`/organizations/${user.organization_id}`))) {
+          return Promise.resolve({ data: organization })
+        }
+        return Promise.resolve({})
       }
     })
 
@@ -89,5 +106,15 @@ describe('employee dashboard with redux', () => {
     expect(testElement.textContent).toMatch(
       employee.time_off_requests[0].reason
     )
+    const shiftElement = await waitForElement(() => getByTestId('shift'))
+    const shift = employee.events[0]
+    const shiftTime = `${moment
+      .utc(shift.start)
+      .local()
+      .format('h:mm a')} - ${moment
+      .utc(shift.end)
+      .local()
+      .format('h:mm a')}`
+    expect(getByTestId('employeeShifts').textContent).toMatch(shiftTime)
   })
 })

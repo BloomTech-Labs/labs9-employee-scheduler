@@ -54,8 +54,6 @@ class EmployeeDashboard extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.auth.user
-    this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
     this.fetchData()
 
     // handle responsiveness for calendar
@@ -112,7 +110,7 @@ class EmployeeDashboard extends Component {
   changeDate = direction => {
     this.setState(({ date, view }) => {
       let returnVal = new Date()
-      let day = 1000 * 60 * 60 * 24
+      let day = 1000 * 60 * 60 * 24 
       const inc = view === 'week' ? 7 * day : day
       if (direction === 'left') {
         returnVal = new Date(date.getTime() - inc)
@@ -263,7 +261,7 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card>
+            <Card data-testid='employeeShifts'>
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>
@@ -276,7 +274,7 @@ class EmployeeDashboard extends Component {
                         key={item.id}
                         fallback={<Message>Fetching your shifts...</Message>}
                       >
-                        <AssignedShifts {...item} />
+                        <AssignedShifts {...item} data-testid='shift'/>
                       </Suspense>
                     )
                   })}
