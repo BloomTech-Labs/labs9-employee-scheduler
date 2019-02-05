@@ -388,7 +388,7 @@ class Scheduler extends React.Component {
           }}
         />
         {width !== 'mobile' ? (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<p>Fetching your employees...</p>}>
             <EmployeePool
               employees={employees}
               updateDragState={this.updateDragState}
@@ -419,7 +419,21 @@ class Scheduler extends React.Component {
               ) : null}
             </div>
           </CalendarButtons>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: 'flex',
+                  flexFlow: 'column nowrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '4rem'
+                }}
+              >
+                <Loader />
+              </div>
+            }
+          >
             <DropCal
               popover
               events={events}
