@@ -37,7 +37,7 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          <video id="video" autoPlay loop>
+          <video id="video" autoPlay={true} loop={TextTrackCue}>
             <source src={Video} type="video/mp4" />
           </video>
         </section>
@@ -82,7 +82,7 @@ const Home = () => {
         <section id="social-proof">
           <h1>People love Cadence.</h1>
           <p>
-            This is fake feedback we've gotten on social media and during user
+            This is real feedback we've gotten on social media and during user
             tests. We hope you'll love Cadence as much as they do.
           </p>
           <div className="cards">
@@ -90,26 +90,38 @@ const Home = () => {
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence is great! Now, I always know who is working at my cafe
-                  any given morning.
+                  I used to spend half my day scheduling. Cadence feels like I
+                  now have a human helper.
                 </p>
-                <h2>—Bob Smith</h2>
+                <h2>
+                  &ndash;Bill DiFulvio,
+                  <br />
+                  <span className="job-title">&ensp;Ops Manager</span>
+                </h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  I love Cadence. I can now better plan how many waiters we'll
-                  need and when we'll need them.
+                  My old shift software was bloated. Cadence is to the point: no
+                  ridiculous unnecessary features.
                 </p>
-                <h2>—Jane Doe</h2>
+                <h2>
+                  &ndash;Max Trestman,
+                  <br />
+                  <span className="job-title">&ensp;Medical Dispatcher</span>
+                </h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Great product. I can attest that the guys who made Cadence are
-                  both gentlemen and scholars.
+                  Cadence is legit! The product has slick design and is really
+                  inviting. It's super cool.
                 </p>
-                <h2>—Louis Lambda</h2>
+                <h2>
+                  &ndash;Blake Fletcher,
+                  <br />
+                  <span className="job-title">&ensp;Entrepreneur</span>
+                </h2>
               </div>
             </Fade>
           </div>
@@ -198,6 +210,7 @@ const Container = styled('div')`
       padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
       width: 45%;
+      text-align: left;
     }
 
     p {
@@ -276,6 +289,7 @@ const Container = styled('div')`
       height: auto;
       z-index: 50;
       border: 0.75px solid black;
+      background: black;
       box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
 
@@ -382,7 +396,7 @@ const Container = styled('div')`
     .card {
       background: #333;
       position: relative;
-      min-height: 240px;
+      min-height: 275px;
 
       @media ${system.breakpoints[2]} {
         min-height: 0;
@@ -400,6 +414,10 @@ const Container = styled('div')`
       h2,
       p {
         color: ${system.color.white};
+        span {
+          font-family: 'Nunito', sans-serif;
+          font-size: ${system.fontSizing.m};
+        }
       }
     }
   }
