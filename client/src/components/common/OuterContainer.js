@@ -26,7 +26,8 @@ const OuterContainer = styled('div')`
 
     @media ${system.breakpoints[1]} {
       margin: ${system.spacing.bigPadding} 0;
-      padding: 0;
+      padding: 1%;
+      text-align: center;
       font-size: ${system.fontSizing.ml};
     }
   }
