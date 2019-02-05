@@ -65,12 +65,11 @@ class TimeOffRequest extends Component {
           <div>
             {/* <label>PTO Date</label> */}
             <DatePicker>
+              <label>Please select a day</label>
+              <DayPicker onDayClick={this.handleDayClick} />
               {this.state.requestDate ? (
                 <label>{this.state.requestDate.toLocaleDateString()}</label>
-              ) : (
-                <label>Please select a day</label>
-              )}
-              <DayPicker onDayClick={this.handleDayClick} />
+              ) : null}
             </DatePicker>
           </div>
           {/* <Input
