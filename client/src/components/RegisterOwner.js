@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import system from '../design/theme'
 
 import firebase from 'firebase/app'
 
@@ -32,7 +34,8 @@ class RegisterOwner extends Component {
     firstName: '',
     lastName: '',
     orgName: '',
-    industry: ''
+    industry: '',
+    terms: false
   }
   // ideall we'd start by checking that the user is not already logged in
   // we're not doing that now
@@ -68,12 +71,28 @@ class RegisterOwner extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     const offset = moment().utcOffset()
-    const { email, phone, firstName, lastName, orgName, industry } = this.state
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      industry,
+      terms
+    } = this.state
 
-    if (!email || !phone || !firstName || !lastName || !orgName) {
+    if (!email || !phone || !firstName || !lastName || !orgName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
@@ -83,7 +102,8 @@ class RegisterOwner extends Component {
         lastName,
         orgName,
         industry,
-        offset
+        offset,
+        terms
       })
     }
   }
@@ -96,9 +116,10 @@ class RegisterOwner extends Component {
       firstName,
       lastName,
       orgName,
-      industry
+      industry,
+      terms
     } = this.state
-    const { handleChange, handleSubmit } = this
+    const { handleChange, handleSubmit, toggleTerms } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (this.props.user) {
@@ -212,8 +233,25 @@ class RegisterOwner extends Component {
                   </option>
                 ))}
               </Select>
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
               <ButtonContainer>
-                <div>
+                <div className="button">
                   <Button type="submit" className="register">
                     Register
                   </Button>
@@ -253,7 +291,15 @@ const ButtonContainer = styled('div')`
   display: flex;
   flex-direction: row;
 
-  div {
+  .button {
     margin-right: 20px;
+  }
+`
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 `
