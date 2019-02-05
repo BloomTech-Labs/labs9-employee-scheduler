@@ -57,11 +57,11 @@ The client will need 3 environment variables. You can copy-paste the first. You 
 <br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 <br/><br/>
-Create an account at [Stripe](https://stripe.com) to work with our Billing page. Once you have an account, go to your [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Publishable key" as your `STRIPE_PKEY`. It is best to use your test keys so as not to run up a bill.
+Create an account at [Stripe](https://stripe.com) to work with our Billing page. Once you have an account, go to your [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Publishable key" as your `REACT_APP_STRIPE_PKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
 REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
-STRIPE_PKEY='{insert Stripe publishable key here}'
+REACT_APP_STRIPE_PKEY='{insert Stripe publishable key here}'
 ```
 
 ##### Server:
