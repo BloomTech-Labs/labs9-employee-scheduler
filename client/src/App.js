@@ -169,6 +169,12 @@ class App extends Component {
               font-weight: bold;
               color: ${system.color.primary};
             }
+
+            .demo-video {
+              margin-top: 20px;
+              width: 100%;
+              height: auto;
+            }
           `}
         />
 
