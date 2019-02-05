@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import system from '../design/theme'
 
 import firebase from 'firebase/app'
 
@@ -231,17 +233,25 @@ class RegisterOwner extends Component {
                   </option>
                 ))}
               </Select>
-              <label htmlFor="terms">Do you agree with the terms? *</label>
-              <Input
-                name="terms"
-                id="terms"
-                type="checkbox"
-                // value={orgName}
-                onChange={toggleTerms}
-                required
-              />
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
               <ButtonContainer>
-                <div>
+                <div className="button">
                   <Button type="submit" className="register">
                     Register
                   </Button>
@@ -281,7 +291,15 @@ const ButtonContainer = styled('div')`
   display: flex;
   flex-direction: row;
 
-  div {
+  .button {
     margin-right: 20px;
+  }
+`
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 `
