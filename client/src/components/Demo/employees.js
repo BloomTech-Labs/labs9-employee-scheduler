@@ -1,4 +1,5 @@
 import React from 'react'
+import avails from '../../img/avails.mp4'
 
 export default [
   {
@@ -91,6 +92,9 @@ export default [
         If you want to{' '}
         <span className="demo-bold">change your employee's availabilities</span>{' '}
         for the week, you can do so here.
+        <video className="demo-video" muted controls autoPlay loop>
+          <source src={avails} type="video/mp4" />
+        </video>
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
