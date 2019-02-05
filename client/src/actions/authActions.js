@@ -25,7 +25,7 @@ export const authenticate = () => async dispatch => {
       const idToken = await currentUser.getIdToken(/* forceRefresh */ false)
 
       axios
-        .post(`${baseURL}/users/current`, null, {
+        .get(`${baseURL}/users/current`, {
           headers: { authorization: idToken }
         })
         .then(res => {
@@ -57,7 +57,7 @@ export const authenticate = () => async dispatch => {
 
 export const updateUserSettings = token => async dispatch => {
   axios
-    .post(`${baseURL}/users/current`, null, {
+    .get(`${baseURL}/users/current`, {
       headers: { authorization: token }
     })
     .then(res => {
