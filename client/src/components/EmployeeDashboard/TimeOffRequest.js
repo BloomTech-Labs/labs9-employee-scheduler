@@ -25,7 +25,6 @@ class TimeOffRequest extends Component {
 
   changeHandler = event => {
     event.preventDefault()
-    console.log(event.target.name)
     this.setState({
       ...this.state,
       [event.target.name]: event.target.value
@@ -58,18 +57,21 @@ class TimeOffRequest extends Component {
   }
 
   render() {
-    console.log(this.state.selectedDay)
     return (
       <Form onSubmit={this.submitTimeOffRequest}>
         <TimeOffContainer>
           <div>
             {/* <label>PTO Date</label> */}
             <DatePicker>
-              <label>Please select a day</label>
+              <label>Select a day</label>
               <DayPicker onDayClick={this.handleDayClick} />
               {this.state.requestDate ? (
-                <label>{this.state.requestDate.toLocaleDateString()}</label>
-              ) : null}
+                <label>
+                  Selected: {this.state.requestDate.toLocaleDateString()}
+                </label>
+              ) : (
+                <label />
+              )}
             </DatePicker>
           </div>
           {/* <Input
