@@ -4,7 +4,6 @@ import BreadCrumb from './BreadCrumb'
 // import LeftSideBar from './LeftSideBar'
 // import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
 // import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-// import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 // import Availability from './EmployeeDashboard/Availability'
 // import DashCal from './EmployeeDashboard/DashCal'
 import Loader from './Loader'
@@ -21,15 +20,13 @@ import OuterContainer from './common/OuterContainer'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 const TimeOffApproved = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffApproved')
 )
 const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
 const TimeOffRequest = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffRequest')
-)
-const AssignedShifts = React.lazy(() =>
-  import('./EmployeeDashboard/AssignedShifts')
 )
 const Availability = React.lazy(() =>
   import('./EmployeeDashboard/Availability')
@@ -110,7 +107,7 @@ class EmployeeDashboard extends Component {
   changeDate = direction => {
     this.setState(({ date, view }) => {
       let returnVal = new Date()
-      let day = 1000 * 60 * 60 * 24 
+      let day = 1000 * 60 * 60 * 24
       const inc = view === 'week' ? 7 * day : day
       if (direction === 'left') {
         returnVal = new Date(date.getTime() - inc)
@@ -261,7 +258,7 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card data-testid='employeeShifts'>
+            <Card data-testid="employeeShifts">
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>
@@ -269,14 +266,7 @@ class EmployeeDashboard extends Component {
               {employee && employee.shifts ? (
                 <>
                   {employee.shifts.map(item => {
-                    return (
-                      <Suspense
-                        key={item.id}
-                        fallback={<Message>Fetching your shifts...</Message>}
-                      >
-                        <AssignedShifts {...item} data-testid='shift'/>
-                      </Suspense>
-                    )
+                    return <AssignedShifts {...item} key={item.id}  />
                   })}
                 </>
               ) : (

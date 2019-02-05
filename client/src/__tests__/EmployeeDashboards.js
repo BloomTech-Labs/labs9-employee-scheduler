@@ -59,9 +59,9 @@ describe('employee dashboard with redux', () => {
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
         if (path.match(new RegExp(`/dashboard/${user.id}`))) {
-          const { time_off_requests, ...rest } = employee
+          const { time_off_requests, events, ...rest } = employee
           return Promise.resolve({
-            data: { ...rest, time_off: time_off_requests }
+            data: { ...rest, time_off: time_off_requests, shifts: events }
           })
         }
         if (path.match(new RegExp(`/employees/${user.organization_id}`))) {
@@ -116,5 +116,11 @@ describe('employee dashboard with redux', () => {
       .local()
       .format('h:mm a')}`
     expect(getByTestId('employeeShifts').textContent).toMatch(shiftTime)
+
+    const date = moment
+      .utc(shift.start)
+      .local()
+      .format('MMM Do')
+    expect(getByTestId('employeeShifts').textContent).toMatch(date)
   })
 })
