@@ -34,6 +34,8 @@ describe('testing the dashboard router', () => {
   })
 
   it('returns 404 if user not logged in', async () => {
-    expect(true)
+    const response = await request.get('/dashboard')
+
+    expect(response.status).toBe(403)
   })
 })
