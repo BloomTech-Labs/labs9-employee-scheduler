@@ -3,9 +3,6 @@ import { Redirect } from 'react-router-dom'
 import drag from '../../img/drag.mp4'
 import resize from '../../img/resize.mp4'
 import hoo from '../../img/hoo.mp4'
-// const drag = React.lazy('../../img/drag.mp4')
-// const resize = React.lazy('../../img/resize.mp4')
-// const hoo = React.lazy('../../img/hoo.mp4')
 
 export default [
   {

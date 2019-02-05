@@ -330,18 +330,6 @@ class Scheduler extends React.Component {
             }, 400)
           }
         )
-      } else if (index === 2 && action === ACTIONS.PREV) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
       } else {
         // Update state to advance the tour
         this.setState({
