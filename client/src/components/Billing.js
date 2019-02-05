@@ -137,7 +137,7 @@ class Billing extends Component {
             {this.state.loading ? <Loader /> : null}
             {this.state.signupSuccess ? (
               <Status success={this.state.signupSuccess}>
-                You're signed up for our $20/mo plan, with a 14-day free trial!
+                You're signed up for our $20/mo plan, with a 14-day free trial!{' '}
                 <span role="img" aria-label="smiling eyes emoji">
                   &#x1F60A;
                 </span>
@@ -146,7 +146,7 @@ class Billing extends Component {
             {this.state.cancelSuccess ? (
               <Status success={this.state.cancelSuccess}>
                 You've successfully canceled your account, but we're sad to see
-                you go.
+                you go.{' '}
                 <span role="img" aria-label="weeping emoji">
                   &#x1F62D;
                 </span>
@@ -154,10 +154,10 @@ class Billing extends Component {
             ) : null}
             {this.state.error ? (
               <Status>
-                Something's wrong. Computers make mistakes, too!
+                Something's wrong. Computers make mistakes, too!{' '}
                 <span role="img" aria-label="wink emoji">
                   &#x1F916;
-                </span>
+                </span>{' '}
                 Please try again.
               </Status>
             ) : null}
@@ -202,7 +202,7 @@ class Billing extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.signupSuccess ? (
             <Status success={this.state.signupSuccess}>
-              You're signed up for our $20/mo plan, with a 14-day free trial!
+              You're signed up for our $20/mo plan, with a 14-day free trial!{' '}
               <span role="img" aria-label="smiling eyes emoji">
                 &#x1F60A;
               </span>
@@ -211,7 +211,7 @@ class Billing extends Component {
           {this.state.cancelSuccess ? (
             <Status success={this.state.cancelSuccess}>
               You've successfully canceled your account, but we're sad to see
-              you go.
+              you go.{' '}
               <span role="img" aria-label="weeping emoji">
                 &#x1F62D;
               </span>
@@ -219,10 +219,10 @@ class Billing extends Component {
           ) : null}
           {this.state.error ? (
             <Status>
-              Something's wrong. Computers make mistakes, too!
+              Something's wrong. Computers make mistakes, too!{' '}
               <span role="img" aria-label="wink emoji">
                 &#x1F916;
-              </span>
+              </span>{' '}
               Please try again.
             </Status>
           ) : null}
