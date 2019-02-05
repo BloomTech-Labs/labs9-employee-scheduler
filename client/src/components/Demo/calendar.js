@@ -43,8 +43,8 @@ export default [
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
-    textAlign: 'left',
-    placement: 'right',
+    textAlign: 'right',
+    placement: 'bottom',
     disableBeacon: true,
     disableOverlayClose: true,
     hideCloseButton: true,
