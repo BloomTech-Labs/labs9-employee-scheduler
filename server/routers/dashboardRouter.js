@@ -4,8 +4,8 @@ const { getDashboard } = require('../../database/helpers')
 
 const authorize = require('../config/customMiddleware/authorize')
 
-router.get('/:id', authorize(['all']), (req, res) => {
-  const { id } = req.params
+router.get('/', authorize(['all']), (req, res) => {
+  const { id } = req.user
   // id is user id
   getDashboard(id)
     .then(users => res.status(200).json(users))
