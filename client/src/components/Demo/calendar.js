@@ -112,6 +112,7 @@ export default [
   },
   {
     target: '#employeePool',
+    title: 'Employee List',
     content: (
       <div>
         Each of your employees gets a card here. <br /> <br />
@@ -146,11 +147,11 @@ export default [
       options: {
         zIndex: 10000
       }
-    },
-    title: 'Employee List'
+    }
   },
   {
     target: '#calendar',
+    title: 'Calendar',
     content: (
       <div>
         <p>
@@ -192,8 +193,7 @@ export default [
       options: {
         zIndex: 10000
       }
-    },
-    title: 'Calendar'
+    }
   },
   {
     target: '#HOO',
