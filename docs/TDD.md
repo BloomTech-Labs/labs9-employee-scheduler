@@ -360,10 +360,10 @@ Events / Scheduled shifts (including time off)
 - user
 
 
-## Deployment
+# Deployment
 
-Solution: Netlify & Heroku
-What problems does this solution solve for this specific project?
+###Solution: Netlify & Heroku  
+**What problems does this solution solve for this specific project?**
 - Enables us to put our project out into the world so that people can use it in an
 accessible, reliable way
 What are the benefits of using this solution?
