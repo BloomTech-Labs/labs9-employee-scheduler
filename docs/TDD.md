@@ -387,7 +387,7 @@ available from Heroku and Netlify
 - local assets
 - Emotion 
 - styling
-- React  
+- React    
 **What are the costs and benefits of using this solution?**  
 This is virtually free, as we have already taken on these dependencies. Costs are the need to
 implement, but given the customization needed this is equally a feature.    
@@ -405,7 +405,7 @@ number of options
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - A value in Redux as to whether the user is logged in
-- Firebase as described above
+- Firebase as described above      
 **What are the costs and benefits of using this solution?**
 Requires no special functionality, aside from checking that the user is logged in.
 
