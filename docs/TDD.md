@@ -568,10 +568,7 @@ Allows us to take payments from users with a widely used API
 
 ---
 ### Feature Name: ​Availability window
-**What services, APIs, or platforms will you use to implement this feature?**
-
-
-```
+**What services, APIs, or platforms will you use to implement this feature?**  
 Reusable react component taking data from the backend
 What are the costs and benefits of using this solution?
 Reusable and not hard coded
@@ -581,7 +578,7 @@ React component, Redux state management, querying data from Node API
 What are the costs and benefits of using this solution?
 Completely customizable, integrates well with rest of codebase, but needs to be developed
 and tested, which takes time.
-```
+
 # Part 3: Summary
 
 Use the information above to fill out the following table:
