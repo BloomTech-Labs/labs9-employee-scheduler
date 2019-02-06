@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 import EmptyScreen from './EmptyScreen'
+import Loader from './Loader'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+
+const StyledFirebaseAuth = React.lazy(() =>
+  import('react-firebaseui/StyledFirebaseAuth')
+)
 
 class Login extends Component {
   uiConfig = {
@@ -38,10 +42,12 @@ class Login extends Component {
       return (
         <EmptyScreen auth background>
           <Container>
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
+            <React.Suspense fallback={<Loader />}>
+              <StyledFirebaseAuth
+                uiConfig={this.uiConfig}
+                firebaseAuth={firebase.auth()}
+              />
+            </React.Suspense>
           </Container>
         </EmptyScreen>
       )

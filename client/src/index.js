@@ -10,7 +10,10 @@ import Store from './reducers/index.js'
 import App from './App'
 import ScrollToTop from './components/ScrollToTop'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers =
+  (process.env.NODE_ENV === 'development' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose
 const store = createStore(Store, composeEnhancers(applyMiddleware(thunk)))
 
 render(

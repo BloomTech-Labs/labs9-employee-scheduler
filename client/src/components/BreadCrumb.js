@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LinkItem from './common/LinkItem'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -6,71 +6,63 @@ import logo2 from '../img/logo2.png'
 import { connect } from 'react-redux'
 import { fetchOrgFromDB } from '../actions'
 
-class BreadCrumb extends React.Component {
-  componentDidMount = () => {
-    const { user, token } = this.props.auth
+const BreadCrumb = props => {
+  useEffect(() => {
+    const { user, token } = props.auth
     if (user !== null) {
-      this.props.fetchOrgFromDB(user.organization_id, token)
+      props.fetchOrgFromDB(user.organization_id, token)
     }
-  }
+  }, [props.auth])
 
-  render() {
-    // initialize content for condition
-    let breadContent
-    // ask the receiving component what location will be
-    const { location, organization, auth } = this.props
-    const username =
-      auth.user !== null
-        ? ` | ${auth.user.first_name} ${auth.user.last_name}`
-        : null
+  // ask the receiving component what location will be
+  const { location, organization, auth } = props
+  const username =
+    auth.user !== null
+      ? ` | ${auth.user.first_name} ${auth.user.last_name}`
+      : null
 
-    const orgname =
-      organization.details.name !== undefined
-        ? `${organization.details.name}`
-        : null
+  const orgname =
+    organization.details.name !== undefined
+      ? `${organization.details.name}`
+      : null
 
-    if (location !== 'Home' || location !== 'terms' || location !== 'privacy') {
-      breadContent = (
-        <Nav fixed={location === 'Employees' ? true : false}>
-          <Container logo>
-            <LinkItem to="/">
-              <img src={logo2} alt="logo" />
-            </LinkItem>
-            <p id="crumb">{location}</p>
-          </Container>
+  const breadContent =
+    location === 'Home' || location === 'terms' || location === 'privacy' ? (
+      <Nav fixed={true}>
+        <Container logo>
+          <LinkItem to="/">
+            <img src={logo2} alt="logo" />
+          </LinkItem>
+        </Container>
 
-          {/* want to put org or user names here */}
-          <Container className="breadcrumbs">
-            <h6 id="org-name">
-              {orgname}
-              <span id="user-name">{username}</span>
-            </h6>
-          </Container>
-        </Nav>
-      )
-    }
-    if (location === 'Home' || location === 'terms' || location === 'privacy') {
-      breadContent = (
-        <Nav fixed={true}>
-          <Container logo>
-            <LinkItem to="/">
-              <img src={logo2} alt="logo" />
-            </LinkItem>
-          </Container>
+        <Container className="breadcrumbs" extra>
+          <LinkItem to="/register" className="entry">
+            Sign Up
+          </LinkItem>
+          <LinkItem to="/login" className="entry">
+            Log In
+          </LinkItem>
+        </Container>
+      </Nav>
+    ) : (
+      <Nav fixed={location === 'Employees' ? true : false}>
+        <Container logo>
+          <LinkItem to="/">
+            <img src={logo2} alt="logo" />
+          </LinkItem>
+          <p id="crumb">{location}</p>
+        </Container>
 
-          <Container className="breadcrumbs" extra>
-            <LinkItem to="/register" className="entry">
-              Sign Up
-            </LinkItem>
-            <LinkItem to="/login" className="entry">
-              Log In
-            </LinkItem>
-          </Container>
-        </Nav>
-      )
-    }
-    return breadContent
-  }
+        {/* want to put org or user names here */}
+        <Container className="breadcrumbs">
+          <h6 id="org-name">
+            {orgname}
+            <span id="user-name">{username}</span>
+          </h6>
+        </Container>
+      </Nav>
+    )
+  return breadContent
 }
 
 const mapStateToProps = state => {

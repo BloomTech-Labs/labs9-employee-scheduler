@@ -53,7 +53,7 @@ in the `./client` you will need a `.env.development` file
 #### Instructions for .env Variables:
 
 ##### Client:
-The client will need 3 environment variables. You can copy-paste the first. You will need to create your own for the latter 2. 
+The client will need 4 environment variables. You can copy-paste the first 2. You will need to create your own for the latter 2. 
 <br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 <br/><br/>

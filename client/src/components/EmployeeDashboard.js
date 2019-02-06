@@ -275,7 +275,7 @@ class EmployeeDashboard extends Component {
               )}
             </Card>
 
-            <Card className="tof-wrapper">
+            <Card className="tof-wrapper" data-testid="dashboardAvails">
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>
