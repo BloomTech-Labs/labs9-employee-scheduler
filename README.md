@@ -60,7 +60,6 @@ Follow the instructions [here](https://firebase.google.com/docs/web/setup) to cr
 Create an account at [Stripe](https://stripe.com) to work with our Billing page. Once you have an account, go to your [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Publishable key" as your `REACT_APP_STRIPE_PKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
-REACT_APP_ENV=development
 REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
 REACT_APP_STRIPE_PKEY='{insert Stripe publishable key here}'
 ```
