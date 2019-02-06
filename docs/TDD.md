@@ -157,64 +157,64 @@ whether a day is fully scheduled / aka done?
 **Name:** ​Employee List  
 **User type:** ​Admin  
 **Description:** ​ A column listing employees. For each employee, there is a box showing
-availability and a box showing time off.
+availability and a box showing time off.  
 **Use Case:** ​In the shift scheduler page shows supervisor all of the employees with their
 availability and time off.
 
 ---
 **Name:** ​ Time off dialogues  
 **User type:** ​Manager, Owner  
-**Description:** ​View all employees and their availability
+**Description:** ​View all employees and their availability  
 **Use Case:** Makes scheduling a lot easier
 
 ---
 **Name:** ​Availability window  
 **User type:** ​Manager, Owner 
-**Description:** ​ Supervisors see an aside menu with the availability of their employees
+**Description:** ​ Supervisors see an aside menu with the availability of their employees  
 **Use Case:** ​Supervisors pick employees from this list to drop their names for work schedule.
 
 ---
 **Name:** ​Employee Shift View  
 **User type:** ​Employee  
-**Description:** ​Shows employ shifts
+**Description:** ​Shows employ shifts  
 **Use Case:** ​Employees will quickly be able to see scheduled shift days.
 
 ---
 **Name:** ​Admin Employees  
 **User type:** ​Supervisor, Owner  
-**Description:** ​Shows approved time off
+**Description:** ​Shows approved time off  
 **Use Case:** ​Supervisor can easily see when employees have approved time off.  
 
 ---
 **Name:** ​Add Employee  
 **User type:** ​Supervisor, Owner  
-**Description:** ​Supervisor or owner can add an employee’s details
+**Description:** ​Supervisor or owner can add an employee’s details  
 **Use Case:** ​As new employees join, they needed to be added to the shift scheduling platform.
 
 ---
 **Name:** ​Payment form  
 **User type:** ​Owner  
-**Description:** ​Billing info
+**Description:** ​Billing info  
 **Use Case:** ​Pay the bill for using the app
 
 ---
 **Name:** ​Checkbox for Recurring Payment  
 **User type:** ​Owner  
-**Description:** ​A checkbox in the payment dialog​ (Stripe integration)
+**Description:** ​A checkbox in the payment dialog​ (Stripe integration)  
 **Use Case:** ​Allows owner to select a recurring payment option when checking out.
 
 ---
 **Name:** ​Input Email / Phone  
 **User type:** ​employee  
 **Description:** ​On the settings page two boxes, one for email and one for phone, where the user
-can update the values.
+can update the values.  
 **Use Case:** ​User can update their email and phone information so that the supervisor can
 contact them with schedule information.
 
 ---
 **Name:** ​Select Emails / Text Preference  
 **User type:** ​employee  
-**Description:** ​Two checkmark boxes in the settings page, one for emails and one for text.
+**Description:** ​Two checkmark boxes in the settings page, one for emails and one for text.  
 **Use Case:** ​Employees can select email and/or text, indicating to their supervisor how they
 would like to review updates on the schedule.  
 
