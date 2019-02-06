@@ -379,7 +379,7 @@ not a fully contained model that can be painlessly transferred
 - Implementation must be friendly to the underlying hardware and operating systems
 available from Heroku and Netlify 
 
-## Features
+# Features
 ---
 ### ​Landing Page  
 
@@ -477,7 +477,7 @@ a box showing requested time off. We will get this data from the database via SQ
 involving joins with the relevant tables.  
 
 ---
-## Time Off Dialogues  
+### Time Off Dialogues  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Vanilla javascript + React
 - Possible but doubtful use of React Portal.  
@@ -642,7 +642,7 @@ and tested, which takes time.
 - Heroku  
 
 ---
-**Elevator Sentence**  
+**Elevator Sentence:**  
 Employee Scheduler [Brand Name TBD] is an application that solves the problem of
 employee shift scheduling by allowing supervisors to assign shifts to employees. Employees
 will be able to request time off in a live environment that will transfer directly to the managers
