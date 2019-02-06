@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
-import Calendar from './components/Calendar'
 import Employees from './components/Employees'
-import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
 import Home from './components/Home'
-import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
 import Legal from './components/Legal'
 import Team from './components/Team'
@@ -26,6 +22,13 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import PropTypes from 'prop-types'
 import './reset.css'
+
+// Lazy Load w/ Prefetch
+const CreateSchedulePromise = import('./components/CreateSchedule')
+const CreateSchedule = React.lazy(() => CreateSchedulePromise)
+
+const DashboardPromise = import('./components/EmployeeDashboard')
+const Dashboard = React.lazy(() => DashboardPromise)
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -218,11 +221,6 @@ class App extends Component {
                 component={Billing}
               />
               <PrivateRoute
-                access="admin"
-                path="/calendar"
-                component={Calendar}
-              />
-              <PrivateRoute
                 access="all"
                 path="/dashboard"
                 component={Dashboard}
@@ -231,11 +229,6 @@ class App extends Component {
                 access="all"
                 path="/settings"
                 component={Settings}
-              />
-              <PrivateRoute
-                access="admin"
-                path="/update-availability"
-                component={AvailabilityForm}
               />
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
