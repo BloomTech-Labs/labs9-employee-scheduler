@@ -260,7 +260,7 @@ Joel is the supervisor of a small, struggling, locally-owned, boutique cafe. He 
 who need to know when to show up for work otherwise there will be no one there to man the
 store and it will close. That would be sad because he would get fired by the owner. So he needs
 to be able to manage his employees.
-Luckily, Joel just discovered [name of app here] and behold! It has a schedule where he can
+Luckily, Joel just discovered **Cadence** and behold! It has a schedule where he can
 add his employees. It has lots of cool features where the employees can tell him what time they
 want off and what their availability is. Joel is elated because now he can use this app to
 communicate with his employees about when they can work and when he needs them to work.
