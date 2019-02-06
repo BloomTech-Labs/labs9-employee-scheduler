@@ -381,8 +381,9 @@ available from Heroku and Netlify
 
 ## Features
 
-**For each feature identified above, provide the following information:**      
-**Feature Name:** ​Landing Page  
+**For each feature identified above, provide the following information:**   
+
+## Feature Name: ​Landing Page  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - local assets
 - Emotion 
