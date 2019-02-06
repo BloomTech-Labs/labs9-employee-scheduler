@@ -395,7 +395,7 @@ This is virtually free, as we have already taken on these dependencies. Costs ar
 implement, but given the customization needed this is equally a feature.    
 
 ___
-#### Feature Name ​ Registration Page / Login Page
+### Feature Name ​ Registration Page / Login Page
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Firebase for Authentication    
 
@@ -405,7 +405,7 @@ the front and back end. Rely on openness of Firebase to allow users to authentic
 number of options    
 
 ---
-#### Feature Name: ​ Schedule Now Button    
+### Feature Name: ​ Schedule Now Button    
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - A value in Redux as to whether the user is logged in
@@ -423,7 +423,7 @@ Requires no special functionality, aside from checking that the user is logged i
 A reusable modal can be used wherever we need it, and redux will maintain a single source of truth for state management
 
 ---
-#### Feature Name: ​ Left Bar, Top Bar  
+### Feature Name: ​ Left Bar, Top Bar  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React Pose for animation
 - Emotion for styling
@@ -433,7 +433,7 @@ A reusable modal can be used wherever we need it, and redux will maintain a sing
 Animations for the left bar will improve UX for the users, and Pose is a developer-friendly
 animation library. Styling will proceed per best practices for navigational elements.    
 ---
-#### Feature Name:Calendar Display Presentation and CRUD 
+### Feature Name:Calendar Display Presentation and CRUD 
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Display will rely on the React Big Calendar library
 -  Backend will be implemented using
@@ -454,14 +454,14 @@ Google Calendar API. We also will avoid lock-in to a third party API that could 
 without any obligation to us. Once we have handled our own data persistence, a read-only
 export to Google Calendar could be considered.
 ---
-#### Feature Name: ​ Daily Summary
+### Feature Name: ​ Daily Summary
 **What services, APIs, or platforms will you use to implement this feature?**
 react, emotion
 **What are the costs and benefits of using this solution?**
 We will display the count of employees working per day and the total count of hours
 scheduled. This can potentially be accomplished by array methods such as reduce.
 ---
-#### Feature Name: ​ Employee List
+### Feature Name: ​ Employee List
 **What services, APIs, or platforms will you use to implement this feature?**
 react, emotion, knex
 **What are the costs and benefits of using this solution?**
@@ -469,7 +469,7 @@ We will display a list of employees. For each employee, there is a box showing a
 a box showing requested time off. We will get this data from the database via SQL query
 involving joins with the relevant tables.
 ---
-#### Feature Name: ​ Time Off Dialogues
+### Feature Name: ​ Time Off Dialogues
 **What services, APIs, or platforms will you use to implement this feature?**
 Vanilla javascript + React. Possible but doubtful use of React Portal.
 **What are the costs and benefits of using this solution?**
@@ -477,20 +477,20 @@ This is a straightforward prompt for the user to approve and decline time off re
 only need is for modal and HTTP post requests, all of which we have with our basic
 framework and back end.
 ---
-#### Feature Name: ​ Employee Shift View
+### Feature Name: ​ Employee Shift View
 **What services, APIs, or platforms will you use to implement this feature?**
 Vanilla javascript + React.
 **What are the costs and benefits of using this solution?**
 This is the display of data in a structured way, and allowing for ajax requests as needed,
 which is directly in the React+Redux core competency. No further API/service is indicated.
 ---
-####Feature Name: Feature Name:** ​Requested time off
+### Feature Name: Feature Name:** ​Requested time off
 **What services, APIs, or platforms will you use to implement this feature?**
 Reusable react component that maps over data from the backend.
 **What are the costs and benefits of using this solution?**
 Reusable and not hard coded.
 ---
-#### Feature Name: ​ Time Off Dialogues
+### Feature Name: ​ Time Off Dialogues
 **What services, APIs, or platforms will you use to implement this feature?**
 Vanilla javascript + React. Possible but doubtful use of React Portal.
 **What are the costs and benefits of using this solution?**
@@ -498,7 +498,7 @@ This is a straightforward prompt for the user to approve and decline time off re
 only need is for modal and HTTP post requests, all of which we have with our basic
 framework and back end.
 ---
-#### Feature Name: ​ Add Employee
+### Feature Name: ​ Add Employee
 **What services, APIs, or platforms will you use to implement this feature?**
 React/Redux, Axios, Express backend
 **What are the costs and benefits of using this solution?**
@@ -506,7 +506,7 @@ This is essentially an input form that makes a POST request on submit. This is p
 the core choices in our stack and further services would likely result in equal to worse
 implementation while increasing package size and muddying structure.
 ---
-#### Feature Name: ​ Input Email / Phone
+### Feature Name: ​ Input Email / Phone
 **What services, APIs, or platforms will you use to implement this feature?**
 React/Redux, Axios, Express backend
 **What are the costs and benefits of using this solution?**
@@ -515,7 +515,7 @@ update their phone number and email. This is provided by the core choices in our
 further services would likely result in equal to worse implementation while increasing package
 size and muddying structure.
 ---
-#### Feature Name: ​ Select Emails / Text Preference
+### Feature Name: ​ Select Emails / Text Preference
 **What services, APIs, or platforms will you use to implement this feature?**
 React / Redux, Axios, Express
 **What are the costs and benefits of using this solution?**
@@ -525,7 +525,7 @@ A potential stretch related to this feature would use Nodemailer for emailing fu
 is not trivial to implement, so a well proven library would be desirable. However, this is not
 indicated in the spec and at this point is not considered a MVP feature.
 ---
-#### Feature Name: ​ Edit Password
+### Feature Name: ​ Edit Password
 **What services, APIs, or platforms will you use to implement this feature?**
 React / Redux, Axios, Express. Potentially Firebase
 **What are the costs and benefits of using this solution?**
@@ -534,25 +534,25 @@ surface area of ajax calls and provide error handling support.
 Given that we are using Firebase, we will need to consider whether it is even possible to
 straightforwardly trigger password updates within our site.
 ---
-#### Feature Name: ​Time off request
+### Feature Name: ​Time off request
 **What services, APIs, or platforms will you use to implement this feature?**
 React reusable component that uses Axios to make a post request to the DB.
 **What are the costs and benefits of using this solution?**
 ​Reusable and not hard coded
 ---
-#### Feature Name: ​Time Off Approval
+### Feature Name: ​Time Off Approval
 **What services, APIs, or platforms will you use to implement this feature?**
 This will GET a given user’s PTO from the database and display it
 **What are the costs and benefits of using this solution?**
 This relies on the core components of our tech stack.
 ---
-#### Feature Name: ​Pricing Confirmation /​ ​Payment Form / Checkbox for Recurring Payment
+### Feature Name: ​Pricing Confirmation /​ ​Payment Form / Checkbox for Recurring Payment
 **What services, APIs, or platforms will you use to implement this feature?**
 Stripe API
 **What are the costs and benefits of using this solution?**
 Allows us to take payments from users with a widely used API
 ---
-#### Feature Name: ​Availability window
+### Feature Name: ​Availability window
 **What services, APIs, or platforms will you use to implement this feature?**
 
 
