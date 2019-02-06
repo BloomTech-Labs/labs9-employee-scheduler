@@ -614,15 +614,29 @@ and tested, which takes time.
 # Part 3: Summary
 
 Use the information above to fill out the following table:
-**Front End Back End Database**
-React, React Router, Redux Node, Express Postgres via Knex
-**List of APIs:**
+**Front End** 
+- React
+- React Router
+- Redux
+- Hooks
+- Suspense
+
+**Back End** 
+- Node
+- Express  
+
+**Database**  
+- Postgres via Knex  
+
+**List of APIs:**  
 - Firebase
 - Stripe
-- React-Big-Calendar
-**List of Additional Services:**
+- React-Big-Calendar  
+
+**List of Additional Services:**  
 - Netlify
-- Heroku
+- Heroku  
+
 **Elevator Sentence**
 Employee Scheduler [Brand Name TBD] is an application that solves the problem of
 employee shift scheduling by allowing supervisors to assign shifts to employees. Employees
