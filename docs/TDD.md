@@ -307,15 +307,6 @@ follow up or not in an appropriate manner.
 ---
 ## User Story
 
-A user story is what it sounds like. A narrative, written from the perspective of a user that
-describes an interaction with multiple features so that they may complete a task with the
-application. A large design team may create a dozen user personas and write stories for them
-to help design the app. From the perspective of a developer, it is useful to complete this
-exercise for your core user(s) to better understand their needs.
-Write a user story for your most common type of user interacting with the app for its central
-purpose. Like all good stories, makes sure you include who, what, where, when, why, and how.
-
-
 Joel is the supervisor of a small, struggling, locally-owned, boutique cafe. He has 6 employees
 who need to know when to show up for work otherwise there will be no one there to man the
 store and it will close. That would be sad because he would get fired by the owner. So he needs
@@ -329,16 +320,7 @@ times so that it doesn’t close and so that he isn’t sad.
 
 # Part 2: Technology
 
-The development team is responsible for choosing a technical solution to the product
-envisioned by the design team. In large companies, this may be a senior engineer or someone
-with the word ‘architect’ in their title. In smaller organizations, the developers themselves make
-the choices. In either case, junior developers will be expected to contribution to these
-discussions. Each piece of technology must be selected because it has the best balance of
-pros and cons to solve the given problem.
-**Because the team knows it, it’s easy, fast, convenient, etc. are not acceptable reasons to
-select a technology.**
-
-# Front End
+## Front End
 
 ### Solution: React with Redux & React Router  
 **What problems does this solution solve for this specific project?**
@@ -366,7 +348,7 @@ preprocessing, emotion will enable us to write in a single language. Compared to
 component libraries like Material UI, emotion gives us the flexibility to create our own styling
 without succumbing to the demands of opinionated 3rd party software.
 
-# Back End
+## Back End
 
 ### Solution: Node & Express  
 **What problems does this solution solve for this specific project?:**
@@ -391,7 +373,7 @@ data in SQLite)
 **What are the costs of using this solution?**  
 Implementation and testing will take developer time.  
 
-### What models do you need to represent your data fully in the database in a manner that is logical and consistent?
+### Data Model
 
 ---
 #### Organization  
@@ -717,7 +699,5 @@ Employee Scheduler [Brand Name TBD] is an application that solves the problem of
 employee shift scheduling by allowing supervisors to assign shifts to employees. Employees
 will be able to request time off in a live environment that will transfer directly to the managers
 schedule view.
-
----
 
 
