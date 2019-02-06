@@ -71,14 +71,6 @@ describe('Scheduler', () => {
         }
       }
     })
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        console.log(path, authorization)
-        if (authorization === 'token') {
-          return Promise.resolve({})
-        }
-      }
-    })
 
     // renders the component with both Redux and Router, with the route set
     // to the matching route for this component in App
