@@ -13,7 +13,7 @@ const uuid = require('uuid/v4') // need here for optimizing creation of org with
 const authorize = require('../config/customMiddleware/authorize')
 
 // return info for the authenticated user
-router.post('/current', authorize(['all']), async (req, res) => {
+router.get('/current', authorize(['all']), async (req, res) => {
   const { id } = req.user
   try {
     const user = await getUser(id)
