@@ -40,6 +40,8 @@ export const employeeReducer = (state = initialState, action) => {
           time_off: state.employee.time_off.filter(time => {
             if (time.id !== action.payload) {
               return time
+            } else {
+              return null
             }
           })
         }

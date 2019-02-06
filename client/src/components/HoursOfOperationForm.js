@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import HOOSlider from './HOOSlider'
+import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
 import styled from '@emotion/styled'
-import system from '../../design/theme'
+import system from '../design/theme'
 import moment from 'moment'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { formatHours, utcDayToLocal } from '../../utils'
-import { editHours } from '../../actions/'
-import Button from '../common/Button'
+import { formatHours, utcDayToLocal } from '../utils'
+import { editHours } from '../actions'
+import Button from './common/Button'
 
 const dayNameMap = [
   'Sunday',
@@ -111,7 +111,6 @@ class HoursOfOperation extends Component {
     this.setState(prevState => {
       return {
         days: prevState.days.map(day => {
-          console.log(day.name)
           if (day.name === targetDay.name) {
             return { ...day, start: time.start, end: time.end }
           } else {
@@ -183,12 +182,15 @@ export default connect(
 )(HoursOfOperation)
 
 HoursOfOperation.propTypes = {
-  editHours: propTypes.func.isRequired,
-  showHandleHours: propTypes.func,
-  closeAllDay: propTypes.func,
-  handleHours: propTypes.func,
-  saveCloseTime: propTypes.func,
-  saveOpenTime: propTypes.func
+  token: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  hours: PropTypes.object.isRequired,
+  editHours: PropTypes.func.isRequired,
+  showHandleHours: PropTypes.func,
+  closeAllDay: PropTypes.func,
+  handleHours: PropTypes.func,
+  saveCloseTime: PropTypes.func,
+  saveOpenTime: PropTypes.func
 }
 
 export const Modal = styled.div`
@@ -205,6 +207,12 @@ export const Modal = styled.div`
   box-shadow: ${system.shadows.other};
   padding: ${system.spacing.standardPadding};
   opacity: 1;
+
+  @media ${system.breakpoints[0]} {
+    border-radius: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   .days-container {
     display: flex;
     flex-direction: column;
@@ -218,5 +226,10 @@ export const Modal = styled.div`
   button {
     width: 30%;
     margin: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[0]} {
+      width: 96%;
+      margin: 2%;
+    }
   }
 `

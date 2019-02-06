@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
-import Calendar from './components/Calendar'
 import Employees from './components/Employees'
-import CreateSchedule from './components/CreateSchedule'
 import Billing from './components/Billing'
 import Home from './components/Home'
-import Dashboard from './components/EmployeeDashboard'
 import Settings from './components/Settings'
 import Login from './components/Login'
-import AvailabilityForm from './components/Availability/AvailabilityForm'
 import Join from './components/Join'
 import Legal from './components/Legal'
 import Team from './components/Team'
@@ -24,8 +20,15 @@ import ReactGA from 'react-ga'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-
+import PropTypes from 'prop-types'
 import './reset.css'
+
+// Lazy Load w/ Prefetch
+const CreateSchedulePromise = import('./components/CreateSchedule')
+const CreateSchedule = React.lazy(() => CreateSchedulePromise)
+
+const DashboardPromise = import('./components/EmployeeDashboard')
+const Dashboard = React.lazy(() => DashboardPromise)
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -60,23 +63,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+    this.unregisterAuthObserver = firebase
+      .auth()
       //checks to see if there is a user logged in.
-      this.props.authenticate()
-    })
-
+      .onAuthStateChanged(() => this.props.authenticate())
     if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-      })
+      this.establishStripe()
     } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe('pk_test_HKBgYIhIo21X8kQikefX3Ei1')
-        })
-      })
+      document
+        .querySelector('#stripe-js')
+        .addEventListener('load', this.establishStripe)
     }
+  }
+
+  establishStripe = () => {
+    const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    this.setState({
+      stripe: window.Stripe(stripePKey)
+    })
   }
 
   componentDidUpdate() {
@@ -108,13 +112,16 @@ class App extends Component {
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver()
+    setRedirectFlagToFalse()
+    resetAuthState()
+    window.removeEventListener('load', this.establishStripe)
   }
 
   render() {
     const { user } = this.props
 
     return (
-      <div>
+      <React.Fragment>
         <Global
           styles={css`
             html {
@@ -131,10 +138,16 @@ class App extends Component {
               }
             }
 
-            body.no-scroll {
+            body {
               height: 100vh;
-              width: 100vw;
-              overflow: hidden;
+              &.no-scroll {
+                overflow: hidden;
+              }
+            }
+
+            #root {
+              height: 100%;
+              width: 100%;
             }
 
             * {
@@ -157,6 +170,18 @@ class App extends Component {
               text-decoration: none;
               font-family: 'Nunito', sans-serif;
               outline: none;
+            }
+
+            .demo-bold {
+              font-family: 'Lato', sans-serif;
+              font-weight: bold;
+              color: ${system.color.primary};
+            }
+
+            .demo-video {
+              margin-top: 20px;
+              width: 100%;
+              height: auto;
             }
           `}
         />
@@ -196,11 +221,6 @@ class App extends Component {
                 component={Billing}
               />
               <PrivateRoute
-                access="admin"
-                path="/calendar"
-                component={Calendar}
-              />
-              <PrivateRoute
                 access="all"
                 path="/dashboard"
                 component={Dashboard}
@@ -209,11 +229,6 @@ class App extends Component {
                 access="all"
                 path="/settings"
                 component={Settings}
-              />
-              <PrivateRoute
-                access="admin"
-                path="/update-availability"
-                component={AvailabilityForm}
               />
               <Route path="/register" component={RegisterOwner} />
               <Route path="/login" render={props => <Login {...props} />} />
@@ -225,7 +240,7 @@ class App extends Component {
             </Switch>
           </Elements>
         </StripeProvider>
-      </div>
+      </React.Fragment>
     )
   }
 }
@@ -245,3 +260,14 @@ export default withRouter(
     { authenticate, resetAuthState, setRedirectFlagToFalse }
   )(App)
 )
+
+App.propTypes = {
+  auth: PropTypes.object,
+  registration: PropTypes.func,
+  user: PropTypes.object,
+  authenticate: PropTypes.func.isRequired,
+  resetAuthState: PropTypes.func.isRequired,
+  setRedirectFlagToFalse: PropTypes.func.isRequired,
+  userDidLogout: PropTypes.bool.isRequired,
+  redirect: PropTypes.bool.isRequired
+}

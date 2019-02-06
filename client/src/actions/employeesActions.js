@@ -38,16 +38,16 @@ export const fetchEmployeesFromDB = (orgId, token) => dispatch => {
         })
       })
       .catch(error => {
-        console.log(error)
+        alert('There was an error retrieving your employees')
         dispatch({ type: FETCH_EMPLOYEES_FROM_DB_FAIL })
       })
   }
 }
 
 // fetches a single employee by user id
-export const fetchSingleEmployeeFromDB = (userid, token) => dispatch => {
+export const fetchSingleEmployeeFromDB = token => dispatch => {
   axios
-    .get(`${baseURL}/dashboard/${userid}`, {
+    .get(`${baseURL}/dashboard/`, {
       headers: { authorization: token }
     })
     .then(res =>
@@ -100,7 +100,7 @@ export const deleteTimeOffRequest = (torId, token) => async dispatch => {
         })
       )
   } catch (err) {
-    console.log(err)
+    alert('There was an error deleting that request, please try again.')
   }
 }
 
@@ -125,5 +125,7 @@ export const addTimeOffRequest = (
         payload: res.data
       })
     )
-    .catch(err => console.log(err))
+    .catch(err =>
+      alert('There was an error adding that request, please try again.')
+    )
 }

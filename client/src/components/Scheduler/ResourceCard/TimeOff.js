@@ -6,7 +6,6 @@ import CardContainer from '../../common/CardContainer'
 import moment from 'moment'
 
 // this component should render the employee's PTO. It will also display pending PTO so managers can approve or reject.
-const baseURL = process.env.REACT_APP_SERVER_URL
 
 export const StatusContent = ({ id, status, handleTimeOff }) => {
   if (status === 'approved') {
@@ -132,7 +131,7 @@ const PTO = styled.div`
           : props.status === 'pending'
           ? system.color.lightgrey
           : system.color.bodytext};
-      font-size: system.fontSizing.sm;
+      font-size: ${system.fontSizing.sm};
       font-weight: 'bold';
       padding-left: 0.5rem;
     }

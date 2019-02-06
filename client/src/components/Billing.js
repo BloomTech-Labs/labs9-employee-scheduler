@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
 import LeftSideBar from './LeftSideBar'
 import OuterContainer from './common/OuterContainer'
@@ -66,7 +66,6 @@ class Billing extends Component {
         )
       })
       .catch(err => {
-        console.log(err)
         this.setState({
           loading: false,
           signupSuccess: false,
@@ -116,7 +115,6 @@ class Billing extends Component {
         })
       })
       .catch(err => {
-        console.log(err)
         this.setState({
           loading: false,
           signupSuccess: false,
@@ -139,7 +137,7 @@ class Billing extends Component {
             {this.state.loading ? <Loader /> : null}
             {this.state.signupSuccess ? (
               <Status success={this.state.signupSuccess}>
-                You're signed up for our $20/mo plan, with a 14-day free trial!
+                You're signed up for our $20/mo plan, with a 14-day free trial!{' '}
                 <span role="img" aria-label="smiling eyes emoji">
                   &#x1F60A;
                 </span>
@@ -148,7 +146,7 @@ class Billing extends Component {
             {this.state.cancelSuccess ? (
               <Status success={this.state.cancelSuccess}>
                 You've successfully canceled your account, but we're sad to see
-                you go.
+                you go.{' '}
                 <span role="img" aria-label="weeping emoji">
                   &#x1F62D;
                 </span>
@@ -156,10 +154,10 @@ class Billing extends Component {
             ) : null}
             {this.state.error ? (
               <Status>
-                Something's wrong. Computers make mistakes, too!
+                Something's wrong. Computers make mistakes, too!{' '}
                 <span role="img" aria-label="wink emoji">
                   &#x1F916;
-                </span>
+                </span>{' '}
                 Please try again.
               </Status>
             ) : null}
@@ -204,7 +202,7 @@ class Billing extends Component {
           {this.state.loading ? <Loader /> : null}
           {this.state.signupSuccess ? (
             <Status success={this.state.signupSuccess}>
-              You're signed up for our $20/mo plan, with a 14-day free trial!
+              You're signed up for our $20/mo plan, with a 14-day free trial!{' '}
               <span role="img" aria-label="smiling eyes emoji">
                 &#x1F60A;
               </span>
@@ -213,7 +211,7 @@ class Billing extends Component {
           {this.state.cancelSuccess ? (
             <Status success={this.state.cancelSuccess}>
               You've successfully canceled your account, but we're sad to see
-              you go.
+              you go.{' '}
               <span role="img" aria-label="weeping emoji">
                 &#x1F62D;
               </span>
@@ -221,10 +219,10 @@ class Billing extends Component {
           ) : null}
           {this.state.error ? (
             <Status>
-              Something's wrong. Computers make mistakes, too!
+              Something's wrong. Computers make mistakes, too!{' '}
               <span role="img" aria-label="wink emoji">
                 &#x1F916;
-              </span>
+              </span>{' '}
               Please try again.
             </Status>
           ) : null}
@@ -270,9 +268,9 @@ export default connect(
 )(injectStripe(Billing))
 
 Billing.propTypes = {
-  // adding propTypes here
-  user: propTypes.object,
-  fetchOrgFromDB: propTypes.func.isRequired,
-  token: propTypes.string.isRequired,
-  error: propTypes.string
+  user: PropTypes.object,
+  organization: PropTypes.object,
+  fetchOrgFromDB: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  error: PropTypes.string
 }

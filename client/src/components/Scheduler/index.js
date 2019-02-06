@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import DropCal from './DropCal'
-import EmployeePool from './EmployeePool'
+// import DropCal from './DropCal'
 import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import axios from 'axios'
+import Loader from '../Loader'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
@@ -25,9 +25,13 @@ import {
   calculateCoverage,
   validateShift
 } from '../../utils'
-import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
 import steps from '../Demo/calendar'
-import WeekSummary from './WeekSummary'
+// import WeekSummary from './WeekSummary'
+// import EmployeePool from './EmployeePool'
+const EmployeePool = React.lazy(() => import('./EmployeePool'))
+const DropCal = React.lazy(() => import('./DropCal'))
+const WeekSummary = React.lazy(() => import('./WeekSummary'))
 
 const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
 const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
@@ -63,7 +67,7 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.fetchData())
-        .catch(err => console.log(err))
+        .catch(err => err)
     } else {
       // else, fetch original data?
       this.setState({ steps, run: false })
@@ -247,7 +251,7 @@ class Scheduler extends React.Component {
       const { hours } = this.props
       const eventTimes = {
         start: date,
-        end: new Date(date.getTime() + 60 * 1000 * 60)
+        end: new Date(date.getTime() + 30 * 1000 * 60)
       }
       const { verdict } = validateShift({
         eventTimes,
@@ -292,7 +296,8 @@ class Scheduler extends React.Component {
 
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
-    const { action, index, type, status } = data
+    const { action, index, status } = data
+
     const { user } = this.props
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       // Need to set our running state to false, so we can restart if we click start again.
@@ -306,44 +311,13 @@ class Scheduler extends React.Component {
           }
         )
         .then(res => this.props.updateUserSettings(this.props.token))
-        .catch(err => console.log(err))
-    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+        .catch(err => err)
+    } else {
+      // Update state to advance the tour
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
-
-      if (index === 0) {
-        setTimeout(() => {
-          this.setState({ run: true })
-        }, 400)
-      } else if (index === 1) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else if (index === 2 && action === ACTIONS.PREV) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else {
-        // Update state to advance the tour
-        this.setState({
-          stepIndex
-        })
-      }
+      this.setState({
+        stepIndex
+      })
     }
   }
 
@@ -373,9 +347,9 @@ class Scheduler extends React.Component {
           callback={this.handleJoyrideCallback}
           continuous
           run={run}
-          scrollToFirstStep
+          scrollToFirstSteps={false}
           showProgress
-          showSkipButton={!this.props.user.cal_visit}
+          showSkipButton
           steps={steps}
           styles={{
             options: {
@@ -384,10 +358,12 @@ class Scheduler extends React.Component {
           }}
         />
         {width !== 'mobile' ? (
-          <EmployeePool
-            employees={employees}
-            updateDragState={this.updateDragState}
-          />
+          <Suspense fallback={<p>Fetching your employees...</p>}>
+            <EmployeePool
+              employees={employees}
+              updateDragState={this.updateDragState}
+            />
+          </Suspense>
         ) : null}
         <CalendarContainer>
           <TopButtons>
@@ -413,26 +389,42 @@ class Scheduler extends React.Component {
               ) : null}
             </div>
           </CalendarButtons>
-          <DropCal
-            popover
-            events={events}
-            eventPropGetter={event => ({
-              className: event.title.split(' ')[0]
-            })}
-            names={names}
-            updateDragState={this.updateDragState}
-            onEventDrop={this.moveEvent}
-            onEventResize={this.resizeEvent}
-            onSelectSlot={this.createEvent}
-            onSelectEvent={this.deleteEvent}
-            onDragStart={this.calendarInteractionStart}
-            min={hourRange.min}
-            max={hourRange.max}
-            view={view}
-            date={date}
-            slotPropGetter={date => this.validateDrop(date, draggedEvent)}
-          />
-          <WeekSummary range={range} events={events} />
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: 'flex',
+                  flexFlow: 'column nowrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '4rem'
+                }}
+              >
+                <Loader />
+              </div>
+            }
+          >
+            <DropCal
+              popover
+              events={events}
+              eventPropGetter={event => ({
+                className: event.title.split(' ')[0]
+              })}
+              names={names}
+              updateDragState={this.updateDragState}
+              onEventDrop={this.moveEvent}
+              onEventResize={this.resizeEvent}
+              onSelectSlot={this.createEvent}
+              onSelectEvent={this.deleteEvent}
+              onDragStart={this.calendarInteractionStart}
+              min={hourRange.min}
+              max={hourRange.max}
+              view={view}
+              date={date}
+              slotPropGetter={date => this.validateDrop(date, draggedEvent)}
+            />
+            <WeekSummary range={range} events={events} />
+          </Suspense>
         </CalendarContainer>
       </Container>
     )
@@ -463,7 +455,7 @@ export default connect(
 
 const Container = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: 100%;
 
   @media ${system.breakpoints[0]} {
     flex-direction: column;

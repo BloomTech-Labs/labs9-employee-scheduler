@@ -33,17 +33,13 @@ describe('Settings Component', () => {
     })
 
     // mock out axios authenticaton call to our server
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        if (authorization === 'token') {
-          return Promise.resolve({ data: user })
-        }
-      }
-    )
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
         if (path.match(new RegExp(`/organizations/${organization.id}`))) {
           return Promise.resolve({ data: organization })
+        }
+        if (path.match(new RegExp(`/users/current`))) {
+          return Promise.resolve({ data: user })
         }
       }
     })

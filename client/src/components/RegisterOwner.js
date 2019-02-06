@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
 import firebase from 'firebase/app'
 
 // this import style is required for proper codesplitting of firebase
@@ -32,7 +33,8 @@ class RegisterOwner extends Component {
     firstName: '',
     lastName: '',
     orgName: '',
-    industry: ''
+    industry: '',
+    terms: false
   }
   // ideall we'd start by checking that the user is not already logged in
   // we're not doing that now
@@ -68,12 +70,28 @@ class RegisterOwner extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  toggleTerms = () => {
+    if (this.state.terms === false) {
+      this.setState({ terms: true })
+    } else {
+      this.setState({ terms: false })
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     const offset = moment().utcOffset()
-    const { email, phone, firstName, lastName, orgName, industry } = this.state
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      orgName,
+      industry,
+      terms
+    } = this.state
 
-    if (!email || !phone || !firstName || !lastName || !orgName) {
+    if (!email || !phone || !firstName || !lastName || !orgName || !terms) {
       alert('Something is missing from your registration details.')
     } else {
       this.props.registerAsOwner({
@@ -83,7 +101,8 @@ class RegisterOwner extends Component {
         lastName,
         orgName,
         industry,
-        offset
+        offset,
+        terms
       })
     }
   }
@@ -98,7 +117,7 @@ class RegisterOwner extends Component {
       orgName,
       industry
     } = this.state
-    const { handleChange, handleSubmit } = this
+    const { handleChange, handleSubmit, toggleTerms } = this
     const { outcome } = this.props.registration // exposes success/fail of axios request
 
     if (this.props.user) {
@@ -141,7 +160,7 @@ class RegisterOwner extends Component {
                 name="firstName"
                 type="text"
                 id="firstName"
-                value={firstName}
+                defaultValue={firstName}
                 onChange={handleChange}
                 placeholder="ex. Samuel"
                 ariaLabel="first-name"
@@ -153,7 +172,7 @@ class RegisterOwner extends Component {
                 name="lastName"
                 id="lastName"
                 type="text"
-                value={lastName}
+                defaultValue={lastName}
                 onChange={handleChange}
                 placeholder="ex. Machat"
                 ariaLabel="last-name"
@@ -212,8 +231,25 @@ class RegisterOwner extends Component {
                   </option>
                 ))}
               </Select>
+              <Terms>
+                <Input
+                  name="terms"
+                  id="terms"
+                  type="checkbox"
+                  onChange={toggleTerms}
+                  required
+                />
+                <label htmlFor="terms">I have read and agree to the</label>
+                <Link to="/terms" className="terms">
+                  TERMS OF SERVICE
+                </Link>
+                <label>and</label>
+                <Link to="/privacy" className="terms">
+                  PRIVACY POLICY
+                </Link>
+              </Terms>
               <ButtonContainer>
-                <div>
+                <div className="button">
                   <Button type="submit" className="register">
                     Register
                   </Button>
@@ -241,11 +277,27 @@ export default connect(
   { registerAsOwner, authenticate, registerReset, logout }
 )(RegisterOwner)
 
+RegisterOwner.propTypes = {
+  registration: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  registerAsOwner: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
+  registerReset: PropTypes.func.isRequired
+}
+
 const ButtonContainer = styled('div')`
   display: flex;
   flex-direction: row;
 
-  div {
+  .button {
     margin-right: 20px;
+  }
+`
+
+const Terms = styled('div')`
+  .terms {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 `

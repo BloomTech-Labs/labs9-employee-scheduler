@@ -1,4 +1,5 @@
 import React from 'react'
+import avails from '../../img/avails.mp4'
 
 export default [
   {
@@ -14,31 +15,6 @@ export default [
     locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'left',
     placement: 'center',
-    disableBeacon: true,
-    disableOverlayClose: true,
-    hideCloseButton: true,
-    hideFooter: false,
-    spotlightClicks: false,
-    styles: {
-      options: {
-        zIndex: 10000
-      }
-    }
-  },
-  {
-    title: 'Quick Find',
-    target: '#search',
-    content: (
-      <div>
-        <p>
-          With this search bar, you can quickly look up whichever employee you
-          need.
-        </p>
-      </div>
-    ),
-    locale: { skip: <strong arial-label="skip">Skip</strong> },
-    textAlign: 'left',
-    placement: 'bottom',
     disableBeacon: true,
     disableOverlayClose: true,
     hideCloseButton: true,
@@ -78,10 +54,19 @@ export default [
     content: (
       <div>
         <p>
-          You'll also be able to manage your employees' time off requests.
+          You'll also be able to{' '}
+          <span className="demo-bold">
+            manage your employees' time off requests
+          </span>
+          .
           <br />
           <br />
-          Try clicking one of the buttons below to change the request status.
+          <span className="demo-bold">
+            Try clicking one of the buttons
+          </span>{' '}
+          below to change the request status.
+          <br />
+          <br />
           Hit 'Next' when you're ready to move on.
         </p>
       </div>
@@ -104,8 +89,12 @@ export default [
     target: '#edit',
     content: (
       <div>
-        If you want to change your employee's availabilities for the week, you
-        can do so here.
+        If you want to{' '}
+        <span className="demo-bold">change your employee's availabilities</span>{' '}
+        for the week, you can do so here.
+        <video className="demo-video" muted controls autoPlay loop>
+          <source src={avails} type="video/mp4" />
+        </video>
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
@@ -126,7 +115,10 @@ export default [
   {
     target: '#delete',
     content: (
-      <div>You can delete an employee's account by clicking this button.</div>
+      <div>
+        You can <span className="demo-bold">delete an employee's account</span>{' '}
+        by clicking this button.
+      </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
     textAlign: 'center',
@@ -147,15 +139,12 @@ export default [
     target: '#add-employee',
     content: (
       <div>
-        You can add an employee using this button.
+        You can <span className="demo-bold">add an employee</span> using this
+        button.
         <br />
         <br />
-        We will send them an invite email. Once they accept your invite, their
-        card will appear here.
-        <br />
-        <br />
-        On the free plan, you have a limit of 3 total employees. Delete the demo
-        accounts to add 2 of your own employees.
+        We will <span className="demo-bold">send them an invite email</span>.
+        Once they accept your invite, their card will appear on this page.
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },
@@ -172,5 +161,30 @@ export default [
       }
     },
     title: 'Add Employee'
+  },
+  {
+    target: 'body',
+    content: (
+      <div>
+        <span className="demo-bold">
+          On the free plan, you have a limit of 3 total employees.
+        </span>{' '}
+        Delete the demo accounts to add 2 of your own employees.
+      </div>
+    ),
+    locale: { skip: <strong arial-label="skip">Skip</strong> },
+    textAlign: 'center',
+    placement: 'center',
+    disableBeacon: true,
+    disableOverlayClose: true,
+    hideCloseButton: true,
+    hideFooter: false,
+    spotlightClicks: true,
+    styles: {
+      options: {
+        zIndex: 10
+      }
+    },
+    title: 'Billing'
   }
 ]

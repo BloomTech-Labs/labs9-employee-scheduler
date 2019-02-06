@@ -18,7 +18,7 @@ jest.mock('react-ga')
 
 // generates test data
 const org = populateOrg({ size: 6 })
-const { users } = org
+const { users, organization } = org
 const user = users.find(user => user.role === 'supervisor')
 const { first_name, last_name, email } = user
 const employees = structureEmployees(org)
@@ -28,7 +28,6 @@ describe('employee dashboard with redux', () => {
     // mocks axios call so that we can control what data gets returned.
     // this is setting up the mock, so that when axios actually gets called
     // by the component, the test works appropriately.
-    axios.get.mockImplementation(() => Promise.resolve({ data: employees }))
 
     // mock out firebase auth
     firebase.auth = jest.fn().mockImplementation(() => {
@@ -44,15 +43,21 @@ describe('employee dashboard with redux', () => {
     })
 
     // mock out axios authenticaton call to our server
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        if (authorization === 'token') {
+    axios.get.mockImplementation((path, { headers: { authorization } }) => {
+      if (authorization === 'token') {
+        if (path.match(new RegExp(`/users/current`))) {
           return Promise.resolve({ data: user })
         }
+        if (path.match(new RegExp(`/employees/${organization.id}`))) {
+          return Promise.resolve({ data: employees })
+        }
+        if (path.match(new RegExp(`/organizations/${organization.id}`))) {
+          return Promise.resolve({ data: organization })
+        }
       }
-    )
+    })
 
-    // setup of document to play nice with Striple component
+    // setup of document to play nice with Stripe component
     setupStripeNode()
 
     // renders the App with both Redux and Router, with the route set
@@ -76,11 +81,11 @@ describe('employee dashboard with redux', () => {
 
     expect(container.textContent).toMatch(`${first_name} ${last_name}`)
 
-    const timeR = employees.find(
+    const timeReq = employees.find(
       employee => employee.time_off_requests.length > 0
     ).time_off_requests
     expect(container.textContent).toMatch(
-      moment(timeR[0].start)
+      moment(timeReq[0].start)
         .local()
         .format('MM / DD')
     )

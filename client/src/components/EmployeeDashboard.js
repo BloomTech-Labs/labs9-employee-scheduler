@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import propTypes from 'prop-types'
 import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
-import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
-import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+// import LeftSideBar from './LeftSideBar'
+// import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
+// import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
+// import Availability from './EmployeeDashboard/Availability'
+// import DashCal from './EmployeeDashboard/DashCal'
+import Loader from './Loader'
+import Button from './common/Button'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest,
@@ -14,12 +17,21 @@ import {
 import { connect } from 'react-redux'
 import { Message, Container, Card } from './EmployeeDashboard/styles'
 import OuterContainer from './common/OuterContainer'
-import Availability from './EmployeeDashboard/Availability'
 import { getHoursOfOperationRange, getRange } from '../utils'
-import DashCal from './EmployeeDashboard/DashCal'
-import Button from './common/Button'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+const TimeOffApproved = React.lazy(() =>
+  import('./EmployeeDashboard/TimeOffApproved')
+)
+const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
+const TimeOffRequest = React.lazy(() =>
+  import('./EmployeeDashboard/TimeOffRequest')
+)
+const Availability = React.lazy(() =>
+  import('./EmployeeDashboard/Availability')
+)
+const DashCal = React.lazy(() => import('./EmployeeDashboard/DashCal'))
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -33,13 +45,12 @@ class EmployeeDashboard extends Component {
       errors: '',
       view: 'week',
       date: new Date(),
-      width: 'desktop'
+      width: 'desktop',
+      employeeView: 'all'
     }
   }
 
   componentDidMount() {
-    const { id } = this.props.auth.user
-    this.props.fetchSingleEmployeeFromDB(id, this.props.auth.token)
     this.fetchData()
 
     // handle responsiveness for calendar
@@ -112,9 +123,10 @@ class EmployeeDashboard extends Component {
     const { organization_id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
+    this.props.fetchSingleEmployeeFromDB(this.props.token)
   }
 
-  toggleView = () => {
+  toggleCalView = () => {
     if (this.state.view === 'week') {
       return this.setState({
         view: 'day',
@@ -128,30 +140,54 @@ class EmployeeDashboard extends Component {
     }
   }
 
+  toggleEmployeeView = () => {
+    if (this.state.employeeView === 'all') {
+      this.setState({ employeeView: 'single' })
+    } else {
+      this.setState({ employeeView: 'all' })
+    }
+  }
+
   render() {
-    // const { employee, hours } = this.props.employee
     const { employees, hours, employee } = this.props
-    const { view, date, width } = this.state
+    const { view, date, width, employeeView } = this.state
+    const { id } = this.props.user
     const names = []
     employees.map(employee => names.push(`${employee.first_name}`))
 
+    //events for all employees
     const events = employees.reduce((acc, employee) => {
       return [
         ...acc,
         ...employee.events.map(event => {
-          return {
-            ...event,
-            start: new Date(event.start),
-            end: new Date(event.end),
-            title: `${employee.first_name} ${employee.last_name}`
+          if (employeeView === 'all') {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else if (event.user_id === id && employeeView === 'single') {
+            return {
+              ...event,
+              start: new Date(event.start),
+              end: new Date(event.end),
+              title: `${employee.first_name} ${employee.last_name}`
+            }
+          } else {
+            return null
           }
         })
       ]
     }, [])
+
     let hourRange = getHoursOfOperationRange(hours, false)
+
     return (
       <OuterContainer>
-        <LeftSideBar />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LeftSideBar />
+        </Suspense>
         <BreadCrumb location="Employee Dashboard" />
 
         <Container>
@@ -164,36 +200,64 @@ class EmployeeDashboard extends Component {
           <CalendarButtons>
             <NavButtons>
               <Button onClick={() => this.changeDate('left')}>&#8592;</Button>
-              <MiddleButton onClick={() => this.changeDate('today')}>
+              <ToggleButton onClick={() => this.changeDate('today')}>
                 Today
-              </MiddleButton>
+              </ToggleButton>
               <Button onClick={() => this.changeDate('right')}>&#8594;</Button>
+              {width === 'mobile' || width === 'tablet' ? (
+                <ToggleButton onClick={this.toggleEmployeeView}>
+                  {employeeView === 'all' ? 'My Shift' : 'All Shifts'}
+                </ToggleButton>
+              ) : null}
             </NavButtons>
             <div>
               {width === 'desktop' ? (
-                <Button onClick={this.toggleView}>
-                  {this.state.view === 'week' ? 'Day View' : 'Week View'}
+                <Button onClick={this.toggleEmployeeView}>
+                  {employeeView === 'all' ? 'My Shifts' : 'All Shifts'}
+                </Button>
+              ) : null}
+            </div>
+            <div>
+              {width === 'desktop' ? (
+                <Button onClick={this.toggleCalView}>
+                  {view === 'week' ? 'Day View' : 'Week View'}
                 </Button>
               ) : null}
             </div>
           </CalendarButtons>
 
           <div>
-            <DashCal
-              events={events}
-              names={names}
-              min={hourRange.min}
-              max={hourRange.max}
-              view={view}
-              eventPropGetter={event => ({
-                className: event.title.split(' ')[0]
-              })}
-              date={date}
-            />
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    display: 'flex',
+                    flexFlow: 'column nowrap',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '4rem'
+                  }}
+                >
+                  <Loader />
+                </div>
+              }
+            >
+              <DashCal
+                events={events}
+                names={names}
+                min={hourRange.min}
+                max={hourRange.max}
+                view={view}
+                eventPropGetter={event => ({
+                  className: event.title.split(' ')[0]
+                })}
+                date={date}
+              />
+            </Suspense>
           </div>
 
           <div className="wrapper">
-            <Card>
+            <Card data-testid="employeeShifts">
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>
@@ -201,7 +265,7 @@ class EmployeeDashboard extends Component {
               {employee && employee.shifts ? (
                 <>
                   {employee.shifts.map(item => {
-                    return <AssignedShifts key={item.id} {...item} />
+                    return <AssignedShifts {...item} key={item.id} />
                   })}
                 </>
               ) : (
@@ -215,11 +279,15 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>
-              {employee && employee.availabilities.length ? (
-                <Availability availabilities={employee.availabilities} />
-              ) : (
-                <Message>You have no availabilities to display.</Message>
-              )}
+              <Suspense
+                fallback={<Message>Fetching your availabilities...</Message>}
+              >
+                {employee && employee.availabilities.length ? (
+                  <Availability availabilities={employee.availabilities} />
+                ) : (
+                  <Message>You have no availabilities to display.</Message>
+                )}
+              </Suspense>
             </Card>
 
             <Card className="tof-wrapper" data-testid="time_off">
@@ -227,7 +295,9 @@ class EmployeeDashboard extends Component {
                 <h5>Your Time Off Requests</h5>
                 {employee && employee.time_off.length ? (
                   <Message>
-                    <>
+                    <Suspense
+                      fallback={<Message>Fetching your PTO...</Message>}
+                    >
                       {employee.time_off.map(item => (
                         <TimeOffApproved
                           key={item.id}
@@ -242,7 +312,7 @@ class EmployeeDashboard extends Component {
                           }
                         />
                       ))}
-                    </>
+                    </Suspense>
                   </Message>
                 ) : (
                   <Message>No requests to display.</Message>
@@ -254,7 +324,9 @@ class EmployeeDashboard extends Component {
               <div className="title">
                 <h5>Request Time Off</h5>
               </div>
-              <TimeOffRequest />
+              <Suspense fallback={<Message>Loading...</Message>}>
+                <TimeOffRequest />
+              </Suspense>
             </Card>
           </div>
         </Container>
@@ -319,10 +391,9 @@ const NavButtons = styled.div`
     justify-content: space-around;
   }
 `
-
-const MiddleButton = styled(Button)`
-  @media ${system.breakpoints[0]} {
-    margin-bottom : ${system.spacing.bigPadding};
+const ToggleButton = styled(Button)`
+  @media ${system.breakpoints[1]} {
+    margin-bottom: ${system.spacing.bigPadding};
     order: -1;
     width: 100%;
   }

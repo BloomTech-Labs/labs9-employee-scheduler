@@ -9,6 +9,7 @@ import headerImg from '../img/header.svg'
 import heroImg from '../img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from './Footer'
+import frontpage from '../img/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
@@ -36,7 +37,9 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          <div id="video">Video Placeholder</div>
+          <video id="video" autoPlay={true} loop={true}>
+            <source src={frontpage} type="video/mp4" />
+          </video>
         </section>
 
         <section id="features">
@@ -79,7 +82,7 @@ const Home = () => {
         <section id="social-proof">
           <h1>People love Cadence.</h1>
           <p>
-            This is fake feedback we've gotten on social media and during user
+            This is real feedback we've gotten on social media and during user
             tests. We hope you'll love Cadence as much as they do.
           </p>
           <div className="cards">
@@ -87,26 +90,38 @@ const Home = () => {
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Cadence is great! Now, I always know who is working at my cafe
-                  any given morning.
+                  I used to spend half my day scheduling. Cadence feels like I
+                  now have a human helper.
                 </p>
-                <h2>—Bob Smith</h2>
+                <h2>
+                  &ndash;Bill DiFulvio,
+                  <br />
+                  <span className="job-title">&ensp;Ops Manager</span>
+                </h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  I love Cadence. I can now better plan how many waiters we'll
-                  need and when we'll need them.
+                  My old shift software was bloated. Cadence is to the point: no
+                  ridiculous unnecessary features.
                 </p>
-                <h2>—Jane Doe</h2>
+                <h2>
+                  &ndash;Max Trestman,
+                  <br />
+                  <span className="job-title">&ensp;Medical Dispatcher</span>
+                </h2>
               </div>
               <div className="card">
                 <div className="stripe" />
                 <p>
-                  Great product. I can attest that the guys who made Cadence are
-                  both gentlemen and scholars.
+                  Cadence is legit! The product has slick design and is really
+                  inviting. It's super cool.
                 </p>
-                <h2>—Louis Lambda</h2>
+                <h2>
+                  &ndash;Blake Fletcher,
+                  <br />
+                  <span className="job-title">&ensp;Entrepreneur</span>
+                </h2>
               </div>
             </Fade>
           </div>
@@ -195,6 +210,7 @@ const Container = styled('div')`
       padding: 100px 0 0;
       font-size: ${system.fontSizing.xl};
       width: 45%;
+      text-align: left;
     }
 
     p {
@@ -234,10 +250,6 @@ const Container = styled('div')`
     align-items: center;
     padding: 18rem 0 10rem;
 
-    /* @media ${system.breakpoints[2]} {
-      padding-top: 5rem;
-    } */
-
     #wrapper {
       h1 {
         padding: 0;
@@ -266,15 +278,17 @@ const Container = styled('div')`
       }
     }
 
-    #video {
+    #video,
+    source {
       position: absolute;
       color: white;
       text-align: center;
       top: 21rem;
       right: 6%;
       width: 480px;
-      height: 270px;
+      height: auto;
       z-index: 50;
+      border: 0.75px solid black;
       background: black;
       box-shadow: ${system.shadows.buttonHover};
       border-radius: ${system.borders.bigRadius};
@@ -284,7 +298,8 @@ const Container = styled('div')`
       }
     }
 
-    #login, #schedule {
+    #login,
+    #schedule {
       margin-left: 2.5rem;
 
       a {
@@ -352,14 +367,16 @@ const Container = styled('div')`
     }
   }
 
-  #features, #social-proof, #pricing {
+  #features,
+  #social-proof,
+  #pricing {
     @media ${system.breakpoints[2]} {
-        padding-bottom: 5rem;
-      }
+      padding-bottom: 5rem;
+    }
 
-      @media ${system.breakpoints[0]} {
-        padding-bottom: 2rem;
-      }
+    @media ${system.breakpoints[0]} {
+      padding-bottom: 2rem;
+    }
   }
 
   #features {
@@ -379,7 +396,7 @@ const Container = styled('div')`
     .card {
       background: #333;
       position: relative;
-      min-height: 240px;
+      min-height: 275px;
 
       @media ${system.breakpoints[2]} {
         min-height: 0;
@@ -397,6 +414,10 @@ const Container = styled('div')`
       h2,
       p {
         color: ${system.color.white};
+        span {
+          font-family: 'Nunito', sans-serif;
+          font-size: ${system.fontSizing.m};
+        }
       }
     }
   }
@@ -435,7 +456,8 @@ const Container = styled('div')`
       margin-bottom: 1.5rem;
     }
 
-    button, a {
+    button,
+    a {
       margin: 25px 0;
       color: ${system.color.white};
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import { connect } from 'react-redux'
@@ -58,7 +58,6 @@ class AddEmployee extends Component {
           })
           .catch(err => {
             alert(`Something has gone wrong. Try again!`)
-            console.log(err)
           })
       } else {
         if (!this.state.newUser.role) {
@@ -86,11 +85,12 @@ class AddEmployee extends Component {
   }
 
   render() {
-    const { role, Close, toggleShow } = this.props
+    const { role, Close } = this.props
     return (
       <ModalContainer>
         {/* ternary checks to see if they have a paid account or less than three employees  */}
-        {this.props.paid || this.props.employees.length < 3 ? (
+        {(this.props.paid && this.props.employees.length < 20) ||
+        this.props.employees.length < 3 ? (
           <form onSubmit={this.submitHandler}>
             <h6 id="instructions">
               Fill all fields & we'll send your employee a sign-up invite!
@@ -160,12 +160,14 @@ class AddEmployee extends Component {
                   style={{ position: 'absolute', top: '25px', right: '25px' }}
                 />
                 <h6 id="instructions">
-                  You have reached the limit for the number of employees on a
-                  free account.
+                  You have reached the limit for the number of users your
+                  account can support.
                 </h6>
-                <Link to="/billing">
-                  <Button>Upgrade</Button>
-                </Link>
+                {this.props.paid ? null : (
+                  <Link to="/billing">
+                    <Button>Upgrade</Button>
+                  </Link>
+                )}
               </>
             ) : (
               <>
@@ -173,8 +175,12 @@ class AddEmployee extends Component {
                   style={{ position: 'absolute', top: '25px', right: '25px' }}
                 />
                 <h6 id="instructions">
-                  You have reached the limit for the number of employees on a
-                  free account. Contact your business' owner about upgrading.
+                  You have reached the limit for the number of users your
+                  account can support.
+                  {this.props.paid
+                    ? null
+                    : `Contact your business' owner about
+                  upgrading.`}
                 </h6>
               </>
             )}
@@ -195,7 +201,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(AddEmployee)
 
 AddEmployee.propTypes = {
-  // add propTypes here
+  role: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  paid: PropTypes.bool,
+  employees: PropTypes.array,
+  addEmployee: PropTypes.func
 }
 
 const ModalContainer = styled(Container)`

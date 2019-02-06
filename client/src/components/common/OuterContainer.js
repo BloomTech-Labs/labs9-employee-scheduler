@@ -14,8 +14,9 @@ const OuterContainer = styled('div')`
       : system.color.neutral};
   background-repeat: repeat;
   background-size: auto;
-  height: 100%;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     padding: ${system.spacing.standardPadding};
@@ -25,7 +26,8 @@ const OuterContainer = styled('div')`
 
     @media ${system.breakpoints[1]} {
       margin: ${system.spacing.bigPadding} 0;
-      padding: 0;
+      padding: 1%;
+      text-align: center;
       font-size: ${system.fontSizing.ml};
     }
   }
