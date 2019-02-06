@@ -421,10 +421,12 @@ A reusable modal can be used wherever we need it, and redux will maintain a sing
 
 **Feature Name: ​ Left Bar, Top Bar**  
 **What services, APIs, or platforms will you use to implement this feature?**  
-React Pose for animation, emotion for styling, flexbox to lay out elements  
-**What are the costs and benefits of using this solution?**
-- Animations for the left bar will improve UX for the users, and Pose is a developer-friendly
-- animation library. Styling will proceed per best practices for navigational elements.    
+- React Pose for animation
+- Emotion for styling
+- Flexbox to lay out elements  
+**What are the costs and benefits of using this solution?**  
+Animations for the left bar will improve UX for the users, and Pose is a developer-friendly
+animation library. Styling will proceed per best practices for navigational elements.    
 
 **Name:** ​Calendar Display Presentation and CRUD
 **What services, APIs, or platforms will you use to implement this feature?**
