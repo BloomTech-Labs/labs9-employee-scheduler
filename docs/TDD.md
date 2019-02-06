@@ -268,20 +268,13 @@ pros and cons to solve the given problem.
 **Because the team knows it, it’s easy, fast, convenient, etc. are not acceptable reasons to
 select a technology.**
 
-## Front End
+# Front End
 
-Solution: React with Redux & React Router
-What problems does this solution solve for this specific project?:
-
-- React abstracts away browser differences in the DOM, and gains performance benefits
-    via the virtual DOM. It has well known compositional patterns and a strong community,
-    while remaining relatively unopinionated
-- Redux offers a single source of truth via a persistent store, sophisticated built-in
-    debugging, and enforces prebaked patterns to impose good behavior among
-    developers.
-- React Router enables developers to create a single page application. Benefits of SPAs
-    include faster routing between views and smoother transitions & animations. All of this
-    serves to improve user experience.
+### Solution: React with Redux & React Router  
+**What problems does this solution solve for this specific project?**
+- React abstracts away browser differences in the DOM, and gains performance benefits via the virtual DOM. It has well known compositional patterns and a strong community, while remaining relatively unopinionated.
+- Redux offers a single source of truth via a persistent store, sophisticated built-in debugging, and enforces pre-baked patterns to impose good behavior among developers.
+- React Router enables developers to create a single page application. Benefits of SPAs include faster routing between views and smoother transitions & animations. All of this serves to improve user experience.
 
 
 **What are the costs of using this solution?**
@@ -290,12 +283,13 @@ What problems does this solution solve for this specific project?:
 - Dependent on third party libraries, and large npm dependency trees. Mitigated by strong
 institutional support for React ecosystem, and avoidance of small libraries
 - Bad SEO performance
-- Will break app if client disallows JS from running
-What will you be using for styling and presentation?
+- Will break app if client disallows JS from running  
+
+**What will you be using for styling and presentation?**
 Emotion is a high-performance, lightweight css-in-js library. It aims to minimize the
 runtime cost of css-in-js by parsing styles with Babel and PostCSS. It is 25x faster than styled
 components when using dynamic props. Kent C. Dodds, the author of glamorous, is considering
-deprecating it in favor of emotion.
+deprecating it in favor of emotion.  
 As compared to CSS, emotion will enable us to be DRY. Compared to CSS
 preprocessing, emotion will enable us to write in a single language. Compared to React
 component libraries like Material UI, emotion gives us the flexibility to create our own styling
@@ -303,7 +297,7 @@ without succumbing to the demands of opinionated 3rd party software.
 
 # Back End
 
-###Solution: Node & Express  
+### Solution: Node & Express  
 **What problems does this solution solve for this specific project?:**
 - Provides a clean way for us to implement authentication, authorization, and CRUD
 actions to our database.
