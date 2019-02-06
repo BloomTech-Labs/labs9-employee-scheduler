@@ -108,6 +108,7 @@ describe('employee dashboard with redux', () => {
     expect(testElement.textContent).toMatch(
       employee.time_off_requests[0].reason
     )
+
     const shiftElement = await waitForElement(() => getByTestId('shift'))
     const shift = employee.events[0]
     const shiftTime = `${moment
@@ -119,13 +120,14 @@ describe('employee dashboard with redux', () => {
       .format('h:mm a')}`
     expect(getByTestId('employeeShifts').textContent).toMatch(shiftTime)
 
+    //testing to make sure dates are in the right format for shifts
     const date = moment
       .utc(shift.start)
       .local()
       .format('MMM Do')
     expect(getByTestId('employeeShifts').textContent).toMatch(date)
 
-    //testing calendar
+    //testing calendar to make sure a name is rendering
     const scheduledName = employee.last_name
 
     const cal = await waitForElement(() =>
