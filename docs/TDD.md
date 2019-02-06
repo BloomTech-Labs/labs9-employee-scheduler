@@ -377,11 +377,7 @@ What are the costs of using this solution?
 - Deployment relies on settings and problem solving specific to each platform, so there is
 not a fully contained model that can be painlessly transferred
 - Implementation must be friendly to the underlying hardware and operating systems
-available from Heroku and Netlify
-
-## Features
-
-**For each feature identified above, provide the following information:**   
+available from Heroku and Netlify 
 
 ## Feature Name: ​Landing Page  
 **What services, APIs, or platforms will you use to implement this feature?**  
@@ -395,7 +391,7 @@ This is virtually free, as we have already taken on these dependencies. Costs ar
 implement, but given the customization needed this is equally a feature.    
 
 
-**Feature Name:** ​ Registration Page / Login Page  
+## Feature Name: ​ Registration Page / Login Page  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Firebase for Authentication    
 
@@ -408,7 +404,8 @@ number of options
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - A value in Redux as to whether the user is logged in
-- Firebase as described above      
+- Firebase as described above    
+  
 **What are the costs and benefits of using this solution?**
 Requires no special functionality, aside from checking that the user is logged in.
 
