@@ -7,6 +7,7 @@ const request = supertest(server)
 
 describe('testing payments router', () => {
   it('posts payment with a valid token', async () => {
+    console.log('hi')
     const response = await request
       .post('/stripe')
       .send({
