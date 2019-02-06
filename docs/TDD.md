@@ -595,7 +595,8 @@ Allows us to take payments from users with a widely used API
 ---
 ### ​Availability window  
 **What services, APIs, or platforms will you use to implement this feature?**  
-Reusable react component taking data from the backend
+- Reusable react component taking data from the backend  
+
 **What are the costs and benefits of using this solution?**  
 Reusable and not hard coded  
 
