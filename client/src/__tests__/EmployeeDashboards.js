@@ -29,8 +29,8 @@ const employee = employees.find(
     employeeCandidates.find(nonOwner => nonOwner.id === candidate.id)
 )
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
-user.cal_visit = true
-user.emp_visit = true
+user.cal_visit = false
+user.emp_visit = false
 
 describe('employee dashboard with redux', () => {
   it('can render with initial state', async () => {
@@ -47,25 +47,18 @@ describe('employee dashboard with redux', () => {
       }
     })
 
-    // mock out axios authenticaton call to our server
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        if (authorization === 'token') {
-          return Promise.resolve({ data: user })
-        }
-      }
-    )
-
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
-        if (path.match(new RegExp(`/dashboard/${user.id}`))) {
+        if (path.match(new RegExp(`/users/current`))) {
+          return Promise.resolve({ data: user })
+        }
+        if (path.match(new RegExp(`/dashboard/`))) {
           const { time_off_requests, events, ...rest } = employee
           return Promise.resolve({
             data: { ...rest, time_off: time_off_requests, shifts: events }
           })
         }
         if (path.match(new RegExp(`/employees/${user.organization_id}`))) {
-          console.log('employees hits')
           return Promise.resolve({ data: employees })
         }
         if (
@@ -143,7 +136,5 @@ describe('employee dashboard with redux', () => {
       .local()
       .format('MM / DD')
     expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
-
-    console.log(employee.time_off_requests[0].start)
   })
 })
