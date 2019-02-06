@@ -19,7 +19,7 @@ jest.mock('react-ga')
 
 // this is the mocked data to be returned
 const org = populateOrg({ size: 4 })
-const { users } = org
+const { users, hoursOfOperation, organization } = org
 const employees = structureEmployees(org)
 const employeeCandidates = users.filter(user => user.role !== 'owner')
 // find an employee who is not an owner and has time off requests
@@ -29,6 +29,8 @@ const employee = employees.find(
     employeeCandidates.find(nonOwner => nonOwner.id === candidate.id)
 )
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
+user.cal_visit = false
+user.emp_visit = false
 
 describe('employee dashboard with redux', () => {
   it('can render with initial state', async () => {
@@ -45,21 +47,29 @@ describe('employee dashboard with redux', () => {
       }
     })
 
-    // mock out axios authenticaton call to our server
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        if (authorization === 'token') {
-          return Promise.resolve({ data: user })
-        }
-      }
-    )
-
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
-        const { time_off_requests, ...rest } = employee
-        return Promise.resolve({
-          data: { ...rest, time_off: time_off_requests }
-        })
+        if (path.match(new RegExp(`/users/current`))) {
+          return Promise.resolve({ data: user })
+        }
+        if (path.match(new RegExp(`/dashboard/`))) {
+          const { time_off_requests, events, ...rest } = employee
+          return Promise.resolve({
+            data: { ...rest, time_off: time_off_requests, shifts: events }
+          })
+        }
+        if (path.match(new RegExp(`/employees/${user.organization_id}`))) {
+          return Promise.resolve({ data: employees })
+        }
+        if (
+          path.match(new RegExp(`/hours-of-operation/${user.organization_id}`))
+        ) {
+          return Promise.resolve({ data: hoursOfOperation })
+        }
+        if (path.match(new RegExp(`/organizations/${user.organization_id}`))) {
+          return Promise.resolve({ data: organization })
+        }
+        return Promise.resolve({})
       }
     })
 
@@ -68,12 +78,14 @@ describe('employee dashboard with redux', () => {
 
     // renders the App with both Redux and Router, with the route set
     // to the matching route for this component in App
-    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
-      <App />,
-      {
-        route: `/dashboard/${employee.id}`
-      }
-    )
+    const {
+      getByTestId,
+      getByText,
+      history,
+      container
+    } = renderWithReduxAndRouter(<App />, {
+      route: `/dashboard/${employee.id}`
+    })
 
     // since axios and redux thunk are asyncronous, this waits for the page to
     // register changes from ComponentDidMount before proceeding with tests
@@ -89,5 +101,40 @@ describe('employee dashboard with redux', () => {
     expect(testElement.textContent).toMatch(
       employee.time_off_requests[0].reason
     )
+
+    const shiftElement = await waitForElement(() => getByTestId('shift'))
+    const shift = employee.events[0]
+    const shiftTime = `${moment
+      .utc(shift.start)
+      .local()
+      .format('h:mm a')} - ${moment
+      .utc(shift.end)
+      .local()
+      .format('h:mm a')}`
+    expect(getByTestId('employeeShifts').textContent).toMatch(shiftTime)
+
+    //testing to make sure dates are in the right format for shifts
+    const date = moment
+      .utc(shift.start)
+      .local()
+      .format('MMM Do')
+    expect(getByTestId('employeeShifts').textContent).toMatch(date)
+
+    //testing calendar to make sure a name is rendering
+    const scheduledName = employee.last_name
+
+    const cal = await waitForElement(() =>
+      container.querySelector('.rbc-calendar')
+    )
+
+    expect(cal.textContent).toMatch(scheduledName)
+
+    //testing to make sure time off requests are in the right format
+    const timeOff = await waitForElement(() => getByTestId('time_off'))
+    const reqTime = moment
+      .utc(employee.time_off_requests[0].start)
+      .local()
+      .format('MM / DD')
+    expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
   })
 })

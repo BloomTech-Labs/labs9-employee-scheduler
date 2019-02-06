@@ -4,7 +4,6 @@ import BreadCrumb from './BreadCrumb'
 // import LeftSideBar from './LeftSideBar'
 // import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
 // import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-// import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 // import Availability from './EmployeeDashboard/Availability'
 // import DashCal from './EmployeeDashboard/DashCal'
 import Loader from './Loader'
@@ -21,15 +20,13 @@ import OuterContainer from './common/OuterContainer'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import styled from '@emotion/styled'
 import system from '../design/theme'
+import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 const TimeOffApproved = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffApproved')
 )
 const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
 const TimeOffRequest = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffRequest')
-)
-const AssignedShifts = React.lazy(() =>
-  import('./EmployeeDashboard/AssignedShifts')
 )
 const Availability = React.lazy(() =>
   import('./EmployeeDashboard/Availability')
@@ -54,7 +51,6 @@ class EmployeeDashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSingleEmployeeFromDB(this.props.auth.token)
     this.fetchData()
 
     // handle responsiveness for calendar
@@ -157,7 +153,6 @@ class EmployeeDashboard extends Component {
     const { view, date, width, employeeView } = this.state
     const { id } = this.props.user
     const names = []
-
     employees.map(employee => names.push(`${employee.first_name}`))
 
     //events for all employees
@@ -262,7 +257,7 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card>
+            <Card data-testid="employeeShifts">
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>
@@ -270,14 +265,7 @@ class EmployeeDashboard extends Component {
               {employee && employee.shifts ? (
                 <>
                   {employee.shifts.map(item => {
-                    return (
-                      <Suspense
-                        key={item.id}
-                        fallback={<Message>Fetching your shifts...</Message>}
-                      >
-                        <AssignedShifts {...item} />
-                      </Suspense>
-                    )
+                    return <AssignedShifts {...item} key={item.id} />
                   })}
                 </>
               ) : (

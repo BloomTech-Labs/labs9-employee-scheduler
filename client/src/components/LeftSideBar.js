@@ -31,15 +31,20 @@ class LeftSideBar extends Component {
   }
 
   render() {
-    const { toggleShow } = this
     const { role } = this.props.auth.user
+    const { toggleShow } = this
     return (
       <Container fixed={this.props.fixed ? true : false}>
-        <Hamburger classname="hamburger" id="menu" onClick={() => toggleShow()}>
+        <Hamburger
+          classname="hamburger"
+          id="menu"
+          data-testid="hamburger"
+          onClick={() => toggleShow()}
+        >
           &#9776;
         </Hamburger>
         <Fade left when={this.state.show} duration={350}>
-          <Nav show={this.state.show}>
+          <Nav show={this.state.show} data-testid="nav">
             {/* render the uneditable calendar page for employees */}
             {role === 'employee' ? (
               <>

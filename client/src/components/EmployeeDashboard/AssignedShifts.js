@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 
 const AssignedShifts = ({ id, start, end, time }) => {
   return (
-    <Shifts key={id}>
+    <Shifts key={id} data-testid="shift">
       <p>{moment(start).format('MMM Do')}</p>
       <span>{`${moment(start).format('h:mm a')} - ${moment(end).format(
         'h:mm a'

@@ -23,6 +23,7 @@ const org = populateOrg({ size: 4 })
 const employees = structureEmployees(org)
 const { users, events, hours, organization } = org
 const user = users.find(user => user.role === 'owner')
+user.cal_visit = false
 
 // find an employee who is scheduled
 const scheduledEmployee = employees.find(
@@ -55,7 +56,6 @@ describe('Scheduler', () => {
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
         if (path.match(new RegExp(`/employees/${user.organization_id}`))) {
-          console.log('employees hits')
           return Promise.resolve({ data: employees })
         }
         if (

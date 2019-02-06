@@ -57,7 +57,7 @@ describe('employee dashboard with redux', () => {
       }
     })
 
-    // setup of document to play nice with Striple component
+    // setup of document to play nice with Stripe component
     setupStripeNode()
 
     // renders the App with both Redux and Router, with the route set
@@ -81,11 +81,11 @@ describe('employee dashboard with redux', () => {
 
     expect(container.textContent).toMatch(`${first_name} ${last_name}`)
 
-    const timeR = employees.find(
+    const timeReq = employees.find(
       employee => employee.time_off_requests.length > 0
     ).time_off_requests
     expect(container.textContent).toMatch(
-      moment(timeR[0].start)
+      moment(timeReq[0].start)
         .local()
         .format('MM / DD')
     )
