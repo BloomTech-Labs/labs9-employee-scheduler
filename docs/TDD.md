@@ -79,9 +79,9 @@ Can change some personal information.
 
 **Name:** ​Landing Page  
 **User type:** ​All  
-**Description:** Marketing site for existing and prospective users, contains login and registration
+**Description:**Marketing site for existing and prospective users, contains login and registration
 buttons to access software  
-**Use Case:** A prospective user is seeking shift scheduling software so they come to our landing
+**Use Case:**A prospective user is seeking shift scheduling software so they come to our landing
 page to learn more about our specific value proposition and potentially register for our product.
 An existing user wishes to login.  
 
@@ -169,8 +169,8 @@ availability and time off.
 
 ---
 **Name:** ​Availability window  
-**User type:** ​Manager, Owner 
-**Description:** ​ Supervisors see an aside menu with the availability of their employees  
+**User type:** ​Manager, Owner  
+**Description:** ​ Supervisors see an aside menu with the availability of their employees   
 **Use Case:** ​Supervisors pick employees from this list to drop their names for work schedule.
 
 ---
