@@ -380,9 +380,9 @@ not a fully contained model that can be painlessly transferred
 available from Heroku and Netlify 
 
 ## Features
-
-#### Feature Name: ​Landing Page  
 ---
+#### Feature Name: ​Landing Page  
+
 
 **What services, APIs, or platforms will you use to implement this feature?**  
 - local assets
@@ -404,7 +404,8 @@ Relying on Google for security, and having a simplified JWT structure that plays
 the front and back end. Rely on openness of Firebase to allow users to authenticate via a
 number of options    
 
-**Feature Name: ​ Schedule Now Button**    
+---
+#### Feature Name: ​ Schedule Now Button    
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - A value in Redux as to whether the user is logged in
