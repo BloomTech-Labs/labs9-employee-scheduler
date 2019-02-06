@@ -15,6 +15,7 @@ jest.mock('firebase/app')
 jest.mock('firebase/auth')
 jest.mock('react-ga')
 
+// mocking the firebaseui component since this needs to hit external urls internally
 jest.mock('react-firebaseui/StyledFirebaseAuth', () => {
   const FirebaseUI = jest.fn(props => {
     const { uiConfig, firebaseAuth } = props
