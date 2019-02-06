@@ -50,7 +50,9 @@ describe('Login Component', () => {
   beforeEach(() => {
     // setup of document to play nice with Striple component
     setupStripeNode()
+  })
 
+  it('should navigate to login for non-logged in user', async () => {
     // mock out axios authenticaton call to our server
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
@@ -62,9 +64,6 @@ describe('Login Component', () => {
         }
       }
     })
-  })
-
-  it('should navigate to login for non-logged in user', async () => {
     // mock out firebase auth
     firebase.auth = jest.fn().mockImplementation(() => {
       return {
@@ -148,7 +147,6 @@ describe('Login Component', () => {
       container.querySelector('.rbc-calendar')
     )
 
-    expect(container).toBeNull()
     expect(queryByText(/sign in/i)).toBeNull()
   })
 })
