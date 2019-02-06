@@ -56,7 +56,7 @@ const StyledCalendar = styled(BigCalendar)`
   padding: ${system.spacing.hugePadding} ${system.spacing.hugePadding} 10px;
 
   ${props => props.colors} .rbc-event {
-    border: 1px solid ${system.color.white};
+    border: 0.75px solid ${system.color.bodytext} !important;
   }
 
   @media ${system.breakpoints[0]} {
