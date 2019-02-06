@@ -315,45 +315,46 @@ What are the costs of using this solution?
 - Modularity of npm and reliance on open source can expose vulnerabilities server side and
 requires diligent maintenance
 
-## Database
+# Database
 
-Solution: Postgres with Knex
-What problems does this solution solve for this specific project?:
+### Solution: Postgres with Knex  
+**What problems does this solution solve for this specific project?**  
 - Data persistence (especially with regard to hosting on Heroku, which does not persist
 data in SQLite)
 - relational data modeling
-
-
 - SQL-esque API
-What are the costs of using this solution?
-- Implementation and testing will take developer time.
-What models do you need to represent your data fully in the database in a manner that is logical
-and consistent?
-Pseudocode your models here:
-**[WORK IN PROGRESS]**
-Organization
+**What are the costs of using this solution?**  
+Implementation and testing will take developer time. 
+**What models do you need to represent your data fully in the database in a manner that is logical
+and consistent?**  
+
+#### Organization  
 - id
 - name
-- description
-User
+- description  
+
+#### User  
 - id
 - role (owner, supervisor, employee)
 - First name
 - Last name
 - Password
 - email
-- phone
-Availability
+- phone  
+
+#### Availability  
 - user
 - day
 - start time
-- end time
-Time off requests
+- end time  
+
+#### Time off requests  
 - date
 - user
 - reason
-- confirmed/pending/denied
-Events / Scheduled shifts (including time off)
+- confirmed/pending/denied  
+
+#### Events / Scheduled shifts (including time off)  
 - begin time
 - end time
 - date
@@ -362,7 +363,7 @@ Events / Scheduled shifts (including time off)
 
 # Deployment
 
-###Solution: Netlify & Heroku  
+### Solution: Netlify & Heroku  
 **What problems does this solution solve for this specific project?**
 - Enables us to put our project out into the world so that people can use it in an
 accessible, reliable way
