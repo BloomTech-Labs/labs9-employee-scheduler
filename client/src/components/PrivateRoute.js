@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import EmptyScreen from './EmptyScreen'
@@ -79,7 +79,17 @@ class PrivateRoute extends React.Component {
             access === 'all'
 
           if (hasPermission) {
-            return <Component {...ownProps} {...rest} />
+            return (
+              <Suspense
+                fallback={
+                  <EmptyScreen>
+                    <Loader />
+                  </EmptyScreen>
+                }
+              >
+                <Component {...ownProps} {...rest} />
+              </Suspense>
+            )
           } else {
             return <Redirect to="/" />
           }

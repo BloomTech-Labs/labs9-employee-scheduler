@@ -32,6 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:analyze": "react-scripts build --stats && npx webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:CI": "CI=true react-scripts test --env=jsdom"
