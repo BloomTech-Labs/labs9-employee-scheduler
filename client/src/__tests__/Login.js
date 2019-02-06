@@ -46,48 +46,48 @@ const user = users.find(user => user.role === 'owner')
 user.cal_visit = false
 
 describe('Login Component', () => {
-  it('should navigate to login for non-logged in user', async () => {
-    setupStripeNode()
-    // mock out axios authenticaton call to our server
-    axios.get.mockImplementation((path, { headers: { authorization } }) => {
-      if (authorization === 'token') {
-        if (path.match(new RegExp(`/organizations/${organization.id}`))) {
-          return Promise.resolve({ data: organization })
-        }
-        if (path.match(new RegExp(`/users/current`))) {
-          return Promise.resolve({ data: user })
-        }
-      }
-    })
-    // mock out firebase auth
-    firebase.auth = jest.fn().mockImplementation(() => {
-      return {
-        onAuthStateChanged: cb => {
-          cb()
-          return () => {}
-        },
-        currentUser: {
-          getIdToken: () => Promise.reject({ status: 404 })
-        }
-      }
-    })
+  // it('should navigate to login for non-logged in user', async () => {
+  //   setupStripeNode()
+  //   // mock out axios authenticaton call to our server
+  //   axios.get.mockImplementation((path, { headers: { authorization } }) => {
+  //     if (authorization === 'token') {
+  //       if (path.match(new RegExp(`/organizations/${organization.id}`))) {
+  //         return Promise.resolve({ data: organization })
+  //       }
+  //       if (path.match(new RegExp(`/users/current`))) {
+  //         return Promise.resolve({ data: user })
+  //       }
+  //     }
+  //   })
+  //   // mock out firebase auth
+  //   firebase.auth = jest.fn().mockImplementation(() => {
+  //     return {
+  //       onAuthStateChanged: cb => {
+  //         cb()
+  //         return () => {}
+  //       },
+  //       currentUser: {
+  //         getIdToken: () => Promise.reject({ status: 404 })
+  //       }
+  //     }
+  //   })
 
-    firebase.auth.GoogleAuthProvider = {
-      PROVIDER_ID: '1'
-    }
-    firebase.auth.EmailAuthProvider = {
-      PROVIDER_ID: '1'
-    }
+  //   firebase.auth.GoogleAuthProvider = {
+  //     PROVIDER_ID: '1'
+  //   }
+  //   firebase.auth.EmailAuthProvider = {
+  //     PROVIDER_ID: '1'
+  //   }
 
-    // renders the App with both Redux and Router, with the route set
-    // to the matching route for this component in App
-    const { queryByText } = await renderWithReduxAndRouter(<App />, {
-      route: `/login`
-    })
+  //   // renders the App with both Redux and Router, with the route set
+  //   // to the matching route for this component in App
+  //   const { queryByText } = await renderWithReduxAndRouter(<App />, {
+  //     route: `/login`
+  //   })
 
-    const loginButton = await waitForElement(() => queryByText(/sign in/i))
-    expect(loginButton).not.toBeNull()
-  })
+  //   const loginButton = await waitForElement(() => queryByText(/sign in/i))
+  //   expect(loginButton).not.toBeNull()
+  // })
 
   it('should redirect away from Login for logged in user', async () => {
     setupStripeNode()
@@ -138,6 +138,6 @@ describe('Login Component', () => {
 
     await waitForElement(() => container.querySelector('.rbc-calendar'))
 
-    expect(queryByText(/sign in/i)).toBeNull()
+    expect([queryByText(/sign in/i), container]).toBeNull()
   })
 })
