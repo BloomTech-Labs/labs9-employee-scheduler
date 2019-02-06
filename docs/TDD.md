@@ -383,7 +383,7 @@ available from Heroku and Netlify
 
 #### Feature Name: ​Landing Page  
 ---
-```
+
 **What services, APIs, or platforms will you use to implement this feature?**  
 - local assets
 - Emotion 
@@ -393,7 +393,7 @@ available from Heroku and Netlify
 **What are the costs and benefits of using this solution?**  
 This is virtually free, as we have already taken on these dependencies. Costs are the need to
 implement, but given the customization needed this is equally a feature.    
-```
+
 
 **Feature Name: ​ Registration Page / Login Page** 
 **What services, APIs, or platforms will you use to implement this feature?**  
