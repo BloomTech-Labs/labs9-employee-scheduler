@@ -167,7 +167,7 @@ class Billing extends Component {
               message accordingly
               {this.props.organization.paid ? (
                 <h6 id="instructions">
-                  You are signed up for the pro plan at $20 / month which
+                  You are signed up for the Pro Plan at $20 / month, which
                   includes:
                 </h6>
               ) : (
