@@ -381,8 +381,7 @@ available from Heroku and Netlify
 
 ## Features
 ---
-### Feature Name: ​Landing Page  
-
+### ​Landing Page  
 
 **What services, APIs, or platforms will you use to implement this feature?**  
 - local assets
@@ -395,7 +394,7 @@ This is virtually free, as we have already taken on these dependencies. Costs ar
 implement, but given the customization needed this is equally a feature.    
 
 ___
-### Feature Name ​ Registration Page / Login Page
+### ​Registration Page / Login Page
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Firebase for Authentication    
 
@@ -405,7 +404,7 @@ the front and back end. Rely on openness of Firebase to allow users to authentic
 number of options    
 
 ---
-### Feature Name: ​ Schedule Now Button    
+### ​Schedule Now Button    
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - A value in Redux as to whether the user is logged in
@@ -423,7 +422,7 @@ Requires no special functionality, aside from checking that the user is logged i
 A reusable modal can be used wherever we need it, and redux will maintain a single source of truth for state management
 
 ---
-### Feature Name: ​ Left Bar, Top Bar  
+### Left Bar, Top Bar  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React Pose for animation
 - Emotion for styling
@@ -434,7 +433,7 @@ Animations for the left bar will improve UX for the users, and Pose is a develop
 animation library. Styling will proceed per best practices for navigational elements.    
 
 ---
-### Feature Name:Calendar Display Presentation and CRUD 
+### Calendar Display Presentation and CRUD 
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Display will rely on the React Big Calendar library
 -  Backend will be implemented using
@@ -456,7 +455,7 @@ without any obligation to us. Once we have handled our own data persistence, a r
 export to Google Calendar could be considered.  
 
 ---
-### Feature Name: ​ Daily Summary
+### ​Daily Summary
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React
 - Emotion  
@@ -466,7 +465,7 @@ We will display the count of employees working per day and the total count of ho
 scheduled. This can potentially be accomplished by array methods such as reduce.  
 
 ---
-### Feature Name: ​ Employee List  
+### Employee List  
 **What services, APIs, or platforms will you use to implement this feature?**    
 - React
 - Emotion
@@ -478,7 +477,7 @@ a box showing requested time off. We will get this data from the database via SQ
 involving joins with the relevant tables.  
 
 ---
-### Feature Name: ​ Time Off Dialogues  
+## Time Off Dialogues  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Vanilla javascript + React
 - Possible but doubtful use of React Portal.  
@@ -489,7 +488,7 @@ only need is for modal and HTTP post requests, all of which we have with our bas
 framework and back end.  
 
 ---
-### Feature Name: ​ Employee Shift View  
+### Employee Shift View  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Vanilla javascript + React  
 
@@ -498,7 +497,7 @@ This is the display of data in a structured way, and allowing for ajax requests 
 which is directly in the React+Redux core competency. No further API/service is indicated.  
 
 ---
-### Feature Name: Feature Name:** ​Requested time off  
+### Feature Name:** ​Requested time off  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Reusable react component that maps over data from the backend.  
 
@@ -506,7 +505,7 @@ which is directly in the React+Redux core competency. No further API/service is 
 Reusable and not hard coded.  
 
 ---
-### Feature Name: ​ Time Off Dialogues  
+### Time Off Dialogues  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Vanilla javascript + React
 - Possible but doubtful use of React Portal.  
@@ -517,7 +516,7 @@ only need is for modal and HTTP post requests, all of which we have with our bas
 framework and back end.  
 
 ---
-### Feature Name: ​ Add Employee  
+### ​Add Employee  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React/Redux
 - Axios
@@ -529,7 +528,7 @@ the core choices in our stack and further services would likely result in equal 
 implementation while increasing package size and muddying structure.  
 
 ---
-### Feature Name: ​ Input Email / Phone  
+### Input Email / Phone  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React/Redux
 - Axios
@@ -542,7 +541,7 @@ further services would likely result in equal to worse implementation while incr
 size and muddying structure.  
 
 ---
-### Feature Name: ​ Select Emails / Text Preference  
+### Select Emails / Text Preference  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React/Redux
 - Axios
@@ -556,7 +555,7 @@ is not trivial to implement, so a well proven library would be desirable. Howeve
 indicated in the spec and at this point is not considered a MVP feature.  
 
 ---
-### Feature Name: ​ Edit Password  
+### ​Edit Password  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React/Redux
 - Axios
@@ -570,7 +569,7 @@ Given that we are using Firebase, we will need to consider whether it is even po
 straightforwardly trigger password updates within our site.  
 
 ---
-### Feature Name: ​Time off request  
+### ​Time off request  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React reusable component that uses Axios to make a post request to the DB.  
 
@@ -578,7 +577,7 @@ straightforwardly trigger password updates within our site.
 ​Reusable and not hard coded  
 
 ---
-### Feature Name: ​Time Off Approval  
+### ​Time Off Approval  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - This will GET a given user’s PTO from the database and display it  
 
@@ -586,7 +585,7 @@ straightforwardly trigger password updates within our site.
 This relies on the core components of our tech stack.  
 
 ---
-### Feature Name: ​Pricing Confirmation /​ ​Payment Form / Checkbox for Recurring Payment  
+### ​Pricing Confirmation /​ ​Payment Form / Checkbox for Recurring Payment  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Stripe API  
 
@@ -594,14 +593,14 @@ This relies on the core components of our tech stack.
 Allows us to take payments from users with a widely used API  
 
 ---
-### Feature Name: ​Availability window  
+### ​Availability window  
 **What services, APIs, or platforms will you use to implement this feature?**  
 Reusable react component taking data from the backend
 **What are the costs and benefits of using this solution?**  
 Reusable and not hard coded  
 
 ---
-### Feature Name: ​Employee Shift View  
+### ​Employee Shift View  
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React component
 - Redux state management
