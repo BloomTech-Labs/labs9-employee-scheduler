@@ -324,9 +324,9 @@ data in SQLite)
 - relational data modeling
 - SQL-esque API
 **What are the costs of using this solution?**  
-Implementation and testing will take developer time. 
-**What models do you need to represent your data fully in the database in a manner that is logical
-and consistent?**  
+Implementation and testing will take developer time.  
+
+### What models do you need to represent your data fully in the database in a manner that is logical and consistent?
 
 ---
 #### Organization  
