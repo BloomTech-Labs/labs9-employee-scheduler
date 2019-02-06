@@ -284,13 +284,13 @@ What problems does this solution solve for this specific project?:
     serves to improve user experience.
 
 
-What are the costs of using this solution?
-● Use react pattern
-● More expensive on the client side, slower initial load for SPAs in particular
-● Dependent on third party libraries, and large npm dependency trees. Mitigated by strong
+**What are the costs of using this solution?**
+- Use react pattern
+- More expensive on the client side, slower initial load for SPAs in particular
+- Dependent on third party libraries, and large npm dependency trees. Mitigated by strong
 institutional support for React ecosystem, and avoidance of small libraries
-● Bad SEO performance
-● Will break app if client disallows JS from running
+- Bad SEO performance
+- Will break app if client disallows JS from running
 What will you be using for styling and presentation?
 Emotion is a high-performance, lightweight css-in-js library. It aims to minimize the
 runtime cost of css-in-js by parsing styles with Babel and PostCSS. It is 25x faster than styled
@@ -303,11 +303,11 @@ without succumbing to the demands of opinionated 3rd party software.
 
 ## Back End
 
-Solution: Node & Express
+**Solution: Node & Express**
 What problems does this solution solve for this specific project?:
-● Provides a clean way for us to implement authentication, authorization, and CRUD
+- Provides a clean way for us to implement authentication, authorization, and CRUD
 actions to our database.
-● Node handles asynchronous as a first class citizen, which is well-suited for handling
+- Node handles asynchronous as a first class citizen, which is well-suited for handling
 many requests in a performant way
 What are the costs of using this solution?
 
@@ -319,64 +319,64 @@ requires diligent maintenance
 
 Solution: Postgres with Knex
 What problems does this solution solve for this specific project?:
-● Data persistence (especially with regard to hosting on Heroku, which does not persist
+- Data persistence (especially with regard to hosting on Heroku, which does not persist
 data in SQLite)
-● relational data modeling
+- relational data modeling
 
 
-● SQL-esque API
+- SQL-esque API
 What are the costs of using this solution?
-● Implementation and testing will take developer time.
+- Implementation and testing will take developer time.
 What models do you need to represent your data fully in the database in a manner that is logical
 and consistent?
 Pseudocode your models here:
 **[WORK IN PROGRESS]**
 Organization
-● id
-● name
-● description
+- id
+- name
+- description
 User
-● id
-● role (owner, supervisor, employee)
-● First name
-● Last name
-● Password
-● email
-● phone
+- id
+- role (owner, supervisor, employee)
+- First name
+- Last name
+- Password
+- email
+- phone
 Availability
-● user
-● day
-● start time
-● end time
+- user
+- day
+- start time
+- end time
 Time off requests
-● date
-● user
-● reason
-● confirmed/pending/denied
+- date
+- user
+- reason
+- confirmed/pending/denied
 Events / Scheduled shifts (including time off)
-● begin time
-● end time
-● date
-● user
+- begin time
+- end time
+- date
+- user
 
 
 ## Deployment
 
 Solution: Netlify & Heroku
 What problems does this solution solve for this specific project?
-● Enables us to put our project out into the world so that people can use it in an
+- Enables us to put our project out into the world so that people can use it in an
 accessible, reliable way
 What are the benefits of using this solution?
-● Cost structure is friendly for initial scaling period, with a predictable growth pattern, and
+- Cost structure is friendly for initial scaling period, with a predictable growth pattern, and
 no lock in
-● Continuous deployment built in with Github
-● Integration testing possible on Heroku via Travis CI
-● Heroku has a robust add-ons marketplace
-● Heroku provides a dev-friendly layer on top of AWS
+- Continuous deployment built in with Github
+- Integration testing possible on Heroku via Travis CI
+- Heroku has a robust add-ons marketplace
+- Heroku provides a dev-friendly layer on top of AWS
 What are the costs of using this solution?
-● Deployment relies on settings and problem solving specific to each platform, so there is
+- Deployment relies on settings and problem solving specific to each platform, so there is
 not a fully contained model that can be painlessly transferred
-● Implementation must be friendly to the underlying hardware and operating systems
+- Implementation must be friendly to the underlying hardware and operating systems
 available from Heroku and Netlify
 
 ## Features
@@ -556,12 +556,12 @@ Use the information above to fill out the following table:
 **Front End Back End Database**
 React, React Router, Redux Node, Express Postgres via Knex
 **List of APIs:**
-● Firebase
-● Stripe
-● React-Big-Calendar
+- Firebase
+- Stripe
+- React-Big-Calendar
 **List of Additional Services:**
-● Netlify
-● Heroku
+- Netlify
+- Heroku
 **Elevator Sentence**
 Employee Scheduler [Brand Name TBD] is an application that solves the problem of
 employee shift scheduling by allowing supervisors to assign shifts to employees. Employees
