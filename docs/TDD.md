@@ -328,11 +328,13 @@ Implementation and testing will take developer time.
 **What models do you need to represent your data fully in the database in a manner that is logical
 and consistent?**  
 
+---
 #### Organization  
 - id
 - name
 - description  
 
+---
 #### User  
 - id
 - role (owner, supervisor, employee)
@@ -342,25 +344,27 @@ and consistent?**
 - email
 - phone  
 
+---
 #### Availability  
 - user
 - day
 - start time
 - end time  
 
+---
 #### Time off requests  
 - date
 - user
 - reason
 - confirmed/pending/denied  
-
+---
 #### Events / Scheduled shifts (including time off)  
 - begin time
 - end time
 - date
 - user
 
-
+---
 # Deployment
 
 ### Solution: Netlify & Heroku  
