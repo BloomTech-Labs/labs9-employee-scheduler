@@ -1,6 +1,11 @@
 import React from 'react'
 import { waitForElement } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import {
+  renderWithReduxAndRouter,
+  setupStripeNode,
+  getAllByTestId
+} from '../../testing/utils'
+import { inRolloverZone, decrementDay, formatHours } from '../utils'
 import App from '../App'
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
@@ -28,6 +33,7 @@ const employee = employees.find(
     candidate.time_off_requests.length > 0 &&
     employeeCandidates.find(nonOwner => nonOwner.id === candidate.id)
 )
+
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
 user.cal_visit = false
 user.emp_visit = false
@@ -113,14 +119,14 @@ describe('employee dashboard with redux', () => {
       .format('h:mm a')}`
     expect(getByTestId('employeeShifts').textContent).toMatch(shiftTime)
 
-    //testing to make sure dates are in the right format for shifts
+    // testing to make sure dates are in the right format for shifts
     const date = moment
       .utc(shift.start)
       .local()
       .format('MMM Do')
     expect(getByTestId('employeeShifts').textContent).toMatch(date)
 
-    //testing calendar to make sure a name is rendering
+    // testing calendar to make sure a name is rendering
     const scheduledName = employee.last_name
 
     const cal = await waitForElement(() =>
@@ -129,12 +135,42 @@ describe('employee dashboard with redux', () => {
 
     expect(cal.textContent).toMatch(scheduledName)
 
-    //testing to make sure time off requests are in the right format
+    // testing to make sure time off requests are in the right format
     const timeOff = await waitForElement(() => getByTestId('time_off'))
     const reqTime = moment
       .utc(employee.time_off_requests[0].start)
       .local()
       .format('MM / DD')
     expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
+
+    // testing to make sure availabilities are visible
+    await waitForElement(() => {
+      getByTestId('availability-day')
+    })
+    // const availContainer = getByTestId('dashboard-availabilities')
+    // const avails = getAllByTestId(availContainer, 'availability-day')
+
+    // const dayNames = [
+    //   'Sunday',
+    //   'Monday',
+    //   'Tuesday',
+    //   'Wednesday',
+    //   'Thursday',
+    //   'Friday',
+    //   'Saturday'
+    // ]
+    // employee.availabilities.forEach(avail => {
+    //   const dayNum = inRolloverZone(avail.start_time)
+    //     ? decrementDay(avail.day)
+    //     : avail.day
+    //   const dayName = dayNames[dayNum]
+    //   const start = formatHours(avail.start_time)
+    //   const end = formatHours(avail.end_time)
+
+    //   const dateString = `${start} - ${end}`
+
+    //   expect(avails[dayNum]).toMatch(dayName)
+    //   expect(avails[dayNum]).toMatch(dateString)
+    // })
   })
 })

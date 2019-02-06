@@ -30,7 +30,7 @@ class Availability extends Component {
             // only displays the days the employee is available
             .map(({ id, day, start_time, end_time, off }) => (
               //temporarily adds ids tp the DOM for easy access for testing
-              <Avails key={id}>
+              <Avails key={id} data-testid="availability-day">
                 <p>{weekdays[utcDayToLocal({ day, time: start_time })]}</p>
                 <span>
                   {off

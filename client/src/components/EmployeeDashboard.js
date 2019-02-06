@@ -283,7 +283,10 @@ class EmployeeDashboard extends Component {
                 fallback={<Message>Fetching your availabilities...</Message>}
               >
                 {employee && employee.availabilities.length ? (
-                  <Availability availabilities={employee.availabilities} />
+                  <Availability
+                    availabilities={employee.availabilities}
+                    data-testid="dashboard-availabilities"
+                  />
                 ) : (
                   <Message>You have no availabilities to display.</Message>
                 )}
