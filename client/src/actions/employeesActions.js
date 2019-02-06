@@ -45,9 +45,9 @@ export const fetchEmployeesFromDB = (orgId, token) => dispatch => {
 }
 
 // fetches a single employee by user id
-export const fetchSingleEmployeeFromDB = (userid, token) => dispatch => {
+export const fetchSingleEmployeeFromDB = token => dispatch => {
   axios
-    .get(`${baseURL}/dashboard/${userid}`, {
+    .get(`${baseURL}/dashboard/`, {
       headers: { authorization: token }
     })
     .then(res =>

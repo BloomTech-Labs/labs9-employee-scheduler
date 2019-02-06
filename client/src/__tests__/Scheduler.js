@@ -66,16 +66,11 @@ describe('Scheduler', () => {
         if (path.match(new RegExp(`/organizations/${user.organization_id}`))) {
           return Promise.resolve({ data: organization })
         }
-      }
-    })
-
-    axios.post.mockImplementation(
-      (path, body, { headers: { authorization } }) => {
-        if (authorization === 'token') {
+        if (path.match(new RegExp(`/users/current`))) {
           return Promise.resolve({ data: user })
         }
       }
-    )
+    })
 
     // renders the component with both Redux and Router, with the route set
     // to the matching route for this component in App

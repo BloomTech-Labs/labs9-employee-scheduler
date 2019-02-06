@@ -120,10 +120,10 @@ class EmployeeDashboard extends Component {
   }
 
   fetchData() {
-    const { organization_id, id } = this.props.user
+    const { organization_id } = this.props.user
     this.props.fetchHoursFromDB(organization_id, this.props.token)
     this.props.fetchEmployeesFromDB(organization_id, this.props.token)
-    this.props.fetchSingleEmployeeFromDB(id, this.props.token)
+    this.props.fetchSingleEmployeeFromDB(this.props.token)
   }
 
   toggleCalView = () => {
