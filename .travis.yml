@@ -3,6 +3,7 @@ node_js:
   - 'node'
 services:
   - postgresql
+cache: yarn
 before_script:
   - createdb cadence
   - psql -c "create user \"cadence-team\" with password 'cadence-rocks!';" -U postgres -d cadence
