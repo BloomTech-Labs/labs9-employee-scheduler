@@ -88,10 +88,8 @@ An existing user wishes to login.
 ---
 **Name:** ​Login Page  
 **User type:** ​All  
-**Description:**  
-​Performs login authentication, redirects based on result  
-**Use Case:**  
-A user wants to login using proper credentials; malicious actors and others using
+**Description:** Performs login authentication, redirects based on result  
+**Use Case:** A user wants to login using proper credentials; malicious actors and others using
 bad credentials will be stopped.  
 
 ---
