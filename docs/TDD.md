@@ -301,16 +301,16 @@ preprocessing, emotion will enable us to write in a single language. Compared to
 component libraries like Material UI, emotion gives us the flexibility to create our own styling
 without succumbing to the demands of opinionated 3rd party software.
 
-## Back End
+# Back End
 
-**Solution: Node & Express**
-What problems does this solution solve for this specific project?:
+###Solution: Node & Express  
+**What problems does this solution solve for this specific project?:**
 - Provides a clean way for us to implement authentication, authorization, and CRUD
 actions to our database.
 - Node handles asynchronous as a first class citizen, which is well-suited for handling
-many requests in a performant way
-What are the costs of using this solution?
+many requests in a performant way  
 
+**What are the costs of using this solution?**  
 - Single threading means we will need to explicitly handle scaling issues
 - Modularity of npm and reliance on open source can expose vulnerabilities server side and
 requires diligent maintenance
