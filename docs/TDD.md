@@ -384,10 +384,10 @@ available from Heroku and Netlify
 **For each feature identified above, provide the following information:**      
 **Feature Name:** ​Landing Page  
 **What services, APIs, or platforms will you use to implement this feature?**  
--local assets
--Emotion 
--styling
--React  
+- local assets
+- Emotion 
+- styling
+- React  
 **What are the costs and benefits of using this solution?**  
 This is virtually free, as we have already taken on these dependencies. Costs are the need to
 implement, but given the customization needed this is equally a feature.    
@@ -395,7 +395,7 @@ implement, but given the customization needed this is equally a feature.
 
 **Feature Name:** ​ Registration Page / Login Page  
 **What services, APIs, or platforms will you use to implement this feature?**  
--Firebase for Authentication  
+- Firebase for Authentication  
 **What are the costs and benefits of using this solution?**  
 Relying on Google for security, and having a simplified JWT structure that plays nicely with
 the front and back end. Rely on openness of Firebase to allow users to authenticate via a
@@ -403,9 +403,9 @@ number of options
 
 **Feature Name:** ​ Schedule Now Button  
 **What services, APIs, or platforms will you use to implement this feature?**  
--React
--A value in Redux as to whether the user is logged in
--Firebase as described above
+- React
+- A value in Redux as to whether the user is logged in
+- Firebase as described above
 **What are the costs and benefits of using this solution?**
 Requires no special functionality, aside from checking that the user is logged in.
 
