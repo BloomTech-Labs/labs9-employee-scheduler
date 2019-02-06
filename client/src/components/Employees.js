@@ -13,12 +13,14 @@ import AvailabilityForm from './Availability/AvailabilityForm'
 import Button from './common/Button'
 import Modal from './Modal'
 import { Input } from './common/FormContainer'
-import ReactJoyride, { STATUS, EVENTS, ACTIONS } from 'react-joyride'
+import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
 import steps from './Demo/employees'
 import axios from 'axios'
+const baseURL = process.env.REACT_APP_SERVER_URL
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
+  mounted = true
   constructor(props) {
     super(props)
     this.state = {
@@ -28,21 +30,28 @@ class Employees extends Component {
       employees: props.employees,
       //react joyride demo steps
       steps: undefined, //check demo folder for steps
-      stepIndex: 0
+      stepIndex: 0,
+      isLoading: true
     }
   }
   componentDidMount() {
-    const { user, org_id, token, fetchEmployeesFromDB } = this.props
-    fetchEmployeesFromDB(org_id, token)
+    if (this.mounted) {
+      const { user, org_id, token, fetchEmployeesFromDB } = this.props
+      fetchEmployeesFromDB(org_id, token)
 
-    // load the demo steps
-    if (steps) this.setState({ steps })
-    // check if the user has completed the demo before
-    if (user && user.emp_visit === true) {
-      return this.setState({ run: true })
-    } else {
-      return this.setState({ run: false })
+      // load the demo steps
+      this.setState({ steps })
+      // check if the user has completed the demo before
+      if (user && user.emp_visit === true) {
+        return this.setState({ run: true })
+      } else {
+        return this.setState({ run: false })
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   updateAvail = user => {
@@ -74,59 +83,28 @@ class Employees extends Component {
 
   // joyride event handling, step index controls the position of the event
   handleJoyrideCallback = data => {
-    const { action, index, type, status } = data
+    const { action, index, status } = data
+
     const { user } = this.props
-    const baseURL = process.env.REACT_APP_SERVER_URL
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       // Need to set our running state to false, so we can restart if we click start again.
       this.setState({ run: false, stepIndex: 0 })
       axios
         .put(
           `${baseURL}/users/${user.id}`,
-          { emp_visit: false, cal_visit: false },
+          { cal_visit: false, emp_visit: false },
           {
             headers: { authorization: this.props.token }
           }
         )
         .then(res => this.props.updateUserSettings(this.props.token))
-        .catch(err => console.log(err))
-    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+        .catch(err => err)
+    } else {
+      // Update state to advance the tour
       const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
-
-      if (index === 0) {
-        setTimeout(() => {
-          this.setState({ run: true })
-        }, 400)
-      } else if (index === 1) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else if (index === 2 && action === ACTIONS.PREV) {
-        this.setState(
-          {
-            run: false,
-            stepIndex
-          },
-          () => {
-            setTimeout(() => {
-              this.setState({ run: true })
-            }, 400)
-          }
-        )
-      } else {
-        // Update state to advance the tour
-        this.setState({
-          stepIndex
-        })
-      }
+      this.setState({
+        stepIndex
+      })
     }
   }
 
@@ -154,7 +132,7 @@ class Employees extends Component {
             callback={this.handleJoyrideCallback}
             continuous
             run={run}
-            scrollToFirstStep
+            scrollToFirstStep={false}
             showProgress
             showSkipButton
             steps={steps}
