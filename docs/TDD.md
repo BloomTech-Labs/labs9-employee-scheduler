@@ -46,7 +46,7 @@ requests.
     on-boarding. Basic $3/user, Professional $6/user. Seems to be positioning for higher
     level, broader solutions, also scheduling as a strategic decision process.
 
-## Users
+# Users
 
 Your users are the reason you have a job. By serving their needs, you get paid. As a
 developer, you can help your designers create “little moments of wonder” as they interact with
@@ -55,35 +55,37 @@ photo library, will cement your users to you.
 To do this, you must understand who they are and how they interact with your application. This
 understanding will also have a direct impact on many elements of your technical solution,
 particularly your user accounts, database type and structure, and APIs or services required to
-meet your users’ needs.
-**How many types of user accounts will you need for this project? For** ​
-**each user account
-type** ​ **, answer the following:
-Account Type: Owner / Superuser
-Description:** ​Superuser account(s) are used by the business owner(s) in order to perform HR
-tasks, such as hiring and firing employees.
-**Needs:**
+meet your users’ needs.  
+
+---  
+###Account Type: Owner / Superuser  
+**Description:**  
+Superuser account(s) are used by the business owner(s) in order to perform HR
+tasks, such as hiring and firing employees.  
+**Needs:**  
 ​Add/remove managers and employees; view, create, edit, save and delete all data on
-the site.
-**Account Type: Supervisor
-Description:** ​Can create new employees and set the schedule for them.
-**Needs:**
+the site.  
+
+---
+### Account Type: Supervisor 
+**Description:** ​Can create new employees and set the schedule for them.  
+**Needs:**  
 ​View, create, edit, and delete employees information (name, phone etc) and create edit
 and delete the schedule.
-**Account Type: Employee**
 
-
-**Description:**
+---
+### Account Type: Employee  
+**Description:**  
 ​Employees need to be able to communicate their availability in advance, to ensure
 they can get scheduled without unnecessary conflicts. They can also request time off in
 advance. The interface allows them to see whether requests and schedules are pending, or
-have been accepted.
+have been accepted.  
 
-**Needs:**
+**Needs:**  
 ​Can access schedules to which they are assigned, request time off, provide availability.
-Can change some personal information.
+Can change some personal information.  
 
-# Description of Features
+# Description of Features  
 
 ---
 **Name:** ​Landing Page  
