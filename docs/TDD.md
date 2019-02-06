@@ -633,7 +633,7 @@ and tested, which takes time.
 
 ---
 **Elevator Sentence:**  
-Employee Scheduler [Brand Name TBD] is an application that solves the problem of
+Employee Scheduler **Cadence** is an application that solves the problem of
 employee shift scheduling by allowing supervisors to assign shifts to employees. Employees
 will be able to request time off in a live environment that will transfer directly to the managers
 schedule view.
