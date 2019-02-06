@@ -381,11 +381,11 @@ available from Heroku and Netlify
 
 ## Features
 
-**For** ​ **each feature identified above** ​ **, provide the following information.
-Name:** ​Landing Page
+**For each feature identified above, provide the following information**
+Name:** ​Landing Page  
 **What services, APIs, or platforms will you use to implement this feature?:**
 This will use local assets, Emotion styling, and React.
-**What are the costs and benefits of using this solution?**
+**What are the costs and benefits of using this solution?**  
 This is virtually free, as we have already taken on these dependencies. Costs are the need to
 implement, but given the customization needed this is equally a feature.
 **Feature Name:** ​ Registration Page / Login Page
