@@ -13,4 +13,4 @@ script:
   - yarn test:once --forceExit
   - cd client
   - yarn install
-  - yarn test
+  - yarn test:CI
