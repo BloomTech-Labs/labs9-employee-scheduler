@@ -589,7 +589,7 @@ This relies on the core components of our tech stack.
 **What services, APIs, or platforms will you use to implement this feature?**  
 - Stripe API  
 
-**What are the costs and benefits of using this solution?**
+**What are the costs and benefits of using this solution?**  
 Allows us to take payments from users with a widely used API  
 
 ---
