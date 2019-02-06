@@ -102,7 +102,7 @@ class PrivateRoute extends React.Component {
 PrivateRoute.propTypes = {
   user: PropTypes.object,
   error: PropTypes.string,
-  component: PropTypes.func,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   access: PropTypes.string
 }
 
