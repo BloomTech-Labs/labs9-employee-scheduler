@@ -12,13 +12,15 @@ before beginning work on the code base.
 As a developer, you are not directly responsible for the design of your project, but it is very
 important that you understand it. The best developers are those that can help the team bridge
 the gap between a skeleton outlining an idea, and a real, written, and usable application.
-Write three to five sentences explaining each of the following questions:
-**What problem does this application solve?**
+Write three to five sentences explaining each of the following questions: 
+
+**What problem does this application solve?**  
 Cadence is an enterprise SaaS application that allows supervisors to schedule their employees’
 shifts at work. It enables managers to see their employees’ availability and paid time off at a
 glance. It also allows employees to see their own shifts and PTO, as well as to make PTO
-requests.
-**Who are your competitors and how do they solve this problem? List at least three.**
+requests.  
+
+**Who are your competitors and how do they solve this problem?**  
 
 1. Sling: Sling is a design-led shift scheduling SaaS product priced at $2 / user / month. Its
     core functionality includes shift scheduling, clock-in and -out, and labor costing. Notably,
@@ -58,7 +60,7 @@ particularly your user accounts, database type and structure, and APIs or servic
 meet your users’ needs.  
 
 ---  
-###Account Type: Owner / Superuser  
+### Account Type: Owner / Superuser  
 **Description:**  
 Superuser account(s) are used by the business owner(s) in order to perform HR
 tasks, such as hiring and firing employees.  
@@ -85,9 +87,10 @@ have been accepted.
 ​Can access schedules to which they are assigned, request time off, provide availability.
 Can change some personal information.  
 
+---
+
 # Description of Features  
 
----
 **Name:** ​Landing Page  
 **User type:** ​All  
 **Description:**  
@@ -446,7 +449,7 @@ not a fully contained model that can be painlessly transferred
 - Implementation must be friendly to the underlying hardware and operating systems
 available from Heroku and Netlify 
 
-# Features
+# Implementation of Features
 ---
 ### ​Landing Page  
 
