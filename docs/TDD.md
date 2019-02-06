@@ -61,30 +61,25 @@ meet your users’ needs.
 
 ---  
 ### Account Type: Owner / Superuser  
-**Description:**  
-Superuser account(s) are used by the business owner(s) in order to perform HR
+**Description:** Superuser account(s) are used by the business owner(s) in order to perform HR
 tasks, such as hiring and firing employees.  
-**Needs:**  
-​Add/remove managers and employees; view, create, edit, save and delete all data on
+**Needs:** Add/remove managers and employees; view, create, edit, save and delete all data on
 the site.  
 
 ---
 ### Account Type: Supervisor 
 **Description:** ​Can create new employees and set the schedule for them.  
-**Needs:**  
-​View, create, edit, and delete employees information (name, phone etc) and create edit
+**Needs:** View, create, edit, and delete employees information (name, phone etc) and create edit
 and delete the schedule.
 
 ---
 ### Account Type: Employee  
-**Description:**  
-​Employees need to be able to communicate their availability in advance, to ensure
+**Description:**  ​Employees need to be able to communicate their availability in advance, to ensure
 they can get scheduled without unnecessary conflicts. They can also request time off in
 advance. The interface allows them to see whether requests and schedules are pending, or
 have been accepted.  
 
-**Needs:**  
-​Can access schedules to which they are assigned, request time off, provide availability.
+**Needs:** Can access schedules to which they are assigned, request time off, provide availability.
 Can change some personal information.  
 
 ---
