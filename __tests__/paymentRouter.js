@@ -11,7 +11,7 @@ describe('testing payments router', () => {
     const response = await request
       .post('/stripe')
       .send({
-        token: 'tok_visa',
+        token: { id: 'tok_visa' },
         email: 'testy@testyMcTestyface.com',
         org_id: '9126df31-2607-4166-9c0c-d0a300c59c62' // cadence org id from seeds
       })

@@ -29,7 +29,9 @@ router.post('/', authorize(['owner']), (req, res, next) => {
             ]
           },
           (err, subscription) => {
+            console.log('got subscription')
             if (err) {
+              console.log(err)
               res.status(500).json({ message: 'Failed to subscribe', err })
             } else {
               updateOrg(org_id, {
@@ -40,7 +42,10 @@ router.post('/', authorize(['owner']), (req, res, next) => {
                 .then(res => {
                   res.status(201).send('Success')
                 })
-                .catch(err => res.status(500).send(err))
+                .catch(err => {
+                  console.log('failed at the db')
+                  res.status(500).send(err)
+                })
             }
           }
         )
