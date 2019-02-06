@@ -17,14 +17,9 @@ admin.initializeApp({
 //checks to see if there is a token and verifies it
 const authenticate = (req, res, next) => {
   const idToken = req.headers.authorization
-  // this is a testing convenience to allow testing while firebase
-  // is in process. It must be removed for production environment
-  if (idToken && idToken === 'testing') {
-    console.log(
-      'This authentication middleware has a testing loophole that must be removed in production'
-    )
 
-    // for testing authorize middleware
+  // authenication loophole for tests
+  if (process.env.NODE_ENV === 'test' && idToken && idToken === 'testing') {
     if (req.headers.user === 'new_id') {
       req.user = { id: uuid() }
     } else if (req.headers.user === 'owner' || !req.headers.user) {
@@ -37,6 +32,7 @@ const authenticate = (req, res, next) => {
 
     return next()
   }
+
   if (idToken) {
     admin
       .auth()
