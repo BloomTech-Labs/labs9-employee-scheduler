@@ -85,12 +85,14 @@ describe('employee dashboard with redux', () => {
 
     // renders the App with both Redux and Router, with the route set
     // to the matching route for this component in App
-    const { getByTestId, getByText, history } = renderWithReduxAndRouter(
-      <App />,
-      {
-        route: `/dashboard/${employee.id}`
-      }
-    )
+    const {
+      getByTestId,
+      getByText,
+      history,
+      container
+    } = renderWithReduxAndRouter(<App />, {
+      route: `/dashboard/${employee.id}`
+    })
 
     // since axios and redux thunk are asyncronous, this waits for the page to
     // register changes from ComponentDidMount before proceeding with tests
@@ -122,5 +124,14 @@ describe('employee dashboard with redux', () => {
       .local()
       .format('MMM Do')
     expect(getByTestId('employeeShifts').textContent).toMatch(date)
+
+    //testing calendar
+    const scheduledName = employee.last_name
+
+    const cal = await waitForElement(() =>
+      container.querySelector('.rbc-calendar')
+    )
+
+    expect(cal.textContent).toMatch(scheduledName)
   })
 })
