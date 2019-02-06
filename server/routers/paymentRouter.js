@@ -35,9 +35,9 @@ router.post('/', authorize(['owner']), (req, res, next) => {
                 paid: true
               })
                 .then(res => {
-                  res.send('Success')
+                  res.status(201).send('Success')
                 })
-                .catch(err => res.send(err))
+                .catch(err => res.status(500).send(err))
             }
           }
         )
