@@ -138,6 +138,6 @@ describe('Login Component', () => {
 
     await waitForElement(() => container.querySelector('.rbc-calendar'))
 
-    expect([queryByText(/sign in/i), container]).toBeNull()
+    expect(queryByText(/sign in/i)).toBeNull()
   })
 })
