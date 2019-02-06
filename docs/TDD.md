@@ -50,15 +50,6 @@ requests.
 
 # Users
 
-Your users are the reason you have a job. By serving their needs, you get paid. As a
-developer, you can help your designers create “little moments of wonder” as they interact with
-your product. These touches, such as pictures moving when you swipe through an iPhone’s
-photo library, will cement your users to you.
-To do this, you must understand who they are and how they interact with your application. This
-understanding will also have a direct impact on many elements of your technical solution,
-particularly your user accounts, database type and structure, and APIs or services required to
-meet your users’ needs.  
-
 ---  
 ### Account Type: Owner / Superuser  
 **Description:** Superuser account(s) are used by the business owner(s) in order to perform HR
