@@ -161,7 +161,7 @@ describe('employee dashboard with redux', () => {
       'Friday',
       'Saturday'
     ]
-    console.log(avails.length)
+
     employee.availabilities.forEach(avail => {
       const dayNum = utcDayToLocal({ day: avail.day, time: avail.start_time })
       const dayName = dayNames[dayNum]
