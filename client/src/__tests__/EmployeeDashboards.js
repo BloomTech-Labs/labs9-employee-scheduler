@@ -5,7 +5,7 @@ import {
   setupStripeNode,
   getAllByTestId
 } from '../../testing/utils'
-import { inRolloverZone, decrementDay, formatHours } from '../utils'
+import { utcDayToLocal, decrementDay, formatHours } from '../utils'
 import App from '../App'
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
@@ -87,6 +87,7 @@ describe('employee dashboard with redux', () => {
     const {
       getByTestId,
       getByText,
+      getAllByTestId,
       history,
       container
     } = renderWithReduxAndRouter(<App />, {
@@ -143,34 +144,34 @@ describe('employee dashboard with redux', () => {
       .format('MM / DD')
     expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
 
+    // expect(container).toBe(null)
+
     // testing to make sure availabilities are visible
-    await waitForElement(() => {
-      getByTestId('availability-day')
+
+    const avails = await waitForElement(() =>
+      getAllByTestId('availability_day')
+    )
+
+    const dayNames = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ]
+    console.log(avails.length)
+    employee.availabilities.forEach(avail => {
+      const dayNum = utcDayToLocal({ day: avail.day, time: avail.start_time })
+      const dayName = dayNames[dayNum]
+      const start = formatHours(avail.start_time)
+      const end = formatHours(avail.end_time)
+
+      const dateString = avail.off ? 'unavailable' : `${start} - ${end}`
+
+      expect(avails[dayNum].textContent).toMatch(dayName)
+      expect(avails[dayNum].textContent).toMatch(dateString)
     })
-    // const availContainer = getByTestId('dashboard-availabilities')
-    // const avails = getAllByTestId(availContainer, 'availability-day')
-
-    // const dayNames = [
-    //   'Sunday',
-    //   'Monday',
-    //   'Tuesday',
-    //   'Wednesday',
-    //   'Thursday',
-    //   'Friday',
-    //   'Saturday'
-    // ]
-    // employee.availabilities.forEach(avail => {
-    //   const dayNum = inRolloverZone(avail.start_time)
-    //     ? decrementDay(avail.day)
-    //     : avail.day
-    //   const dayName = dayNames[dayNum]
-    //   const start = formatHours(avail.start_time)
-    //   const end = formatHours(avail.end_time)
-
-    //   const dateString = `${start} - ${end}`
-
-    //   expect(avails[dayNum]).toMatch(dayName)
-    //   expect(avails[dayNum]).toMatch(dateString)
-    // })
   })
 })

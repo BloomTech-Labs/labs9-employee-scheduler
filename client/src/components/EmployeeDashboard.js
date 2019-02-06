@@ -275,7 +275,7 @@ class EmployeeDashboard extends Component {
               )}
             </Card>
 
-            <Card className="tof-wrapper">
+            <Card className="tof-wrapper" data-testid="dashboardAvails">
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>
@@ -283,10 +283,7 @@ class EmployeeDashboard extends Component {
                 fallback={<Message>Fetching your availabilities...</Message>}
               >
                 {employee && employee.availabilities.length ? (
-                  <Availability
-                    availabilities={employee.availabilities}
-                    data-testid="dashboard-availabilities"
-                  />
+                  <Availability availabilities={employee.availabilities} />
                 ) : (
                   <Message>You have no availabilities to display.</Message>
                 )}
