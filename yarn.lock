@@ -1140,6 +1140,13 @@ debug@4.1.0:
   dependencies:
     ms "^2.1.1"
 
+debug@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 debug@=3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
@@ -3722,7 +3729,15 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 
-nodemailer@^5.1.1:
+nodemailer-mock@^1.3.15:
+  version "1.3.15"
+  resolved "https://registry.yarnpkg.com/nodemailer-mock/-/nodemailer-mock-1.3.15.tgz#4bfa1c51d46f15fdfeeeb1bfbd29eab00301ab49"
+  integrity sha512-aOp7RoWC/AIVVawfIHZ2DCrti9EXIqk6CFrZuk0r+9U+VYjMcTvyHlB2OO/FvinuJHKAcHyaQg4eAJUNdMZpIQ==
+  dependencies:
+    debug "4.1.1"
+    nodemailer "5.1.1"
+
+nodemailer@5.1.1, nodemailer@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-5.1.1.tgz#0c48d1ecab02e86d9ff6c620ee75ed944b763505"
 
