@@ -85,8 +85,7 @@ Can change some personal information.
 
 # Description of Features
 
-
-<!-- **the features found in your spec and answer the following:** -->
+---
 **Name:** ​Landing Page  
 **User type:** ​All  
 **Description:**  
@@ -97,6 +96,7 @@ A prospective user is seeking shift scheduling software so they come to our land
 page to learn more about our specific value proposition and potentially register for our product.
 An existing user wishes to login.  
 
+---
 **Name:** ​Login Page  
 **User type:** ​All  
 **Description:**  
@@ -105,6 +105,7 @@ An existing user wishes to login.
 A user wants to login using proper credentials; malicious actors and others using
 bad credentials will be stopped.  
 
+---
 **Name:** ​Registration Page  
 **User type:** ​All  
 **Description:**  
@@ -114,6 +115,7 @@ owners. Need to figure out who creates accounts?
 A new employee needs an account, that needs to get created. New owner sets up
 own account and organization. Supervisors get registered  
 
+---
 **Name:** ​Schedule Now Button  
 **User type:** ​Mixed  
 **Description:** ​  
@@ -122,7 +124,7 @@ Only shows up if logged in.
 **Use Case:** ​ 
 A user is logged in and wants to use the scheduling functionality of the app.  
 
-
+---
 **Name:** ​Hours of Operation Modal  
 **User type:** ​Supervisor / Owner  
 **Description:** ​  
@@ -130,6 +132,7 @@ Hours of Operation Modal - ​ask Brian what this is.
 **Use Case:** ​ 
 Shows hours if if operation.  
 
+---
 **Name:** ​Left Bar  
 **User type:** ​All (with limitations based on role)  
 **Description:**   
@@ -137,6 +140,7 @@ Slide out drawer sidebar that includes user menu/settings options.
 **Use Case:** ​ 
 User will have a list of options to choose and navigate through the site.  
 
+---
 **Name:** ​Top Bar  
 **User type:** ​All  
 **Description:** ​ 
@@ -144,6 +148,7 @@ Minimalist top bar containing navigation help (e.g. home button) and sign out
 **Use Case:** ​ 
 A user wishes to navigate back home or to sign out of our application.  
 
+---
 **Name:** ​Calendar display  
 **User type:** ​All  
 **Description:** ​ 
@@ -151,6 +156,7 @@ Employee schedule is shown in a calendar format.
 **Use Case:** ​ 
 Show off what is scheduled currently.  
 
+---
 **Name:** ​ Calendar Data Entry -- add / delete shifts  
 **User type:** ​Supervisor, Owner  
 **Description:** ​ 
@@ -158,6 +164,7 @@ Schedulers can add or delete shifts by dragging and dropping
 **Use Case:** ​ 
 Employers can schedule employees through drag and drop.  
 
+---
 **Name:** ​ Calendar Data Entry -- move/edit shifts  
 **User type:** ​Supervisor, Owner  
 **Description:** ​ 
@@ -166,6 +173,7 @@ Also a modal for text editing?
 **Use Case:** ​ 
 Employers can schedule employees through drag and drop.  
 
+---
 **Name:** ​Daily Summary  
 **User type:** ​Supervisor, Owner  
 **Description:** ​  
@@ -174,6 +182,7 @@ whether a day is fully scheduled / aka done?
 **Use Case:** ​  
 Allows a scheduler to see at a glance the important stats for a day  
 
+---
 **Name:** ​Employee List  
 **User type:** ​Admin  
 **Description:** ​  
@@ -183,6 +192,7 @@ availability and a box showing time off.
 In the shift scheduler page shows supervisor all of the employees with their
 availability and time off.
 
+---
 **Name:** ​ Time off dialogues  
 **User type:** ​Manager, Owner  
 **Description:** ​ 
@@ -190,6 +200,7 @@ View all employees and their availability
 **Use Case:**  
  ​Makes scheduling a lot easier
 
+---
 **Name:** ​Availability window  
 **User type:** ​Manager, Owner 
 **Description:** ​  
@@ -197,6 +208,7 @@ Supervisors see an aside menu with the availability of their employees
 **Use Case:** ​ 
 Supervisors pick employees from this list to drop their names for work schedule.
 
+---
 **Name:** ​Employee Shift View  
 **User type:** ​Employee  
 **Description:** ​ 
@@ -204,6 +216,7 @@ Shows employ shifts
 **Use Case:** ​ 
 Employees will quickly be able to see scheduled shift days.
 
+---
 **Name:** ​Admin Employees  
 **User type:** ​Supervisor, Owner  
 **Description:** ​ 
@@ -211,6 +224,7 @@ Shows approved time off
 **Use Case:** ​ 
 Supervisor can easily see when employees have approved time off.  
 
+---
 **Name:** ​Add Employee  
 **User type:** ​Supervisor, Owner  
 **Description:** ​ 
@@ -218,6 +232,7 @@ Supervisor or owner can add an employee’s details
 **Use Case:** ​ 
 As new employees join, they needed to be added to the shift scheduling platform.
 
+---
 **Name:** ​Payment form  
 **User type:** ​Owner  
 **Description:** ​ 
@@ -225,6 +240,7 @@ Billing info
 **Use Case:** ​ 
 Pay the bill for using the app
 
+---
 **Name:** ​Checkbox for Recurring Payment  
 **User type:** ​Owner  
 **Description:** ​ 
@@ -232,6 +248,7 @@ A checkbox in the payment dialog​ (Stripe integration)
 **Use Case:** ​ 
 Allows owner to select a recurring payment option when checking out.
 
+---
 **Name:** ​Input Email / Phone  
 **User type:** ​employee  
 **Description:** ​ 
@@ -241,6 +258,7 @@ can update the values.
 User can update their email and phone information so that the supervisor can
 contact them with schedule information.
 
+---
 **Name:** ​Select Emails / Text Preference  
 **User type:** ​employee  
 **Description:** ​ 
@@ -249,6 +267,7 @@ Two checkmark boxes in the settings page, one for emails and one for text.
 Employees can select email and/or text, indicating to their supervisor how they
 would like to review updates on the schedule.  
 
+---
 **Name:** ​Edit password  
 **User type:** ​Owner/supervisor/employee  
 **Description:**  ​
@@ -257,6 +276,7 @@ confirm the password, and a button to submit the password.
 **Use Case:** ​ 
 Allows users to to change their password.  
 
+---
 **Name:** ​Time off request  
 **User type:** ​Employees  
 **Description:** ​ 
@@ -264,11 +284,13 @@ Employee requested time off
 **Use Case:** ​ 
 Employees can see times they have requested off  
 
+---
 **Name:** ​Pricing confirmation  
 **User type:** ​Owner  
 **Description:** ​pricing confirmation  
 **Use Case:** ​Shows the user how much they are going to be charged  
 
+---
 **Name:** ​Time Off Approval  
 **User type:** ​Employee  
 **Description:** ​ 
@@ -277,6 +299,7 @@ Visual display of whether PTO request is approved, denied, or pending
 Employees should be able to see the status of their PTO requests, so they can
 follow up or not in an appropriate manner.  
 
+---
 ## User Story
 
 A user story is what it sounds like. A narrative, written from the perspective of a user that
