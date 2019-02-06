@@ -12,7 +12,15 @@ describe('testing payments router', () => {
     expect(true)
   })
 
-  it('puts a change to the subscription', async () => {
+  it('fails to post with an invalid token', async () => {
+    expect(true)
+  })
+
+  it('puts a cancel to the subscription', async () => {
+    expect(true)
+  })
+
+  it('fails to cancel with wrong user role', async () => {
     expect(true)
   })
 })
