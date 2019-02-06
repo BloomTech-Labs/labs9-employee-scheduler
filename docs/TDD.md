@@ -83,157 +83,199 @@ have been accepted.
 ​Can access schedules to which they are assigned, request time off, provide availability.
 Can change some personal information.
 
-## Features
+# Description of Features
 
-Features are how your app solves your users needs. A Minimally Viable Product (MVP) is the
-smallest set of features that can deliver a useful experience to your users. It is important that
-you understand the features in your design including what they are and how your users will
-interact with them.
 
-**List** ​ **all** ​
-**the features found in your spec and answer the following:**
-**Name:** ​Landing Page
-**User type:** ​All
-**Description:**
+<!-- **the features found in your spec and answer the following:** -->
+**Name:** ​Landing Page  
+**User type:** ​All  
+**Description:**  
  ​Marketing site for existing and prospective users, contains login and registration
-buttons to access software
-**Use Case:** ​A prospective user is seeking shift scheduling software so they come to our landing
+buttons to access software  
+**Use Case:**  
+A prospective user is seeking shift scheduling software so they come to our landing
 page to learn more about our specific value proposition and potentially register for our product.
-An existing user wishes to login.
+An existing user wishes to login.  
 
-**Name:** ​Login Page
-**User type:** ​All
-**Description:** ​Performs login authentication, redirects based on result
-**Use Case:** ​A user wants to login using proper credentials; malicious actors and others using
-bad credentials will be stopped.
+**Name:** ​Login Page  
+**User type:** ​All  
+**Description:**  
+​Performs login authentication, redirects based on result  
+**Use Case:**  
+A user wants to login using proper credentials; malicious actors and others using
+bad credentials will be stopped.  
 
-**Name:** ​Registration Page
-**User type:** ​All
-**Description:** ​Allows for creation of new users, organizations, ​possibly need roles assigned by
-owners. Need to figure out who creates accounts?
-**Use Case:** ​A new employee needs an account, that needs to get created. New owner sets up
-own account and organization. Supervisors get registered
+**Name:** ​Registration Page  
+**User type:** ​All  
+**Description:**  
+Allows for creation of new users, organizations, ​possibly need roles assigned by
+owners. Need to figure out who creates accounts?  
+**Use Case:** ​ 
+A new employee needs an account, that needs to get created. New owner sets up
+own account and organization. Supervisors get registered  
 
-**Name:** ​Schedule Now Button
-**User type:** ​Mixed
-**Description:** ​Takes owner/supervisor to schedule page, takes employee to employee page.
-Only shows up if logged in.
-**Use Case:** ​A user is logged in and wants to use the scheduling functionality of the app
+**Name:** ​Schedule Now Button  
+**User type:** ​Mixed  
+**Description:** ​  
+Takes owner/supervisor to schedule page, takes employee to employee page.
+Only shows up if logged in.  
+**Use Case:** ​ 
+A user is logged in and wants to use the scheduling functionality of the app.  
 
 
-**Name:** ​Hours of Operation Modal
-**User type:** ​Supervisor / Owner
-**Description:** ​Hours of Operation Modal - ​ask Brian what this is.
-**Use Case:** ​Shows hours if if operation
+**Name:** ​Hours of Operation Modal  
+**User type:** ​Supervisor / Owner  
+**Description:** ​  
+Hours of Operation Modal - ​ask Brian what this is.  
+**Use Case:** ​ 
+Shows hours if if operation.  
 
-**Name:** ​Left Bar
-**User type:** ​All (with limitations based on role)
-**Description:** ​Slide out drawer sidebar that includes user menu/settings options
-**Use Case:** ​User will have a list of options to choose and navigate through the site.
+**Name:** ​Left Bar  
+**User type:** ​All (with limitations based on role)  
+**Description:**   
+Slide out drawer sidebar that includes user menu/settings options.  
+**Use Case:** ​ 
+User will have a list of options to choose and navigate through the site.  
 
-**Name:** ​Top Bar
-**User type:** ​All
-**Description:** ​Minimalist top bar containing navigation help (e.g. home button) and sign out
-**Use Case:** ​A user wishes to navigate back home or to sign out of our application.
+**Name:** ​Top Bar  
+**User type:** ​All  
+**Description:** ​ 
+Minimalist top bar containing navigation help (e.g. home button) and sign out  
+**Use Case:** ​ 
+A user wishes to navigate back home or to sign out of our application.  
 
-**Name:** ​Calendar display
-**User type:** ​All
-**Description:** ​Employee schedule is shown in a calendar format
-**Use Case:** ​Show off what is scheduled currently
+**Name:** ​Calendar display  
+**User type:** ​All  
+**Description:** ​ 
+Employee schedule is shown in a calendar format.  
+**Use Case:** ​ 
+Show off what is scheduled currently.  
 
-**Name:** ​ Calendar Data Entry -- add / delete shifts
-**User type:** ​Supervisor, Owner
-**Description:** ​Schedulers can add or delete shifts by dragging and dropping
-**Use Case:** ​Employers can schedule employees through drag and drop.
+**Name:** ​ Calendar Data Entry -- add / delete shifts  
+**User type:** ​Supervisor, Owner  
+**Description:** ​ 
+Schedulers can add or delete shifts by dragging and dropping  
+**Use Case:** ​ 
+Employers can schedule employees through drag and drop.  
 
-**Name:** ​ Calendar Data Entry -- move/edit shifts
-**User type:** ​Supervisor, Owner
-**Description:** ​Schedulers can change shifts by dragging extremities, or dragging entire block.
-Also a modal for text editing?
-**Use Case:** ​Employers can schedule employees through drag and drop.
+**Name:** ​ Calendar Data Entry -- move/edit shifts  
+**User type:** ​Supervisor, Owner  
+**Description:** ​ 
+Schedulers can change shifts by dragging extremities, or dragging entire block.
+Also a modal for text editing?  
+**Use Case:** ​ 
+Employers can schedule employees through drag and drop.  
 
-**Name:** ​Daily Summary
-**User type:** ​Supervisor, Owner
-**Description:** ​Shows the total employees and time scheduled for a day. ​Also some test for
-whether a day is fully scheduled / aka done?
-**Use Case:** ​Allows a scheduler to see at a glance the important stats for a day
+**Name:** ​Daily Summary  
+**User type:** ​Supervisor, Owner  
+**Description:** ​  
+Shows the total employees and time scheduled for a day. ​Also some test for
+whether a day is fully scheduled / aka done?  
+**Use Case:** ​  
+Allows a scheduler to see at a glance the important stats for a day  
 
-**Name:** ​Employee List
-**User type:** ​Admin
-**Description:** ​A column listing employees. For each employee, there is a box showing
+**Name:** ​Employee List  
+**User type:** ​Admin  
+**Description:** ​  
+A column listing employees. For each employee, there is a box showing
 availability and a box showing time off.
-**Use Case:** ​In the shift scheduler page shows supervisor all of the employees with their
+**Use Case:** ​ 
+In the shift scheduler page shows supervisor all of the employees with their
 availability and time off.
 
-**Name:** ​ Time off dialogues
-**User type:** ​Manager, Owner
-**Description:** ​View all employees and their availability
-**Use Case:** ​Makes scheduling a lot easier
+**Name:** ​ Time off dialogues  
+**User type:** ​Manager, Owner  
+**Description:** ​ 
+View all employees and their availability
+**Use Case:**  
+ ​Makes scheduling a lot easier
 
-**Name:** ​Availability window
-**User type:** ​Manager, Owner
-**Description:** ​Supervisors see an aside menu with the availability of their employees
-**Use Case:** ​Supervisors pick employees from this list to drop their names for work schedule.
+**Name:** ​Availability window  
+**User type:** ​Manager, Owner 
+**Description:** ​  
+Supervisors see an aside menu with the availability of their employees
+**Use Case:** ​ 
+Supervisors pick employees from this list to drop their names for work schedule.
 
-**Name:** ​Employee Shift View
-**User type:** ​Employee
-**Description:** ​Shows employ shifts
-**Use Case:** ​Employees will quickly be able to see scheduled shift days.
+**Name:** ​Employee Shift View  
+**User type:** ​Employee  
+**Description:** ​ 
+Shows employ shifts
+**Use Case:** ​ 
+Employees will quickly be able to see scheduled shift days.
 
-**Name:** ​Admin Employees
-**User type:** ​Supervisor, Owner
-**Description:** ​Shows approved time off
-**Use Case:** ​Supervisor can easily see when employees have approved time off.
+**Name:** ​Admin Employees  
+**User type:** ​Supervisor, Owner  
+**Description:** ​ 
+Shows approved time off
+**Use Case:** ​ 
+Supervisor can easily see when employees have approved time off.  
 
-**Name:** ​Add Employee
-**User type:** ​Supervisor, Owner
-**Description:** ​Supervisor or owner can add an employee’s details
-**Use Case:** ​As new employees join, they needed to be added to the shift scheduling platform.
+**Name:** ​Add Employee  
+**User type:** ​Supervisor, Owner  
+**Description:** ​ 
+Supervisor or owner can add an employee’s details
+**Use Case:** ​ 
+As new employees join, they needed to be added to the shift scheduling platform.
 
-**Name:** ​Payment form
-**User type:** ​Owner
-**Description:** ​Billing info
-**Use Case:** ​Pay the bill for using the app
+**Name:** ​Payment form  
+**User type:** ​Owner  
+**Description:** ​ 
+Billing info
+**Use Case:** ​ 
+Pay the bill for using the app
 
-**Name:** ​Checkbox for Recurring Payment
-**User type:** ​Owner
-**Description:** ​A checkbox in the payment dialog​ (Stripe integration)
-**Use Case:** ​Allows owner to select a recurring payment option when checking out.
+**Name:** ​Checkbox for Recurring Payment  
+**User type:** ​Owner  
+**Description:** ​ 
+A checkbox in the payment dialog​ (Stripe integration)
+**Use Case:** ​ 
+Allows owner to select a recurring payment option when checking out.
 
-**Name:** ​Input Email / Phone
-**User type:** ​employee
-**Description:** ​On the settings page two boxes, one for email and one for phone, where the user
+**Name:** ​Input Email / Phone  
+**User type:** ​employee  
+**Description:** ​ 
+On the settings page two boxes, one for email and one for phone, where the user
 can update the values.
-**Use Case:** ​User can update their email and phone information so that the supervisor can
+**Use Case:** ​ 
+User can update their email and phone information so that the supervisor can
 contact them with schedule information.
 
-**Name:** ​Select Emails / Text Preference
-**User type:** ​employee
-**Description:** ​Two checkmark boxes in the settings page, one for emails and one for text.
-**Use Case:** ​Employees can select email and/or text, indicating to their supervisor how they
-would like to review updates on the schedule.
+**Name:** ​Select Emails / Text Preference  
+**User type:** ​employee  
+**Description:** ​ 
+Two checkmark boxes in the settings page, one for emails and one for text.
+**Use Case:** ​ 
+Employees can select email and/or text, indicating to their supervisor how they
+would like to review updates on the schedule.  
 
-**Name:** ​Edit password
-**User type:** ​Owner/supervisor/employee
-**Description:** ​Two boxes that allow a user to enter their new desired password, a second box to
-confirm the password, and a button to submit the password.
-**Use Case:** ​Allows users to to change their password.
+**Name:** ​Edit password  
+**User type:** ​Owner/supervisor/employee  
+**Description:**  ​
+Two boxes that allow a user to enter their new desired password, a second box to
+confirm the password, and a button to submit the password.  
+**Use Case:** ​ 
+Allows users to to change their password.  
 
-**Name:** ​Time off request
-**User type:** ​Employees
-**Description:** ​Employee requested time off
-**Use Case:** ​Employees can see times they have requested off
+**Name:** ​Time off request  
+**User type:** ​Employees  
+**Description:** ​ 
+Employee requested time off  
+**Use Case:** ​ 
+Employees can see times they have requested off  
 
-**Name:** ​Pricing confirmation
-**User type:** ​Owner
-**Description:** ​pricing confirmation
-**Use Case:** ​Shows the user how much they are going to be charged
+**Name:** ​Pricing confirmation  
+**User type:** ​Owner  
+**Description:** ​pricing confirmation  
+**Use Case:** ​Shows the user how much they are going to be charged  
 
-**Name:** ​Time Off Approval
-**User type:** ​Employee
-**Description:** ​Visual display of whether PTO request is approved, denied, or pending
-**Use Case:** ​Employees should be able to see the status of their PTO requests, so they can
-follow up or not in an appropriate manner.
+**Name:** ​Time Off Approval  
+**User type:** ​Employee  
+**Description:** ​ 
+Visual display of whether PTO request is approved, denied, or pending  
+**Use Case:** ​ 
+Employees should be able to see the status of their PTO requests, so they can
+follow up or not in an appropriate manner.  
 
 ## User Story
 
@@ -286,7 +328,7 @@ institutional support for React ecosystem, and avoidance of small libraries
 - Will break app if client disallows JS from running  
 
 
-**What will you be using for styling and presentation?**
+**What will you be using for styling and presentation?**  
 Emotion is a high-performance, lightweight css-in-js library. It aims to minimize the
 runtime cost of css-in-js by parsing styles with Babel and PostCSS. It is 25x faster than styled
 components when using dynamic props. Kent C. Dodds, the author of glamorous, is considering
