@@ -423,17 +423,19 @@ A reusable modal can be used wherever we need it, and redux will maintain a sing
 **What services, APIs, or platforms will you use to implement this feature?**  
 - React Pose for animation
 - Emotion for styling
-- Flexbox to lay out elements  
+- Flexbox to lay out elements   
+
 **What are the costs and benefits of using this solution?**  
 Animations for the left bar will improve UX for the users, and Pose is a developer-friendly
 animation library. Styling will proceed per best practices for navigational elements.    
 
-**Name:** ​Calendar Display Presentation and CRUD
-**What services, APIs, or platforms will you use to implement this feature?**
-Display will rely on the React Big Calendar library. Backend will be implemented using
+**Name:Calendar Display Presentation and CRUD**  
+**What services, APIs, or platforms will you use to implement this feature?**  
+- Display will rely on the React Big Calendar library
+-  Backend will be implemented using
 database.
 
-**What are the costs and benefits of using this solution?**
+**What are the costs and benefits of using this solution?**  
 Implementing a calendar has a myriad of specific implementation issues that are not directly
 tied to the problem we are trying to solve, so we seek to use prior open source art here. The
 downside would be any locked-in formatting that doesn’t meet our design, but if need be we
