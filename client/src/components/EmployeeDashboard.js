@@ -153,7 +153,6 @@ class EmployeeDashboard extends Component {
     const { view, date, width, employeeView } = this.state
     const { id } = this.props.user
     const names = []
-
     employees.map(employee => names.push(`${employee.first_name}`))
 
     //events for all employees
@@ -266,7 +265,7 @@ class EmployeeDashboard extends Component {
               {employee && employee.shifts ? (
                 <>
                   {employee.shifts.map(item => {
-                    return <AssignedShifts {...item} key={item.id}  />
+                    return <AssignedShifts {...item} key={item.id} />
                   })}
                 </>
               ) : (

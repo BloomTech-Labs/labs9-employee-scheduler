@@ -14,7 +14,7 @@ const TimeOffApproved = ({
   return (
     <PTO key={id} status={status}>
       <div className="text">
-        <p>
+        <p data-testid="time_off_format">
           {moment(start)
             .local()
             .format('MM / DD')}

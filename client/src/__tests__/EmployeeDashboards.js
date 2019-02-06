@@ -135,5 +135,15 @@ describe('employee dashboard with redux', () => {
     )
 
     expect(cal.textContent).toMatch(scheduledName)
+
+    //testing to make sure time off requests are in the right format
+    const timeOff = await waitForElement(() => getByTestId('time_off'))
+    const reqTime = moment
+      .utc(employee.time_off_requests[0].start)
+      .local()
+      .format('MM / DD')
+    expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
+
+    console.log(employee.time_off_requests[0].start)
   })
 })
