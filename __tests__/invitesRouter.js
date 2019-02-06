@@ -2,21 +2,8 @@ const supertest = require('supertest')
 const server = require('../server/server')
 const db = require('../database/dbConfig')
 const uuid = require('uuid/v4')
-const nodemailerMock = require('nodemailer-mock')
-const transport = nodemailerMock.createTransport()
+
 const request = supertest(server)
-
-// email we will send in the mock
-const email = 'You have been invited'
-
-// send an email with nodestyle callback
-transport.sendMail(email, (err, info) => {
-  if (err) {
-    console.log('Error', err, info)
-  } else {
-    console.log('Success', info)
-  }
-})
 
 describe('testing the invites router', () => {
   // both of the POST routes depend on the testing middleware
