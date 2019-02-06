@@ -381,7 +381,7 @@ available from Heroku and Netlify
 
 ## Features
 ---
-#### Feature Name: ​Landing Page  
+### Feature Name: ​Landing Page  
 
 
 **What services, APIs, or platforms will you use to implement this feature?**  
