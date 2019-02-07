@@ -1,6 +1,6 @@
 import React from 'react'
 import App from '../App'
-import { waitForElement, fireEvent } from 'react-testing-library'
+import { waitForElement, fireEvent, cleanup } from 'react-testing-library'
 import moment from 'moment'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import {
@@ -26,6 +26,7 @@ const { first_name, last_name, email } = user
 const employees = structureEmployees(org) //makes an array of employee objects
 
 describe('Left Sidebar with redux', () => {
+  afterEach(cleanup)
   it('not displayed on landing page', async () => {
     setupStripeNode()
     // mocks axios call so that we can control what data gets returned.

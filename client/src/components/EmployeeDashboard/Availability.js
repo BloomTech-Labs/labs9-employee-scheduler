@@ -22,7 +22,7 @@ const Availability = props => {
     : availabilities &&
         availabilities.map(({ id, day, start_time, end_time, off }) => (
           //temporarily adds ids tp the DOM for easy access for testing
-          <Shifts key={id}>
+          <Shifts key={id} data-testid="availability_day">
             <p>{weekdays[day]}</p>
             <span>
               {off
