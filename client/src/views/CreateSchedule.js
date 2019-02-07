@@ -22,9 +22,9 @@ const CreateSchedule = props => {
 
   return (
     <OuterContainer>
-      <LeftSideBar />
-      <BreadCrumb location="Schedule" />
-      {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
+      <NavMenu />
+      <TopBar location="Schedule" />
+      {/* DO NOT REMOVE THE NavMenu AND TopBar COMPONENTS - THEY NEED TO BE HERE */}
       <MainContentHolder>
         <MobileOnly>
           <Alert>

@@ -39,7 +39,7 @@ const Login = props => {
     return <Redirect to="/register" />
   } else {
     return (
-      <EmptyScreen auth background>
+      <LayoutFrame auth background>
         <Container>
           <React.Suspense fallback={<Loader />}>
             <StyledFirebaseAuth
@@ -48,7 +48,7 @@ const Login = props => {
             />
           </React.Suspense>
         </Container>
-      </EmptyScreen>
+      </LayoutFrame>
     )
   }
 }
