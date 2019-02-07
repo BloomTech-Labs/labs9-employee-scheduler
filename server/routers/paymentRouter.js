@@ -7,17 +7,17 @@ const { updateOrg } = require('../../database/helpers')
 
 router.post('/', authorize(['owner']), (req, res, next) => {
   const { token, email, org_id } = req.body
-  console.log('shallowest level')
+
   stripe.customers.create(
     {
       email: email,
       source: token.id
     },
     (err, customer) => {
-      console.log('after created')
       if (err) {
-        console.log(error)
-        res.status(500).json({ message: 'Failed to create customer', err })
+        return res
+          .status(500)
+          .json({ message: 'Failed to create customer', err })
       } else {
         stripe.subscriptions.create(
           {
@@ -29,22 +29,21 @@ router.post('/', authorize(['owner']), (req, res, next) => {
             ]
           },
           (err, subscription) => {
-            console.log('got subscription')
             if (err) {
-              console.log(err)
-              res.status(500).json({ message: 'Failed to subscribe', err })
+              return res
+                .status(500)
+                .json({ message: 'Failed to subscribe', err })
             } else {
               updateOrg(org_id, {
                 subscription_id: subscription.id,
                 customer_id: customer.id,
                 paid: true
               })
-                .then(res => {
-                  res.status(201).send('Success')
+                .then(() => {
+                  return res.status(201).json({ message: 'Success' })
                 })
                 .catch(err => {
-                  console.log('failed at the db')
-                  res.status(500).send(err)
+                  return res.status(500).json(err)
                 })
             }
           }
