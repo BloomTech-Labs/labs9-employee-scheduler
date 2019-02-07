@@ -36,7 +36,7 @@ Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maint
 ### Features
 
 - Secure User Authentication using Google Firebase
-- Billing utilizing Stripe payment (up to 2 employees free)
+- Billing utilizing Stripe payment (up to 3 employees free)
 - Drag & Drop Calendar for interactive and intuitive employee shift scheduling
 - Create your organization and add employees by inviting them
 - Supervisor dashboard to delegate responsibility
