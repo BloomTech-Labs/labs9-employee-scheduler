@@ -14,7 +14,8 @@ const authorize = require('../config/customMiddleware/authorize')
 // what are the relevant routes here?
 // get all employees (includes time off info, etc)
 
-router.get('/:id', authorize(['owner', 'supervisor']), (req, res) => {
+// this needs to be authorized for all so when an employee is logged in the calendar on the dashboard will get events
+router.get('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   // id is org id
   getEmployees(id)

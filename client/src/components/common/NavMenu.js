@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import system from '../design/theme'
-import NavItem from './common/NavItem'
+import system from '../../design/theme'
+import NavItem from './NavItem'
 import Fade from 'react-reveal/Fade'
 import { connect } from 'react-redux'
-import { logout } from '../actions'
+import { logout } from '../../actions'
 
 // this component will represent a button that will control the left side bar.
 // it will be brought into container components and an open/close state will be held there.
-class LeftSideBar extends Component {
+class NavMenu extends Component {
   state = {
     show: false
   }
@@ -112,9 +112,9 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logout }
-)(LeftSideBar)
+)(NavMenu)
 
-LeftSideBar.propTypes = {
+NavMenu.propTypes = {
   logout: propTypes.func,
   auth: propTypes.object
 }

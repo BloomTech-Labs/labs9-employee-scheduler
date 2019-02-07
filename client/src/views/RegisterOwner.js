@@ -13,15 +13,16 @@ import {
   logout
 } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
-import Login from './Login'
-import Status from './Status'
-import EmptyScreen from './EmptyScreen'
-import BreadCrumb from './BreadCrumb'
-import OuterContainer from './common/OuterContainer'
-import { Container, Input, Select } from './common/FormContainer'
+import Login from '../components/Login'
+import Status from '../components/common/Status'
+import LayoutFrame from '../components/common/LayoutFrame'
+import TopBar from '../components/common/TopBar'
+import OuterContainer from '../components/common/OuterContainer'
+import { Container, Input, Select } from '../components/common/FormContainer'
 import { Redirect } from 'react-router-dom'
-import Button from './common/Button'
-import industryList from '../industryList'
+import Button from '../components/common/Button'
+import { phonePattern } from '../utils'
+import industryList from '../assets/industryList'
 import styled from '@emotion/styled'
 import moment from 'moment'
 
@@ -122,20 +123,20 @@ class RegisterOwner extends Component {
 
     if (this.props.user) {
       return (
-        <EmptyScreen>
+        <LayoutFrame>
           <Status>
             There is already an account for this email. Please log out to
             register a new account.
           </Status>
           <Redirect to="/shift-calendar" />
-        </EmptyScreen>
+        </LayoutFrame>
       )
     } else if (!oauthSuccess) {
       return <Login />
     } else if (outcome) {
       return (
         <OuterContainer height="true">
-          <BreadCrumb />
+          <TopBar />
           <Container className="wrapper">
             <h1 className="headerText" data-testid="register-form">
               {`Registration ${outcome}`}
@@ -146,7 +147,7 @@ class RegisterOwner extends Component {
     } else {
       return (
         <OuterContainer>
-          <BreadCrumb />
+          <TopBar />
           <Container className="wrapper">
             <h1 className="headerText" data-testid="register-form">
               Complete Registration
@@ -199,6 +200,7 @@ class RegisterOwner extends Component {
                 value={phone}
                 onChange={handleChange}
                 placeholder="ex. 123-456-7890"
+                pattern={phonePattern}
                 ariaLabel="phone"
                 required
               />

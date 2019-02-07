@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/img/cadence.png)
+# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/assets/img/cadence.png)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
 

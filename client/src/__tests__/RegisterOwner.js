@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import { populateOrg } from '../../../database/utils/generateData'
 import App from '../App'
 import axios from 'axios'

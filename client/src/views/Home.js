@@ -1,21 +1,21 @@
 import React from 'react'
-import BreadCrumb from './BreadCrumb'
+import TopBar from '../components/common/TopBar'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import Button from './common/Button'
-import LinkItem from './common/LinkItem'
-import OuterContainer from './common/OuterContainer'
-import headerImg from '../img/header.svg'
-import heroImg from '../img/hero.svg'
+import Button from '../components/common/Button'
+import LinkItem from '../components/common/LinkItem'
+import OuterContainer from '../components/common/OuterContainer'
+import headerImg from '../assets/img/header.svg'
+import heroImg from '../assets/img/hero.svg'
 import Fade from 'react-reveal/Fade'
-import Footer from './Footer'
-import frontpage from '../img/frontpage.mp4'
+import Footer from '../components/common/Footer'
+import frontpage from '../assets/video/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
   return (
     <OuterContainer>
-      <BreadCrumb location="Home" />
+      <TopBar location="Home" />
       <Container>
         <section id="hero">
           <img id="header-img" alt="header" src={headerImg} />
