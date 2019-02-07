@@ -171,10 +171,10 @@ class Billing extends Component {
                   includes:
                 </h6>
               ) : (
-                  <h6 id="instructions">
-                    Here's what's included in the $20 / month Pro Plan:
+                <h6 id="instructions">
+                  Here's what's included in the $20 / month Pro Plan:
                 </h6>
-                )}
+              )}
               <ul>
                 <li>A simple calendar interface to manage shifts.</li>
                 <li>
