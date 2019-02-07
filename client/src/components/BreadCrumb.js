@@ -45,7 +45,7 @@ const BreadCrumb = props => {
         </Container>
       </Nav>
     ) : (
-      <Nav fixed={location === 'Employees' ? true : false}>
+      <Nav>
         <Container logo>
           <LinkItem to="/">
             <img src={logo2} alt="logo" />
