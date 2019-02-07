@@ -28,7 +28,6 @@ router.get('/:id', authorize(['all']), (req, res) => {
 
 // this post router creates fake demo employees
 router.post('/:id', authorize(['owner', 'supervisor']), (req, res) => {
-  router.post('/:id', authorize(['owner', 'supervisor']), (req, res) => {
   const { id } = req.params
   const { offset } = req.body
   // id is org id
