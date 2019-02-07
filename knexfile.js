@@ -1,4 +1,3 @@
-console.log(process.env.DATABASE_URL)
 module.exports = {
   development: {
     client: 'postgresql',
@@ -20,10 +19,6 @@ module.exports = {
     migrations: {
       directory: './database/migrations',
       tableName: 'dbmigrations'
-    },
-    pool: {
-      min: 2,
-      max: 10
     },
     seeds: { directory: './database/seeds' }
   }
