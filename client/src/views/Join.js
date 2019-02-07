@@ -6,11 +6,11 @@ import 'firebase/auth'
 
 import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
-import Login from './Login'
-import TopBar from './common/TopBar'
-import OuterContainer from './common/OuterContainer'
-import { Container, Input } from './common/FormContainer'
-import Button from './common/Button'
+import Login from '../components/Login'
+import TopBar from '../components/common/TopBar'
+import OuterContainer from '../components/common/OuterContainer'
+import { Container, Input } from '../components/common/FormContainer'
+import Button from '../components/common/Button'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 

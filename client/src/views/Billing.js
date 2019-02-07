@@ -154,17 +154,17 @@ class Billing extends Component {
             ) : null}
             {this.state.error ? (
               <Status>
-                Something's wrong. Computers make mistakes, too!{' '}
+                Something's wrong. Computers make mistakes, too!
                 <span role="img" aria-label="wink emoji">
                   &#x1F916;
-                </span>{' '}
+                </span>
                 Please try again.
               </Status>
             ) : null}
 
             <form onSubmit={this.deleteHandler}>
-              //checks to see if the owner has a paid account and displays a
-              message accordingly
+              {/* checks to see if the owner has a paid account and displays a
+              message accordingly */}
               {this.props.organization.paid ? (
                 <h6 id="instructions">
                   You are signed up for the Pro Plan at $20 / month, which

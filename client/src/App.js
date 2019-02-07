@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import { Global, css } from '@emotion/core'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
-import Employees from './components/Employees'
+import Employees from './views/Employees'
 import Billing from './views/Billing'
-import Home from './components/Home'
-import Settings from './components/Settings'
+import Home from './views/Home'
+import Settings from './views/Settings'
 import Login from './components/Login'
-import Join from './components/Join'
-import Legal from './components/Legal'
-import Team from './components/Team'
+import Join from './views/Join'
+import Legal from './views/Legal'
+import Team from './views/Team'
 import system from './design/theme'
 import PrivateRoute from './components/PrivateRoute'
 import FourOhFour from './components/common/FourOhFour'
 import { Elements, StripeProvider } from 'react-stripe-elements'
-import RegisterOwner from './components/RegisterOwner'
+import RegisterOwner from './views/RegisterOwner'
 import { authenticate, resetAuthState, setRedirectFlagToFalse } from './actions' // for initial call
 import { connect } from 'react-redux'
 import ReactGA from 'react-ga'
@@ -24,10 +24,10 @@ import PropTypes from 'prop-types'
 import './reset.css'
 
 // Lazy Load w/ Prefetch
-const CreateSchedulePromise = import('./components/CreateSchedule')
+const CreateSchedulePromise = import('./views/CreateSchedule')
 const CreateSchedule = React.lazy(() => CreateSchedulePromise)
 
-const DashboardPromise = import('./components/EmployeeDashboard')
+const DashboardPromise = import('./views/EmployeeDashboard')
 const Dashboard = React.lazy(() => DashboardPromise)
 
 const firebaseConfig = {

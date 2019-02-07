@@ -1,8 +1,8 @@
 import React, { Component, Suspense } from 'react'
 import propTypes from 'prop-types'
-import TopBar from './common/TopBar'
-import Loader from './common/Loader'
-import Button from './common/Button'
+import TopBar from '../components/common/TopBar'
+import Loader from '../components/common/Loader'
+import Button from '../components/common/Button'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest,
@@ -10,23 +10,23 @@ import {
   fetchEmployeesFromDB
 } from '../actions'
 import { connect } from 'react-redux'
-import { Message, Container, Card } from './EmployeeDashboard/styles'
-import OuterContainer from './common/OuterContainer'
+import { Message, Container, Card } from '../components/EmployeeDashboard/styles'
+import OuterContainer from '../components/common/OuterContainer'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+import AssignedShifts from '../components/EmployeeDashboard/AssignedShifts'
 const TimeOffApproved = React.lazy(() =>
-  import('./EmployeeDashboard/TimeOffApproved')
+  import('../components/EmployeeDashboard/TimeOffApproved')
 )
-const NavMenu = React.lazy(() => import('./common/NavMenu'))
+const NavMenu = React.lazy(() => import('../components/common/NavMenu'))
 const TimeOffRequest = React.lazy(() =>
-  import('./EmployeeDashboard/TimeOffRequest')
+  import('../components/EmployeeDashboard/TimeOffRequest')
 )
 const Availability = React.lazy(() =>
-  import('./EmployeeDashboard/Availability')
+  import('../components/EmployeeDashboard/Availability')
 )
-const DashCal = React.lazy(() => import('./EmployeeDashboard/DashCal'))
+const DashCal = React.lazy(() => import('../components/EmployeeDashboard/DashCal'))
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
