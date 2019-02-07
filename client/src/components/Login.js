@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
@@ -14,8 +14,8 @@ const StyledFirebaseAuth = React.lazy(() =>
   import('react-firebaseui/StyledFirebaseAuth')
 )
 
-class Login extends Component {
-  uiConfig = {
+const Login = props => {
+  const uiConfig = {
     // Configure FirebaseUI.
     // Popup signin flow rather than redirect flow.
     signInFlow: 'redirect',
@@ -32,26 +32,24 @@ class Login extends Component {
       signInSuccessWithAuthResult: () => false
     }
   }
-  render() {
-    if (this.props.user) {
-      // redirect to home once/if user is in the store
-      return <Redirect to="/" />
-    } else if (this.props.isNewUser) {
-      return <Redirect to="/register" />
-    } else {
-      return (
-        <EmptyScreen auth background>
-          <Container>
-            <React.Suspense fallback={<Loader />}>
-              <StyledFirebaseAuth
-                uiConfig={this.uiConfig}
-                firebaseAuth={firebase.auth()}
-              />
-            </React.Suspense>
-          </Container>
-        </EmptyScreen>
-      )
-    }
+  if (props.user) {
+    // redirect to home once/if user is in the store
+    return <Redirect to="/" />
+  } else if (props.isNewUser) {
+    return <Redirect to="/register" />
+  } else {
+    return (
+      <EmptyScreen auth background>
+        <Container>
+          <React.Suspense fallback={<Loader />}>
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          </React.Suspense>
+        </Container>
+      </EmptyScreen>
+    )
   }
 }
 
