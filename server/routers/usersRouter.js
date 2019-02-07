@@ -15,6 +15,7 @@ const authorize = require('../config/customMiddleware/authorize')
 // return info for the authenticated user
 router.get('/current', authorize(['all']), async (req, res) => {
   const { id } = req.user
+  console.log(req.user)
   try {
     const user = await getUser(id)
 
