@@ -3,7 +3,7 @@ import App from '../App'
 import { populateOrg } from '../../../database/utils/generateData'
 import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
-import Settings from '../components/Settings'
+import Settings from '../views/Settings'
 
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
@@ -25,7 +25,7 @@ describe('Settings Component', () => {
       return {
         onAuthStateChanged: cb => {
           cb()
-          return () => {}
+          return () => { }
         },
         currentUser: {
           getIdToken: () => Promise.resolve('token')
