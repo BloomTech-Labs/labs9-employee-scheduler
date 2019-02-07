@@ -252,7 +252,7 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card data-testid="employeeShifts">
+            <Card data-testid="employeeShifts"> 
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>

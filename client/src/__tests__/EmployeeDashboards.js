@@ -33,7 +33,7 @@ const employee = employees.find(
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
 user.cal_visit = false
 user.emp_visit = false
-
+console.log(employee.events[0].start)
 describe('employee dashboard with redux', () => {
   afterEach(cleanup)
   it('can render with initial state', async () => {
@@ -141,10 +141,24 @@ describe('employee dashboard with redux', () => {
       .format('MM / DD')
     expect(getByTestId('time_off_format').textContent).toMatch(reqTime)
 
+    // testing to see if upcoming shifts are in the right format
+    await waitForElement(() => getByTestId('shift_day'))
+    const shiftDay = moment
+      .utc(employee.events[0].start)
+      .local()
+      .format('MMM Do')
+    expect(getByTestId('shift_day').textContent).toMatch(shiftDay)
+    await waitForElement(() => getByTestId('shift_time'))
+
+    const shiftStartTime = moment
+      .utc(employee.events[0].start)
+      .local()
+      .format('h:mm a')
+    expect(getByTestId('shift_time').textContent).toMatch(shiftStartTime)
+
     // expect(container).toBe(null)
 
     // testing to make sure availabilities are visible
-
     const avails = await waitForElement(() =>
       getAllByTestId('availability_day')
     )
