@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragSource } from 'react-dnd'
 import EmployeeCard from './ResourceCard'
-import circle from '../../img/circle.svg'
+import circle from '../../assets/img/circle.svg'
 
 class EmployeeEvent extends React.Component {
   componentDidMount() {

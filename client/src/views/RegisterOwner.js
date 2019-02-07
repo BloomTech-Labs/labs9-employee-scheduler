@@ -21,7 +21,8 @@ import OuterContainer from '../components/common/OuterContainer'
 import { Container, Input, Select } from '../components/common/FormContainer'
 import { Redirect } from 'react-router-dom'
 import Button from '../components/common/Button'
-import industryList from '../industryList'
+import { phonePattern } from '../utils'
+import industryList from '../assets/industryList'
 import styled from '@emotion/styled'
 import moment from 'moment'
 
@@ -199,6 +200,7 @@ class RegisterOwner extends Component {
                 value={phone}
                 onChange={handleChange}
                 placeholder="ex. 123-456-7890"
+                pattern={phonePattern}
                 ariaLabel="phone"
                 required
               />

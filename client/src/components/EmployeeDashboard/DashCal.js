@@ -1,7 +1,7 @@
 import React from 'react'
 import Calendar from '../common/Calendar'
 import styled from '@emotion/styled'
-import lines from '../../img/lines.svg'
+import lines from '../../assets/img/lines.svg'
 import PropTypes from 'prop-types'
 
 export default function DashCal(props) {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import LinkItem from './LinkItem'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import logo2 from '../../img/logo2.png'
+import logo2 from '../../assets/img/logo2.png'
 import { connect } from 'react-redux'
 import { fetchOrgFromDB } from '../../actions'
 

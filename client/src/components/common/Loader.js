@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import rings from '../../img/rings.svg'
+import rings from '../../assets/img/rings.svg'
 
 const Loader = () => {
   return (
@@ -9,7 +9,7 @@ const Loader = () => {
     <Container>
       <img alt="loader" src={rings} />
       <p>
-        We'll get you sorted momentarily. Thanks for your patience.{' '}
+        {`We'll get you sorted momentarily. Thanks for your patience. `}
         <span role="img" aria-label="hourglass done emoji">
           &#x231B;
         </span>

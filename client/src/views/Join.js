@@ -11,6 +11,7 @@ import TopBar from '../components/common/TopBar'
 import OuterContainer from '../components/common/OuterContainer'
 import { Container, Input } from '../components/common/FormContainer'
 import Button from '../components/common/Button'
+import { phonePattern } from '../utils'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 
@@ -164,6 +165,7 @@ const Join = props => {
               onChange={handleChange}
               placeholder="ex. 123-456-7890"
               ariaLabel="phone"
+              pattern={phonePattern}
               required
             />
             <Terms>

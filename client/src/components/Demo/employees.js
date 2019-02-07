@@ -1,5 +1,5 @@
 import React from 'react'
-import avails from '../../img/avails.mp4'
+import avails from '../../assets/video/avails.mp4'
 
 export default [
   {

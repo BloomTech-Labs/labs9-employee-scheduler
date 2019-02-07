@@ -3,7 +3,7 @@ import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'cadence-big-calendar/lib/addons/dragAndDrop'
 import Calendar from '../common/Calendar'
 import styled from '@emotion/styled'
-import lines from '../../img/lines.svg'
+import lines from '../../assets/img/lines.svg'
 
 const DnDCal = withDragAndDrop(Calendar)
 

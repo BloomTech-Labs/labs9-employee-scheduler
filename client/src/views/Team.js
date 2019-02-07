@@ -4,11 +4,11 @@ import TopBar from '../components/common/TopBar'
 import Footer from '../components/common/Footer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import Kam from '../img/Kam.jpg'
-import Rahul from '../img/Rahul.jpg'
-import Carlos from '../img/Carlos.jpg'
-import Samuel from '../img/Samuel.jpg'
-import Adam from '../img/Adam.jpg'
+import Kam from '../assets/img/Kam.jpg'
+import Rahul from '../assets/img/Rahul.jpg'
+import Carlos from '../assets/img/Carlos.jpg'
+import Samuel from '../assets/img/Samuel.jpg'
+import Adam from '../assets/img/Adam.jpg'
 
 const Team = () => {
   return (

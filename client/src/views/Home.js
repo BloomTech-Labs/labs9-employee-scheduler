@@ -5,11 +5,11 @@ import system from '../design/theme'
 import Button from '../components/common/Button'
 import LinkItem from '../components/common/LinkItem'
 import OuterContainer from '../components/common/OuterContainer'
-import headerImg from '../img/header.svg'
-import heroImg from '../img/hero.svg'
+import headerImg from '../assets/img/header.svg'
+import heroImg from '../assets/img/hero.svg'
 import Fade from 'react-reveal/Fade'
 import Footer from '../components/common/Footer'
-import frontpage from '../img/frontpage.mp4'
+import frontpage from '../assets/video/frontpage.mp4'
 
 const Home = () => {
   const width = window.innerWidth
