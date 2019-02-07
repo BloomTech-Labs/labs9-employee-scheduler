@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Scheduler from './Scheduler'
 import Modal from './Modal'
@@ -11,37 +11,35 @@ import Alert from './common/Alert'
 import system from '../design/theme'
 
 // this component will house all of the main features for the create schedule page.
-class CreateSchedule extends Component {
-  state = { hoursModal: false }
+const CreateSchedule = props => {
+  const [state, useState] = useState({ hoursModal: false })
 
   toggleModal = e => {
-    this.setState(state => ({ hoursModal: !state.hoursModal }))
+    setState(state => ({ ...state, hoursModal: !state.hoursModal }))
   }
 
-  render() {
-    return (
-      <OuterContainer>
-        <LeftSideBar />
-        <BreadCrumb location="Schedule" />
-        {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
-        <MainContentHolder>
-          <MobileOnly>
-            <Alert>
-              This calendar is read-only on mobile for now.
-              <br />
-              We're working hard to release mobile editing soon.
-            </Alert>
-          </MobileOnly>
-          <div>
-            <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
-              <HoursOfOperationForm />
-            </Modal>
-            <Scheduler toggleModal={this.toggleModal} />
-          </div>
-        </MainContentHolder>
-      </OuterContainer>
-    )
-  }
+  return (
+    <OuterContainer>
+      <LeftSideBar />
+      <BreadCrumb location="Schedule" />
+      {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
+      <MainContentHolder>
+        <MobileOnly>
+          <Alert>
+            This calendar is read-only on mobile for now.
+            <br />
+            We're working hard to release mobile editing soon.
+          </Alert>
+        </MobileOnly>
+        <div>
+          <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
+            <HoursOfOperationForm />
+          </Modal>
+          <Scheduler toggleModal={this.toggleModal} />
+        </div>
+      </MainContentHolder>
+    </OuterContainer>
+  )
 }
 
 export default CreateSchedule
