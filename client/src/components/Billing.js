@@ -163,8 +163,8 @@ class Billing extends Component {
             ) : null}
 
             <form onSubmit={this.deleteHandler}>
-              //checks to see if the owner has a paid account and displays a
-              message accordingly
+              {/* //checks to see if the owner has a paid account and displays a
+              message accordingly */}
               {this.props.organization.paid ? (
                 <h6 id="instructions">
                   You are signed up for the Pro Plan at $20 / month, which
