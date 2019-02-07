@@ -1,8 +1,6 @@
 const supertest = require('supertest')
 const server = require('../server/server')
 const { getOrg } = require('../database/helpers/')
-// const db = require('../database/dbConfig')
-// const uuid = require('uuid/v4')
 
 const request = supertest(server)
 
@@ -53,6 +51,30 @@ describe('testing payments router', () => {
   })
 
   it('fails to cancel with wrong user role', async () => {
-    expect(true)
+    const { subscription_id } = await getOrg(orgId)
+
+    const response = await request
+      .put('/stripe')
+      .send({
+        subscription_id,
+        org_id: orgId
+      })
+      .set('authorization', 'testing')
+      .set('user', 'supervisor')
+
+    expect(response.status).toEqual(403)
+  })
+
+  it('fails with a bad substription id', async () => {
+    const response = await request
+      .put('/stripe')
+      .send({
+        subscription_id: ';lkj;kjafe;k',
+        org_id: orgId
+      })
+      .set('authorization', 'testing')
+      .set('user', 'owner')
+
+    expect(response.status).toEqual(500)
   })
 })
