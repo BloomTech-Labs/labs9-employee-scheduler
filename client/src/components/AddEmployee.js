@@ -9,6 +9,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 const closeStyle = { position: 'absolute', top: '25px', right: '25px' }
+const serverUrl = process.env.REACT_APP_SERVER_URL
 
 class AddEmployee extends Component {
   state = {
@@ -31,7 +32,7 @@ class AddEmployee extends Component {
     } else if (currentRole === 'supervisor') {
       axios
         .post(
-          `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
+          `${serverUrl}/invites/invite-employee`,
           { email, name },
           {
             headers: { authorization: token }
@@ -49,7 +50,7 @@ class AddEmployee extends Component {
     } else {
       axios
         .post(
-          `${process.env.REACT_APP_SERVER_URL}/invites/invite-${newUserRole}`,
+          `${serverUrl}/invites/invite-${newUserRole}`,
           { email, name },
           {
             headers: { authorization: token }
