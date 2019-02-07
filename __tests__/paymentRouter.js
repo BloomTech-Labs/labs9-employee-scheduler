@@ -7,7 +7,6 @@ const request = supertest(server)
 
 describe('testing payments router', () => {
   it('posts payment with a valid token', async () => {
-    console.log('hi')
     const response = await request
       .post('/stripe')
       .send({
@@ -19,11 +18,20 @@ describe('testing payments router', () => {
       .set('user', 'owner')
 
     expect(response.status).toEqual(201)
-    expect(true)
   })
 
   it('fails to post with an invalid token', async () => {
-    expect(true)
+    const response = await request
+      .post('/stripe')
+      .send({
+        token: { id: ';lkjaf;kj;kja;kj;lkjaf;elkja' },
+        email: 'testy@testyMcTestyface.com',
+        org_id: '9126df31-2607-4166-9c0c-d0a300c59c62' // cadence org id from seeds
+      })
+      .set('authorization', 'testing')
+      .set('user', 'owner')
+
+    expect(response.status).toEqual(500)
   })
 
   it('puts a cancel to the subscription', async () => {
