@@ -5,7 +5,10 @@ const server = require('./server.js')
 const port = process.env.PORT || 9000
 
 if (cluster.isMaster) {
-  const cpuCount = process.env.WEB_CONCURRENCY || os.cpus().length || 1
+  const cpuCount =
+    process.env.WEB_CONCURRENCY ||
+    (process.env.NODE_ENV === 'development' && os.cpus().length) ||
+    1
   for (let i = 0; i < cpuCount; i++) {
     console.log('spawning child cluster')
     cluster.fork()
