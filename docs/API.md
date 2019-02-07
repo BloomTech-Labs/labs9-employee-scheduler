@@ -14,7 +14,7 @@
 
 | Method | Endpoint                        | Access Control      | Description                                        |
 |--------|---------------------------------|---------------------|----------------------------------------------------|
-| POST   | `/users/current`                | all users           | Returns info for the logged in user.               |
+| GET    | `/users/current`                | all users           | Returns info for the logged in user.               |
 | GET    | `/users/org/:userId`            | owners, supervisors | Returns all users for an organization.             |
 | GET    | `/users/:userId`                | owners, supervisors | Returns info for a single user.                    |
 | POST   | `/users/register/owner`         | none                | Creates a new user as owner of a new organization. |
