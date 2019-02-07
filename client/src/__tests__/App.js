@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitForElement } from 'react-testing-library'
+import { cleanup, waitForElement } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import App from '../App'
 import axios from 'axios'
@@ -13,6 +13,7 @@ jest.mock('firebase/auth')
 jest.mock('react-ga')
 
 describe('App component', () => {
+  afterEach(cleanup)
   it('renders hello', async () => {
     setupStripeNode()
 
