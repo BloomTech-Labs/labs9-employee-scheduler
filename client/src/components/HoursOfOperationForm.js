@@ -32,14 +32,12 @@ const buildDay = HOO => {
 }
 
 const HoursOfOperation = props => {
+  // featureRef = React.createRef()
 
-    featureRef = React.createRef()
-
-    const [state, setState] = useState({
-      days: this.props.hours.hours.map(buildDay),
-      initialTime: null
-    })
-
+  const [state, setState] = useState({
+    days: props.hours.hours.map(buildDay),
+    initialTime: null
+  })
 
   const toggle = targetDay => {
     setState(prevState => {
@@ -63,7 +61,7 @@ const HoursOfOperation = props => {
 
   // for submitting all of the hours
   const submitHandler = () => {
-    this.state.days.forEach(day => {
+    state.days.forEach(day => {
       if (day.updated) {
         const start = moment(day.start, 'h:mm a')
           .utc()
@@ -124,52 +122,48 @@ const HoursOfOperation = props => {
   }
 
   // handles returning the starting position of the slider
-  changeStartHandler = currentTime => {
+  const changeStartHandler = currentTime => {
     return setState({ ...state, initialTime: currentTime })
   }
 
-  render() {
-    const { Close } = props
-    return (
-      <Modal>
-        {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
-        <div className="days-container">
-          <Close />
-          <h3>What times is your business open?</h3>
-          {/* maps over the days and places a pair of edit buttons for each one */}
-          {state.days.map((day, i) => {
-            return (
-              <HOOSlider
-                // props to days and close/open button
-                id={i}
-                key={day.id}
-                handleHours={handleHours}
-                day={day}
-                name={day.name}
-                closedAllDay={() => toggle(day)}
-                toggled={day.closed}
-                status={day.closed === false ? 'Open' : 'Closed'}
-                // slider props //
-                disabled={day.closed} //disabled if day is closed
-                draggableTrack={true} //slide by touching the bar
-                start={day.start} //start of each day
-                end={day.end} //end of each day
-                // functions //
-                onChangeComplete={time => onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
-                onChange={time => timeChangeHandler(time, day)} //handles when the slider moves
-                onChangeStart={changeStartHandler} // records the time in which the slider is started at
-              >
-                {props.children}
-              </HOOSlider>
-            )
-          })}
-          <Button onClick={submitHandler}>
-            Submit Hours of Operation
-          </Button>
-        </div>
-      </Modal>
-    )
-  }
+  const { Close } = props
+  return (
+    <Modal>
+      {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
+      <div className="days-container">
+        <Close />
+        <h3>What times is your business open?</h3>
+        {/* maps over the days and places a pair of edit buttons for each one */}
+        {state.days.map((day, i) => {
+          return (
+            <HOOSlider
+              // props to days and close/open button
+              id={i}
+              key={day.id}
+              // handleHours={handleHours}
+              day={day}
+              name={day.name}
+              closedAllDay={() => toggle(day)}
+              toggled={day.closed}
+              status={day.closed === false ? 'Open' : 'Closed'}
+              // slider props //
+              disabled={day.closed} //disabled if day is closed
+              draggableTrack={true} //slide by touching the bar
+              start={day.start} //start of each day
+              end={day.end} //end of each day
+              // functions //
+              onChangeComplete={time => onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+              onChange={time => timeChangeHandler(time, day)} //handles when the slider moves
+              onChangeStart={changeStartHandler} // records the time in which the slider is started at
+            >
+              {props.children}
+            </HOOSlider>
+          )
+        })}
+        <Button onClick={submitHandler}>Submit Hours of Operation</Button>
+      </div>
+    </Modal>
+  )
 }
 
 const mapStateToProps = state => ({
