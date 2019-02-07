@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import Scheduler from './Scheduler'
-import Modal from './Modal'
-import HoursOfOperationForm from './HoursOfOperationForm'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
-import OuterContainer from './common/OuterContainer'
+import Scheduler from '../components/Scheduler'
+import Modal from '../components/Modal'
+import HoursOfOperationForm from '../components/HoursOfOperationForm'
+import TopBar from '../components/common/TopBar'
+import NavMenu from '../components/common/NavMenu'
+import OuterContainer from '../components/common/OuterContainer'
 import styled from '@emotion/styled'
-import Alert from './common/Alert'
+import Alert from '../components/common/Alert'
 import system from '../design/theme'
 
 // this component will house all of the main features for the create schedule page.
@@ -22,9 +22,9 @@ const CreateSchedule = props => {
 
   return (
     <OuterContainer>
-      <LeftSideBar />
-      <BreadCrumb location="Schedule" />
-      {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
+      <NavMenu />
+      <TopBar location="Schedule" />
+      {/* DO NOT REMOVE THE NavMenu AND TopBar COMPONENTS - THEY NEED TO BE HERE */}
       <MainContentHolder>
         <MobileOnly>
           <Alert>

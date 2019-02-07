@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react'
 import { Redirect } from 'react-router-dom'
-import drag from '../../img/drag.mp4'
-import resize from '../../img/resize.mp4'
-import hoo from '../../img/hoo.mp4'
+import drag from '../../assets/video/drag.mp4'
+import resize from '../../assets/video/resize.mp4'
+import hoo from '../../assets/video/hoo.mp4'
 
 export default [
   {

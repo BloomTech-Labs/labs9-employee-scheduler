@@ -1,12 +1,12 @@
-const organizations = require('./organizationsModel')
-const users = require('./usersModel')
-const availabilities = require('./availabilitiesModel')
-const timeOffRequests = require('./timeOffRequestsModel')
-const events = require('./eventsModel')
+const organizations = require('./organizationsHelper')
+const users = require('./usersHelper')
+const availabilities = require('./availabilitiesHelper')
+const timeOffRequests = require('./timeOffRequestsHelper')
+const events = require('./eventsHelper')
 const employees = require('./employeesHelper')
 const dashboard = require('./dashboardHelper')
-const hoursOfOperation = require('./hoursOfOperationModel')
-const invites = require('./invitesModel')
+const hoursOfOperation = require('./hoursOfOperationHelper')
+const invites = require('./invitesHelper')
 
 module.exports = {
   ...organizations,
