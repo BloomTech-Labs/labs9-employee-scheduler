@@ -56,17 +56,21 @@ router.post('/', authorize(['owner']), (req, res) => {
 router.put('/', authorize(['owner']), (req, res) => {
   const { subscription_id, org_id } = req.body
 
-  stripe.subscriptions.del(subscription_id)
-
-  updateOrg(org_id, {
-    subscription_id: null,
-    customer_id: null,
-    paid: false
+  stripe.subscriptions.del(subscription_id, (err, confirmation) => {
+    if (err) {
+      return res.status(500).json({ message: 'Subscription id does not exist' })
+    } else {
+      updateOrg(org_id, {
+        subscription_id: null,
+        customer_id: null,
+        paid: false
+      })
+        .then(() => {
+          return res.status(200).json({ message: 'Subscription cancelled' })
+        })
+        .catch(err => res.status(500).json({ message: 'Server error', err }))
+    }
   })
-    .then(() => {
-      return res.status(200).json({ message: 'Subscription cancelled' })
-    })
-    .catch(err => res.status(500).json(err))
 })
 
 module.exports = router
