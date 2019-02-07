@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
-import system from '../design/theme'
-import logo2 from '../img/logo2.png'
+import system from '../../design/theme'
+import logo2 from '../../img/logo2.png'
 
 const Footer = () => {
   return (

@@ -1,19 +1,19 @@
 import React from 'react'
-import BreadCrumb from './BreadCrumb'
-import OuterContainer from './common/OuterContainer'
+import TopBar from './TopBar'
+import OuterContainer from './OuterContainer'
 import styled from '@emotion/styled'
 
 // This component will render out settings for the signed in user
-const EmptyScreen = (props, auth) => {
+const LayoutFrame = (props, auth) => {
   return (
     <OuterContainer height="true" background={props.background ? true : false}>
-      <BreadCrumb location="" auth={auth} />
+      <TopBar location="" auth={auth} />
       <Container>{props.children}</Container>
     </OuterContainer>
   )
 }
 
-export default EmptyScreen
+export default LayoutFrame
 
 const Container = styled('div')`
   padding-top: 20px;

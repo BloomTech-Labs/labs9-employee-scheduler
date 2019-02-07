@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Scheduler from './Scheduler'
 import Modal from './Modal'
 import HoursOfOperationForm from './HoursOfOperationForm'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
+import TopBar from './common/TopBar'
+import NavMenu from './common/NavMenu'
 import OuterContainer from './common/OuterContainer'
 import styled from '@emotion/styled'
 import Alert from './common/Alert'
@@ -21,9 +21,9 @@ class CreateSchedule extends Component {
   render() {
     return (
       <OuterContainer>
-        <LeftSideBar />
-        <BreadCrumb location="Schedule" />
-        {/* DO NOT REMOVE THE LEFTSIDEBAR AND BREADCRUMB COMPONENTS - THEY NEED TO BE HERE */}
+        <NavMenu />
+        <TopBar location="Schedule" />
+        {/* DO NOT REMOVE THE NavMenu AND TopBar COMPONENTS - THEY NEED TO BE HERE */}
         <MainContentHolder>
           <MobileOnly>
             <Alert>

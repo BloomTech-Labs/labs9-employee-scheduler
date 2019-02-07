@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
+import TopBar from './common/TopBar'
+import NavMenu from './common/NavMenu'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import Status from './Status'
-import Loader from './Loader'
+import Status from './common/Status'
+import Loader from './common/Loader'
 import { updateUserSettings } from '../actions'
 
 const phonePattern =
@@ -117,8 +117,8 @@ class Settings extends Component {
   render() {
     return (
       <OuterContainer height="true">
-        <LeftSideBar />
-        <BreadCrumb location="Settings" />
+        <NavMenu />
+        <TopBar location="Settings" />
 
         <Container settings>
           <h1 data-testid="settings">

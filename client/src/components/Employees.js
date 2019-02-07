@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
+import TopBar from './common/TopBar'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import { fetchEmployeesFromDB, updateUserSettings } from '../actions'
 import { connect } from 'react-redux'
 import Card from './EmployeeCard/Card'
-import LeftSideBar from './LeftSideBar'
+import NavMenu from './common/NavMenu'
 import OuterContainer from './common/OuterContainer'
 import AddEmployee from './AddEmployee'
 import AvailabilityForm from './Availability/AvailabilityForm'
@@ -124,8 +124,8 @@ class Employees extends Component {
     })
     return (
       <OuterContainer location="Employees ">
-        <BreadCrumb location="Employees" />
-        <LeftSideBar fixed />
+        <TopBar location="Employees" />
+        <NavMenu fixed />
         <MidContainer>
           <h1>Employee Directory</h1>
           <ReactJoyride

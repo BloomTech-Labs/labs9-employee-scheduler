@@ -1,6 +1,6 @@
 import React from 'react'
 import { waitForElement, cleanup } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import { utcDayToLocal, decrementDay, formatHours } from '../utils'
 import App from '../App'
 import * as axios from 'axios'

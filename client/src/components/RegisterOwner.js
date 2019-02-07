@@ -14,9 +14,9 @@ import {
 } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
-import Status from './Status'
-import EmptyScreen from './EmptyScreen'
-import BreadCrumb from './BreadCrumb'
+import Status from './common/Status'
+import LayoutFrame from './common/LayoutFrame'
+import TopBar from './common/TopBar'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input, Select } from './common/FormContainer'
 import { Redirect } from 'react-router-dom'
@@ -122,20 +122,20 @@ class RegisterOwner extends Component {
 
     if (this.props.user) {
       return (
-        <EmptyScreen>
+        <LayoutFrame>
           <Status>
             There is already an account for this email. Please log out to
             register a new account.
           </Status>
           <Redirect to="/shift-calendar" />
-        </EmptyScreen>
+        </LayoutFrame>
       )
     } else if (!oauthSuccess) {
       return <Login />
     } else if (outcome) {
       return (
         <OuterContainer height="true">
-          <BreadCrumb />
+          <TopBar />
           <Container className="wrapper">
             <h1 className="headerText" data-testid="register-form">
               {`Registration ${outcome}`}
@@ -146,7 +146,7 @@ class RegisterOwner extends Component {
     } else {
       return (
         <OuterContainer>
-          <BreadCrumb />
+          <TopBar />
           <Container className="wrapper">
             <h1 className="headerText" data-testid="register-form">
               Complete Registration

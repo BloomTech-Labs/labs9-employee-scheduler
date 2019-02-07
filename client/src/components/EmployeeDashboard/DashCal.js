@@ -1,5 +1,5 @@
 import React from 'react'
-import Calendar from '../Calendar'
+import Calendar from '../common/Calendar'
 import styled from '@emotion/styled'
 import lines from '../../img/lines.svg'
 import PropTypes from 'prop-types'

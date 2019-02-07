@@ -10,7 +10,7 @@ import {
   getByText,
   cleanup
 } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'

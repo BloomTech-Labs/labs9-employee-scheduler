@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { populateOrg } from '../../../database/utils/generateData'
 import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import Settings from '../components/Settings'
 
 import * as axios from 'axios'

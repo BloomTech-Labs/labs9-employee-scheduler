@@ -86,7 +86,7 @@ const StyledModal = styled.div`
   justify-content: center;
   align-items: center;
   overflow-y: auto;
-  padding-top: ${system.spacing.breadCrumb};
+  padding-top: ${system.spacing.TopBar};
   @media ${system.breakpoints[0]} {
     align-items: stretch;
   }

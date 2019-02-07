@@ -1,37 +1,34 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import system from '../design/theme'
-import rings from '../img/rings.svg'
+import system from '../../design/theme'
+import check from '../../img/check.svg'
+import x from '../../img/x.svg'
 
-const Loader = () => {
+const Status = props => {
   return (
-    // show this component when your component is loading, request is pending, etc.
-    <Container>
-      <img alt="loader" src={rings} />
-      <p>
-        We'll get you sorted momentarily. Thanks for your patience.{' '}
-        <span role="img" aria-label="hourglass done emoji">
-          &#x231B;
-        </span>
-      </p>
+    // Pass this component a "success" boolean from your component's state. It will handle the rest.
+    <Container success={props.success}>
+      <img alt="status icon" src={props.success ? check : x} />
+      <p>{props.children}</p>
     </Container>
   )
 }
 
-export default Loader
+export default Status
 
 const Container = styled.div`
   display: flex;
   position: relative;
   flex-flow: row nowrap;
   align-items: center;
+  line-height: 1.25;
   width: 60%;
-  background: ${system.color.bodytext};
+  background: ${props =>
+    props.success ? system.color.success : system.color.danger};
   padding: ${system.spacing.bigPadding};
   border-radius: ${system.borders.bigRadius};
   box-shadow: ${system.shadows.otherLight};
-  margin-bottom: 20px;
-  line-height: 1.25;
+  margin: 20px 0;
 
   p {
     color: ${system.color.white};
@@ -48,18 +45,14 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: 80%;
     min-width: 290px;
+    width: 80%;
     text-align: center;
     padding: ${system.spacing.standardPadding};
 
     p {
       margin: 1rem 0;
       font-size: ${system.fontSizing.sm};
-
-      span {
-        margin-left: 0.25rem;
-      }
     }
   }
 `

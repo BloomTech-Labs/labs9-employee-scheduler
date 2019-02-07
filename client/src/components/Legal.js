@@ -1,7 +1,7 @@
 import React from 'react'
 import OuterContainer from './common/OuterContainer'
-import BreadCrumb from './BreadCrumb'
-import Footer from './Footer'
+import TopBar from './common/TopBar'
+import Footer from './common/Footer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
@@ -9,7 +9,7 @@ const Legal = props => {
   const pathname = props.location.pathname.substring(1)
   return (
     <OuterContainer>
-      <BreadCrumb location={pathname} />
+      <TopBar location={pathname} />
       <Container>
         {pathname === 'terms' ? (
           <div>

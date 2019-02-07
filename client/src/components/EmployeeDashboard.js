@@ -1,12 +1,7 @@
 import React, { Component, Suspense } from 'react'
 import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-// import LeftSideBar from './LeftSideBar'
-// import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
-// import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-// import Availability from './EmployeeDashboard/Availability'
-// import DashCal from './EmployeeDashboard/DashCal'
-import Loader from './Loader'
+import TopBar from './common/TopBar'
+import Loader from './common/Loader'
 import Button from './common/Button'
 import {
   fetchSingleEmployeeFromDB,
@@ -24,7 +19,7 @@ import AssignedShifts from './EmployeeDashboard/AssignedShifts'
 const TimeOffApproved = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffApproved')
 )
-const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
+const NavMenu = React.lazy(() => import('./common/NavMenu'))
 const TimeOffRequest = React.lazy(() =>
   import('./EmployeeDashboard/TimeOffRequest')
 )
@@ -186,9 +181,9 @@ class EmployeeDashboard extends Component {
     return (
       <OuterContainer>
         <Suspense fallback={<div>Loading...</div>}>
-          <LeftSideBar />
+          <NavMenu />
         </Suspense>
-        <BreadCrumb location="Employee Dashboard" />
+        <TopBar location="Employee Dashboard" />
 
         <Container>
           <div className="employee-welcome">

@@ -1,7 +1,7 @@
 import React from 'react'
 import OuterContainer from './common/OuterContainer'
-import BreadCrumb from './BreadCrumb'
-import Footer from './Footer'
+import TopBar from './common/TopBar'
+import Footer from './common/Footer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import Kam from '../img/Kam.jpg'
@@ -13,7 +13,7 @@ import Adam from '../img/Adam.jpg'
 const Team = () => {
   return (
     <OuterContainer>
-      <BreadCrumb location="Team" />
+      <TopBar location="Team" />
       <Container>
         <h1>Meet the Team</h1>
 

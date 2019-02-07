@@ -2,7 +2,7 @@ import React from 'react'
 import BigCalendar from 'cadence-big-calendar'
 import moment from 'moment'
 import styled from '@emotion/styled'
-import system from '../design/theme'
+import system from '../../design/theme'
 
 import 'cadence-big-calendar/lib/css/react-big-calendar.css'
 import 'cadence-big-calendar/lib/addons/dragAndDrop/styles.css'

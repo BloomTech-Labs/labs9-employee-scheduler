@@ -7,7 +7,7 @@ import 'firebase/auth'
 import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from './Login'
-import BreadCrumb from './BreadCrumb'
+import TopBar from './common/TopBar'
 import OuterContainer from './common/OuterContainer'
 import { Container, Input } from './common/FormContainer'
 import Button from './common/Button'
@@ -87,7 +87,7 @@ const Join = props => {
   if (props.token) {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText">
             Please logout then click the register link in your email again
@@ -103,7 +103,7 @@ const Join = props => {
   } else if (outcome) {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText" data-testid="register-form">
             {`Registration ${outcome}`}
@@ -114,7 +114,7 @@ const Join = props => {
   } else {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText" data-testid="register-form">
             Complete Registration
