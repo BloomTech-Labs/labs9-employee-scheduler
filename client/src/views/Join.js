@@ -6,11 +6,12 @@ import 'firebase/auth'
 
 import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
-import Login from './Login'
-import BreadCrumb from './BreadCrumb'
-import OuterContainer from './common/OuterContainer'
-import { Container, Input } from './common/FormContainer'
-import Button from './common/Button'
+import Login from '../components/Login'
+import TopBar from '../components/common/TopBar'
+import OuterContainer from '../components/common/OuterContainer'
+import { Container, Input } from '../components/common/FormContainer'
+import Button from '../components/common/Button'
+import { phonePattern } from '../utils'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 
@@ -87,7 +88,7 @@ const Join = props => {
   if (props.token) {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText">
             Please logout then click the register link in your email again
@@ -103,7 +104,7 @@ const Join = props => {
   } else if (outcome) {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText" data-testid="register-form">
             {`Registration ${outcome}`}
@@ -114,7 +115,7 @@ const Join = props => {
   } else {
     return (
       <OuterContainer height="true">
-        <BreadCrumb />
+        <TopBar />
         <Container className="wrapper">
           <h1 className="headerText" data-testid="register-form">
             Complete Registration
@@ -164,6 +165,7 @@ const Join = props => {
               onChange={handleChange}
               placeholder="ex. 123-456-7890"
               ariaLabel="phone"
+              pattern={phonePattern}
               required
             />
             <Terms>

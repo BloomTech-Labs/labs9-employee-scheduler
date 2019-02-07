@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { waitForElement, fireEvent, cleanup } from 'react-testing-library'
 import moment from 'moment'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import {
   structureEmployees,
   populateOrg

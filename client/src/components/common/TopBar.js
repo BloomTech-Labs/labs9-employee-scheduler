@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import LinkItem from './common/LinkItem'
+import LinkItem from './LinkItem'
 import styled from '@emotion/styled'
-import system from '../design/theme'
-import logo2 from '../img/logo2.png'
+import system from '../../design/theme'
+import logo2 from '../../assets/img/logo2.png'
 import { connect } from 'react-redux'
-import { fetchOrgFromDB } from '../actions'
+import { fetchOrgFromDB } from '../../actions'
 
-const BreadCrumb = props => {
+const TopBar = props => {
   useEffect(() => {
     const { user, token } = props.auth
     if (user !== null) {
@@ -35,7 +35,7 @@ const BreadCrumb = props => {
           </LinkItem>
         </Container>
 
-        <Container className="breadcrumbs" extra>
+        <Container className="TopBars" extra>
           <LinkItem to="/register" className="entry">
             Sign Up
           </LinkItem>
@@ -54,7 +54,7 @@ const BreadCrumb = props => {
         </Container>
 
         {/* want to put org or user names here */}
-        <Container className="breadcrumbs">
+        <Container className="TopBars">
           <h6 id="org-name">
             {orgname}
             <span id="user-name">{username}</span>
@@ -75,7 +75,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchOrgFromDB }
-)(BreadCrumb)
+)(TopBar)
 
 // basic styling to match design file
 const Container = styled('div')`
@@ -163,7 +163,7 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 2.5rem 10rem;
-  height: ${system.spacing.breadCrumb};
+  height: ${system.spacing.TopBar};
   margin-bottom: ${({ fixed }) => (fixed ? '10rem' : undefined)};
 
   @media ${system.breakpoints[0]} {

@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import EmptyScreen from './EmptyScreen'
+import LayoutFrame from './common/LayoutFrame'
 import PropTypes from 'prop-types'
 
-import Loader from './Loader'
-import Status from './Status'
+import Loader from './common/Loader'
+import Status from './common/Status'
 
 // takes in a component and it's props and wraps in App.js as
 // <PrivateRoute exact path="<routePath>" />
@@ -43,9 +43,9 @@ class PrivateRoute extends React.Component {
                   this.setState({ errorTimeout: true })
                 }, errorInterval)
                 return (
-                  <EmptyScreen>
+                  <LayoutFrame>
                     <Status>{`Ruh-roh, something's wrong: ${error}`}</Status>
-                  </EmptyScreen>
+                  </LayoutFrame>
                 )
               }
               // else, redirects to root
@@ -60,9 +60,9 @@ class PrivateRoute extends React.Component {
                 this.setState({ loadingTimeout: true })
               }, loadingInterval)
               return (
-                <EmptyScreen>
+                <LayoutFrame>
                   <Loader />
-                </EmptyScreen>
+                </LayoutFrame>
               )
             } else {
               // else, redirects to root
@@ -82,9 +82,9 @@ class PrivateRoute extends React.Component {
             return (
               <Suspense
                 fallback={
-                  <EmptyScreen>
+                  <LayoutFrame>
                     <Loader />
-                  </EmptyScreen>
+                  </LayoutFrame>
                 }
               >
                 <Component {...ownProps} {...rest} />

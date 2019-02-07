@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
 import PropTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
-import OuterContainer from './common/OuterContainer'
-import { Container } from './common/FormContainer'
-import Button from './common/Button'
+import TopBar from '../components/common/TopBar'
+import NavMenu from '../components/common/NavMenu'
+import OuterContainer from '../components/common/OuterContainer'
+import { Container } from '../components/common/FormContainer'
+import Button from '../components/common/Button'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import Loader from './Loader'
-import Status from './Status'
+import Loader from '../components/common/Loader'
+import Status from '../components/common/Status'
 import { fetchOrgFromDB } from '../actions'
 
 class Billing extends Component {
@@ -128,8 +128,8 @@ class Billing extends Component {
     if (Boolean(this.props.organization.paid)) {
       return (
         <OuterContainer height="true">
-          <LeftSideBar />
-          <BreadCrumb location="Billing" />
+          <NavMenu />
+          <TopBar location="Billing" />
 
           <Container danger>
             <h1>Billing</h1>
@@ -154,17 +154,17 @@ class Billing extends Component {
             ) : null}
             {this.state.error ? (
               <Status>
-                Something's wrong. Computers make mistakes, too!{' '}
+                Something's wrong. Computers make mistakes, too!
                 <span role="img" aria-label="wink emoji">
                   &#x1F916;
-                </span>{' '}
+                </span>
                 Please try again.
               </Status>
             ) : null}
 
             <form onSubmit={this.deleteHandler}>
-              //checks to see if the owner has a paid account and displays a
-              message accordingly
+              {/* checks to see if the owner has a paid account and displays a
+              message accordingly */}
               {this.props.organization.paid ? (
                 <h6 id="instructions">
                   You are signed up for the Pro Plan at $20 / month, which
@@ -202,8 +202,8 @@ class Billing extends Component {
 
     return (
       <OuterContainer height="true">
-        <LeftSideBar />
-        <BreadCrumb location="Billing" />
+        <NavMenu />
+        <TopBar location="Billing" />
 
         <Container billing>
           <h1>Billing</h1>

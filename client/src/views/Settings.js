@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-import LeftSideBar from './LeftSideBar'
-import OuterContainer from './common/OuterContainer'
-import { Container, Input } from './common/FormContainer'
-import Button from './common/Button'
+import TopBar from '../components/common/TopBar'
+import NavMenu from '../components/common/NavMenu'
+import OuterContainer from '../components/common/OuterContainer'
+import { Container, Input } from '../components/common/FormContainer'
+import Button from '../components/common/Button'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import Status from './Status'
-import Loader from './Loader'
+import Status from '../components/common/Status'
+import Loader from '../components/common/Loader'
 import { updateUserSettings } from '../actions'
+import { phonePattern } from '../utils'
 
-const phonePattern =
-  '^(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$'
 
 // This component will render out settings for the signed in user
 class Settings extends Component {
@@ -117,8 +116,8 @@ class Settings extends Component {
   render() {
     return (
       <OuterContainer height="true">
-        <LeftSideBar />
-        <BreadCrumb location="Settings" />
+        <NavMenu />
+        <TopBar location="Settings" />
 
         <Container settings>
           <h1 data-testid="settings">

@@ -1,6 +1,6 @@
 import React from 'react'
 import { cleanup, waitForElement } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import App from '../App'
 import axios from 'axios'
 import * as ReactGA from 'react-ga'

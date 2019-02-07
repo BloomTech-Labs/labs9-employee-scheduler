@@ -9,7 +9,7 @@ import Button from '../common/Button'
 import styled from '@emotion/styled'
 import system from '../../design/theme'
 import axios from 'axios'
-import Loader from '../Loader'
+import Loader from '../common/Loader'
 import {
   fetchEmployeesFromDB,
   fetchHoursFromDB,
