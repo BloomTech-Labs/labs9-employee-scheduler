@@ -125,7 +125,7 @@ class Employees extends Component {
     return (
       <OuterContainer location="Employees ">
         <TopBar location="Employees" />
-        <NavMenu fixed />
+        <NavMenu />
         <MidContainer>
           <h1>Employee Directory</h1>
           <ReactJoyride
