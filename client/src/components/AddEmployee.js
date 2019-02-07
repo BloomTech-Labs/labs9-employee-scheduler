@@ -17,7 +17,7 @@ class AddEmployee extends Component {
     }
   }
 
-  changeHandler = event => {
+  handleChange = event => {
     this.setState({
       newUser: {
         ...this.state.newUser,
@@ -26,7 +26,7 @@ class AddEmployee extends Component {
     })
   }
 
-  submitHandler = event => {
+  handleSubmit = event => {
     event.preventDefault()
     const { role, token } = this.props
     const { email, name } = this.state.newUser
@@ -80,13 +80,14 @@ class AddEmployee extends Component {
   }
 
   render() {
-    const { role, Close } = this.props
-    return (
-      <ModalContainer>
-        {/* ternary checks to see if they have a paid account or less than three employees  */}
-        {(this.props.paid && this.props.employees.length < 20) ||
-        this.props.employees.length < 5 ? ( // 5 because the owner is getting counted
-          <form onSubmit={this.submitHandler}>
+    const { role, Close, paid, employees } = this.props
+    const { handleChange, handleSubmit } = this
+
+    if ((paid && employees.length < 21) || employees.lengh < 5) {
+      // 20 is cap for pro, 4 is cap for free
+      return (
+        <ModalContainer>
+          <form onSubmit={handleSubmit}>
             <h6 id="instructions">
               Fill all fields & we'll send your employee a sign-up invite!
             </h6>
@@ -99,7 +100,7 @@ class AddEmployee extends Component {
               id="name"
               name="name"
               placeholder="ex. Adam Hinckley"
-              onChange={this.changeHandler}
+              onChange={handleChange}
               value={this.props.value}
               aria-label="name"
               required
@@ -110,7 +111,7 @@ class AddEmployee extends Component {
               id="email"
               name="email"
               placeholder="ex. adam@getcadence.co"
-              onChange={this.changeHandler}
+              onChange={handleChange}
               value={this.props.value}
               checked={this.props.checked}
               aria-label="email"
@@ -126,7 +127,7 @@ class AddEmployee extends Component {
                     name="role"
                     value="employee"
                     checked={this.props.checked}
-                    onChange={this.changeHandler}
+                    onChange={handleChange}
                   />
                   <label htmlFor="emp"> Employee</label>
                 </div>
@@ -136,7 +137,7 @@ class AddEmployee extends Component {
                     id="sup"
                     name="role"
                     value="supervisor"
-                    onChange={this.changeHandler}
+                    onChange={handleChange}
                   />
                   <label htmlFor="sup"> Supervisor</label>
                 </div>
@@ -146,7 +147,12 @@ class AddEmployee extends Component {
               Send Invite
             </Button>
           </form>
-        ) : (
+        </ModalContainer>
+      )
+    } else {
+      // if employee number is at the cap
+      return (
+        <ModalContainer>
           <form>
             {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
             {this.props.role === 'owner' ? (
@@ -180,9 +186,9 @@ class AddEmployee extends Component {
               </>
             )}
           </form>
-        )}
-      </ModalContainer>
-    )
+        </ModalContainer>
+      )
+    }
   }
 }
 
