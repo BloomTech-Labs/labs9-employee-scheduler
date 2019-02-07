@@ -5,7 +5,7 @@ const stripe = require('stripe')(stripeSKey)
 const authorize = require('../config/customMiddleware/authorize')
 const { updateOrg } = require('../../database/helpers')
 
-router.post('/', authorize(['owner']), (req, res, next) => {
+router.post('/', authorize(['owner']), (req, res) => {
   const { token, email, org_id } = req.body
 
   stripe.customers.create(
@@ -55,16 +55,18 @@ router.post('/', authorize(['owner']), (req, res, next) => {
 
 router.put('/', authorize(['owner']), (req, res) => {
   const { subscription_id, org_id } = req.body
+
   stripe.subscriptions.del(subscription_id)
+
   updateOrg(org_id, {
     subscription_id: null,
     customer_id: null,
     paid: false
   })
     .then(res => {
-      return res.send('Cancelled')
+      return res.status(200).json({ message: 'Subscription cancelled' })
     })
-    .catch(err => res.send(err))
+    .catch(err => res.status(500).json(err))
 })
 
 module.exports = router
