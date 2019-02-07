@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
 import styled from '@emotion/styled'
 import system from '../design/theme'
@@ -31,21 +31,21 @@ const buildDay = HOO => {
   return day
 }
 
-class HoursOfOperation extends Component {
-  constructor(props) {
-    super(props)
-    this.featureRef = React.createRef()
+const HoursOfOperation = props => {
 
-    this.state = {
+    featureRef = React.createRef()
+
+    const [state, setState] = useState({
       days: this.props.hours.hours.map(buildDay),
       initialTime: null
-    }
-  }
+    })
 
-  toggle = targetDay => {
-    this.setState(prevState => {
+
+  const toggle = targetDay => {
+    setState(prevState => {
       const { days } = prevState
       return {
+        ...state,
         days: days.map(day => {
           if (day.name === targetDay.name) {
             return {
@@ -62,7 +62,7 @@ class HoursOfOperation extends Component {
   }
 
   // for submitting all of the hours
-  submitHandler = () => {
+  const submitHandler = () => {
     this.state.days.forEach(day => {
       if (day.updated) {
         const start = moment(day.start, 'h:mm a')
@@ -72,21 +72,22 @@ class HoursOfOperation extends Component {
           .utc()
           .format('HH:mm')
         const closed = day.closed
-        this.props.editHours(
+        props.editHours(
           day.id,
           { open_time: start, close_time: end, closed },
-          this.props.token
+          props.token
         )
       }
     })
-    this.props.toggleShow()
+    props.toggleShow()
   }
 
   // handles the slider position when the user is done sliding
-  onChangeComplete = (time, targetDay) => {
-    this.setState(prevState => {
+  const onChangeComplete = (time, targetDay) => {
+    setState(prevState => {
       const { days, initialTime } = prevState
       return {
+        ...state,
         days: days.map(day => {
           if (day.name === targetDay.name) {
             const notEqual =
@@ -107,9 +108,10 @@ class HoursOfOperation extends Component {
   }
 
   // handles recording positions when the slider moves
-  timeChangeHandler(time, targetDay) {
-    this.setState(prevState => {
+  const timeChangeHandler = (time, targetDay) => {
+    setState(prevState => {
       return {
+        ...state,
         days: prevState.days.map(day => {
           if (day.name === targetDay.name) {
             return { ...day, start: time.start, end: time.end }
@@ -123,11 +125,11 @@ class HoursOfOperation extends Component {
 
   // handles returning the starting position of the slider
   changeStartHandler = currentTime => {
-    return this.setState({ initialTime: currentTime })
+    return setState({ ...state, initialTime: currentTime })
   }
 
   render() {
-    const { Close } = this.props
+    const { Close } = props
     return (
       <Modal>
         {/* opens either a different instance of the timekeeper based on if it's editing open or close time */}
@@ -135,16 +137,16 @@ class HoursOfOperation extends Component {
           <Close />
           <h3>What times is your business open?</h3>
           {/* maps over the days and places a pair of edit buttons for each one */}
-          {this.state.days.map((day, i) => {
+          {state.days.map((day, i) => {
             return (
               <HOOSlider
                 // props to days and close/open button
                 id={i}
                 key={day.id}
-                handleHours={this.handleHours}
+                handleHours={handleHours}
                 day={day}
                 name={day.name}
-                closedAllDay={() => this.toggle(day)}
+                closedAllDay={() => toggle(day)}
                 toggled={day.closed}
                 status={day.closed === false ? 'Open' : 'Closed'}
                 // slider props //
@@ -153,15 +155,15 @@ class HoursOfOperation extends Component {
                 start={day.start} //start of each day
                 end={day.end} //end of each day
                 // functions //
-                onChangeComplete={time => this.onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
-                onChange={time => this.timeChangeHandler(time, day)} //handles when the slider moves
-                onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
+                onChangeComplete={time => onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
+                onChange={time => timeChangeHandler(time, day)} //handles when the slider moves
+                onChangeStart={changeStartHandler} // records the time in which the slider is started at
               >
-                {this.props.children}
+                {props.children}
               </HOOSlider>
             )
           })}
-          <Button onClick={this.submitHandler}>
+          <Button onClick={submitHandler}>
             Submit Hours of Operation
           </Button>
         </div>
