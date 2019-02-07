@@ -34,34 +34,28 @@ const buildDay = HOO => {
 const HoursOfOperation = props => {
   // featureRef = React.createRef()
 
-  const [state, setState] = useState({
-    days: props.hours.hours.map(buildDay),
-    initialTime: null
-  })
+  const [days, setDays] = useState(props.hours.hours.map(buildDay))
+  const [time, setTime] = useState(null)
 
   const toggle = targetDay => {
-    setState(prevState => {
-      const { days } = prevState
-      return {
-        ...state,
-        days: days.map(day => {
-          if (day.name === targetDay.name) {
-            return {
-              ...day,
-              updated: true,
-              closed: !day.closed
-            }
-          } else {
-            return day
+    setDays(
+      days.map(day => {
+        if (day.name === targetDay.name) {
+          return {
+            ...day,
+            updated: true,
+            closed: !day.closed
           }
-        })
-      }
-    })
+        } else {
+          return day
+        }
+      })
+    )
   }
 
   // for submitting all of the hours
   const submitHandler = () => {
-    state.days.forEach(day => {
+    days.forEach(day => {
       if (day.updated) {
         const start = moment(day.start, 'h:mm a')
           .utc()
@@ -82,48 +76,40 @@ const HoursOfOperation = props => {
 
   // handles the slider position when the user is done sliding
   const onChangeComplete = (time, targetDay) => {
-    setState(prevState => {
-      const { days, initialTime } = prevState
-      return {
-        ...state,
-        days: days.map(day => {
-          if (day.name === targetDay.name) {
-            const notEqual =
-              initialTime.start !== targetDay.start ||
-              initialTime.end !== targetDay.end
-            return {
-              ...day,
-              start: time.start,
-              end: time.end,
-              updated: notEqual
-            }
-          } else {
-            return day
+    setDays(
+      days.map(day => {
+        if (day.name === targetDay.name) {
+          const notEqual =
+            time.start !== targetDay.start || time.end !== targetDay.end
+          return {
+            ...day,
+            start: time.start,
+            end: time.end,
+            updated: notEqual
           }
-        })
-      }
-    })
+        } else {
+          return day
+        }
+      })
+    )
   }
 
   // handles recording positions when the slider moves
   const timeChangeHandler = (time, targetDay) => {
-    setState(prevState => {
-      return {
-        ...state,
-        days: prevState.days.map(day => {
-          if (day.name === targetDay.name) {
-            return { ...day, start: time.start, end: time.end }
-          } else {
-            return day
-          }
-        })
-      }
-    })
+    setDays(
+      days.map(day => {
+        if (day.name === targetDay.name) {
+          return { ...day, start: time.start, end: time.end }
+        } else {
+          return day
+        }
+      })
+    )
   }
 
   // handles returning the starting position of the slider
   const changeStartHandler = currentTime => {
-    return setState({ ...state, initialTime: currentTime })
+    return setTime({ ...time, initialTime: currentTime })
   }
 
   const { Close } = props
@@ -134,7 +120,7 @@ const HoursOfOperation = props => {
         <Close />
         <h3>What times is your business open?</h3>
         {/* maps over the days and places a pair of edit buttons for each one */}
-        {state.days.map((day, i) => {
+        {days.map((day, i) => {
           return (
             <HOOSlider
               // props to days and close/open button
