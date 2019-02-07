@@ -10,7 +10,7 @@ if (cluster.isMaster) {
     (process.env.NODE_ENV === 'development' && os.cpus().length) ||
     1
   for (let i = 0; i < cpuCount; i++) {
-    console.log('spawning child cluster')
+    console.log('spawning child process')
     cluster.fork()
   }
 } else {
