@@ -144,7 +144,9 @@ class AddEmployee extends Component {
                 <Button>Upgrade</Button>
               </Link>
             ) : (
-              `Contact your business's owner about upgrading.`
+              <p style={{ fontSize: system.fontSizing.m }}>
+                Contact your business's owner about upgrading.
+              </p>
             )}
           </form>
         </ModalContainer>
