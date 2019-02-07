@@ -20,8 +20,8 @@ const sendInvite = (email, inviteId) => {
       subject: 'Invite link',
       html: `You have been invited to join the app. Would you like to? <br><br> Click this link to sign up: ${clientUrl}/join/${inviteId}`
     })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+    .then(res => 'return success')
+    .catch(err => 'returned with error')
 }
 
 module.exports = sendInvite

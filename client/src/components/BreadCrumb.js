@@ -14,8 +14,6 @@ const BreadCrumb = props => {
     }
   }, [props.auth])
 
-  // initialize content for condition
-  let breadContent
   // ask the receiving component what location will be
   const { location, organization, auth } = props
   const username =
@@ -28,25 +26,8 @@ const BreadCrumb = props => {
       ? `${organization.details.name}`
       : null
 
-  breadContent =
-    location !== 'Home' || location !== 'terms' || location !== 'privacy' ? (
-      <Nav fixed={location === 'Employees' ? true : false}>
-        <Container logo>
-          <LinkItem to="/">
-            <img src={logo2} alt="logo" />
-          </LinkItem>
-          <p id="crumb">{location}</p>
-        </Container>
-
-        {/* want to put org or user names here */}
-        <Container className="breadcrumbs">
-          <h6 id="org-name">
-            {orgname}
-            <span id="user-name">{username}</span>
-          </h6>
-        </Container>
-      </Nav>
-    ) : (
+  const breadContent =
+    location === 'Home' || location === 'terms' || location === 'privacy' ? (
       <Nav fixed={true}>
         <Container logo>
           <LinkItem to="/">
@@ -61,6 +42,23 @@ const BreadCrumb = props => {
           <LinkItem to="/login" className="entry">
             Log In
           </LinkItem>
+        </Container>
+      </Nav>
+    ) : (
+      <Nav fixed={location === 'Employees' ? true : false}>
+        <Container logo>
+          <LinkItem to="/">
+            <img src={logo2} alt="logo" />
+          </LinkItem>
+          <p id="crumb">{location}</p>
+        </Container>
+
+        {/* want to put org or user names here */}
+        <Container className="breadcrumbs">
+          <h6 id="org-name">
+            {orgname}
+            <span id="user-name">{username}</span>
+          </h6>
         </Container>
       </Nav>
     )
