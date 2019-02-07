@@ -163,9 +163,18 @@ class Billing extends Component {
             ) : null}
 
             <form onSubmit={this.deleteHandler}>
-              <h6 id="instructions">
-                Here's what's included in the $20 / month Pro Plan:
-              </h6>
+              //checks to see if the owner has a paid account and displays a
+              message accordingly
+              {this.props.organization.paid ? (
+                <h6 id="instructions">
+                  You are signed up for the Pro Plan at $20 / month, which
+                  includes:
+                </h6>
+              ) : (
+                <h6 id="instructions">
+                  Here's what's included in the $20 / month Pro Plan:
+                </h6>
+              )}
               <ul>
                 <li>A simple calendar interface to manage shifts.</li>
                 <li>
