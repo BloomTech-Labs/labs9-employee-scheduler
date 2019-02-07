@@ -90,7 +90,7 @@ class AddEmployee extends Component {
       <ModalContainer>
         {/* ternary checks to see if they have a paid account or less than three employees  */}
         {(this.props.paid && this.props.employees.length < 20) ||
-        this.props.employees.length < 3 ? (
+        this.props.employees.length < 5 ? ( // 5 because the owner is getting counted
           <form onSubmit={this.submitHandler}>
             <h6 id="instructions">
               Fill all fields & we'll send your employee a sign-up invite!

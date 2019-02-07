@@ -139,7 +139,7 @@ const Home = () => {
                 <h2>Basic Plan</h2>
                 <h3>Free</h3>
                 <ul>
-                  <li>Up to 3 total users</li>
+                  <li>Up to 4 total users</li>
                   <li>Includes all main features</li>
                   <li>Get to know Cadence risk-free</li>
                 </ul>
