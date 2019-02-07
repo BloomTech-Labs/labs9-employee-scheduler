@@ -1,5 +1,5 @@
 import React from 'react'
-import { waitForElement } from 'react-testing-library'
+import { waitForElement, cleanup } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import App from '../App'
 import {
@@ -34,6 +34,7 @@ const scheduledName = `${scheduledEmployee.first_name} ${
 }`
 
 describe('Scheduler', () => {
+  afterEach(cleanup)
   it('renders with employee data', async () => {
     // setup of document to play nice with Stripe component
     setupStripeNode()

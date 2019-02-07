@@ -1,10 +1,6 @@
 import React from 'react'
-import { waitForElement } from 'react-testing-library'
-import {
-  renderWithReduxAndRouter,
-  setupStripeNode,
-  getAllByTestId
-} from '../../testing/utils'
+import { waitForElement, cleanup } from 'react-testing-library'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import { utcDayToLocal, decrementDay, formatHours } from '../utils'
 import App from '../App'
 import * as axios from 'axios'
@@ -39,6 +35,7 @@ user.cal_visit = false
 user.emp_visit = false
 console.log(employee.events[0].start)
 describe('employee dashboard with redux', () => {
+  afterEach(cleanup)
   it('can render with initial state', async () => {
     // mock out firebase auth
     firebase.auth = jest.fn().mockImplementation(() => {
@@ -175,6 +172,7 @@ describe('employee dashboard with redux', () => {
       'Friday',
       'Saturday'
     ]
+
     employee.availabilities.forEach(avail => {
       const dayNum = utcDayToLocal({ day: avail.day, time: avail.start_time })
       const dayName = dayNames[dayNum]

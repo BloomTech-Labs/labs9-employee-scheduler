@@ -1,7 +1,7 @@
 import React from 'react'
 import App from '../App'
 import { populateOrg } from '../../../database/utils/generateData'
-import { fireEvent, waitForElement } from 'react-testing-library'
+import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import Settings from '../components/Settings'
 
@@ -17,6 +17,7 @@ const { organization, users } = populateOrg({ size: 6 })
 const user = users[0]
 
 describe('Settings Component', () => {
+  afterEach(cleanup)
   let email, phone, emailpref, phonepref, utils
   beforeEach(() => {
     // mock out firebase auth

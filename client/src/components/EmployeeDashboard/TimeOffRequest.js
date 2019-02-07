@@ -47,11 +47,7 @@ class TimeOffRequest extends Component {
       alert(`You can't go on vacation in the past, silly!`)
     } else {
       const { token, user } = this.props.auth
-      const formattedDate = date.format('YYYY-MM-DD')
       this.props.addTimeOffRequest(user.id, start, end, reason, token)
-      alert(
-        `We put in your PTO request for ${formattedDate}. We hope you get it!`
-      )
       event.target.reset()
     }
   }

@@ -4,7 +4,12 @@ import {
   populateOrg,
   structureEmployees
 } from '../../../database/utils/generateData'
-import { fireEvent, waitForElement, getByText } from 'react-testing-library'
+import {
+  fireEvent,
+  waitForElement,
+  getByText,
+  cleanup
+} from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 
 import * as axios from 'axios'
@@ -46,11 +51,9 @@ const user = users.find(user => user.role === 'owner')
 user.cal_visit = false
 
 describe('Login Component', () => {
-  let email, phone, emailpref, phonepref, utils
-  beforeEach(() => {
-    // setup of document to play nice with Striple component
+  afterEach(cleanup)
+  it('should navigate to login for non-logged in user', async () => {
     setupStripeNode()
-
     // mock out axios authenticaton call to our server
     axios.get.mockImplementation((path, { headers: { authorization } }) => {
       if (authorization === 'token') {
@@ -62,9 +65,6 @@ describe('Login Component', () => {
         }
       }
     })
-  })
-
-  it('should navigate to login for non-logged in user', async () => {
     // mock out firebase auth
     firebase.auth = jest.fn().mockImplementation(() => {
       return {
@@ -96,6 +96,7 @@ describe('Login Component', () => {
   })
 
   it('should redirect away from Login for logged in user', async () => {
+    setupStripeNode()
     // mock out firebase auth
     firebase.auth = jest.fn().mockImplementation(() => {
       return {
@@ -141,13 +142,8 @@ describe('Login Component', () => {
       route: `/login`
     })
 
-    const loginButton = await waitForElement(() => queryByText(/sign in/i))
-    expect(loginButton).not.toBeNull()
+    await waitForElement(() => container.querySelector('.rbc-calendar'))
 
-    const cal = await waitForElement(() =>
-      container.querySelector('.rbc-calendar')
-    )
-    expect(cal).not.toBeNull()
     expect(queryByText(/sign in/i)).toBeNull()
   })
 })

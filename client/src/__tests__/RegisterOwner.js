@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, waitForElement } from 'react-testing-library'
+import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
 import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
 import { populateOrg } from '../../../database/utils/generateData'
 import App from '../App'
@@ -53,6 +53,7 @@ const setup = async () => {
 }
 
 describe('Register Component', () => {
+  afterEach(cleanup)
   it('should render the register form on sign up click', async () => {
     utils = await setup()
 
