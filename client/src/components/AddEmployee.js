@@ -8,74 +8,58 @@ import system from '../design/theme'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
+const closeStyle = { position: 'absolute', top: '25px', right: '25px' }
+
 class AddEmployee extends Component {
   state = {
-    newUser: {
-      email: '',
-      name: '',
-      role: ''
-    }
+    email: '',
+    name: '',
+    role: ''
   }
 
-  handleChange = event => {
-    this.setState({
-      newUser: {
-        ...this.state.newUser,
-        [event.target.name]: event.target.value
-      }
-    })
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value })
   }
 
-  handleSubmit = event => {
-    event.preventDefault()
-    const { role, token } = this.props
-    const { email, name } = this.state.newUser
-    const newUser = {
-      email: email,
-      name: name
-    }
+  handleSubmit = ({ preventDefault }) => {
+    preventDefault()
+    const { role: currentRole, token, toggleShow } = this.props
+    const { email, name, role: newUserRole } = this.state
 
     if (!email || !name) {
       alert('Please fill out all fields!')
+    } else if (currentRole === 'supervisor') {
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
+          { email, name },
+          {
+            headers: { authorization: token }
+          }
+        )
+        .then(() => {
+          alert(`We've sent an invite to employee: ${name}.`)
+          toggleShow()
+        })
+        .catch(() => {
+          alert(`Something has gone wrong. Try again!`)
+        })
+    } else if (!newUserRole) {
+      alert(`Please indicate the new user's role.`)
     } else {
-      if (role === 'supervisor') {
-        axios
-          .post(
-            `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
-            newUser,
-            {
-              headers: { authorization: token }
-            }
-          )
-          .then(res => {
-            alert(`We've sent an invite to employee: ${name}.`)
-            this.props.toggleShow()
-          })
-          .catch(err => {
-            alert(`Something has gone wrong. Try again!`)
-          })
-      } else {
-        if (!this.state.newUser.role) {
-          alert(`Please indicate the new user's role.`)
-        } else {
-          const intendedRole = this.state.newUser.role
-          axios
-            .post(
-              `${
-                process.env.REACT_APP_SERVER_URL
-              }/invites/invite-${intendedRole}`,
-              newUser,
-              {
-                headers: { authorization: token }
-              }
-            )
-            .then(res => {
-              alert(`We've sent an invite to ${intendedRole}: ${name}.`)
-              this.props.toggleShow()
-            })
-            .catch(err => alert(`Something has gone wrong. Try again!`))
-        }
-      }
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/invites/invite-${newUserRole}`,
+          { email, name },
+          {
+            headers: { authorization: token }
+          }
+        )
+        .then(() => {
+          alert(`We've sent an invite to ${intendedRole}: ${name}.`)
+          toggleShow()
+        })
+        .catch(() => alert(`Something has gone wrong. Try again!`))
     }
   }
 
@@ -91,9 +75,7 @@ class AddEmployee extends Component {
             <h6 id="instructions">
               Fill all fields & we'll send your employee a sign-up invite!
             </h6>
-            <Close
-              style={{ position: 'absolute', top: '25px', right: '25px' }}
-            />
+            <Close style={closeStyle} />
             <label htmlFor="name">Employee Name *</label>
             <Input
               type="name"
@@ -154,21 +136,20 @@ class AddEmployee extends Component {
       return (
         <ModalContainer>
           <form>
-            <Close style={{ position: 'absolute', top: '25px', right: '25px' }}>
-              <h6 id="instructions">
-                You have reached the limit for the number of users your account
-                can support.
-              </h6>
+            <Close style={closeStyle} />
+            <h6 id="instructions">
+              You have reached the limit for the number of users your account
+              can support.
+            </h6>
 
-              {role === 'owner' ? (
-                <Link to="/billing">
-                  <Button>Upgrade</Button>
-                </Link>
-              ) : (
-                `Contact your business' owner about
+            {role === 'owner' ? (
+              <Link to="/billing">
+                <Button>Upgrade</Button>
+              </Link>
+            ) : (
+              `Contact your business' owner about
               upgrading.`
-              )}
-            </Close>
+            )}
           </form>
         </ModalContainer>
       )
