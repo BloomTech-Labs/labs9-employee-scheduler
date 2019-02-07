@@ -12,9 +12,11 @@ import system from '../design/theme'
 
 // this component will house all of the main features for the create schedule page.
 const CreateSchedule = props => {
-  const [state, useState] = useState({ hoursModal: false })
+  const [state, setState] = useState({
+    hoursModal: false
+  })
 
-  toggleModal = e => {
+  const toggleModal = e => {
     setState(state => ({ ...state, hoursModal: !state.hoursModal }))
   }
 
@@ -32,10 +34,10 @@ const CreateSchedule = props => {
           </Alert>
         </MobileOnly>
         <div>
-          <Modal show={this.state.hoursModal} toggleShow={this.toggleModal}>
+          <Modal show={state.hoursModal} toggleShow={toggleModal}>
             <HoursOfOperationForm />
           </Modal>
-          <Scheduler toggleModal={this.toggleModal} />
+          <Scheduler toggleModal={toggleModal} />
         </div>
       </MainContentHolder>
     </OuterContainer>
