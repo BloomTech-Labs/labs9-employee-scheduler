@@ -21,8 +21,8 @@ class AddEmployee extends Component {
     this.setState({ [name]: value })
   }
 
-  handleSubmit = ({ preventDefault }) => {
-    preventDefault()
+  handleSubmit = event => {
+    event.preventDefault()
     const { role: currentRole, token, toggleShow } = this.props
     const { email, name, role: newUserRole } = this.state
 
@@ -38,7 +38,7 @@ class AddEmployee extends Component {
           }
         )
         .then(() => {
-          alert(`We've sent an invite to employee: ${name}.`)
+          alert(`We've sent an invite to: ${name}.`)
           toggleShow()
         })
         .catch(() => {
@@ -56,7 +56,7 @@ class AddEmployee extends Component {
           }
         )
         .then(() => {
-          alert(`We've sent an invite to ${intendedRole}: ${name}.`)
+          alert(`We've sent an invite to: ${name}.`)
           toggleShow()
         })
         .catch(() => alert(`Something has gone wrong. Try again!`))
@@ -67,7 +67,7 @@ class AddEmployee extends Component {
     const { role, Close, paid, employees } = this.props
     const { handleChange, handleSubmit } = this
 
-    if ((paid && employees.length < 21) || employees.lengh < 5) {
+    if ((paid && employees.length < 21) || employees.length < 5) {
       // 20 is cap for pro, 4 is cap for free
       return (
         <ModalContainer>
@@ -83,7 +83,6 @@ class AddEmployee extends Component {
               name="name"
               placeholder="ex. Adam Hinckley"
               onChange={handleChange}
-              value={this.props.value}
               aria-label="name"
               required
             />
@@ -94,12 +93,10 @@ class AddEmployee extends Component {
               name="email"
               placeholder="ex. adam@getcadence.co"
               onChange={handleChange}
-              value={this.props.value}
-              checked={this.props.checked}
               aria-label="email"
               required
             />
-            {role === 'owner' ? (
+            {role === 'owner' && (
               <>
                 <label htmlFor="role">Employee Role *</label>
                 <div className="radio">
@@ -108,7 +105,6 @@ class AddEmployee extends Component {
                     id="emp"
                     name="role"
                     value="employee"
-                    checked={this.props.checked}
                     onChange={handleChange}
                   />
                   <label htmlFor="emp"> Employee</label>
@@ -124,7 +120,7 @@ class AddEmployee extends Component {
                   <label htmlFor="sup"> Supervisor</label>
                 </div>
               </>
-            ) : null}
+            )}
             <Button type="submit" data-test="submit">
               Send Invite
             </Button>
@@ -147,8 +143,7 @@ class AddEmployee extends Component {
                 <Button>Upgrade</Button>
               </Link>
             ) : (
-              `Contact your business' owner about
-              upgrading.`
+              `Contact your business's owner about upgrading.`
             )}
           </form>
         </ModalContainer>
