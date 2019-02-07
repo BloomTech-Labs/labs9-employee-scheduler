@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import system from '../design/theme'
-import check from '../img/check.svg'
-import x from '../img/x.svg'
+import system from '../../design/theme'
+import check from '../../assets/img/check.svg'
+import x from '../../assets/img/x.svg'
 
 const Status = props => {
   return (

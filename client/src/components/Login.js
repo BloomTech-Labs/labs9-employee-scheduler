@@ -2,8 +2,8 @@ import React from 'react'
 import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
-import EmptyScreen from './EmptyScreen'
-import Loader from './Loader'
+import LayoutFrame from './common/LayoutFrame'
+import Loader from './common/Loader'
 import { authenticate } from '../actions'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
@@ -39,7 +39,7 @@ const Login = props => {
     return <Redirect to="/register" />
   } else {
     return (
-      <EmptyScreen auth background>
+      <LayoutFrame auth background>
         <Container>
           <React.Suspense fallback={<Loader />}>
             <StyledFirebaseAuth
@@ -48,7 +48,7 @@ const Login = props => {
             />
           </React.Suspense>
         </Container>
-      </EmptyScreen>
+      </LayoutFrame>
     )
   }
 }

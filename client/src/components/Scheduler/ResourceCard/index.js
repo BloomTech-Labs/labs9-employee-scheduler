@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import system from '../../../design/theme'
 import Availability from './Availability'
 import TimeOff from './TimeOff'
-import drag from '../../../img/drag.svg'
+import drag from '../../../assets/img/drag.svg'
 
 // this card component will contain the employee's info such as name, email, phone.
 // these cards will live in both the calendar page (view only) and the employees directory (edit possible)

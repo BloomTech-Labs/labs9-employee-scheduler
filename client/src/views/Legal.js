@@ -1,7 +1,7 @@
 import React from 'react'
-import OuterContainer from './common/OuterContainer'
-import BreadCrumb from './BreadCrumb'
-import Footer from './Footer'
+import OuterContainer from '../components/common/OuterContainer'
+import TopBar from '../components/common/TopBar'
+import Footer from '../components/common/Footer'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 
@@ -9,7 +9,7 @@ const Legal = props => {
   const pathname = props.location.pathname.substring(1)
   return (
     <OuterContainer>
-      <BreadCrumb location={pathname} />
+      <TopBar location={pathname} />
       <Container>
         {pathname === 'terms' ? (
           <div>
@@ -313,214 +313,214 @@ const Legal = props => {
             </p>
           </div>
         ) : (
-          <div>
-            <h1>Privacy Policy</h1>
-            <p>Effective date: 2/1/2019</p>
-            <br />
-            <h2>The Gist</h2>
-            <p>
-              Cadence will collect certain non-personally identify information
-              about you as you use our site(s). We may use this data to better
-              understand our users. We can also publish this data, but the data
-              will be about a large group of users, not individuals.
+            <div>
+              <h1>Privacy Policy</h1>
+              <p>Effective date: 2/1/2019</p>
+              <br />
+              <h2>The Gist</h2>
+              <p>
+                Cadence will collect certain non-personally identify information
+                about you as you use our site(s). We may use this data to better
+                understand our users. We can also publish this data, but the data
+                will be about a large group of users, not individuals.
             </p>
-            <br />
+              <br />
 
-            <p>
-              We will also ask you to provide personal information, but you'll
-              always be able to opt out. If you give us personal information, we
-              won't do anything evil with it.
+              <p>
+                We will also ask you to provide personal information, but you'll
+                always be able to opt out. If you give us personal information, we
+                won't do anything evil with it.
             </p>
-            <br />
+              <br />
 
-            <p>
-              We can also use cookies, without which our product cannot
-              function. While you may disable such cookies, Cadence cannot
-              guarantee the product's functionality in such cases.
+              <p>
+                We can also use cookies, without which our product cannot
+                function. While you may disable such cookies, Cadence cannot
+                guarantee the product's functionality in such cases.
             </p>
-            <br />
+              <br />
 
-            <p>
-              That's the basic idea, but you must read through the entire
-              Privacy Policy below and agree with all the details before you use
-              any of our sites.
+              <p>
+                That's the basic idea, but you must read through the entire
+                Privacy Policy below and agree with all the details before you use
+                any of our sites.
             </p>
-            <br />
+              <br />
 
-            <h2>Reuse</h2>
-            <p>
-              This document is based upon the{' '}
-              <a href="https://automattic.com/privacy/">
-                Automattic Privacy Policy
+              <h2>Reuse</h2>
+              <p>
+                This document is based upon the{' '}
+                <a href="https://automattic.com/privacy/">
+                  Automattic Privacy Policy
               </a>{' '}
-              and is licensed under{' '}
-              <a href="https://creativecommons.org/licenses/by-sa/2.5/">
-                Creative Commons Attribution Share-Alike License 2.5
+                and is licensed under{' '}
+                <a href="https://creativecommons.org/licenses/by-sa/2.5/">
+                  Creative Commons Attribution Share-Alike License 2.5
               </a>
-              . Basically, this means you can use it verbatim or edited, but you
-              must release new versions under the same license and you have to
-              credit Automattic somewhere (like this!). Automattic is not
-              connected with and does not sponsor or endorse Cadence or its use
-              of the work.
+                . Basically, this means you can use it verbatim or edited, but you
+                must release new versions under the same license and you have to
+                credit Automattic somewhere (like this!). Automattic is not
+                connected with and does not sponsor or endorse Cadence or its use
+                of the work.
             </p>
-            <br />
+              <br />
 
-            <p>
-              Cadence, Inc. ("Cadence") makes available services include our web
+              <p>
+                Cadence, Inc. ("Cadence") makes available services include our web
               sites (<a href="https://getcadence.co">https://getcadence.co</a>),
-              our API, and any other software, sites, and services offered by
-              Cadence in connection to any of those (taken together, the
-              "Service"). It is Cadence's policy to respect your privacy
-              regarding any information we may collect while operating our
-              websites.
+                our API, and any other software, sites, and services offered by
+                Cadence in connection to any of those (taken together, the
+                "Service"). It is Cadence's policy to respect your privacy
+                regarding any information we may collect while operating our
+                websites.
             </p>
-            <br />
+              <br />
 
-            <h2>Questions</h2>
-            <p>
-              If you have question about this Privacy Policy, please contact us
+              <h2>Questions</h2>
+              <p>
+                If you have question about this Privacy Policy, please contact us
               at <a href="mailto:getcadence@gmail.com">getcadence@gmail.com</a>.
             </p>
-            <br />
+              <br />
 
-            <h2>Visitors</h2>
-            <p>
-              Like most website operators, Cadence collects
-              non-personally-identifying information of the sort that web
-              browsers and servers typically make available, such as the browser
-              type, language preference, referring site, and the date and time
-              of each visitor request. Cadence's purpose in collecting
-              non-personally identifying information is to better understand how
-              Cadence's visitors use its website. From time to time, Cadence may
-              release non-personally-identifying information in the aggregate,
-              e.g., by publishing a report on trends in the usage of its
-              website.
+              <h2>Visitors</h2>
+              <p>
+                Like most website operators, Cadence collects
+                non-personally-identifying information of the sort that web
+                browsers and servers typically make available, such as the browser
+                type, language preference, referring site, and the date and time
+                of each visitor request. Cadence's purpose in collecting
+                non-personally identifying information is to better understand how
+                Cadence's visitors use its website. From time to time, Cadence may
+                release non-personally-identifying information in the aggregate,
+                e.g., by publishing a report on trends in the usage of its
+                website.
             </p>
-            <br />
+              <br />
 
-            <p>
-              Cadence also collects potentially personally-identifying
-              information like Internet Protocol (IP) addresses. Cadence does
-              not use such information to identify its visitors, however, and
-              does not disclose such information, other than under the same
-              circumstances that it uses and discloses personally-identifying
-              information, as described below. We may also collect and use IP
-              addresses to block users who violated our Terms of Service.
+              <p>
+                Cadence also collects potentially personally-identifying
+                information like Internet Protocol (IP) addresses. Cadence does
+                not use such information to identify its visitors, however, and
+                does not disclose such information, other than under the same
+                circumstances that it uses and discloses personally-identifying
+                information, as described below. We may also collect and use IP
+                addresses to block users who violated our Terms of Service.
             </p>
-            <br />
+              <br />
 
-            <h2>Gathering of Personally-Identifying Information</h2>
-            <p>
-              Certain visitors to Cadence's websites choose to interact with
-              Cadence in ways that require Cadence to gather
-              personally-identifying information. The amount and type of
-              information that Cadence gathers depends on the nature of the
-              interaction. Cadence collects such information only insofar as is
-              necessary or appropriate to fulfill the purpose of the visitor's
-              interaction with Cadence. Cadence does not disclose
-              personally-identifying information other than as described below.
-              And visitors can always refuse to supply personally-identifying
-              information, with the caveat that it may prevent them from
-              engaging in certain Service-related activities.
+              <h2>Gathering of Personally-Identifying Information</h2>
+              <p>
+                Certain visitors to Cadence's websites choose to interact with
+                Cadence in ways that require Cadence to gather
+                personally-identifying information. The amount and type of
+                information that Cadence gathers depends on the nature of the
+                interaction. Cadence collects such information only insofar as is
+                necessary or appropriate to fulfill the purpose of the visitor's
+                interaction with Cadence. Cadence does not disclose
+                personally-identifying information other than as described below.
+                And visitors can always refuse to supply personally-identifying
+                information, with the caveat that it may prevent them from
+                engaging in certain Service-related activities.
             </p>
-            <br />
+              <br />
 
-            <p>
-              Additionally, some interactions, such as posting a comment, may
-              ask for optional personal information. For instance, when posting
-              a comment, may provide a website that will be displayed along with
-              a user's name when the comment is displayed. Supplying such
-              personal information is completely optional and is only displayed
-              for the benefit and the convenience of the user.
+              <p>
+                Additionally, some interactions, such as posting a comment, may
+                ask for optional personal information. For instance, when posting
+                a comment, may provide a website that will be displayed along with
+                a user's name when the comment is displayed. Supplying such
+                personal information is completely optional and is only displayed
+                for the benefit and the convenience of the user.
             </p>
-            <br />
+              <br />
 
-            <h2>Aggregated Statistics</h2>
-            <p>
-              Cadence may collect statistics about the behavior of visitors to
-              the Service. For instance, Cadence may monitor the most popular
-              parts of the Service. Cadence may display this information
-              publicly or provide it to others. However, Cadence does not
-              disclose personally-identifying information other than as
-              described below.
+              <h2>Aggregated Statistics</h2>
+              <p>
+                Cadence may collect statistics about the behavior of visitors to
+                the Service. For instance, Cadence may monitor the most popular
+                parts of the Service. Cadence may display this information
+                publicly or provide it to others. However, Cadence does not
+                disclose personally-identifying information other than as
+                described below.
             </p>
-            <br />
+              <br />
 
-            <h2>Protection of Certain Personally-Identifying Information</h2>
-            <p>
-              Cadence discloses potentially personally-identifying and
-              personally-identifying information only to those of its employees,
-              contractors and affiliated organizations that (i) need to know
-              that information in order to process it on Cadence's behalf or to
-              provide services available at Cadence's websites, and (ii) that
-              have agreed not to disclose it to others. Some of those employees,
-              contractors and affiliated organizations may be located outside of
-              your home country; by using the Service, you consent to the
-              transfer of such information to them. Cadence will not rent or
-              sell potentially personally-identifying and personally-identifying
-              information to anyone. Other than to its employees, contractors
-              and affiliated organizations, as described above, Cadence
-              discloses potentially personally-identifying and
-              personally-identifying information only when required to do so by
-              law, or when Cadence believes in good faith that disclosure is
-              reasonably necessary to protect the property or rights of Cadence,
+              <h2>Protection of Certain Personally-Identifying Information</h2>
+              <p>
+                Cadence discloses potentially personally-identifying and
+                personally-identifying information only to those of its employees,
+                contractors and affiliated organizations that (i) need to know
+                that information in order to process it on Cadence's behalf or to
+                provide services available at Cadence's websites, and (ii) that
+                have agreed not to disclose it to others. Some of those employees,
+                contractors and affiliated organizations may be located outside of
+                your home country; by using the Service, you consent to the
+                transfer of such information to them. Cadence will not rent or
+                sell potentially personally-identifying and personally-identifying
+                information to anyone. Other than to its employees, contractors
+                and affiliated organizations, as described above, Cadence
+                discloses potentially personally-identifying and
+                personally-identifying information only when required to do so by
+                law, or when Cadence believes in good faith that disclosure is
+                reasonably necessary to protect the property or rights of Cadence,
               third parties or the public at large.{' '}
-            </p>
-            <br />
+              </p>
+              <br />
 
-            <p>
-              If you are a registered user of the Service and have supplied your
-              email address, Cadence may occasionally send you an email to tell
-              you about new features, solicit your feedback, or just keep you up
-              to date with what's going on with Cadence and our products. We
-              primarily use our website and blog to communicate this type of
-              information, so we expect to keep this type of email to a minimum.
-              If you send us a request (for example via a support email or via
-              one of our feedback mechanisms), we reserve the right to publish
-              it in order to help us clarify or respond to your request or to
-              help us support other users. Cadence takes all measures reasonably
-              necessary to protect against the unauthorized access, use,
-              alteration or destruction of potentially personally-identifying
-              and personally-identifying information.
+              <p>
+                If you are a registered user of the Service and have supplied your
+                email address, Cadence may occasionally send you an email to tell
+                you about new features, solicit your feedback, or just keep you up
+                to date with what's going on with Cadence and our products. We
+                primarily use our website and blog to communicate this type of
+                information, so we expect to keep this type of email to a minimum.
+                If you send us a request (for example via a support email or via
+                one of our feedback mechanisms), we reserve the right to publish
+                it in order to help us clarify or respond to your request or to
+                help us support other users. Cadence takes all measures reasonably
+                necessary to protect against the unauthorized access, use,
+                alteration or destruction of potentially personally-identifying
+                and personally-identifying information.
             </p>
-            <br />
+              <br />
 
-            <h2>Cookies</h2>
-            <p>
-              A cookie is a string of information that a website stores on a
-              visitor's computer, and that the visitor's browser provides to the
-              Service each time the visitor returns. Cadence uses cookies to
-              help Cadence identify and track visitors, their usage of Cadence
-              Service, and their Service access preferences. Cadence visitors
-              who do not wish to have cookies placed on their computers should
-              set their browsers to refuse cookies before using Cadence's
-              websites, with the drawback that certain features of Cadence's
-              websites may not function properly without the aid of cookies.
+              <h2>Cookies</h2>
+              <p>
+                A cookie is a string of information that a website stores on a
+                visitor's computer, and that the visitor's browser provides to the
+                Service each time the visitor returns. Cadence uses cookies to
+                help Cadence identify and track visitors, their usage of Cadence
+                Service, and their Service access preferences. Cadence visitors
+                who do not wish to have cookies placed on their computers should
+                set their browsers to refuse cookies before using Cadence's
+                websites, with the drawback that certain features of Cadence's
+                websites may not function properly without the aid of cookies.
             </p>
-            <br />
+              <br />
 
-            <h2>Data Storage</h2>
-            <p>
-              Cadence uses third party vendors and hosting partners to provide
-              the necessary hardware, software, networking, storage, and related
-              technology required to run the Service. You understand that
-              although you retain full rights to your data, it may be stored on
-              third party storage and transmitted through third party networks.
+              <h2>Data Storage</h2>
+              <p>
+                Cadence uses third party vendors and hosting partners to provide
+                the necessary hardware, software, networking, storage, and related
+                technology required to run the Service. You understand that
+                although you retain full rights to your data, it may be stored on
+                third party storage and transmitted through third party networks.
             </p>
-            <br />
+              <br />
 
-            <h2>Privacy Policy Changes</h2>
-            <p>
-              Although most changes are likely to be minor, Cadence may change
-              its Privacy Policy from time to time, and in Cadence's sole
-              discretion. Cadence encourages visitors to frequently check this
-              page for any changes to its Privacy Policy. Your continued use of
-              this site after any change in this Privacy Policy will constitute
-              your acceptance of such change.
+              <h2>Privacy Policy Changes</h2>
+              <p>
+                Although most changes are likely to be minor, Cadence may change
+                its Privacy Policy from time to time, and in Cadence's sole
+                discretion. Cadence encourages visitors to frequently check this
+                page for any changes to its Privacy Policy. Your continued use of
+                this site after any change in this Privacy Policy will constitute
+                your acceptance of such change.
             </p>
-            <br />
-          </div>
-        )}
+              <br />
+            </div>
+          )}
       </Container>
       <Footer />
     </OuterContainer>

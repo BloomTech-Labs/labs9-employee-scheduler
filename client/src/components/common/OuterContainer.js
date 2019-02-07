@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import system from '../../design/theme'
-import doodles from '../../img/doodles.png'
+import doodles from '../../assets/img/doodles.png'
 
 // this component should wrap every page of the app
 const OuterContainer = styled('div')`
