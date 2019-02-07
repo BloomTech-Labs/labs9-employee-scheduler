@@ -41,7 +41,7 @@ Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maint
 - Create your organization and add employees by inviting them
 - Supervisor dashboard to delegate responsibility
 - Full visibility and control over your business's hours of operation
-- Seamlessly approve, deny and request PTOs
+- Seamlessly approve, deny and request PTO
 
 
 ### Installation
