@@ -89,10 +89,6 @@ const Container = styled('div')`
     width: 100%;
     margin: 20px 0;
 
-    @media ${system.breakpoints[1]} {
-      width: ${props => (props.settings ? '100%' : '80%')};
-    }
-
     label {
       font-size: ${system.fontSizing.s};
       padding: 0 5px;
