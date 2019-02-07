@@ -63,7 +63,7 @@ router.put('/', authorize(['owner']), (req, res) => {
     customer_id: null,
     paid: false
   })
-    .then(res => {
+    .then(() => {
       return res.status(200).json({ message: 'Subscription cancelled' })
     })
     .catch(err => res.status(500).json(err))

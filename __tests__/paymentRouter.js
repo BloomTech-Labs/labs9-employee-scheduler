@@ -1,9 +1,12 @@
 const supertest = require('supertest')
 const server = require('../server/server')
-const db = require('../database/dbConfig')
-const uuid = require('uuid/v4')
+const { getOrg } = require('../database/helpers/')
+// const db = require('../database/dbConfig')
+// const uuid = require('uuid/v4')
 
 const request = supertest(server)
+
+const orgId = '9126df31-2607-4166-9c0c-d0a300c59c62' // cadence org id from seeds
 
 describe('testing payments router', () => {
   it('posts payment with a valid token', async () => {
@@ -12,7 +15,7 @@ describe('testing payments router', () => {
       .send({
         token: { id: 'tok_visa' },
         email: 'testy@testyMcTestyface.com',
-        org_id: '9126df31-2607-4166-9c0c-d0a300c59c62' // cadence org id from seeds
+        org_id: orgId
       })
       .set('authorization', 'testing')
       .set('user', 'owner')
@@ -26,7 +29,7 @@ describe('testing payments router', () => {
       .send({
         token: { id: ';lkjaf;kj;kja;kj;lkjaf;elkja' },
         email: 'testy@testyMcTestyface.com',
-        org_id: '9126df31-2607-4166-9c0c-d0a300c59c62' // cadence org id from seeds
+        org_id: orgId
       })
       .set('authorization', 'testing')
       .set('user', 'owner')
@@ -35,7 +38,18 @@ describe('testing payments router', () => {
   })
 
   it('puts a cancel to the subscription', async () => {
-    expect(true)
+    const { subscription_id } = await getOrg(orgId)
+
+    const response = await request
+      .put('/stripe')
+      .send({
+        subscription_id,
+        org_id: orgId
+      })
+      .set('authorization', 'testing')
+      .set('user', 'owner')
+
+    expect(response.status).toEqual(200)
   })
 
   it('fails to cancel with wrong user role', async () => {
