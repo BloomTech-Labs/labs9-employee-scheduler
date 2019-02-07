@@ -66,17 +66,6 @@ DashCal.propTypes = {
 }
 
 const StyledCal = styled(Calendar)`
-  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
-    height: 15px;
-    padding: 5px;
-    background-image: url(${lines});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 20px;
-    border: none;
-  }
-
   .rbc-event {
     cursor: default;
   }
