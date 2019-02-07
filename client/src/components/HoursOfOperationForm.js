@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HOOSlider from './common/TimeRangeSlider/TimeSliderForm'
+import HOOSlider from './common/TimeRangeSlider'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import moment from 'moment'
@@ -33,7 +33,6 @@ const buildDay = HOO => {
 
 const HoursOfOperation = props => {
   const [days, setDays] = useState(props.hours.hours.map(buildDay))
-  const [time, setTime] = useState(null)
 
   const toggle = targetDay => {
     setDays(
@@ -53,6 +52,7 @@ const HoursOfOperation = props => {
 
   // for submitting all of the hours
   const submitHandler = () => {
+    console.log(days)
     days.forEach(day => {
       if (day.updated) {
         const start = moment(day.start, 'h:mm a')
@@ -72,42 +72,17 @@ const HoursOfOperation = props => {
     props.toggleShow()
   }
 
-  // handles the slider position when the user is done sliding
-  const onChangeComplete = (time, targetDay) => {
-    setDays(
-      days.map(day => {
-        if (day.name === targetDay.name) {
-          const notEqual =
-            time.start !== targetDay.start || time.end !== targetDay.end
-          return {
-            ...day,
-            start: time.start,
-            end: time.end,
-            updated: notEqual
-          }
-        } else {
-          return day
-        }
-      })
-    )
-  }
-
   // handles recording positions when the slider moves
   const timeChangeHandler = (time, targetDay) => {
     setDays(
       days.map(day => {
         if (day.name === targetDay.name) {
-          return { ...day, start: time.start, end: time.end }
+          return { ...day, start: time.start, end: time.end, updated: true }
         } else {
           return day
         }
       })
     )
-  }
-
-  // handles returning the starting position of the slider
-  const changeStartHandler = currentTime => {
-    return setTime({ ...time, initialTime: currentTime })
   }
 
   const { Close } = props
@@ -136,9 +111,7 @@ const HoursOfOperation = props => {
               start={day.start} //start of each day
               end={day.end} //end of each day
               // functions //
-              onChangeComplete={time => onChangeComplete(time, day)} // records where the slider ends at (currently only one firing)
               onChange={time => timeChangeHandler(time, day)} //handles when the slider moves
-              onChangeStart={changeStartHandler} // records the time in which the slider is started at
             >
               {props.children}
             </HOOSlider>
