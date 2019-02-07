@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/img/cadence.png)
+# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/assets/img/cadence.png)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
 
@@ -36,7 +36,7 @@ Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maint
 ### Features
 
 - Secure User Authentication using Google Firebase
-- Billing utilizing Stripe payment (up to 2 employees free)
+- Billing utilizing Stripe payment (up to 3 employees free)
 - Drag & Drop Calendar for interactive and intuitive employee shift scheduling
 - Create your organization and add employees by inviting them
 - Supervisor dashboard to delegate responsibility

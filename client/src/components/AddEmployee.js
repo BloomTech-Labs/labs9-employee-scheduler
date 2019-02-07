@@ -8,104 +8,82 @@ import system from '../design/theme'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-// this component will represent a button that will control the left side bar.
-// it will be brought into container components and an open/close state will be held there.
+const closeStyle = { position: 'absolute', top: '25px', right: '25px' }
+const serverUrl = process.env.REACT_APP_SERVER_URL
+
 class AddEmployee extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      newUser: {
-        email: '',
-        name: '',
-        role: ''
-      }
-    }
+  state = {
+    email: '',
+    name: '',
+    role: ''
   }
 
-  changeHandler = event => {
-    this.setState({
-      newUser: {
-        ...this.state.newUser,
-        [event.target.name]: event.target.value
-      }
-    })
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value })
   }
 
-  submitHandler = event => {
+  handleSubmit = event => {
     event.preventDefault()
-    const { role, token } = this.props
-    const { email, name } = this.state.newUser
-    const newUser = {
-      email: email,
-      name: name
-    }
+    const { role: currentRole, token, toggleShow } = this.props
+    const { email, name, role: newUserRole } = this.state
 
     if (!email || !name) {
       alert('Please fill out all fields!')
+    } else if (currentRole === 'supervisor') {
+      axios
+        .post(
+          `${serverUrl}/invites/invite-employee`,
+          { email, name },
+          {
+            headers: { authorization: token }
+          }
+        )
+        .then(() => {
+          alert(`We've sent an invite to: ${name}.`)
+          toggleShow()
+        })
+        .catch(() => {
+          alert(`Something has gone wrong. Try again!`)
+        })
+    } else if (!newUserRole) {
+      alert(`Please indicate the new user's role.`)
     } else {
-      if (role === 'supervisor') {
-        axios
-          .post(
-            `${process.env.REACT_APP_SERVER_URL}/invites/invite-employee`,
-            newUser,
-            {
-              headers: { authorization: token }
-            }
-          )
-          .then(res => {
-            alert(`We've sent an invite to employee: ${name}.`)
-            this.props.toggleShow()
-          })
-          .catch(err => {
-            alert(`Something has gone wrong. Try again!`)
-          })
-      } else {
-        if (!this.state.newUser.role) {
-          alert(`Please indicate the new user's role.`)
-        } else {
-          const intendedRole = this.state.newUser.role
-          axios
-            .post(
-              `${
-                process.env.REACT_APP_SERVER_URL
-              }/invites/invite-${intendedRole}`,
-              newUser,
-              {
-                headers: { authorization: token }
-              }
-            )
-            .then(res => {
-              alert(`We've sent an invite to ${intendedRole}: ${name}.`)
-              this.props.toggleShow()
-            })
-            .catch(err => alert(`Something has gone wrong. Try again!`))
-        }
-      }
+      axios
+        .post(
+          `${serverUrl}/invites/invite-${newUserRole}`,
+          { email, name },
+          {
+            headers: { authorization: token }
+          }
+        )
+        .then(() => {
+          alert(`We've sent an invite to: ${name}.`)
+          toggleShow()
+        })
+        .catch(() => alert(`Something has gone wrong. Try again!`))
     }
   }
 
   render() {
-    const { role, Close } = this.props
-    return (
-      <ModalContainer>
-        {/* ternary checks to see if they have a paid account or less than three employees  */}
-        {(this.props.paid && this.props.employees.length < 20) ||
-        this.props.employees.length < 3 ? (
-          <form onSubmit={this.submitHandler}>
+    const { role, Close, paid, employees } = this.props
+    const { handleChange, handleSubmit } = this
+
+    if ((paid && employees.length < 21) || employees.length < 5) {
+      // 20 is cap for pro, 4 is cap for free
+      return (
+        <ModalContainer>
+          <form onSubmit={handleSubmit}>
             <h6 id="instructions">
               Fill all fields & we'll send your employee a sign-up invite!
             </h6>
-            <Close
-              style={{ position: 'absolute', top: '25px', right: '25px' }}
-            />
+            <Close style={closeStyle} />
             <label htmlFor="name">Employee Name *</label>
             <Input
               type="name"
               id="name"
               name="name"
               placeholder="ex. Adam Hinckley"
-              onChange={this.changeHandler}
-              value={this.props.value}
+              onChange={handleChange}
               aria-label="name"
               required
             />
@@ -115,13 +93,11 @@ class AddEmployee extends Component {
               id="email"
               name="email"
               placeholder="ex. adam@getcadence.co"
-              onChange={this.changeHandler}
-              value={this.props.value}
-              checked={this.props.checked}
+              onChange={handleChange}
               aria-label="email"
               required
             />
-            {role === 'owner' ? (
+            {role === 'owner' && (
               <>
                 <label htmlFor="role">Employee Role *</label>
                 <div className="radio">
@@ -130,8 +106,7 @@ class AddEmployee extends Component {
                     id="emp"
                     name="role"
                     value="employee"
-                    checked={this.props.checked}
-                    onChange={this.changeHandler}
+                    onChange={handleChange}
                   />
                   <label htmlFor="emp"> Employee</label>
                 </div>
@@ -141,53 +116,40 @@ class AddEmployee extends Component {
                     id="sup"
                     name="role"
                     value="supervisor"
-                    onChange={this.changeHandler}
+                    onChange={handleChange}
                   />
                   <label htmlFor="sup"> Supervisor</label>
                 </div>
               </>
-            ) : null}
+            )}
             <Button type="submit" data-test="submit">
               Send Invite
             </Button>
           </form>
-        ) : (
+        </ModalContainer>
+      )
+    } else {
+      // if employee number is at the cap
+      return (
+        <ModalContainer>
           <form>
-            {/* checks to see if a owner or manager is logged in and displays the appropriate message */}
-            {this.props.role === 'owner' ? (
-              <>
-                <Close
-                  style={{ position: 'absolute', top: '25px', right: '25px' }}
-                />
-                <h6 id="instructions">
-                  You have reached the limit for the number of users your
-                  account can support.
-                </h6>
-                {this.props.paid ? null : (
-                  <Link to="/billing">
-                    <Button>Upgrade</Button>
-                  </Link>
-                )}
-              </>
+            <Close style={closeStyle} />
+            <h6 id="instructions">
+              You have reached the limit for the number of users your account
+              can support.
+            </h6>
+
+            {role === 'owner' ? (
+              <Link to="/billing">
+                <Button>Upgrade</Button>
+              </Link>
             ) : (
-              <>
-                <Close
-                  style={{ position: 'absolute', top: '25px', right: '25px' }}
-                />
-                <h6 id="instructions">
-                  You have reached the limit for the number of users your
-                  account can support.
-                  {this.props.paid
-                    ? null
-                    : `Contact your business' owner about
-                  upgrading.`}
-                </h6>
-              </>
+              `Contact your business's owner about upgrading.`
             )}
           </form>
-        )}
-      </ModalContainer>
-    )
+        </ModalContainer>
+      )
+    }
   }
 }
 

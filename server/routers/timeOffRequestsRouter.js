@@ -60,7 +60,8 @@ router.put('/:id', authorize(['owner', 'supervisor']), (req, res) => {
 })
 
 //delete time off request
-router.delete('/:id', authorize(['owner', 'supervisor']), (req, res) => {
+// this needs to be set to 'all' so an employee can delete their own time off requests
+router.delete('/:id', authorize(['all']), (req, res) => {
   const { id } = req.params
   deleteTimeOffRequest(id)
     .then(success => res.status(200).json(success))
