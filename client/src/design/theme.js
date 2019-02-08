@@ -58,7 +58,8 @@ const system = {
     container: '0 75px',
     mobile: '0 25px',
     lineHeight: 1.25,
-    TopBar: '7.5rem'
+    TopBar: '7.5rem',
+    modalBottom: '15rem'
   }
 }
 

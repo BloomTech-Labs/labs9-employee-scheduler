@@ -83,22 +83,27 @@ const StyledModal = styled.div`
   opacity: 0.98;
   transition: opacity 0s, z-index 0s, opacity 0.5s linear;
   display: flex;
-  justify-content: center;
-  align-items: center;
   overflow-y: auto;
+  box-sizing: content-box;
   padding-top: ${system.spacing.TopBar};
   @media ${system.breakpoints[0]} {
+    background: ${system.color}
     align-items: stretch;
+    padding-top: 0;
+  z-index: 101;
   }
 
   & > div {
     transition: transform 0.3s linear;
     padding: ${system.spacing.bigPadding};
+    margin: auto;
+    padding-bottom: ${system.spacing.modalBottom};
 
     @media ${system.breakpoints[0]} {
       padding: 0;
       width: 100%;
-      min-height: 100%;
+      min-height: 100vh;
+      z-index: 102;
     }
   }
 

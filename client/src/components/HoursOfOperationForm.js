@@ -163,8 +163,8 @@ export const Modal = styled.div`
 
   @media ${system.breakpoints[0]} {
     border-radius: 0;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 20px 5px;
+    min-height: 100vh;
   }
   .days-container {
     display: flex;
@@ -179,6 +179,12 @@ export const Modal = styled.div`
   button {
     width: 30%;
     margin: ${system.spacing.bigPadding};
+
+    @media ${system.breakpoints[1]} {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     @media ${system.breakpoints[0]} {
       width: 96%;
