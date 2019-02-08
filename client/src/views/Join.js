@@ -20,14 +20,18 @@ import { phonePattern } from '../utils'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 
+const initialState = {
+  oauthSuccess: false,
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  terms: false
+}
+
 const Join = props => {
   const [state, setState] = useState({
-    oauthSuccess: false,
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    terms: false
+    ...initialState
   })
 
   useEffect(() => {
@@ -40,7 +44,6 @@ const Join = props => {
 
     // a cleanup function is returned by firebase.auth().onAuthStateChanged by default
     const cleanupFunction = firebase.auth().onAuthStateChanged(user => {
-      console.log(user, 'authstate change')
       //checks to see if user has registered yet
       if (firebase.auth().currentUser) {
         const { email, phone, displayName } = firebase.auth().currentUser
@@ -55,8 +58,14 @@ const Join = props => {
           lastName,
           oauthSuccess: true
         })
+      } else {
+        setState({
+          ...state,
+          ...initialState
+        })
       }
     })
+
     return cleanupFunction
   }, [props.token])
 
@@ -96,7 +105,6 @@ const Join = props => {
   const { outcome } = props.registration // exposes success/fail of axios request
 
   if (!oauthSuccess && !props.user) {
-    console.log()
     return <Login />
   } else if (outcome) {
     return (
