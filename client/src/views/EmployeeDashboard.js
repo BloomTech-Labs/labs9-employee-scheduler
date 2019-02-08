@@ -1,13 +1,8 @@
 import React, { Component, Suspense } from 'react'
 import propTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
-// import LeftSideBar from './LeftSideBar'
-// import TimeOffApproved from './EmployeeDashboard/TimeOffApproved'
-// import TimeOffRequest from './EmployeeDashboard/TimeOffRequest'
-// import Availability from './EmployeeDashboard/Availability'
-// import DashCal from './EmployeeDashboard/DashCal'
-import Loader from './Loader'
-import Button from './common/Button'
+import TopBar from '../components/common/TopBar'
+import Loader from '../components/common/Loader'
+import Button from '../components/common/Button'
 import {
   fetchSingleEmployeeFromDB,
   deleteTimeOffRequest,
@@ -15,23 +10,23 @@ import {
   fetchEmployeesFromDB
 } from '../actions'
 import { connect } from 'react-redux'
-import { Message, Container, Card } from './EmployeeDashboard/styles'
-import OuterContainer from './common/OuterContainer'
+import { Message, Container, Card } from '../components/EmployeeDashboard/styles'
+import OuterContainer from '../components/common/OuterContainer'
 import { getHoursOfOperationRange, getRange } from '../utils'
 import styled from '@emotion/styled'
 import system from '../design/theme'
-import AssignedShifts from './EmployeeDashboard/AssignedShifts'
+import AssignedShifts from '../components/EmployeeDashboard/AssignedShifts'
 const TimeOffApproved = React.lazy(() =>
-  import('./EmployeeDashboard/TimeOffApproved')
+  import('../components/EmployeeDashboard/TimeOffApproved')
 )
-const LeftSideBar = React.lazy(() => import('./LeftSideBar'))
+const NavMenu = React.lazy(() => import('../components/common/NavMenu'))
 const TimeOffRequest = React.lazy(() =>
-  import('./EmployeeDashboard/TimeOffRequest')
+  import('../components/EmployeeDashboard/TimeOffRequest')
 )
 const Availability = React.lazy(() =>
-  import('./EmployeeDashboard/Availability')
+  import('../components/EmployeeDashboard/Availability')
 )
-const DashCal = React.lazy(() => import('./EmployeeDashboard/DashCal'))
+const DashCal = React.lazy(() => import('../components/EmployeeDashboard/DashCal'))
 
 // This page will house all of the information that will be visible to the employees when they log in to the site
 
@@ -186,9 +181,9 @@ class EmployeeDashboard extends Component {
     return (
       <OuterContainer>
         <Suspense fallback={<div>Loading...</div>}>
-          <LeftSideBar />
+          <NavMenu />
         </Suspense>
-        <BreadCrumb location="Employee Dashboard" />
+        <TopBar location="Employee Dashboard" />
 
         <Container>
           <div className="employee-welcome">
@@ -257,7 +252,7 @@ class EmployeeDashboard extends Component {
           </div>
 
           <div className="wrapper">
-            <Card data-testid="employeeShifts">
+            <Card data-testid="employeeShifts"> 
               <div className="title">
                 <h5>Your Upcoming Shifts</h5>
               </div>
@@ -275,7 +270,7 @@ class EmployeeDashboard extends Component {
               )}
             </Card>
 
-            <Card className="tof-wrapper">
+            <Card className="tof-wrapper" data-testid="dashboardAvails">
               <div className="title">
                 <h5>Your Weekly Availability</h5>
               </div>

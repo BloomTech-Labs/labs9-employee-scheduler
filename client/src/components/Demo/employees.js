@@ -1,5 +1,5 @@
 import React from 'react'
-import avails from '../../img/avails.mp4'
+import avails from '../../assets/video/avails.mp4'
 
 export default [
   {
@@ -167,9 +167,9 @@ export default [
     content: (
       <div>
         <span className="demo-bold">
-          On the free plan, you have a limit of 3 total employees.
+          On the free plan, you have a limit of 4 total employees.
         </span>{' '}
-        Delete the demo accounts to add 2 of your own employees.
+        Delete the demo accounts to free up some slots.
       </div>
     ),
     locale: { skip: <strong arial-label="skip">Skip</strong> },

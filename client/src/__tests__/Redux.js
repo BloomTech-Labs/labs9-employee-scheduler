@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderWithRedux } from '../../testing/utils'
+import { renderWithRedux } from '../../testingUtils'
 
 const TestComponent = () => <p>Test</p>
 

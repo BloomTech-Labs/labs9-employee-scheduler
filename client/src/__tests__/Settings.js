@@ -1,9 +1,9 @@
 import React from 'react'
 import App from '../App'
 import { populateOrg } from '../../../database/utils/generateData'
-import { fireEvent, waitForElement } from 'react-testing-library'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
-import Settings from '../components/Settings'
+import { fireEvent, waitForElement, cleanup } from 'react-testing-library'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
+import Settings from '../views/Settings'
 
 import * as axios from 'axios'
 import * as firebase from 'firebase/app'
@@ -17,6 +17,7 @@ const { organization, users } = populateOrg({ size: 6 })
 const user = users[0]
 
 describe('Settings Component', () => {
+  afterEach(cleanup)
   let email, phone, emailpref, phonepref, utils
   beforeEach(() => {
     // mock out firebase auth
@@ -24,7 +25,7 @@ describe('Settings Component', () => {
       return {
         onAuthStateChanged: cb => {
           cb()
-          return () => {}
+          return () => { }
         },
         currentUser: {
           getIdToken: () => Promise.resolve('token')

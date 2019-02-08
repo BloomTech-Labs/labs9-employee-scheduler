@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BreadCrumb from './BreadCrumb'
+import TopBar from '../components/common/TopBar'
 import styled from '@emotion/styled'
 import system from '../design/theme'
 import { fetchEmployeesFromDB, updateUserSettings } from '../actions'
 import { connect } from 'react-redux'
-import Card from './EmployeeCard/Card'
-import LeftSideBar from './LeftSideBar'
-import OuterContainer from './common/OuterContainer'
-import AddEmployee from './AddEmployee'
-import AvailabilityForm from './Availability/AvailabilityForm'
-import Button from './common/Button'
-import Modal from './Modal'
-import { Input } from './common/FormContainer'
+import Card from '../components/EmployeeCard/Card'
+import NavMenu from '../components/common/NavMenu'
+import OuterContainer from '../components/common/OuterContainer'
+import AddEmployee from '../components/AddEmployee'
+import AvailabilityForm from '../components/Availability/AvailabilityForm'
+import Button from '../components/common/Button'
+import Modal from '../components/Modal'
+import { Input } from '../components/common/FormContainer'
 import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
-import steps from './Demo/employees'
+import steps from '../components/Demo/employees'
 import axios from 'axios'
 const baseURL = process.env.REACT_APP_SERVER_URL
 
@@ -124,8 +124,8 @@ class Employees extends Component {
     })
     return (
       <OuterContainer location="Employees ">
-        <BreadCrumb location="Employees" />
-        <LeftSideBar fixed />
+        <TopBar location="Employees" />
+        <NavMenu />
         <MidContainer>
           <h1>Employee Directory</h1>
           <ReactJoyride

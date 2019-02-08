@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
 import withDragAndDrop from 'cadence-big-calendar/lib/addons/dragAndDrop'
-import Calendar from '../Calendar'
+import Calendar from '../common/Calendar'
 import styled from '@emotion/styled'
-import lines from '../../img/lines.svg'
+import lines from '../../assets/img/lines.svg'
 
 const DnDCal = withDragAndDrop(Calendar)
 
@@ -107,13 +107,14 @@ class DropCal extends Component {
 export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
 
 const StyledDndCal = styled(DnDCal)`
-  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
+  &.rbc-addons-dnd
+    .rbc-addons-dnd-resize-ns-anchor
+    .rbc-addons-dnd-resize-ns-icon {
     height: 15px;
     padding: 5px;
     background-image: url(${lines});
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
     width: 20px;
     border: none;
   }

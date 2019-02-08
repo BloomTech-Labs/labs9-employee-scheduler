@@ -1,8 +1,8 @@
 import React from 'react'
 import App from '../App'
-import { waitForElement } from 'react-testing-library'
+import { waitForElement, cleanup } from 'react-testing-library'
 import moment from 'moment'
-import { renderWithReduxAndRouter, setupStripeNode } from '../../testing/utils'
+import { renderWithReduxAndRouter, setupStripeNode } from '../../testingUtils'
 import {
   structureEmployees,
   populateOrg
@@ -24,6 +24,7 @@ const { first_name, last_name, email } = user
 const employees = structureEmployees(org)
 
 describe('employee dashboard with redux', () => {
+  afterEach(cleanup)
   it('can render with initial state', async () => {
     // mocks axios call so that we can control what data gets returned.
     // this is setting up the mock, so that when axios actually gets called

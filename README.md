@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/img/cadence.png)
+# ![logo](https://raw.githubusercontent.com/Lambda-School-Labs/labs9-employee-scheduler/master/client/src/assets/img/cadence.png)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1f33c851-d544-41c1-adc3-d82975d87cff/deploy-status)](https://app.netlify.com/sites/cadence/deploys)
 
@@ -31,16 +31,16 @@ Wireframe: https://balsamiq.cloud/snv27r3/p1rv5r3
 
 ### Motivation
 
-Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business' hours of operations, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md). It outlines the rationale for our tech stack as well as our architectural decisions.
+Cadence is a B2B SaaS created to make shift scheduling quick and painless. Maintaining absolute visibility over your company's schedule can be a difficult task; spreadsheets and legacy software don't do the job. Cadence is an intuitive and easy-to-use application that will do the heavy lifting for you. Just register [here](https://getcadence.co/), create your company, and take our demo for a spin. Drag and drop demo employees to schedule them. Change their availabilities, approve or deny their time off requests, change your business's hours of operation, and much more. When you're done, feel free to remove them and begin adding your own employees. The technical design document / spec for this project is [here](https://github.com/Lambda-School-Labs/labs9-employee-scheduler/blob/master/docs/TDD.md). It outlines the rationale for our tech stack as well as our architectural decisions.
 
 ### Features
 
 - Secure User Authentication using Google Firebase
-- Billing utilizing Stripe payment (including 14-day free trial)
+- Billing utilizing Stripe payment (up to 3 employees free)
 - Drag & Drop Calendar for interactive and intuitive employee shift scheduling
 - Create your organization and add employees by inviting them
 - Supervisor dashboard to delegate responsibility
-- Full visibility and control over your business' hours of operation
+- Full visibility and control over your business's hours of operation
 - Seamlessly approve, deny and request PTO
 
 
@@ -53,15 +53,15 @@ in the `./client` you will need a `.env.development` file
 #### Instructions for .env Variables:
 
 ##### Client:
-The client will need 4 environment variables. You can copy-paste the first 2. You will need to create your own for the latter 2. 
+The client will need 3 environment variables. You can copy-paste the first 2. You will need to create your own for the latter 2. 
 <br/><br/>
 Follow the instructions [here](https://firebase.google.com/docs/web/setup) to create a Firebase account & project. Once your project is set up, go to your project's settings page to find your "Web API Key"; that value (as a string) will be your `REACT_APP_FIREBASE_KEY`.  
 <br/><br/>
 Create an account at [Stripe](https://stripe.com) to work with our Billing page. Once you have an account, go to your [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Publishable key" as your `REACT_APP_STRIPE_PKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 REACT_APP_SERVER_URL=http://localhost:9000
-REACT_APP_FIREBASE_KEY='{insert Web API Key here}'
-REACT_APP_STRIPE_PKEY='{insert Stripe publishable key here}'
+REACT_APP_FIREBASE_KEY={insert Web API Key here}
+REACT_APP_STRIPE_PKEY={insert Stripe publishable key here}
 ```
 
 ##### Server:
@@ -75,11 +75,11 @@ For your `FIREBASE_EMAIL`, open the JSON object mentioned in the previous step i
 Go to your Stripe [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Secret key" as your `STRIPE_SKEY`. It is best to use your test keys so as not to run up a bill.
 ```
 CLIENT_URL=http://localhost:3000
-GMAIL_USERNAME="{insert your Gmail address here}"
-GMAIL_PASSWORD="{insert your Gmail password here}"
+GMAIL_USERNAME={insert your Gmail address here}
+GMAIL_PASSWORD={insert your Gmail password here}
 FIREBASE_SECRET={copy paste your "private_key" here}
 FIREBASE_EMAIL={copy paste your "client_email" here}
-STRIPE_SKEY='{insert Stripe secret key here}'
+STRIPE_SKEY={insert Stripe secret key here}
 ```
 
 ### Using the App

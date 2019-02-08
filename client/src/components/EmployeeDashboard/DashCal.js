@@ -1,7 +1,6 @@
 import React from 'react'
-import Calendar from '../Calendar'
+import Calendar from '../common/Calendar'
 import styled from '@emotion/styled'
-import lines from '../../img/lines.svg'
 import PropTypes from 'prop-types'
 
 export default function DashCal(props) {
@@ -66,17 +65,6 @@ DashCal.propTypes = {
 }
 
 const StyledCal = styled(Calendar)`
-  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
-    height: 15px;
-    padding: 5px;
-    background-image: url(${lines});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 20px;
-    border: none;
-  }
-
   .rbc-event {
     cursor: default;
   }
