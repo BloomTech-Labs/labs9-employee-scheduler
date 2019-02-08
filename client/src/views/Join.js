@@ -4,12 +4,7 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import {
-  registerViaJoinOrg,
-  authenticate,
-  logout,
-  resetAuthState
-} from '../actions' // for calling once all data is in
+import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from '../components/Login'
 import TopBar from '../components/common/TopBar'
@@ -20,28 +15,17 @@ import { phonePattern } from '../utils'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 
-const initialState = {
-  oauthSuccess: false,
-  firstName: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  terms: false
-}
-
 const Join = props => {
   const [state, setState] = useState({
-    ...initialState
+    oauthSuccess: false,
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    terms: false
   })
 
   useEffect(() => {
-    if (props.token) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => props.resetAuthState())
-    }
-
     // a cleanup function is returned by firebase.auth().onAuthStateChanged by default
     const cleanupFunction = firebase.auth().onAuthStateChanged(user => {
       //checks to see if user has registered yet
@@ -50,6 +34,7 @@ const Join = props => {
         // In case user enters more than two names
         const firstName = displayName.split(' ')[0]
         const lastName = displayName.split(' ').slice(1)[0]
+
         setState({
           ...state,
           email,
@@ -58,16 +43,10 @@ const Join = props => {
           lastName,
           oauthSuccess: true
         })
-      } else {
-        setState({
-          ...state,
-          ...initialState
-        })
       }
     })
-
     return cleanupFunction
-  }, [props.token])
+  }, [])
 
   const handleChange = e => {
     e.preventDefault()
@@ -104,7 +83,23 @@ const Join = props => {
   const { oauthSuccess, email, firstName, lastName } = state
   const { outcome } = props.registration // exposes success/fail of axios request
 
-  if (!oauthSuccess && !props.user) {
+  //checks to see if there is a current user logged in and forces a logout to enable registration.
+  //this is a bug fix
+  if (props.token) {
+    return (
+      <OuterContainer height="true">
+        <TopBar />
+        <Container className="wrapper">
+          <h1 className="headerText">
+            Please logout then click the register link in your email again
+          </h1>
+          <Button onClick={props.logout}>Logout</Button>
+        </Container>
+      </OuterContainer>
+    )
+  }
+
+  if (!oauthSuccess) {
     return <Login />
   } else if (outcome) {
     return (
@@ -203,13 +198,12 @@ const Join = props => {
 
 const mapStateToProps = ({ registration, auth }) => ({
   registration,
-  token: auth.token,
-  user: auth.user
+  token: auth.token
 })
 
 export default connect(
   mapStateToProps,
-  { registerViaJoinOrg, authenticate, logout, resetAuthState }
+  { registerViaJoinOrg, authenticate, logout }
 )(Join)
 
 Join.propTypes = {
@@ -217,8 +211,7 @@ Join.propTypes = {
   token: PropTypes.string.isRequired,
   registerViaJoinOrg: PropTypes.func.isRequired,
   authenticate: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  resetAuthState: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired
 }
 
 const Terms = styled('div')`
