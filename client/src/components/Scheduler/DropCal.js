@@ -107,13 +107,14 @@ class DropCal extends Component {
 export default DropTarget('SHIFT', dropSpec, dropCollect)(DropCal)
 
 const StyledDndCal = styled(DnDCal)`
-  .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
+  &.rbc-addons-dnd
+    .rbc-addons-dnd-resize-ns-anchor
+    .rbc-addons-dnd-resize-ns-icon {
     height: 15px;
     padding: 5px;
     background-image: url(${lines});
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
     width: 20px;
     border: none;
   }

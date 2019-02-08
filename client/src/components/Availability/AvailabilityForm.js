@@ -4,7 +4,7 @@ import { editAvailability } from '../../actions'
 import Button from '../common/Button'
 import { formatHours, utcDayToLocal } from '../../utils'
 import moment from 'moment'
-import HOOSlider from '../common/TimeRangeSlider/TimeSliderForm'
+import Slider from '../common/TimeRangeSlider'
 import { Modal } from '../HoursOfOperationForm'
 
 const dayNameMap = [
@@ -34,8 +34,7 @@ class AvailabilityForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      days: props.availabilities.map(buildDay),
-      initialTime: null
+      days: props.availabilities.map(buildDay)
     }
   }
 
@@ -81,48 +80,19 @@ class AvailabilityForm extends Component {
     this.props.toggleShow()
   }
 
-  // handles the slider position when the user is done sliding
-  onChangeComplete = (time, targetDay) => {
-    this.setState(prevState => {
-      const { days, initialTime } = prevState
-      return {
-        days: days.map(day => {
-          if (day.name === targetDay.name) {
-            const notEqual =
-              initialTime.start !== targetDay.start ||
-              initialTime.end !== targetDay.end
-            return {
-              ...day,
-              start: time.start,
-              end: time.end,
-              updated: notEqual
-            }
-          } else {
-            return day
-          }
-        })
-      }
-    })
-  }
-
   // handles recording positions when the slider moves
   timeChangeHandler(time, targetDay) {
     this.setState(prevState => {
       return {
         days: prevState.days.map(day => {
           if (day.name === targetDay.name) {
-            return { ...day, start: time.start, end: time.end }
+            return { ...day, start: time.start, end: time.end, updated: true }
           } else {
             return day
           }
         })
       }
     })
-  }
-
-  // handles returning the starting position of the slider
-  changeStartHandler = currentTime => {
-    return this.setState({ initialTime: currentTime })
   }
 
   render() {
@@ -135,7 +105,7 @@ class AvailabilityForm extends Component {
           {/* maps over all availabilities and displays them with the ability to select changes */}
           {this.state.days.map((day, i) => {
             return (
-              <HOOSlider
+              <Slider
                 // props to days and close/open button
                 id={i}
                 key={day.id}
@@ -156,7 +126,7 @@ class AvailabilityForm extends Component {
                 onChangeStart={this.changeStartHandler} // records the time in which the slider is started at
               >
                 {this.props.children}
-              </HOOSlider>
+              </Slider>
             )
           })}
           <Button onClick={this.submitHandler}>Submit Availabilities</Button>
