@@ -173,6 +173,9 @@ AddEmployee.propTypes = {
 }
 
 const ModalContainer = styled(Container)`
+  form {
+    justify-content: center;
+  }
   @media ${system.breakpoints[0]} {
     margin: 0;
     width: 100%;
@@ -181,7 +184,7 @@ const ModalContainer = styled(Container)`
     form {
       margin: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       border-radius: 0;
     }
   }
