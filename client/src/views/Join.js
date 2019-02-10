@@ -4,9 +4,10 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import { registerViaJoinOrg, authenticate, logout } from '../actions' // for calling once all data is in
+import { registerViaJoinOrg, authenticate, logoutInPlace } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from '../components/Login'
+import Loader from '../components/common/Loader'
 import TopBar from '../components/common/TopBar'
 import OuterContainer from '../components/common/OuterContainer'
 import { Container, Input } from '../components/common/FormContainer'
@@ -15,19 +16,23 @@ import { phonePattern } from '../utils'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 
+const initialState = {
+  oauthSuccess: false,
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  terms: false
+}
+
 const Join = props => {
-  const [state, setState] = useState({
-    oauthSuccess: false,
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    terms: false
-  })
+  const [state, setState] = useState({ ...initialState })
 
   useEffect(() => {
     // a cleanup function is returned by firebase.auth().onAuthStateChanged by default
     const cleanupFunction = firebase.auth().onAuthStateChanged(user => {
+      console.log('TCL: user', user)
+
       //checks to see if user has registered yet
       if (firebase.auth().currentUser) {
         const { email, phone, displayName } = firebase.auth().currentUser
@@ -42,6 +47,10 @@ const Join = props => {
           firstName,
           lastName,
           oauthSuccess: true
+        })
+      } else {
+        setState({
+          ...initialState
         })
       }
     })
@@ -83,8 +92,18 @@ const Join = props => {
   const { oauthSuccess, email, firstName, lastName } = state
   const { outcome } = props.registration // exposes success/fail of axios request
 
-  //checks to see if there is a current user logged in and forces a logout to enable registration.
-  //this is a bug fix
+  // checks to see if user information has not yet been checked or is in the process
+  // of being checked. Displays loader in either case.
+  if (props.isFetching || !props.checkedUser) {
+    return (
+      <OuterContainer height="true">
+        <TopBar />
+        <Container className="wrapper">
+          <Loader />
+        </Container>
+      </OuterContainer>
+    )
+  }
   if (props.token) {
     return (
       <OuterContainer height="true">
@@ -93,7 +112,7 @@ const Join = props => {
           <h1 className="headerText">
             Please logout then click the register link in your email again
           </h1>
-          <Button onClick={props.logout}>Logout</Button>
+          <Button onClick={props.logoutInPlace}>Logout</Button>
         </Container>
       </OuterContainer>
     )
@@ -198,12 +217,14 @@ const Join = props => {
 
 const mapStateToProps = ({ registration, auth }) => ({
   registration,
-  token: auth.token
+  token: auth.token,
+  isFetching: auth.isFetching,
+  checkedUser: auth.checkedUser
 })
 
 export default connect(
   mapStateToProps,
-  { registerViaJoinOrg, authenticate, logout }
+  { registerViaJoinOrg, authenticate, logoutInPlace }
 )(Join)
 
 Join.propTypes = {
@@ -211,7 +232,7 @@ Join.propTypes = {
   token: PropTypes.string.isRequired,
   registerViaJoinOrg: PropTypes.func.isRequired,
   authenticate: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  logoutInPlace: PropTypes.func.isRequired
 }
 
 const Terms = styled('div')`
