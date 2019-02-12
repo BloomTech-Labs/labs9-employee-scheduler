@@ -1,1 +1,1 @@
-web: knex migrate:rollback --env production && knex migrate:latest --env production && npx knex seed:run && node server/index.js
+web: node server/index.js
