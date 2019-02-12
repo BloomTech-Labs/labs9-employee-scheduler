@@ -31,8 +31,6 @@ const Join = props => {
   useEffect(() => {
     // a cleanup function is returned by firebase.auth().onAuthStateChanged by default
     const cleanupFunction = firebase.auth().onAuthStateChanged(user => {
-      console.log('TCL: user', user)
-
       //checks to see if user has registered yet
       if (firebase.auth().currentUser) {
         const { email, phone, displayName } = firebase.auth().currentUser
