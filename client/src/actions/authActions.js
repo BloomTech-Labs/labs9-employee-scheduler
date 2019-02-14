@@ -7,6 +7,7 @@ export const AUTH_INIT = 'AUTH_INIT'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
+export const LOGOUT_IN_PLACE = 'LOGOUT_IN_PLACE'
 export const RESET_AUTH_STATE = 'RESET_AUTH_STATE'
 export const UNREGISTERED_ACCOUNT = 'UNREGISTERED_ACCOUNT'
 
@@ -73,6 +74,15 @@ export const logout = () => async dispatch => {
   try {
     await firebase.auth().signOut()
     dispatch({ type: LOGOUT })
+  } catch (error) {
+    alert('There was an error while logging out, please try again')
+  }
+}
+
+export const logoutInPlace = () => async dispatch => {
+  try {
+    await firebase.auth().signOut()
+    dispatch({ type: LOGOUT_IN_PLACE })
   } catch (error) {
     alert('There was an error while logging out, please try again')
   }

@@ -95,6 +95,7 @@ class App extends Component {
       redirect,
       setRedirectFlagToFalse
     } = this.props
+
     if (userDidLogout) {
       resetAuthState()
       history.push('/')

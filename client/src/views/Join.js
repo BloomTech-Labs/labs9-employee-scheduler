@@ -4,14 +4,10 @@ import firebase from 'firebase/app'
 // this import style is required for proper codesplitting of firebase
 import 'firebase/auth'
 
-import {
-  registerViaJoinOrg,
-  authenticate,
-  logout,
-  resetAuthState
-} from '../actions' // for calling once all data is in
+import { registerViaJoinOrg, authenticate, logoutInPlace } from '../actions' // for calling once all data is in
 import { connect } from 'react-redux'
 import Login from '../components/Login'
+import Loader from '../components/common/Loader'
 import TopBar from '../components/common/TopBar'
 import OuterContainer from '../components/common/OuterContainer'
 import { Container, Input } from '../components/common/FormContainer'
@@ -30,18 +26,9 @@ const initialState = {
 }
 
 const Join = props => {
-  const [state, setState] = useState({
-    ...initialState
-  })
+  const [state, setState] = useState({ ...initialState })
 
   useEffect(() => {
-    if (props.token) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => props.resetAuthState())
-    }
-
     // a cleanup function is returned by firebase.auth().onAuthStateChanged by default
     const cleanupFunction = firebase.auth().onAuthStateChanged(user => {
       //checks to see if user has registered yet
@@ -50,6 +37,7 @@ const Join = props => {
         // In case user enters more than two names
         const firstName = displayName.split(' ')[0]
         const lastName = displayName.split(' ').slice(1)[0]
+
         setState({
           ...state,
           email,
@@ -60,14 +48,12 @@ const Join = props => {
         })
       } else {
         setState({
-          ...state,
           ...initialState
         })
       }
     })
-
     return cleanupFunction
-  }, [props.token])
+  }, [])
 
   const handleChange = e => {
     e.preventDefault()
@@ -104,7 +90,33 @@ const Join = props => {
   const { oauthSuccess, email, firstName, lastName } = state
   const { outcome } = props.registration // exposes success/fail of axios request
 
-  if (!oauthSuccess && !props.user) {
+  // checks to see if user information has not yet been checked or is in the process
+  // of being checked. Displays loader in either case.
+  if (props.isFetching || !props.checkedUser) {
+    return (
+      <OuterContainer height="true">
+        <TopBar />
+        <Container className="wrapper">
+          <Loader />
+        </Container>
+      </OuterContainer>
+    )
+  }
+  if (props.token) {
+    return (
+      <OuterContainer height="true">
+        <TopBar />
+        <Container className="wrapper">
+          <h1 className="headerText">
+            Please logout then click the register link in your email again
+          </h1>
+          <Button onClick={props.logoutInPlace}>Logout</Button>
+        </Container>
+      </OuterContainer>
+    )
+  }
+
+  if (!oauthSuccess) {
     return <Login />
   } else if (outcome) {
     return (
@@ -204,12 +216,13 @@ const Join = props => {
 const mapStateToProps = ({ registration, auth }) => ({
   registration,
   token: auth.token,
-  user: auth.user
+  isFetching: auth.isFetching,
+  checkedUser: auth.checkedUser
 })
 
 export default connect(
   mapStateToProps,
-  { registerViaJoinOrg, authenticate, logout, resetAuthState }
+  { registerViaJoinOrg, authenticate, logoutInPlace }
 )(Join)
 
 Join.propTypes = {
@@ -217,8 +230,7 @@ Join.propTypes = {
   token: PropTypes.string.isRequired,
   registerViaJoinOrg: PropTypes.func.isRequired,
   authenticate: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  resetAuthState: PropTypes.func.isRequired
+  logoutInPlace: PropTypes.func.isRequired
 }
 
 const Terms = styled('div')`
