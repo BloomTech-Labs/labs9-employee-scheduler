@@ -68,7 +68,8 @@ class AddEmployee extends Component {
     const { role, Close, paid, employees } = this.props
     const { handleChange, handleSubmit } = this
 
-    if ((paid && employees.length < 21) || employees.length < 5) {
+    if ((paid) || employees.length < 5) {
+      // && employees.length < 21 -- removed for MVP trial
       // 20 is cap for pro, 4 is cap for free
       return (
         <ModalContainer>
