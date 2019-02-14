@@ -108,7 +108,8 @@ const Join = props => {
         <TopBar />
         <Container className="wrapper">
           <h1 className="headerText">
-            Please logout then click the register link in your email again
+            You are already logged in as an existing user. Please logout to
+            continue the registration process.
           </h1>
           <Button onClick={props.logoutInPlace}>Logout</Button>
         </Container>
