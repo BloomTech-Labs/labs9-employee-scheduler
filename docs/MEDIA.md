@@ -1,6 +1,7 @@
 | Image Filename | Source / Creator | License |
 | -------------- | ------------- | ----- |
 | check.svg      | Evoria Studio  | [Creative Commons](https://www.iconfinder.com/icons/3162599/approve_check_good_success_tick_icon)  |
+| lines.svg      | Kam Bowman  | MIT (projectl icense)
 | circle.svg     | Kam Bowman  | MIT (project license) |
 | header.svg     | Paco Vitiello & Davide Pacilio  | [GPL](https://cruip.com/terms/) |
 | hero.svg       | Paco Vitiello & Davide Pacilio  | [GPL](https://cruip.com/terms/) |
