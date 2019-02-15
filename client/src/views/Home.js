@@ -37,7 +37,7 @@ const Home = () => {
               </Button>
             </div>
           </Fade>
-          <video id="video" autoPlay={true} loop={true}>
+          <video id="video" autoPlay loop muted>
             <source src={frontpage} type="video/mp4" />
           </video>
         </section>

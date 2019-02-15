@@ -24,7 +24,7 @@ router.post('/', authorize(['owner']), (req, res) => {
             customer: customer.id,
             items: [
               {
-                plan: 'plan_ELLat7E29umz5Y'
+                plan: 'plan_EXHDMMgXpXCajr'
               }
             ]
           },
