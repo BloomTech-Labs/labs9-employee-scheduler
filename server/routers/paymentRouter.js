@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const stripeSKey = process.env.STRIPE_SKEY
+const plan = process.env.STRIPE_PLAN_ID
 const stripe = require('stripe')(stripeSKey)
 const authorize = require('../config/customMiddleware/authorize')
 const { updateOrg } = require('../../database/helpers')
@@ -24,7 +25,7 @@ router.post('/', authorize(['owner']), (req, res) => {
             customer: customer.id,
             items: [
               {
-                plan: 'plan_EXHDMMgXpXCajr'
+                plan
               }
             ]
           },
