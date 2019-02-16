@@ -53,7 +53,7 @@ class Scheduler extends React.Component {
   componentDidMount() {
     // if redux shows that this state is true, create dummy employees
     const { user } = this.props
-    if (user && user.cal_visit === true) {
+    if (user && user.role === 'owner' && user.cal_visit === true) {
       const baseURL = process.env.REACT_APP_SERVER_URL
       const offset = moment().utcOffset()
       // load the demo steps

@@ -52,7 +52,6 @@ const HoursOfOperation = props => {
 
   // for submitting all of the hours
   const submitHandler = () => {
-    console.log(days)
     days.forEach(day => {
       if (day.updated) {
         const start = moment(day.start, 'h:mm a')
