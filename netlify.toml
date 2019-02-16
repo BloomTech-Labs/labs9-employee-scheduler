@@ -9,5 +9,5 @@ to = "/index.html"
 status = 200
 
 [context.pts.environment]
-  REACT_APP_SERVER_URL = "https://cadence-pts.herokuapp.com
+  REACT_APP_SERVER_URL = "https://cadence-pts.herokuapp.com"
   REACT_APP_STRIPE_PKEY="'pk_test_HKBgYIhIo21X8kQikefX3Ei1'"
