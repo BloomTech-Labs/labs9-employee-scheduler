@@ -65,7 +65,7 @@ REACT_APP_STRIPE_PKEY={insert Stripe publishable key here}
 ```
 
 ##### Server:
-The server will need 6 environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
+The server will need 7 environment variables. You can copy-paste the first. You will need to create your own for the rest. <br/><br/>
 `GMAIL_USERNAME` and `GMAIL_PASSWORD` refer to the literal username and password for a Gmail account. You need a Gmail account wired up to our app in order to send invites to new users. Said Gmail account must have access for "less secure apps" enabled, which you can learn how to do [here](https://support.google.com/accounts/answer/6010255?hl=en). It is inadvisable to use your personal Gmail for this.
 <br/><br/>
 For your `FIREBASE_SECRET`, go to your Firebase project settings. Go to the tab for "Service Accounts" and click the "Generate new private key" button. This will auto-download a JSON object. Open it up in your text editor; copy the value for the key "private_key"; it (as a string) is your `FIREBASE_SECRET`. 
