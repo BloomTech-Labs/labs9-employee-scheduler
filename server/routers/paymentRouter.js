@@ -10,9 +10,6 @@ const { updateOrg } = require('../../database/helpers')
 
 router.post('/', authorize(['owner']), (req, res) => {
   const { token, email, org_id } = req.body
-  console.log(stripeSKey)
-  console.log(plan)
-  console.log(req.body)
 
   stripe.customers.create(
     {

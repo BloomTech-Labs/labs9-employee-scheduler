@@ -33,7 +33,7 @@ const employee = employees.find(
 const user = employeeCandidates.find(nonOwner => nonOwner.id === employee.id)
 user.cal_visit = false
 user.emp_visit = false
-console.log(employee.events[0].start)
+
 describe('employee dashboard with redux', () => {
   afterEach(cleanup)
   it('can render with initial state', async () => {
