@@ -78,6 +78,7 @@ class App extends Component {
 
   establishStripe = () => {
     const stripePKey = process.env.REACT_APP_STRIPE_PKEY
+    console.log(stripePKey)
     this.setState({
       stripe: window.Stripe(stripePKey)
     })
