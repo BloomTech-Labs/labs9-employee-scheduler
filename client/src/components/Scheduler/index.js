@@ -343,20 +343,25 @@ class Scheduler extends React.Component {
     const { run, steps } = this.state
     return (
       <Container>
-        <ReactJoyride
-          callback={this.handleJoyrideCallback}
-          continuous
-          run={run}
-          scrollToFirstSteps={false}
-          showProgress
-          showSkipButton
-          steps={steps}
-          styles={{
-            options: {
-              zIndex: 10000
-            }
-          }}
-        />
+        { 
+          width !== 'mobile'
+          ? (
+          <ReactJoyride
+              callback={this.handleJoyrideCallback}
+              continuous
+              run={run}
+              scrollToFirstSteps={false}
+              showProgress
+              showSkipButton
+              steps={steps}
+              styles={{
+                options: {
+                  zIndex: 10000
+                }
+              }}
+            />
+        ) : null
+        }
         {width !== 'mobile' ? (
           <Suspense fallback={<p>Fetching your employees...</p>}>
             <EmployeePool
