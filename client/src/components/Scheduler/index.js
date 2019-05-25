@@ -77,7 +77,6 @@ class Scheduler extends React.Component {
     this.updateWidth()
     window.addEventListener('resize', this.updateWidth)
     // this makes sure any unfinished resizes/moves still clear out colorization
-    window.addEventListener('pointerup', this.clearEventDrag)
   }
 
   componentDidUpdate() {
@@ -89,7 +88,6 @@ class Scheduler extends React.Component {
   componentWillUnmount() {
     // cleanup
     window.removeEventListener('resize', this.updateWidth)
-    window.removeEventListener('pointerup', this.clearEventDrag)
   }
 
   fetchData() {
@@ -417,6 +415,7 @@ class Scheduler extends React.Component {
               onSelectSlot={this.createEvent}
               onSelectEvent={this.deleteEvent}
               onDragStart={this.calendarInteractionStart}
+              onDropFromOutside={this.createEvent}
               min={hourRange.min}
               max={hourRange.max}
               view={view}
