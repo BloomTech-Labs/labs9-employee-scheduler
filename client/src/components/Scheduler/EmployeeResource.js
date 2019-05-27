@@ -3,24 +3,29 @@ import EmployeeCard from './ResourceCard'
 import circle from '../../assets/img/circle.svg'
 
 class EmployeeResource extends React.Component {
+  previewImg = null
+
   componentDidMount() {
-    // const { connectDragPreview } = this.props
-    const img = new Image()
-    img.src = circle
-    // img.onload = () => connectDragPreview(img)
+    this.previewImg = new Image()
+    this.previewImg.src = circle
   }
+
   render() {
     const { employee, updateDragState } = this.props
 
     return (
       <div
         style={{ cursor: 'grab' }}
-        onDragStart={() => {
+        onDragStart={e => {
+          if (this.previewImg) {
+            e.dataTransfer.setDragImage(this.previewImg, 0, 0)
+          }
           updateDragState(employee)
         }}
         onDragEnd={() => {
           updateDragState(null)
         }}
+        draggable={true}
       >
         <EmployeeCard {...employee} view="pool" />
       </div>

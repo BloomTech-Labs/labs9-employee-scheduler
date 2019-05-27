@@ -1,9 +1,6 @@
 import React, { Suspense } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-// import DropCal from './DropCal'
 import CoverageBadge from './CoverageBadge'
 import Button from '../common/Button'
 import styled from '@emotion/styled'
@@ -438,7 +435,6 @@ const mapStateToProps = ({ employees, hours, auth, coverage }) => ({
   coverage: coverage
 })
 
-const DragSched = DragDropContext(HTML5Backend)(Scheduler)
 export default connect(
   mapStateToProps,
   {
@@ -450,7 +446,7 @@ export default connect(
     displayCoverage,
     updateUserSettings
   }
-)(DragSched)
+)(Scheduler)
 
 const Container = styled.div`
   display: flex;
