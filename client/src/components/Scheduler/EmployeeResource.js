@@ -1,44 +1,36 @@
 import React from 'react'
-import { DragSource } from 'react-dnd'
 import EmployeeCard from './ResourceCard'
 import circle from '../../assets/img/circle.svg'
 
-class EmployeeEvent extends React.Component {
-  componentDidMount() {
-    const { connectDragPreview } = this.props
-    const img = new Image()
-    img.src = circle
-    img.onload = () => connectDragPreview(img)
-  }
-  render() {
-    const { connectDragSource, isDragging, employee } = this.props
+class EmployeeResource extends React.Component {
+  previewImg = null
 
-    return connectDragSource(
-      <div style={{ opacity: isDragging ? '.7' : undefined, cursor: 'grab' }}>
+  componentDidMount() {
+    this.previewImg = new Image()
+    this.previewImg.src = circle
+  }
+
+  render() {
+    const { employee, updateDragState } = this.props
+
+    return (
+      <div
+        style={{ cursor: 'grab' }}
+        onDragStart={e => {
+          if (this.previewImg) {
+            e.dataTransfer.setDragImage(this.previewImg, 0, 0)
+          }
+          updateDragState(employee)
+        }}
+        onDragEnd={() => {
+          updateDragState(null)
+        }}
+        draggable={true}
+      >
         <EmployeeCard {...employee} view="pool" />
-        {/* set view to pool to enable conditional render */}
       </div>
     )
   }
 }
 
-const eventSource = {
-  beginDrag(props) {
-    const { employee, updateDragState } = props
-    updateDragState(employee)
-    return {}
-  },
-  endDrag(props, monitor) {
-    props.updateDragState(null)
-  }
-}
-
-const collectSource = (connect, monitor) => {
-  return {
-    isDragging: monitor.isDragging(),
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview()
-  }
-}
-
-export default DragSource('SHIFT', eventSource, collectSource)(EmployeeEvent)
+export default EmployeeResource
