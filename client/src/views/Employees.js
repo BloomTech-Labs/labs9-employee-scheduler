@@ -16,7 +16,10 @@ import { Input } from '../components/common/FormContainer'
 import ReactJoyride, { STATUS, ACTIONS } from 'react-joyride'
 import steps from '../components/Demo/employees'
 import axios from 'axios'
+
 const baseURL = process.env.REACT_APP_SERVER_URL
+const MEDIUM_BP = Number.parseInt(system.breakpoints[1].split(' ')[1])
+const SMALL_BP = Number.parseInt(system.breakpoints[0].split(' ')[1])
 
 // This will have admin information on employees (name, email, phone number, availability ext), managers will be able to add new employees through here.
 class Employees extends Component {
@@ -31,10 +34,13 @@ class Employees extends Component {
       //react joyride demo steps
       steps: undefined, //check demo folder for steps
       stepIndex: 0,
-      isLoading: true
+      isLoading: true,
+      width: 'desktop'
     }
   }
   componentDidMount() {
+    this.updateWidth()
+    window.addEventListener('resize', this.updateWidth)
     if (this.mounted) {
       const { user, org_id, token, fetchEmployeesFromDB } = this.props
       fetchEmployeesFromDB(org_id, token)
@@ -52,6 +58,28 @@ class Employees extends Component {
 
   componentWillUnmount() {
     this.mounted = false
+    window.removeEventListener('resize', this.updateWidth)
+  }
+
+  updateWidth = () => {
+    const width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+
+    if (Number.parseInt(width) < SMALL_BP) {
+      return this.setState({
+        width: 'mobile'
+      })
+    } else if (Number.parseInt(width) < MEDIUM_BP) {
+      return this.setState({
+        width: 'tablet'
+      })
+    } else {
+      return this.setState({
+        width: 'desktop'
+      })
+    }
   }
 
   updateAvail = user => {
@@ -110,7 +138,7 @@ class Employees extends Component {
 
   render() {
     const { employees } = this.props
-    const { availTarget, run, steps } = this.state
+    const { availTarget, run, steps, width } = this.state
     let filteredEmployees = employees.filter(person => {
       if (
         person.first_name
@@ -128,20 +156,22 @@ class Employees extends Component {
         <NavMenu />
         <MidContainer>
           <h1>Employee Directory</h1>
-          <ReactJoyride
-            callback={this.handleJoyrideCallback}
-            continuous
-            run={run}
-            scrollToFirstStep={false}
-            showProgress
-            showSkipButton
-            steps={steps}
-            styles={{
-              options: {
-                zIndex: 10000
-              }
-            }}
-          />
+          {width !== 'mobile' ? (
+            <ReactJoyride
+              callback={this.handleJoyrideCallback}
+              continuous
+              run={run}
+              scrollToFirstStep={false}
+              showProgress
+              showSkipButton
+              steps={steps}
+              styles={{
+                options: {
+                  zIndex: 10000
+                }
+              }}
+            />
+          ) : null}
           <TopButtons>
             <Button id="add-employee" onClick={this.toggleShow}>
               Add Employee

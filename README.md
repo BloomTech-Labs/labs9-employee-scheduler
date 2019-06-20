@@ -74,7 +74,7 @@ For your `FIREBASE_EMAIL`, open the JSON object mentioned in the previous step i
 <br/><br/>
 Go to your Stripe [dashboard](https://dashboard.stripe.com/account/apikeys) and copy-paste your "Secret key" as your `STRIPE_SKEY`. It is best to use your test keys so as not to run up a bill.
 <br/><br/>
-Go to your Stripe dashboard [products page](https://dashboard.stripe.com/account/apikeys) and make a Product plan. Then take the product ID, and swap `plan_` for `prod_`. So `prod_XXXXXXXX becomes `plan_XXXXXXXX`. Save this as your `STRIPE_PLAN_ID`.
+Go to your Stripe dashboard [products page](https://dashboard.stripe.com/account/apikeys) and make a Product plan. Then set up a pricing plan. Grab the pricing plan id (not the product plan id). It should be written as plan_XXXXXXXXXXXX. This will be saved as `STRIPE_PLAN_ID`.
 ```
 CLIENT_URL=http://localhost:3000
 GMAIL_USERNAME={insert your Gmail address here}
